@@ -1,0 +1,13 @@
+settings:
+  is_strict: True
+
+global_dependencies:
+  - react.env
+
+outputs:
+  ../../domain/.env/dev.injected.env:
+    targets:
+      - ../../domain/.env/dev.injected.env.in
+  ../../frontend/.env/dev.injected.env:
+    targets:
+      - ../../frontend/.env/dev.injected.env.in

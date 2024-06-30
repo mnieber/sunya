@@ -51,7 +51,6 @@ def the_project_analysis_queue_calls_the_create_project_analysis_action(
             "loops over all plots in the",
             project_at_now,
         ):
-            __import__("pudb").set_trace()  # zz
             plot_list = get_project_plot_list_by_name(project_at_now, "default")
             for plot in plot_list.plots:
                 plot_analysis = the_create_project_analysis_action_calls_the_create_plot_analysis_action(

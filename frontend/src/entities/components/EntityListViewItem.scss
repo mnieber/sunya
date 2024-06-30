@@ -1,0 +1,7 @@
+.EntityListViewItem {
+  @apply cursor-pointer;
+}
+
+.EntityListViewItem--selected {
+  @apply bg-[green];
+}
