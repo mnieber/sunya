@@ -1,61 +1,30 @@
 version: "3.7"
 
 services:
-  backend:
+  domain:
     build:
-      context: ./backend
+      context: ./domain
       dockerfile: Dockerfile.dev
     command: sleep infinity
-    depends_on:
-      - postgres
     env_file:
-      - ./backend/.env/dev.injected.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: calcium_backend_dev
-    ports:
-      - 8000:8000
+      - ./domain/.env/dev.injected.env
+    image: sunya_domain_dev
     volumes:
-      - ./backend:/app/src
-      - backend_venv:/app/env
-  mock:
+      - ./domain:/app/src
+      - domain_venv:/app/env
+  frontend:
     build:
-      context: ./mock
+      context: ./frontend
       dockerfile: Dockerfile.dev
     command: sleep infinity
-    image: calcium_mock_dev
-    volumes:
-      - ./mock:/app/src
-      - mock_venv:/app/env
-  calcium:
-    build:
-      context: ./calcium
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    depends_on:
-      - postgres
     env_file:
-      - ./calcium/.env/dev.injected.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: calcium_calcium_dev
+      - ./frontend/.env/dev.injected.env
+    image: sunya_frontend_dev
     ports:
-      - 4200:4200
-      - 8001:8001
+      - 3000:3000
     volumes:
-      - ./calcium:/app/src
-      - ./calcium/profiles.toml:/root/.prefect/profiles.toml
-      - calcium_venv:/app/env
-  postgres:
-    env_file:
-      - ./postgres/.env/dev.injected.env
-    image: postgis/postgis
-    ports:
-      - 5432:5432
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - ./frontend:/app/src
+      - bundle:/app/bundle
 volumes:
-  postgres_data: {}
-  backend_venv: {}
-  mock_venv: {}
-  calcium_venv: {}
+  domain_venv: {}
+  bundle: {}

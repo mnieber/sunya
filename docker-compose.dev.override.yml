@@ -1,19 +1,18 @@
 version: "3.7"
 
 services:
-  backend:
+  domain:
     volumes:
       - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/calcium/backend/dumps:/app/dumps
-      - /opt/projects/calcium/backend/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/calcium/backend/ipython:/root/.ipython
-      - /opt/projects/calcium/backend/log:/app/log
-      - /opt/projects/calcium/backend/media:/app/media
-      - /opt/projects/calcium/backend/pytest.html:/app/pytest
-      - /opt/projects/calcium/backend/static:/app/static
-  calcium:
+      - /opt/projects/sunya/domain/assets:/app/assets
+      - /opt/projects/sunya/domain/fish_history:/root/.local/share/fish/fish_history
+      - /opt/projects/sunya/domain/ipython:/root/.ipython
+      - /opt/projects/sunya/domain/pytest_report.html:/app/pytest_report.html
+  frontend:
     volumes:
-      - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/calcium/calcium/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/calcium/calcium/ipython:/root/.ipython
-      - /opt/projects/calcium/calcium/log:/app/log
+      - /opt/projects/sunya/frontend/fish_history:/root/.local/share/fish/fish_history
+      # Map editable packages to the container
+      - /home/maarten/projects/aspiration/src:/npm/aspiration
+      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
+      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
+      - /home/maarten/projects/skandha/src:/npm/skandha
