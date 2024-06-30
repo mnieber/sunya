@@ -1,0 +1,66 @@
+import typing as T
+from datetime import datetime
+
+if T.TYPE_CHECKING:
+    pass
+
+from mock.backend.modules.project_analysis_jobs import ProjectAnalysisJobs
+from mock.backend.modules.projects import Projects
+from mock.datatypes import Action, Enum, Module
+from sunya import Entity, MemField, actor_to_str, extend
+
+
+class ProjectAnalyses(Module):
+    class Models:
+        class ProjectAnalysis(Entity):
+            """A Django model that contains a project analysis.
+
+            The project analysis will consider all historical data that
+            was created up to the `now` timestamp. Note that this considers
+            how old/new the historical data is, not how early/late it is.
+
+            Also note that this implies a race condition, because a previous project
+            analysis may nor may not finish (and add more historical data)
+            before this one starts. This is a design decision: we generally don't wait
+            for other project analyses to finish before starting a new one. The
+            exception is when a previous project analysis on the same project and
+            product is still running. In that case, we wait.
+            """
+
+            project: Projects.Models.Project
+            job: ProjectAnalysisJobs.Models.ProjectAnalysisJob
+            now: datetime
+            status: "ProjectAnalyses.Enums.ProjectAnalysisStatus"
+
+    class Enums:
+        class ProjectAnalysisStatus(Enum):
+            RUNNING = "running"
+            COMPLETED = "completed"
+            FAILED = "failed"
+
+    class Actions:
+        class CreateProjectAnalysis(Action):
+            class Args:
+                project_analysis_job: ProjectAnalysisJobs.Models.ProjectAnalysisJob
+
+        class RunProjectAnalysis(Action):
+            class Args:
+                project_analysis: "ProjectAnalyses.Models.ProjectAnalysis"
+
+    class DomainEvents:
+        class ProjectAnalysisCreated:
+            pass
+
+
+create_project_analysis_action = ProjectAnalyses.Actions.CreateProjectAnalysis()
+run_project_analysis_action = ProjectAnalyses.Actions.RunProjectAnalysis()
+
+
+@actor_to_str.method((ProjectAnalyses.Models.ProjectAnalysis,))
+def project_analysis_to_str(project_analysis):
+    return f"{project_analysis.project.name}+:project-analysis"
+
+
+@extend(ProjectAnalysisJobs.Models.ProjectAnalysisJob)
+class ExtendProjectAnalysisJob:
+    project_analyses = MemField(lambda: list())

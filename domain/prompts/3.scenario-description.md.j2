@@ -1,0 +1,19 @@
+# Step 2: The scenario description step
+
+The application must support the following scenarios:
+
+# {{ scenario.name }}                                                                            {% for step in steps %}
+
+{{ step.title }}                                                                                 {% if step.actors_created %}
+The following actors are created in this step:                                                   {% for actor_created in step.actors_created %}
+
+{{ actor_created.name }}:
+{% for k, v0, v1 in actor_created.deltas %}{{ k }}={{ v1 }}
+{% endfor %}                                                                                     {% endfor %}{% endif%}
+{% if step.actors_updated %}
+The following actors are updated in this step:                                                   {% for actor_updated in step.actors_updated %}
+
+The {{ actor_updated.name }}:
+{% for k, v0, v1 in actor_updated.deltas %}{{ k }}={{ v1 }} (from {{ v0 }})
+{% endfor %}                                                                                     {% endfor %}{% endif%}{% endfor %}
+

@@ -1,0 +1,244 @@
+# Task description
+
+You are a coding assistent. We will write for a Django backend together using the following steps:
+
+- step 1: module specification;
+- step 2: scenario description;
+- step 3: code generation guided by forms and code-snippets.
+
+Below I will describe each step in more detail, and I will provide you with examples. These examples
+are based on the fictional use-case of adding a new blog-post to a blog.
+
+## Explanation of Step 1: module specification
+
+In this step I will give you a high-level description of the Django app modules that will be created.
+This description contains a module-specification for every module in the application.
+The comments in the module-specification that are specifically for your information are
+marked with `SPEC: ...`.
+
+Here are the example module-specifications for the BlogsModule and BlogPostsModule:
+
+```python
+class Blogs(Module):
+    # SPEC: This section describes all django models in the module.
+    class Models:
+        class Blog(Entity):
+            """A Django model that represents a blog"""
+
+            id: UUID
+            name: str
+            description: str
+            blog_posts: List[BlogPosts.Models.BlogPost]
+
+    # SPEC: An action is a function in the module that updates the application state.
+    class Actions:
+        class CreateBlog(Action):
+            class Args:
+                create_blog_form: Form
+
+    class ApiViews:
+        class CreateBlogApiView(ApiView):
+            pass
+
+class BlogPosts(Module):
+    class Models:
+        class BlogPost(Entity):
+            """A Django model that contains a blog-post"""
+
+            id: UUID
+            blog_id: UUID
+            name: str
+            content: str
+
+    class Actions:
+        class CreateBlogPost(Action):
+            class Args:
+                create_blog_post_form: Form
+                blog: Blogs.Models.Blog
+
+    class ApiViews:
+        class CreateBlogPostApiView(ApiView):
+            pass
+```
+
+## Explanation of Step 2: scenario description
+
+In this step I will describe a scenario that must be supported by the backend. I will mention actors (i.e. the
+objects in the scenario) that are based on the module-specification. The actors are described using a special
+notation: [(actor name+)(actor sub-type):actor-type]. For example:
+
+- the notation `hello-world+:blog-post` means that the type is `blog-post` and the name is `hello-world`.
+- the notation `wow+special:blog-post` means that the type is `special:blog-post` and the name is `wow`.
+
+Here are two example scenario-descriptions. In the first one, the user creates a new blog. In this scenario,
+the api-view only calls one action, but in other scenarios it might call multiple actions.
+
+```markdown
+# Scenario: a user creates a blog
+
+## The [:frontend] calls the [create-blog:api-view]
+
+### The [create-blog:api-view] calls the [create-blog:action] to create a [my-blog+:blog]
+
+The following actors are created in this step:
+
+[my-blog+:blog]:
+id=1
+name=my blog
+description=My personal blog
+blog_posts=[]
+
+#### The [create-blog-post:action] validates the name of the [my-blog+:blog-post]
+```
+
+In the second scenario, the user creates a blog-post. Note that this scenario doesn't mention a validation
+step, but when we generate code together in the future then you will be asked to consider the validations that
+are necessary.
+
+```markdown
+# Scenario: a user creates a blog-post
+
+## The [:frontend] calls the [create-blog-post:api-view]
+
+### The [create-blog-post:api-view] calls the [create-blog-post:action] to create a [hello-world+:blog-post]
+
+The following actors are created in this step:
+
+[hello-world+:blog-post]:
+name=hello world
+content=Hello world, this is my first blog post
+blog_id=1
+
+The following actors are updated in this step:
+
+[my-blog+:blog]:
+blog_posts=[hello-world+:blog-post]
+```
+
+## Explanation of step 3: Code generation
+
+In this step I will present you with some building blocks.
+Each building block has a form and a code-snippet that utilizes the information in the form.
+When we generate actual code later then I will ask you to map the information in the module specification
+and the scenario description onto the form. The form is then used to generate the code by closely following
+the code structure of the corresponding code snippet.
+
+I will now show you the first building block so that you can understand the approach.
+
+### The action building-block
+
+The action building-block is used to create an action function.
+Here is the form. The example values in this form correspond to BlogPosts.Actions.CreateBlogPost.
+When we use this form in a real-life situation then I will ask you to fill out the form step-by-step,
+so that we can focus on each concern separately.
+
+```yaml
+# SPEC: Enter the name of the action here. The name is taken from the module specification.
+name: create_blog_post
+# SPEC: Please summarize the purpose or main objective of the action in this field.
+# The purpose should be a concise description that captures the primary
+# responsibility or task performed by the action.
+#
+# For example, if the action is responsible for creating a new blog post, the purpose
+# could be:
+#   "Create a new blog post for a given blog"
+#
+# When filling out this field, think about the main task or responsibility of the action,
+# and summarize it in a concise statement.
+purpose: Create a new blog-post
+# SPEC: The arguments are taken from the module specification. These are the inputs
+# that the action needs to perform its task.
+#
+# For example, if the action is creating a new blog post, the arguments might include:
+#   - create_blog_post_form (CreateBlogPostForm): An instance of the form containing
+#     the data required to create the new blog post (e.g., name, content)
+#   - blog (Blog): An instance of the Blog model to which the new post should belong. In general,
+#     don't put dependencies to other objects in a form, but pass them as separate arguments
+#     to the action.
+#
+# The arguments should match the parameters of the corresponding action function in the
+# code snippet. Each argument should have a name and a type (which can be a custom type
+# like a Form or a model instance).
+#
+# When filling out this section, refer to the module specification and scenario description
+# to determine the required inputs for the action, and list them as arguments accordingly.
+arguments:
+    - name: create_blog_post_form
+      type: Form
+# SPEC: If the action has Form arguments, they are described in this section of the form.
+# Each form should have a name and one or more fields that represent the data required
+# for the action to execute.
+#
+# For example, if the action is creating a new blog post, the form might have fields like:
+#   - name (str): The title or name of the blog post
+#   - content (str): The main content or body text of the blog post
+#   - blog (Blog): The instance of the Blog model to which the new post belongs
+#
+# Each field should have a name, a data type, and optional parameters like 'required'
+# (specifying if the field is mandatory) or 'default' (providing a default value).
+#
+# When filling out this section, think about the data that the action needs to perform
+# its task, and define the corresponding form fields accordingly.
+forms:
+    - name: CreateBlogPostForm
+      fields:
+          - name: name
+            type: str
+            required: true
+          - name: content
+            type: str
+            required: false
+            default: ""
+    - name: blog
+      type: Blog
+      required: true
+# SPEC: In this section, you should list any validation exceptions or custom errors that the action
+# might raise during its execution. These exceptions should be related to the business logic
+# and validation rules specific to the action being performed.
+#
+# For example, if the action is creating a new blog post, a common validation could be
+# to check if a blog post with the same name already exists for the given blog/organization.
+# In such a case, you could include a validation exception like 'BlogPostWithNameAlreadyExistsError'.
+#
+# Please provide the validation exceptions you think are necessary based on the scenario
+# description and your understanding of the application's requirements.
+validation_exceptions:
+    - name: BlogPostWithNameAlreadyExistsError
+```
+
+Here is the code-snippet.
+
+```python
+from dataclassy import dataclass
+
+class BlogPostWithNameAlreadyExistsError(Exception):
+    pass
+
+
+@dataclass
+class CreateBlogPostForm:
+    name: str
+    content: str
+
+
+def create_blog_post(
+    create_blog_post_form: CreateBlogPostForm,
+    blog: Blog
+):
+    _validate_args(create_blog_post_form, blog)
+
+    blog_post = BlogPost(
+        name=create_blog_post_form.name,
+        content=create_blog_post_form.content,
+        blog_id=blog.id,
+    )
+    blog_post.save()
+
+    return blog_post
+
+
+def _validate_args(create_blog_post_form: CreateBlogPostForm, blog):
+    if BlogPost.objects.filter(name=create_plot_form.name, blog=blog).exists():
+        raise BlogPostWithNameAlreadyExistsError()
+```
+

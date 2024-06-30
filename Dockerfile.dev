@@ -1,0 +1,27 @@
+FROM python:3.10
+
+RUN pip install --upgrade pip
+
+# install pkg dependencies
+RUN apt-get update && apt-get install -y \
+    make
+
+# install dev pkg dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    fish \
+    nano
+
+# create a python venv that we can easily store inside a docker volume
+RUN python3 -m venv /app/env
+ENV PATH="/app/env/bin:${PATH}"
+
+# install dev pip dependencies
+RUN pip install \
+    black \
+    ipython \
+    isort \
+    pip-tools \
+    pudb
+
+WORKDIR /app/src
