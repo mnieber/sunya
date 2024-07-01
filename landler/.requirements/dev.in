@@ -1,0 +1,8 @@
+-r base.txt
+
+factory-boy
+faker
+pytest
+pytest-django
+pytest-html
+pytest-socket

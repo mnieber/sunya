@@ -1,13 +1,13 @@
 version: "3.7"
 
 services:
-  domain:
+  mock:
     volumes:
       - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/domain/assets:/app/assets
-      - /opt/projects/sunya/domain/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/domain/ipython:/root/.ipython
-      - /opt/projects/sunya/domain/pytest_report.html:/app/pytest_report.html
+      - /opt/projects/sunya/mock/assets:/app/assets
+      - /opt/projects/sunya/mock/fish_history:/root/.local/share/fish/fish_history
+      - /opt/projects/sunya/mock/ipython:/root/.ipython
+      - /opt/projects/sunya/mock/pytest_report.html:/app/pytest_report.html
   frontend:
     volumes:
       - /opt/projects/sunya/frontend/fish_history:/root/.local/share/fish/fish_history
@@ -16,3 +16,14 @@ services:
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
       - /home/maarten/projects/skandha/src:/npm/skandha
+  landler:
+    volumes:
+      - $HOME/.config/pudb:/root/.config/pudb
+      - /opt/projects/sunya/landler/assets:/app/assets
+      - /opt/projects/sunya/landler/dumps:/app/dumps
+      - /opt/projects/sunya/landler/fish_history:/root/.local/share/fish/fish_history
+      - /opt/projects/sunya/landler/ipython:/root/.ipython
+      - /opt/projects/sunya/landler/log:/app/log
+      - /opt/projects/sunya/landler/media:/app/media
+      - /opt/projects/sunya/landler/pytest_report.html:/app/pytest_report.html
+      - /opt/projects/sunya/landler/static:/app/static

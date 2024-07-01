@@ -1,0 +1,21 @@
+COMMANDS:
+  list:
+    '~install':
+      run: [in: docker, cmd: make, install]
+    '~mk':
+      run: [in: docker, cmd: dodo, backend.make]
+    '~pip-compile':
+      run: [in: docker, cmd: make, pip-compile]
+    '~shell':
+      run: [in: docker, cmd: fish]
+
+DOCKER:
+  container: sunya-dev-mock-1
+
+ROOT:
+  decorators:
+    docker: [make]
+
+SERVER:
+  install_dir: /app
+  src_dir: ${/SERVER/install_dir}/src

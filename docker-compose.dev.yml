@@ -1,17 +1,17 @@
 version: "3.7"
 
 services:
-  domain:
+  mock:
     build:
-      context: ./domain
+      context: ./mock
       dockerfile: Dockerfile.dev
     command: sleep infinity
     env_file:
-      - ./domain/.env/dev.injected.env
-    image: sunya_domain_dev
+      - ./mock/.env/dev.injected.env
+    image: sunya_mock_dev
     volumes:
-      - ./domain:/app/src
-      - domain_venv:/app/env
+      - ./mock:/app/src
+      - mock_venv:/app/env
   frontend:
     build:
       context: ./frontend
@@ -25,6 +25,33 @@ services:
     volumes:
       - ./frontend:/app/src
       - bundle:/app/bundle
+  landler:
+    build:
+      context: ./landler
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    depends_on:
+      - postgres
+    env_file:
+      - ./landler/.env/dev.injected.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings.dev
+    image: sunya_landler_dev
+    ports:
+      - 8000:8000
+    volumes:
+      - ./landler:/app/src
+      - landler_venv:/app/env
+  postgres:
+    env_file:
+      - ./postgres/.env/dev.injected.env
+    image: postgres:14.0
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 volumes:
-  domain_venv: {}
   bundle: {}
+  landler_venv: {}
+  mock_venv: {}
+  postgres_data: {}

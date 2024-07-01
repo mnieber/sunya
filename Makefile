@@ -1,18 +1,29 @@
-#
-# Python
-#
+ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-install:
-	pip install -r .requirements/dev.txt
+init-dev:
+	pip install compile-env==0.4.1
 
-pip-compile:
-	pip-compile .requirements/base.in -o .requirements/base.txt
-	pip-compile .requirements/dev.in -o .requirements/dev.txt
+compile-env:
+	cd ${ROOT_DIR}/env/dev && compile-env env-spec.yaml
 
-#
-# Stack
-#
+create-opt-paths:
+	sudo mkdir -p /opt/projects/sunya/mock
+	sudo chmod -R 777 /opt/projects/sunya
+	sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/sunya/mock/fish_history
+	sudo mkdir -p /opt/projects/sunya/mock/ipython
+	sudo mkdir -p /opt/projects/sunya/mock/assets
+	sudo touch    /opt/projects/sunya/mock/pytest_report.html
+	sudo mkdir -p /opt/projects/sunya/frontend
+	sudo chmod -R 777 /opt/projects/sunya
+	sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/sunya/frontend/fish_history
 
-init-dev: \
-	pip-compile \
-	install
+create-landler-opt-paths:
+	sudo mkdir -p /opt/projects/sunya/landler
+	sudo chmod -R 777 /opt/projects/sunya
+	sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/sunya/landler/fish_history
+	sudo mkdir -p /opt/projects/sunya/landler/ipython
+	sudo mkdir -p /opt/projects/sunya/landler/assets
+	sudo touch    /opt/projects/sunya/landler/pytest_report.html
+	sudo mkdir -p /opt/projects/sunya/landler/media
+	sudo mkdir -p /opt/projects/sunya/landler/static
+	sudo chmod -R 777 /opt/projects/sunya

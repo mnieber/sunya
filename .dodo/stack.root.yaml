@@ -1,0 +1,34 @@
+COMMANDS:
+  list:
+    '~build':
+      run: [cmd: dodo, root.docker-compose, build]
+    '~down':
+      run: [cmd: dodo, root.docker-compose, down]
+    '~down-volumes':
+      run: [cmd: dodo, root.docker-compose, down, ++volumes]
+    '~mk':
+      run: [cmd: dodo, root.make]
+      cwd: ${/SERVER/src_dir}
+    '~mt':
+      run: [cmd: dodo, root.menu, --tmux]
+    '~up':
+      run: [cmd: dodo, root.docker-compose, up, ++detach]
+
+DOCKER_COMPOSE:
+  compose_project_name: sunya-dev
+  cwd: ${/ROOT/src_dir}
+  files:
+    - docker-compose.dev.yml
+    - docker-compose.dev.override.yml
+
+MENU:
+  session_id: sunya
+  commands:
+    serve:
+      - dodo landler.serve
+
+ROOT:
+  aliases: {}
+
+SERVER:
+  src_dir: ${/ROOT/src_dir}
