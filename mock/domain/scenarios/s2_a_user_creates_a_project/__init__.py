@@ -31,9 +31,9 @@ def the_fe_posts_to_create_a_project(request):
 
 
 def run():
-    import mock.scenarios.s1_a_user_signs_up_and_creates_an_org
+    import domain.scenarios.s1_a_user_signs_up_and_creates_an_org
 
-    mock.scenarios.s1_a_user_signs_up_and_creates_an_org.run()
+    domain.scenarios.s1_a_user_signs_up_and_creates_an_org.run()
 
     return start()
 

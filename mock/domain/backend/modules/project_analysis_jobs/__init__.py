@@ -47,7 +47,7 @@ project_analysis_queue = ProjectAnalysisJobs.Models.ProjectAnalysisQueue()
 
 
 @actor_to_str.method((ProjectAnalysisJobs.Models.ProjectAnalysisJob,))
-def project_to_str(project_analysis_job):
+def project_analysis_job_to_str(project_analysis_job):
     return f"{project_analysis_job.project.name}+:project-analysis-job"
 
 

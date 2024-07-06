@@ -55,7 +55,7 @@ def the_fe_posts_to_create_an_org(p_organization):
                     Organizations.Models.OrganizationMembership(
                         organization=organization,
                         user=user_session.user,
-                        role=Users.Enums.UserRoles.ADMIN,
+                        role=Organizations.Enums.UserInOrganizationRoles.ADMIN,
                     )
                 ]
 

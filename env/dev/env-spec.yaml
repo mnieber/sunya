@@ -3,11 +3,19 @@ settings:
 
 global_dependencies:
   - react.env
+  - django.env
+  - postgres.env
 
 outputs:
-  ../../domain/.env/dev.injected.env:
+  ../../mock/.env/dev.injected.env:
     targets:
-      - ../../domain/.env/dev.injected.env.in
+      - ../../mock/.env/dev.injected.env.in
   ../../frontend/.env/dev.injected.env:
     targets:
       - ../../frontend/.env/dev.injected.env.in
+  ../../landler_be/.env/dev.injected.env:
+    targets:
+      - ../../landler_be/.env/dev.injected.env.in
+  ../../landler_fe/.env/dev.injected.env:
+    targets:
+      - ../../landler_fe/.env/dev.injected.env.in

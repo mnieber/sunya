@@ -1,7 +1,5 @@
 import typing as T
 
-from dataclassy import Internal
-
 if T.TYPE_CHECKING:
     from domain.app import Plots
 
@@ -16,14 +14,14 @@ class Projects(Module):
             """A Django model that contains a project."""
 
             name: str
-            memberships: Internal[T.List["Projects.Models.ProjectMembership"]] = []
+            memberships: T.List["Projects.Models.ProjectMembership"] = []
 
         class ProjectMembership(Entity):
             """A Django model that contains a membership of a project."""
 
             project: "Projects.Models.Project"
             organization: Organizations.Models.Organization
-            role: "Projects.Enums.ProjectRoles"
+            role: "Projects.Enums.OrganizationInProjectRoles"
 
     class Actions:
         class CreateProject(Action):
@@ -34,7 +32,7 @@ class Projects(Module):
             class Args:
                 project: "Projects.Models.Project"
                 organization: Organizations.Models.Organization
-                role: "Projects.Enums.ProjectRoles"
+                role: "Projects.Enums.OrganizationInProjectRoles"
 
         class AddPlotToProject(Action):
             class Args:
@@ -46,7 +44,7 @@ class Projects(Module):
             pass
 
     class Enums:
-        class ProjectRoles(Enum):
+        class OrganizationInProjectRoles(Enum):
             ADMIN = "admin"
             EDITOR = "editor"
             LAND_STEWARD = "land_steward"
@@ -69,6 +67,15 @@ add_plot_to_project_action = Projects.Actions.AddPlotToProject()
 @actor_to_str.method((Projects.Models.Project,))
 def project_to_str(project):
     return f"{project.name}+:project"
+
+
+@actor_to_str.method((Projects.Models.ProjectMembership,))
+def project_membership_to_str(project_membership):
+    return (
+        f"({project_membership.project.name})-"
+        + f"({project_membership.organization.name})-"
+        + f"({project_membership.role})+:project-membership"
+    )
 
 
 @get_actor_key.method((Projects.Models.Project,))

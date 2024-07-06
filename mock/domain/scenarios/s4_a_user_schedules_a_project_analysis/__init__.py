@@ -10,6 +10,9 @@ from sunya import (
     register,
 )
 
+from .the_backend_processes_a_calcium_job_result import (
+    the_backend_processes_a_calcium_job_result,
+)
 from .the_create_project_analysis_job_api_view_creates_a_project_analysis_job import (
     the_create_project_analysis_job_api_view_creates_a_project_analysis_job,
 )
@@ -48,14 +51,12 @@ def start(project, variation="default"):
                         project_analysis_job
                     )
                 )
-                with the_project_analysis_queue_calls_the_run_project_analysis_action(
+                the_project_analysis_queue_calls_the_run_project_analysis_action(
                     project_analysis
-                ):
-                    pass
+                )
 
             for idx, plot_analysis in enumerate(project_analysis.plot_analyses):
-                with the_backend_processes_a_calcium_job_result(idx, plot_analysis):
-                    pass
+                the_backend_processes_a_calcium_job_result(idx, plot_analysis)
 
     return get_scenario(scenario_name)
 
@@ -85,9 +86,9 @@ def the_project_analysis_queue_finds_jobs_to_run_next(p_jobs_to_run):
 
 
 def run():
-    import mock.scenarios.s3_a_user_adds_a_plot_to_a_project
+    import domain.scenarios.s3_a_user_adds_a_plot_to_a_project
 
-    mock.scenarios.s3_a_user_adds_a_plot_to_a_project.run()
+    domain.scenarios.s3_a_user_adds_a_plot_to_a_project.run()
     project = get_entity(Projects.Models.Project, name="my-project")
 
     return start(project=project)

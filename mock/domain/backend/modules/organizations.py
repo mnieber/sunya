@@ -1,9 +1,8 @@
 import typing as T
 from uuid import UUID
 
-from dataclassy import Internal
 from domain.backend.modules.users import Users
-from domain.datatypes import Action, ApiView, Form, Module
+from domain.datatypes import Action, ApiView, Enum, Form, Module
 from sunya import Entity, actor_to_str
 
 
@@ -14,16 +13,14 @@ class Organizations(Module):
 
             id: UUID
             name: str
-            memberships: Internal[
-                T.List["Organizations.Models.OrganizationMembership"]
-            ] = []
+            memberships: T.List["Organizations.Models.OrganizationMembership"] = []
 
         class OrganizationMembership(Entity):
             """A Django model that contains a membership of an organization."""
 
             organization: "Organizations.Models.Organization"
             user: Users.Models.User
-            role: Users.Enums.UserRoles
+            role: "Organizations.Enums.UserInOrganizationRoles"
 
     class Actions:
         class CreateOrganization(Action):
@@ -34,7 +31,12 @@ class Organizations(Module):
             class Args:
                 organization: "Organizations.Models.Organization"
                 user: Users.Models.User
-                role: Users.Enums.UserRoles
+                role: "Organizations.Enums.UserInOrganizationRoles"
+
+    class Enums:
+        class UserInOrganizationRoles(Enum):
+            ADMIN = "admin"
+            EDITOR = "editor"
 
     class ApiViews:
         class CreateOrganizationApiView(ApiView):
@@ -59,3 +61,12 @@ add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
 @actor_to_str.method((Organizations.Models.Organization,))
 def organization_to_str(organization):
     return f"{organization.name}+:organization"
+
+
+@actor_to_str.method((Organizations.Models.OrganizationMembership,))
+def organization_membership_to_str(organization_membership):
+    return (
+        f"({organization_membership.organization.name})-"
+        + f"({organization_membership.user.email})-"
+        + f"({organization_membership.role})+:organization-membership"
+    )

@@ -1,6 +1,6 @@
 from uuid import UUID
 
-from domain.datatypes import Action, ApiView, Enum, Form, Module
+from domain.datatypes import Action, ApiView, Form, Module
 from sunya import Entity, actor_to_str, get_actor_key
 
 
@@ -13,11 +13,16 @@ class Users(Module):
             email: str
             password: str
             is_authenticated: bool = False
+            is_active: bool = False
 
     class Actions:
         class CreateUser(Action):
             class Args:
                 create_user_form: Form
+
+        class SignInUser(Action):
+            class Args:
+                sign_in_user_form: Form
 
     class ApiViews:
         class SignUpUserApiView(ApiView):
@@ -29,11 +34,6 @@ class Users(Module):
         class SetActiveOrganizationApiView(ApiView):
             pass
 
-    class Enums:
-        class UserRoles(Enum):
-            ADMIN = "admin"
-            EDITOR = "editor"
-
     class DomainEvents:
         class UserCreated:
             user: "Users.Models.User"
@@ -42,6 +42,7 @@ class Users(Module):
 sign_up_user_api_view = Users.ApiViews.SignUpUserApiView()
 sign_in_user_api_view = Users.ApiViews.SignInUserApiView()
 create_user_action = Users.Actions.CreateUser()
+sign_in_user_action = Users.Actions.SignInUser()
 set_active_organization_api_view = Users.ApiViews.SetActiveOrganizationApiView()
 
 

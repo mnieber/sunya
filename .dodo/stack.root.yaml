@@ -25,7 +25,8 @@ MENU:
   session_id: sunya
   commands:
     serve:
-      - dodo landler.serve
+      - dodo landler_be.serve
+      - dodo landler_fe.serve
 
 ROOT:
   aliases: {}

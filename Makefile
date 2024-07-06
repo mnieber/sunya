@@ -17,13 +17,13 @@ create-opt-paths:
 	sudo chmod -R 777 /opt/projects/sunya
 	sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/sunya/frontend/fish_history
 
-create-landler-opt-paths:
-	sudo mkdir -p /opt/projects/sunya/landler
+create-landler-be-opt-paths:
+	sudo mkdir -p /opt/projects/sunya/landler_be
 	sudo chmod -R 777 /opt/projects/sunya
-	sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/sunya/landler/fish_history
-	sudo mkdir -p /opt/projects/sunya/landler/ipython
-	sudo mkdir -p /opt/projects/sunya/landler/assets
-	sudo touch    /opt/projects/sunya/landler/pytest_report.html
-	sudo mkdir -p /opt/projects/sunya/landler/media
-	sudo mkdir -p /opt/projects/sunya/landler/static
+	sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/sunya/landler_be/fish_history
+	sudo mkdir -p /opt/projects/sunya/landler_be/ipython
+	sudo mkdir -p /opt/projects/sunya/landler_be/assets
+	sudo touch    /opt/projects/sunya/landler_be/pytest_report.html
+	sudo mkdir -p /opt/projects/sunya/landler_be/media
+	sudo mkdir -p /opt/projects/sunya/landler_be/static
 	sudo chmod -R 777 /opt/projects/sunya

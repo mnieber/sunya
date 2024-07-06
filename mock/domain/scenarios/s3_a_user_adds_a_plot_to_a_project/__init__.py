@@ -32,9 +32,9 @@ def the_fe_posts_to_create_a_plot(request):
 
 
 def run():
-    import mock.scenarios.s2_a_user_creates_a_project
+    import domain.scenarios.s2_a_user_creates_a_project
 
-    mock.scenarios.s2_a_user_creates_a_project.run()
+    domain.scenarios.s2_a_user_creates_a_project.run()
     project = get_entity(Projects.Models.Project, name="my-project")
 
     return start(project=project)

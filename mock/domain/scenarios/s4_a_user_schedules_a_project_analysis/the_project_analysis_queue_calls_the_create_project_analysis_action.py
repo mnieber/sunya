@@ -3,7 +3,7 @@ from domain.backend.modules.plot_lists.project_interface import (
     get_project_plot_list_by_name,
 )
 from domain.datatypes import *
-from sunya import add_step, preregister, register
+from sunya import add_step, create_uuid, preregister, register
 
 
 def the_project_analysis_queue_calls_the_create_project_analysis_action(
@@ -23,6 +23,7 @@ def the_project_analysis_queue_calls_the_create_project_analysis_action(
     ):
         project_analysis = register(
             ProjectAnalyses.Models.ProjectAnalysis(
+                id="98a05401-e76e-5e9c-bd3f-d15b567d1dce",
                 job=project_analysis_job,
                 project=project_analysis_job.project,
                 now=project_analysis_job.scheduled_at,
@@ -75,6 +76,7 @@ def the_create_project_analysis_action_calls_the_create_plot_analysis_action(
     ):
         plot_analysis = register(
             PlotAnalyses.Models.PlotAnalysis(
+                id=create_uuid(),
                 plot=plot,
                 project_analysis=project_analysis,
                 now=project_analysis.now,

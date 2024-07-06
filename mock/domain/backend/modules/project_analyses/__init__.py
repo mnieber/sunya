@@ -1,5 +1,6 @@
 import typing as T
 from datetime import datetime
+from uuid import UUID
 
 if T.TYPE_CHECKING:
     pass
@@ -27,6 +28,7 @@ class ProjectAnalyses(Module):
             product is still running. In that case, we wait.
             """
 
+            id: UUID
             project: Projects.Models.Project
             job: ProjectAnalysisJobs.Models.ProjectAnalysisJob
             now: datetime

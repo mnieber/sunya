@@ -1,0 +1,12 @@
+.DeleteBlogPostsButton {
+  @apply p-4;
+  @apply rounded-3xl border-2;
+}
+
+.DeleteBlogPostsButton--enabled {
+  @apply border-red-400 text-red-400;
+}
+
+.DeleteBlogPostsButton--disabled {
+  @apply cursor-not-allowed border-gray-500 text-gray-500;
+}

@@ -4,6 +4,8 @@ from datetime import datetime
 if T.TYPE_CHECKING:
     pass
 
+from uuid import UUID
+
 from domain.backend.modules.plots import Plots
 from domain.backend.modules.project_analyses import ProjectAnalyses
 from domain.datatypes import Action, Enum, Module
@@ -15,6 +17,7 @@ class PlotAnalyses(Module):
         class PlotAnalysis(Entity):
             """A Django model that contains a plot analysis."""
 
+            id: UUID
             plot: Plots.Models.Plot
             project_analysis: ProjectAnalyses.Models.ProjectAnalysis
             now: datetime

@@ -35,7 +35,7 @@ def the_project_analysis_queue_calls_the_run_project_analysis_action(project_ana
 
                     calcium_plot_analysis_job = register(
                         CalciumPlotAnalysisJob(
-                            project_analysis_id=project_analysis.id,
+                            id=plot_analysis.id,
                             polygon=plot_at_now.polygon,
                         ),
                         p_calcium_plot_analysis_job,

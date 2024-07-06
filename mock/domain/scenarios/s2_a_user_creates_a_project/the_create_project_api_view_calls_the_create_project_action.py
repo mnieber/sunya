@@ -36,7 +36,7 @@ def the_create_project_api_view_calls_the_create_project_action(request):
                 Projects.Models.ProjectMembership(
                     project=project,
                     organization=user_session.active_organization,
-                    role=Projects.Enums.ProjectRoles.ADMIN,
+                    role=Projects.Enums.OrganizationInProjectRoles.ADMIN,
                 )
             )
 

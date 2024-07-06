@@ -2,6 +2,7 @@ import copy
 import typing as T
 
 from dataclassy import Internal, dataclass
+from sunya import actor_to_str
 from sunya.entities import Entity
 from sunya.entities.get_actor_key import get_actor_key
 from sunya.scenarios.scenario import Scenario, Step
@@ -58,7 +59,6 @@ def get_scenario(name: str):
 
 def add_step(*fact_bits):
     step = Step(fact=fact_bits, steps=[], level=store.step.level + 1)
-    print("Add step ", step.fact)
     store.step.steps.append(step)
 
     for fact_bit in fact_bits:
@@ -151,5 +151,16 @@ def _iter_fields(obj):
 def create_memo(entity):
     memo = {}
     for field, value in _iter_fields(entity):
-        memo[field] = copy.deepcopy(value)
+        if isinstance(value, list):
+            memo_value = [_get_memo_field_value(x) for x in value]
+        elif isinstance(value, dict):
+            memo_value = {k: _get_memo_field_value(v) for k, v in value.items()}
+        else:
+            memo_value = _get_memo_field_value(value)
+
+        memo[field] = memo_value
     return memo
+
+
+def _get_memo_field_value(x):
+    return actor_to_str(x) if isinstance(x, Entity) else copy.deepcopy(x)

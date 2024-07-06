@@ -1,4 +1,4 @@
-from sunya import Entity, Fn, Value, actor_to_str
+from sunya import Entity, Fn, Value, actor_to_str, shorten_term_str
 from sunya.utils.case import camel_to_snake, l0, snake_name_from_instance
 
 
@@ -48,7 +48,7 @@ def module_to_str(module):
 
 @actor_to_str.method((Form,))
 def form_to_str(form):
-    return f"{l0(camel_to_snake(form.name))}:form"
+    return shorten_term_str(f"{l0(camel_to_snake(form.name))}:form")
 
 
 @actor_to_str.method((Enum,))
@@ -58,12 +58,12 @@ def enum_to_str(enum):
 
 @actor_to_str.method((Action,))
 def action_to_str(action):
-    return f"{snake_name_from_instance(action)}:action"
+    return shorten_term_str(f"{snake_name_from_instance(action)}:action")
 
 
 @actor_to_str.method((ApiView,))
 def api_view_to_str(api_view):
-    return f"{snake_name_from_instance(api_view)}:api-view"
+    return shorten_term_str(f"{snake_name_from_instance(api_view)}:api-view")
 
 
 @actor_to_str.method((Page,))

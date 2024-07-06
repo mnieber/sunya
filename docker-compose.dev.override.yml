@@ -16,14 +16,22 @@ services:
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
       - /home/maarten/projects/skandha/src:/npm/skandha
-  landler:
+  landler_be:
     volumes:
       - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/landler/assets:/app/assets
-      - /opt/projects/sunya/landler/dumps:/app/dumps
-      - /opt/projects/sunya/landler/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/landler/ipython:/root/.ipython
-      - /opt/projects/sunya/landler/log:/app/log
-      - /opt/projects/sunya/landler/media:/app/media
-      - /opt/projects/sunya/landler/pytest_report.html:/app/pytest_report.html
-      - /opt/projects/sunya/landler/static:/app/static
+      - /opt/projects/sunya/landler_be/assets:/app/assets
+      - /opt/projects/sunya/landler_be/dumps:/app/dumps
+      - /opt/projects/sunya/landler_be/fish_history:/root/.local/share/fish/fish_history
+      - /opt/projects/sunya/landler_be/ipython:/root/.ipython
+      - /opt/projects/sunya/landler_be/log:/app/log
+      - /opt/projects/sunya/landler_be/media:/app/media
+      - /opt/projects/sunya/landler_be/pytest_report.html:/app/pytest_report.html
+      - /opt/projects/sunya/landler_be/static:/app/static
+  landler_fe:
+    volumes:
+      - /opt/projects/sunya/landler_fe/fish_history:/root/.local/share/fish/fish_history
+      # Map editable packages to the container
+      - /home/maarten/projects/aspiration/src:/npm/aspiration
+      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
+      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
+      - /home/maarten/projects/skandha/src:/npm/skandha

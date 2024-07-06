@@ -39,9 +39,16 @@ def the_fe_posts_to_sign_up_a_user(p_user):
                         id="b2cbf7e4-7b41-5414-a009-f5952a74743f",
                         email="my-org-owner@example.com",
                         password="my-password",
-                        is_authenticated=False,
                     ),
                     p_user,
                 )
+
+        with add_step(
+            "The",
+            sign_up_user_api_view,
+            "activates the account of the",
+            user,
+        ):
+            user.is_active = True
 
     return user

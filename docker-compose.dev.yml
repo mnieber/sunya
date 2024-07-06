@@ -24,24 +24,36 @@ services:
       - 3000:3000
     volumes:
       - ./frontend:/app/src
-      - bundle:/app/bundle
-  landler:
+      - frontend_bundle:/app/bundle
+  landler_be:
     build:
-      context: ./landler
+      context: ./landler_be
       dockerfile: Dockerfile.dev
     command: sleep infinity
     depends_on:
       - postgres
     env_file:
-      - ./landler/.env/dev.injected.env
+      - ./landler_be/.env/dev.injected.env
     environment:
       - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: sunya_landler_dev
+    image: sunya_landler_be_dev
     ports:
       - 8000:8000
     volumes:
-      - ./landler:/app/src
-      - landler_venv:/app/env
+      - ./landler_be:/app/src
+      - landler_be_venv:/app/env
+  landler_fe:
+    build:
+      context: ./landler_fe
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    env_file:
+      - ./landler_fe/.env/dev.injected.env
+    image: sunya_landler_fe_dev
+    ports:
+      - 3001:3001
+    volumes:
+      - ./landler_fe:/app/src
   postgres:
     env_file:
       - ./postgres/.env/dev.injected.env
@@ -51,7 +63,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
-  bundle: {}
-  landler_venv: {}
+  frontend_bundle: {}
+  landler_be_venv: {}
   mock_venv: {}
   postgres_data: {}

@@ -1,5 +1,5 @@
 from domain.datatypes import Enum, Module
-from sunya import Entity, actor_to_str, get_actor_key
+from sunya import Entity, actor_to_str, get_actor_key, shorten_term_str
 
 
 class Calculations(Module):
@@ -24,7 +24,7 @@ class Calculations(Module):
 
 @actor_to_str.method((Calculations.Models.Calculation,))
 def calculation_to_str(calculation):
-    return f"{calculation.name}+:calculation"
+    return shorten_term_str(f"{calculation.name}+:calculation")
 
 
 @get_actor_key.method((Calculations.Models.Calculation,))
