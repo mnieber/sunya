@@ -44,7 +44,7 @@ run-server:
 	python manage.py runserver 0.0.0.0:8000
 
 generateschema:
-	python manage.py spectacular --file docs/openapi-schema.yml --validate
+	python manage.py spectacular --file api/openapi-schema.yml --validate
 
 #
 # Stack

@@ -1,4 +1,4 @@
-from common.utils.extend_schema import allow, deny
+from api.utils.extend_schema import allow, deny
 
 
 def user_is_blog_owner(user, blog):

@@ -8,12 +8,12 @@ from common.serializers import BaseModelSerializer, ReadSerializerMixin
 
 class CreateBlogFormSerializer(FormSerializer):
     class Meta:
-        model = CreateBlogForm
+        form_class = CreateBlogForm
 
 
 class CreateBlogPostFormSerializer(FormSerializer):
     class Meta:
-        model = CreateBlogPostForm
+        form_class = CreateBlogPostForm
 
 
 class BlogSerializer(ReadSerializerMixin, BaseModelSerializer):

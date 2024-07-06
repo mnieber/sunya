@@ -1,8 +1,8 @@
 from drf_spectacular.utils import extend_schema as drf_extend_schema
 from rest_framework.response import Response
 
-from common.utils.extend_schema.data_spec import get_data_kwargs, resolve_data_spec
-from common.utils.extend_schema.permissions import (  # noqa: F401
+from api.utils.extend_schema.data_spec import get_data_kwargs, resolve_data_spec
+from api.utils.extend_schema.permissions import (  # noqa: F401
     PermissionResult,
     allow,
     check_permission_spec,
@@ -27,7 +27,7 @@ def extend_schema(
             request = (
                 args[request_arg_pos] if request_arg_pos != -1 else kwargs["request"]
             )
-            initial_resolved_data = dict()
+            initial_resolved_data = kwargs.copy()
             if request:
                 initial_resolved_data["user"] = request.user
                 if serializer_class:

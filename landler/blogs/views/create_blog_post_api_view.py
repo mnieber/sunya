@@ -5,18 +5,17 @@ from blogs.actions.create_blog_post import (
 from blogs.permissions import user_is_blog_owner
 from blogs.serializers import BlogPostSerializer, CreateBlogPostFormSerializer
 from blogs.shortcuts import get_blog_or_404
-from rest_framework import serializers, status
+from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from api.utils.extend_schema import extend_schema
 from common.form_serializer import FormSerializer
-from common.utils.extend_schema import extend_schema
 
 
 class CreateBlogPostRequestSerializer(FormSerializer):
     create_blog_post_form = CreateBlogPostFormSerializer()
-    blog_id = serializers.UUIDField()
 
 
 class CreateBlogPostApiView(APIView):
@@ -36,7 +35,7 @@ class CreateBlogPostApiView(APIView):
             ),
         ],
     )
-    def post(self, request, request_data, blog):
+    def post(self, request, blog_id, request_data, blog):
         try:
             blog_post = create_blog_post(
                 create_blog_post_form=request_data.create_blog_post_form,

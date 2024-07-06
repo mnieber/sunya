@@ -7,7 +7,7 @@ from common.serializers import BaseModelSerializer, ReadOnlySerializerMixin
 
 class CreateOrganizationFormSerializer(FormSerializer):
     class Meta:
-        model = CreateOrganizationForm
+        form_class = CreateOrganizationForm
 
 
 class OrganizationSerializer(ReadOnlySerializerMixin, BaseModelSerializer):

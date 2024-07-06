@@ -25,8 +25,15 @@ class TestDashboardPlotReport:
         client.force_authenticate(user=blog_owner)
 
         url = reverse("create-blog-post", kwargs=dict(blog_id=blog.id))
-        response = client.get(url)
+        response = client.post(
+            url,
+            data=dict(
+                create_blog_post_form=dict(
+                    title="string",
+                    content="string",
+                )
+            ),
+        )
         result = response.json()
-        __import__("pudb").set_trace()  # zz
         assert result
-        assert response.status_code == 200
+        assert response.status_code == 201

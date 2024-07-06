@@ -6,7 +6,7 @@ from users.models import User
 
 class CreateUserFormSerializer(FormSerializer):
     class Meta:
-        model = CreateUserForm
+        form_class = CreateUserForm
 
 
 class UserSerializer(ReadOnlySerializerMixin, BaseModelSerializer):

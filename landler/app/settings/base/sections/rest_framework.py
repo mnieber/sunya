@@ -1,7 +1,7 @@
 REST_FRAMEWORK = {
     # "DEFAULT_AUTHENTICATION_CLASSES": [],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
-    # "DEFAULT_SCHEMA_CLASS": "api.openapi.AutoSchemaWithErrorResponses",
+    "DEFAULT_SCHEMA_CLASS": "api.openapi.AutoSchemaWithErrorResponses",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     # "PAGE_SIZE": 1000,
 }
