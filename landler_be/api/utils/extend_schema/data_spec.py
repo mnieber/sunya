@@ -29,12 +29,16 @@ def resolve_data_spec(data_spec, initial_resolved_data):
 
 
 def get_data_kwargs(
-    kwarg_names, resolved_data, data_args_not_passed, data_args_never_passed
+    kwarg_names,
+    request_data,
+    resolved_data,
+    data_args_never_passed,
 ):
-    return {
+    data_kwargs = {
         arg_name: resolved_data[arg_name]
         for arg_name in kwarg_names
-        if arg_name in resolved_data
-        and arg_name not in data_args_not_passed
-        and arg_name not in data_args_never_passed
+        if arg_name in resolved_data and arg_name not in data_args_never_passed
     }
+    if "request_data" in kwarg_names:
+        data_kwargs["request_data"] = request_data
+    return data_kwargs

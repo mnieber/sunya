@@ -16,7 +16,6 @@ def extend_schema(
     *args,
     data=None,
     permissions=None,
-    data_args_not_passed=None,
     request_arg_pos=1,
     **kwargs,
 ):
@@ -53,17 +52,13 @@ def extend_schema(
 
             data_kwargs = get_data_kwargs(
                 f.__code__.co_varnames,
+                request_data,
                 resolved_data,
-                data_args_not_passed or [],
+                # TODO: do we still need this block-list?
                 ["serializer", "user"],
             )
 
-            return f(
-                *args,
-                request_data=request_data,
-                **data_kwargs,
-                **({k: v for k, v in kwargs.items() if k not in data_kwargs}),
-            )
+            return f(*args, **data_kwargs)
 
         wrapped_f.permissions = permissions
 
