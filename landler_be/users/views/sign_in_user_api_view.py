@@ -1,7 +1,6 @@
 from users.actions.sign_in_user import (
     sign_in_user,
     InvalidCredentialsError,
-    InactiveUserError,
 )
 from users.serializers import SignInUserFormSerializer, UserSerializer
 from rest_framework import status
@@ -31,7 +30,5 @@ class SignInUserApiView(APIView):
             user = sign_in_user(request_data.sign_in_user_form)
         except InvalidCredentialsError:
             raise ValidationError({"non_field_errors": ["Invalid email or password."]})
-        except InactiveUserError:
-            raise ValidationError({"non_field_errors": ["This account is inactive."]})
 
         return Response(UserSerializer(user).data, status=status.HTTP_200_OK)

@@ -19,8 +19,8 @@ class TestUserIsBlogOwnerPermission:
         return BlogFactory(owner=blog_owner)
 
     @pytest.mark.django_db
-    def test_user_is_blog_owner_success(self, blog, user):
-        result = user_is_blog_owner(user, blog)
+    def test_user_is_blog_owner_success(self, blog, blog_owner):
+        result = user_is_blog_owner(blog_owner, blog)
 
         assert result.permission_allowed
         assert result.reason is None

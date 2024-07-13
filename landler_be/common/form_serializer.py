@@ -37,6 +37,8 @@ class FormSerializer(serializers.Serializer):
                 field = rest_framework_gis.fields.GeometryField(**field_kwargs)
             elif field_type == str:
                 field = serializers.CharField(**field_kwargs)
+            elif field_type == bool:
+                field = serializers.BooleanField(**field_kwargs)
             elif hasattr(field_type, "choices"):
                 field = serializers.ChoiceField(
                     choices=field_type.choices, **field_kwargs

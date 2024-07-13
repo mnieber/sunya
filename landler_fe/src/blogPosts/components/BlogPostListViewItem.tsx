@@ -23,8 +23,8 @@ export const BlogPostListViewItem: React.FC<PropsT> = observer(
         )}
         {...selectionUIHandlers(props.selectionUIProps)}
       >
-        {props.blogPost.name}
-        {props.blogPost.state === 'done' ? ' ✔️' : ''}
+        {props.blogPost.title}
+        {props.blogPost.isPublished ? ' ✔️' : ''}
       </div>
     );
   }

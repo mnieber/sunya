@@ -63,7 +63,7 @@ def _get_api_views(module):
     if api_views := getattr(module, "ApiViews", None):
         for api_view_name, api_view in _get_members(api_views):
             if isinstance(api_view, type):
-                result.append(dict(name=api_view_name))
+                result.append(dict(name=api_view_name, filters=_get_filters(api_view)))
     return result
 
 
@@ -74,3 +74,15 @@ def _get_members(container):
             continue
         classes.append((cls_name, cls))
     return classes
+
+
+def _get_filters(api_view):
+    result = []
+    filters = getattr(api_view, "Filters", None) or []
+    result.append(
+        dict(
+            name=camel_to_snake(filter_name),
+        )
+        for filter_name in filters
+    )
+    return result

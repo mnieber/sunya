@@ -1,3 +1,5 @@
+from common.utils.inspect import get_argument_names
+
 class PermissionResult:
     def __init__(self, permission_allowed, reason=None):
         self.permission_allowed = permission_allowed
@@ -8,7 +10,7 @@ class PermissionResult:
 
 
 def check_permission_spec(permission_fn, resolved_data):
-    var_names = permission_fn.__code__.co_varnames
+    var_names = get_argument_names(permission_fn)
     kwargs = {
         arg_name: resolved_data[arg_name]
         for arg_name in var_names

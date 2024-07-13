@@ -30,3 +30,7 @@ class WriteSerializerMixin:
         raise NotImplementedError(
             "This serializer only supports deserialization from JSON."
         )
+
+
+class EmptySerializer(serializers.Serializer):
+    pass

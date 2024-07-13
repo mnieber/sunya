@@ -1,18 +1,3 @@
-/*
-The BlogPostsState class has a blogPostsCtr container with a data facet (that contains the blogPosts)
-and deletion, filtering, highlight and selection facets (these are reusable behaviours).
-
-The BlogPostsState class has properties that connect the state to the outside world (e.g. getBlogPosts).
-
-The registerBlogPostsCtr function registers the blogPostsCtr container with the BlogPostsState. When the
-blogPostsCtr is registered, it can bind to the properties of the BlogPostsState (e.g. this allows the
-blogPostsCtr.deletion facet to call the deleteBlogPosts property of the BlogPostsState).
-
-You can continue by:
-
-- reading the registerBlogPostsCtr.ts file.
-*/
-
 import * as Skandha from 'skandha';
 import { Deletion, Filtering, Highlight, Selection } from 'skandha-facets';
 import { BlogPostT } from '/src/api/types';

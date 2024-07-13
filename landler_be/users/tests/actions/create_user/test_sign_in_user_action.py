@@ -2,7 +2,6 @@ import pytest
 from django.contrib.auth import get_user_model
 
 from users.actions.sign_in_user import (
-    InactiveUserError,
     InvalidCredentialsError,
     SignInUserForm,
     sign_in_user,
@@ -14,7 +13,7 @@ User = get_user_model()
 
 class TestSignInUserAction:
     @pytest.mark.django_db
-    def test_sign_in_user_success(self):
+    def test_sign_in_user_action_success(self):
         # Given
         user = UserFactory(email="user@example.com")
         user.set_password("password123")
@@ -33,7 +32,7 @@ class TestSignInUserAction:
         assert authenticated_user.is_authenticated
 
     @pytest.mark.django_db
-    def test_sign_in_user_invalid_credentials(self):
+    def test_sign_in_user_action_invalid_credentials(self):
         # Given
         UserFactory(email="user@example.com")
         sign_in_user_form = SignInUserForm(
@@ -46,7 +45,7 @@ class TestSignInUserAction:
             sign_in_user(sign_in_user_form)
 
     @pytest.mark.django_db
-    def test_sign_in_user_inactive_user(self):
+    def test_sign_in_user_action_inactive_user(self):
         # Given
         user = InactiveUserFactory(email="inactive@example.com")
         user.set_password("password123")
@@ -58,5 +57,5 @@ class TestSignInUserAction:
         )
 
         # When / Then
-        with pytest.raises(InactiveUserError):
+        with pytest.raises(InvalidCredentialsError):
             sign_in_user(sign_in_user_form)

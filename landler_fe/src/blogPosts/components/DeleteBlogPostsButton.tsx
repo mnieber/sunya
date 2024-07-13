@@ -1,8 +1,3 @@
-/*
-Just like BlogPostsFilter, the DeleteBlogPostsButton is quite simple. It calls the delete method of
-blogPostsDeletion, passing the ids of the selected blogPosts.
-*/
-
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
@@ -46,7 +41,7 @@ export const DeleteBlogPostsButton = observer(
           })
         }
       >
-        Delete selected blogPosts
+        Delete selected blog posts
       </button>
     );
   }, ContextProps)

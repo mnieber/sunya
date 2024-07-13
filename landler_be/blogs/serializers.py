@@ -4,6 +4,8 @@ from blogs.models import Blog, BlogPost
 
 from common.form_serializer import FormSerializer
 from common.serializers import BaseModelSerializer, ReadSerializerMixin
+from blogs.actions.delete_blog_posts import DeleteBlogPostsForm
+from common.form_serializer import FormSerializer
 
 
 class CreateBlogFormSerializer(FormSerializer):
@@ -19,10 +21,15 @@ class CreateBlogPostFormSerializer(FormSerializer):
 class BlogSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = Blog
-        fields = ["id", "name", "description", "owner_id"]
+        fields = ["id", "name", "slug", "description", "owner_id", "audience"]
 
 
 class BlogPostSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = BlogPost
-        fields = ["id", "blog_id", "content", "title"]
+        fields = ["id", "title", "slug", "blog_id", "content"]
+
+
+class DeleteBlogPostsFormSerializer(FormSerializer):
+    class Meta:
+        form_class = DeleteBlogPostsForm

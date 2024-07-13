@@ -1,32 +1,19 @@
-/*
-The useBlogPostsState function is a hook that creates the BlogPostsState.
-It creates a ObservableQuery (getBlogPosts) and an ObservableMutation (deleteBlogPosts).
-When it creates the BlogPostsState, it implements the getBlogPosts and deleteBlogPosts methods that
-connect the BlogPostsState to the "outside world".
-The trackPromise function is used to put the selected blogPost's in an "updating" state while
-the deleteBlogPosts mutation is in progress.
-
-You can continue by:
-
-- diving into the details (e.g. useGraftResourceStatesFromMemo, or trackPromise), or
-- returning to BlogPostsStateProvider.tsx.
-
-On a first reading, it's probably best to return to BlogPostsStateProvider.tsx.
-*/
-
 import React from 'react';
 import { useDeleteBlogPosts } from '/src/api/endpoints';
 import { useObservableQuery } from '/src/api/hooks';
 import { DeleteBlogPostsArgsT } from '/src/api/mutations';
 import { useGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
 import { BlogPostT } from '/src/api/types';
+import { BlogT } from '/src/api/types/BlogT';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
 import { trackPromise } from '/src/resourceStates/trackPromise';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 import { useGraftResourceStatesFromMemo } from '/src/utils/hooks/useGraftResourceStatesFromMemo';
 import { lookUp } from '/src/utils/ids';
 
-export type PropsT = {};
+export type PropsT = {
+  getBlog: () => BlogT | undefined;
+};
 
 export const useBlogPostsState = (props: PropsT) => {
   const graftResourceStatesFromMemo = useGraftResourceStatesFromMemo({});
@@ -35,10 +22,16 @@ export const useBlogPostsState = (props: PropsT) => {
   const deleteBlogPosts = useDeleteBlogPosts();
 
   // Queries
-  const getBlogPosts = useObservableQuery(useGetBlogPosts(), {
-    fetchAsLoad: true,
-    debugLabel: 'getBlogPosts',
-  });
+  const getBlogPosts = useObservableQuery(
+    useGetBlogPosts(
+      { blogSlug: props.getBlog()?.slug ?? '' },
+      { enabled: !!props.getBlog() }
+    ),
+    {
+      fetchAsLoad: true,
+      debugLabel: 'getBlogPosts',
+    }
+  );
 
   const blogPostsState = useBuilder(() => {
     const state = new BlogPostsState({
@@ -58,16 +51,16 @@ export const useBlogPostsState = (props: PropsT) => {
           name: 'deleteBlogPosts',
           states: { updating: blogPosts },
           promise: deleteBlogPosts.mutateAsync({
+            blog: props.getBlog(),
             blogPostIds: ids,
           } as DeleteBlogPostsArgsT),
         }).result;
       },
     });
 
-    // Initialize state.blogPostsCtr.filtering
     state.blogPostsCtr.filtering.apply({
       filter: (blogPosts: BlogPostT[]) => {
-        return blogPosts.filter((x: BlogPostT) => x.state === 'done');
+        return blogPosts.filter((x: BlogPostT) => x.isPublished);
       },
     });
     state.blogPostsCtr.filtering.setEnabled({ flag: false });

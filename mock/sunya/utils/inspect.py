@@ -1,15 +1,4 @@
 import importlib
-import inspect
-
-
-def get_class_source(klass):
-    try:
-        source = inspect.getsource(klass)
-        return source
-    except TypeError:
-        print(f"The object {klass} is not a class.")
-    except OSError:
-        print(f"Source code for {klass} could not be found.")
 
 
 def find_root_class(cls, base_cls):

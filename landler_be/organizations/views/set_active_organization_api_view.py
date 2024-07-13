@@ -6,10 +6,12 @@ from api.utils.extend_schema import extend_schema
 from organizations.permissions import user_is_organization_member
 from organizations.serializers import OrganizationSerializer
 from organizations.shortcuts import get_organization_or_404
+from common.serializers import EmptySerializer
 
 
 class SetActiveOrganizationApiView(APIView):
     @extend_schema(
+        request=EmptySerializer,
         responses={
             200: OrganizationSerializer,
         },
@@ -24,7 +26,7 @@ class SetActiveOrganizationApiView(APIView):
             ),
         ],
     )
-    def post(self, request, organization_id, organization):
+    def post(self, request, organization):
         request.session["active_organization_id"] = str(organization.id)
         request.session.modified = True
         return Response(

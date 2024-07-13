@@ -35,7 +35,7 @@ class CreateBlogPostApiView(APIView):
             ),
         ],
     )
-    def post(self, request, blog_id, request_data, blog):
+    def post(self, request, request_data, blog):
         try:
             blog_post = create_blog_post(
                 create_blog_post_form=request_data.create_blog_post_form,

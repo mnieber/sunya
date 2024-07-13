@@ -4,6 +4,9 @@ from organizations.models import OrganizationMembership
 
 
 def user_is_organization_admin(user, organization):
+    if user.is_anonymous:
+        return deny("User must be authenticated")
+
     try:
         membership = OrganizationMembership.objects.get(
             user=user, organization=organization
@@ -16,6 +19,9 @@ def user_is_organization_admin(user, organization):
 
 
 def user_is_organization_member(user, organization):
+    if user.is_anonymous:
+        return deny("User must be authenticated")
+
     if OrganizationMembership.objects.filter(
         user=user, organization=organization
     ).exists():

@@ -1,3 +1,4 @@
+from organizations.enums import UserInOrganizationRoles
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -47,9 +48,9 @@ class SignUpUserApiView(APIView):
 
         try:
             organization = create_organization(
-                CreateOrganizationForm(name="My Organization"), owner=user
+                CreateOrganizationForm(name="My Organization")
             )
-            add_user_to_organization(user, organization)
+            add_user_to_organization(organization, user, UserInOrganizationRoles.ADMIN)
         except OrganizationWithNameAlreadyExistsError:
             raise ValidationError(
                 {"non_field_errors": [_("Organization with this name already exists")]}

@@ -3,8 +3,6 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from users.tests.factories import UserFactory
-
 
 class TestSignUpUserApiView:
     @pytest.fixture

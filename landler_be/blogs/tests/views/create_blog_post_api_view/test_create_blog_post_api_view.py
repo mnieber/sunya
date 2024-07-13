@@ -13,9 +13,9 @@ from users.tests.factories import UserFactory
 
 class TestCreateBlogPostApiView:
     @pytest.fixture()
-    def client(self):
-        client = APIClient()
-        return client
+    def api_client(self):
+        api_client = APIClient()
+        return api_client
 
     @pytest.fixture()
     def blog_owner(self):
@@ -26,13 +26,13 @@ class TestCreateBlogPostApiView:
         return BlogFactory(owner=blog_owner)
 
     @pytest.mark.django_db()
-    def test_create_blog_post_api_view_success(self, client, blog_owner, blog):
+    def test_create_blog_post_api_view_success(self, api_client, blog_owner, blog):
         # Given
-        client.force_authenticate(user=blog_owner)
-        url = reverse("create-blog-post", kwargs=dict(blog_id=blog.id))
+        api_client.force_authenticate(user=blog_owner)
+        url = reverse("create-blog-post", kwargs=dict(blog_key=blog.slug))
 
         # When
-        response = client.post(
+        response = api_client.post(
             url,
             data=dict(
                 create_blog_post_form=dict(
@@ -51,6 +51,7 @@ class TestCreateBlogPostApiView:
                 "id": "some id",
                 "blog_id": str(blog.id),
                 "title": "My blog title",
+                "slug": "my-blog-title",
                 "content": "My blog content",
             },
             result,

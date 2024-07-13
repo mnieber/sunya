@@ -1,10 +1,4 @@
-/*
-Continue by:
-
-- reading the App.tsx file.
-*/
-
-// Import styles. This needs to be done before importing any components.
+// Import styles.
 import '/src/frames/styles/index.css';
 import '/src/frames/styles/index.scss';
 
@@ -22,7 +16,6 @@ if (import.meta.env.DEV) {
   applyFormatters();
 }
 
-// Enable logging of skandha operations.
 setOptions({
   logging: flags.logSkandha,
   formatObject: toJS,

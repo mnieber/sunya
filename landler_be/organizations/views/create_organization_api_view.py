@@ -1,3 +1,4 @@
+from organizations.enums import UserInOrganizationRoles
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -5,7 +6,7 @@ from rest_framework.views import APIView
 
 from api.utils.extend_schema import extend_schema
 from common.form_serializer import FormSerializer
-from landler.common.permissions import user_is_authenticated
+from common.permissions import user_is_authenticated
 from organizations.actions.add_user_to_organization import (
     UserAlreadyInOrganizationError,
     add_user_to_organization,
@@ -48,7 +49,9 @@ class CreateOrganizationApiView(APIView):
             )
 
         try:
-            add_user_to_organization(organization, request.user)
+            add_user_to_organization(
+                organization, request.user, UserInOrganizationRoles.ADMIN
+            )
         except UserAlreadyInOrganizationError:
             raise ValidationError({"user": "The user is already in the organization."})
 

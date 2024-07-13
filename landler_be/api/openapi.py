@@ -1,8 +1,9 @@
 from drf_spectacular.openapi import AutoSchema
 from rest_framework import serializers
 from rest_framework.permissions import AND, NOT, OR
-
+from drf_spectacular.extensions import OpenApiFilterExtension
 from api.utils.extend_schema import get_permissions_description
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class DummySerializer(serializers.Serializer):
@@ -90,6 +91,22 @@ class AutoSchemaWithErrorResponses(AutoSchema):
         for code in add_error_codes:
             response_bodies[code] = self.error_response_bodies[code]
         return response_bodies
+
+    def _get_filter_parameters(self):
+        if getattr(self.view, "filterset_class", None) is None:
+            return []
+
+        filter_backends = getattr(self.view, "filter_backends", [DjangoFilterBackend])
+        parameters = []
+        for filter_backend in filter_backends:
+            filter_extension = OpenApiFilterExtension.get_match(filter_backend())
+            if filter_extension:
+                parameters += filter_extension.get_schema_operation_parameters(self)
+            else:
+                parameters += filter_backend().get_schema_operation_parameters(
+                    self.view
+                )
+        return parameters
 
     def get_description(self):
         """

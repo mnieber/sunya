@@ -18,15 +18,8 @@ def sign_in_user(sign_in_user_form: SignInUserForm):
     if user is None:
         raise InvalidCredentialsError()
 
-    if not user.is_active:
-        raise InactiveUserError()
-
     return user
 
 
 class InvalidCredentialsError(Exception):
-    pass
-
-
-class InactiveUserError(Exception):
     pass

@@ -1,7 +1,10 @@
 from app.utils.get_internal_ips import get_internal_ips
 
-ALLOWED_HOSTS = ["*"]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3001",
+]
 
-CORS_ORIGIN_ALLOW_ALL = True
+ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 INTERNAL_IPS = get_internal_ips()

@@ -3,18 +3,23 @@ import { get } from '/src/api/restClient';
 import { wait } from '/src/utils/wait';
 
 export type ArgsT = {
-  blogId: string;
+  blogSlug: string;
 };
 
 export const getBlogPosts = (args: ArgsT) => {
-  return get(`/blogs/${args.blogId}/blog_posts`).then((response) => {
-    return wait(import.meta.env.DEV ? 1000 : 0, response);
+  return get(`/blogs/${args.blogSlug}/blog-posts/list`).then((response) => {
+    return wait(import.meta.env.DEV ? 1000 : 0, { blogPosts: response.data });
   });
 };
 
-export const useGetBlogPosts = () => {
+export type OptionsT = {
+  enabled?: boolean;
+};
+
+export const useGetBlogPosts = (args: ArgsT, options?: OptionsT) => {
   return useQuery({
-    queryKey: ['getBlogPosts'],
-    queryFn: () => getBlogPosts(),
+    queryKey: ['getBlogPosts', args.blogSlug],
+    queryFn: () => getBlogPosts(args),
+    enabled: !!(options?.enabled ?? true),
   });
 };

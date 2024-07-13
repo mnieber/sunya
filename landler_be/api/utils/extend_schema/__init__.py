@@ -10,6 +10,7 @@ from api.utils.extend_schema.permissions import (  # noqa: F401
     get_permissions_description,
     parse_permission_spec,
 )
+from common.utils.inspect import get_argument_names
 
 
 def extend_schema(
@@ -51,7 +52,7 @@ def extend_schema(
                     )
 
             data_kwargs = get_data_kwargs(
-                f.__code__.co_varnames,
+                get_argument_names(f),
                 request_data,
                 resolved_data,
                 # TODO: do we still need this block-list?
