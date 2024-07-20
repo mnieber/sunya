@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 
 from common.models import BaseModel
 from users.actions.create_user import CreateUserForm
+from django.db import models
 
 
 class UserManager(django.contrib.auth.models.UserManager):
@@ -69,3 +70,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         from users.actions.delete_user import delete_user
 
         delete_user(self, using=using)
+
+
+class BlockedToken(BaseModel):
+    jti = models.TextField(unique=True)

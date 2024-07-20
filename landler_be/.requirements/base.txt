@@ -24,6 +24,7 @@ django==4.0.8
     #   django-filter
     #   django-modeladmin-reorder
     #   djangorestframework
+    #   djangorestframework-simplejwt
     #   drf-spectacular
     #   drf-spectacular-sidecar
 django-admin-sortable2==1.0.4
@@ -42,8 +43,11 @@ djangorestframework==3.14.0
     # via
     #   -r .requirements/base.in
     #   djangorestframework-gis
+    #   djangorestframework-simplejwt
     #   drf-spectacular
 djangorestframework-gis==1.0
+    # via -r .requirements/base.in
+djangorestframework-simplejwt==5.3.1
     # via -r .requirements/base.in
 drf-spectacular==0.26.0
     # via -r .requirements/base.in
@@ -59,6 +63,8 @@ ordered-set==4.1.0
     # via deepdiff
 psycopg2-binary==2.9.9
     # via -r .requirements/base.in
+pyjwt==2.8.0
+    # via djangorestframework-simplejwt
 pytz==2022.7.1
     # via
     #   django-dbbackup
