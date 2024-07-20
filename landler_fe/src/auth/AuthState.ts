@@ -16,6 +16,7 @@ export class AuthState {
   @observable initialState: string;
   @observable state: string;
   @observable details: ObjT = {};
+  @observable userId: string = '';
 
   constructor(initialState: string) {
     makeObservable(this);
@@ -50,6 +51,10 @@ export class AuthState {
     if (this.isTrackedQuery(queryName)) {
       this.reset();
     }
+  }
+
+  @action setUserId(userId: string) {
+    this.userId = userId;
   }
 
   @action onErrored(queryName: string, message: string) {

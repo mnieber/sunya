@@ -1,5 +1,5 @@
 import { useObservableMutation } from '/src/api/ObservableMutation';
-import { post } from '/src/api/restClient';
+import { post, setAuthTokens } from '/src/api/restClient';
 import { AuthState } from '/src/auth/AuthState';
 import { ObjT } from '/src/utils/types';
 import { wait } from '/src/utils/wait';
@@ -10,13 +10,14 @@ export type ArgsT = {
 };
 
 export function signIn(args: ArgsT) {
-  const url = `/users/sign-in/`;
+  const url = '/users/sign-in/';
   return post(url, {
     signInUserForm: {
       email: args.userId,
       password: args.password,
     },
   }).then((response) => {
+    setAuthTokens(response.data.token, response.data.refreshToken);
     return wait(import.meta.env.DEV ? 1000 : 0, {});
   });
 }

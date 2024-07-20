@@ -9,17 +9,33 @@ export const hostUrl = window.location.host.startsWith('localhost')
   : import.meta.env.VITE_BACKEND_API_ENDPOINT ?? '';
 
 export function get(query: string) {
-  return axios.get(`${hostUrl}${trimLeadingSlash(query)}`).then((response) => {
-    response.data = camelcaseKeys(response.data);
-    return response;
-  });
+  return axios
+    .get(`${hostUrl}${trimLeadingSlash(query)}`, {
+      headers: getHeaders(),
+    })
+    .then((response) => {
+      response.data = camelcaseKeys(response.data);
+      return response;
+    });
 }
 
 export function post(query: string, variables: any) {
   return axios.post(
     `${hostUrl}${trimLeadingSlash(query)}`,
-    snakecaseKeys(variables)
+    snakecaseKeys(variables),
+    {
+      headers: getHeaders(),
+    }
   );
+}
+
+function getHeaders() {
+  const accessToken = getAccessToken();
+  return accessToken
+    ? {
+        Authorization: 'JWT ' + accessToken,
+      }
+    : {};
 }
 
 function trimLeadingSlash(query: string) {
@@ -28,3 +44,27 @@ function trimLeadingSlash(query: string) {
   }
   return query;
 }
+
+export const setAuthTokens = (
+  accessToken: string | undefined,
+  refreshToken?: string
+) => {
+  if (accessToken === undefined) {
+    localStorage.removeItem('accessToken');
+  } else {
+    localStorage.setItem('accessToken', accessToken);
+  }
+  if (refreshToken === undefined) {
+    localStorage.removeItem('refreshToken');
+  } else {
+    localStorage.setItem('refreshToken', refreshToken);
+  }
+};
+
+export const getAccessToken = () => {
+  return localStorage.getItem('accessToken');
+};
+
+export const getRefreshToken = () => {
+  return localStorage.getItem('refreshToken');
+};
