@@ -21,13 +21,14 @@ export function signIn(args: ArgsT) {
     .then((response) => {
       setAuthTokens(response.data.accessToken, response.data.refreshToken);
       return waitOnDev(1000, {
-        success: true,
+        success: !!response.data.accessToken,
       });
     })
-    .catch(() => {
+    .catch((error) => {
       setAuthTokens(undefined, undefined);
       return waitOnDev(1000, {
         success: false,
+        error: error,
       });
     });
 }
@@ -41,11 +42,11 @@ export const useSignIn = (authState?: AuthState) => {
       if (authState) authState.onUpdating(queryName);
     },
     onSuccess: (data: ObjT) => {
-      if (authState) authState.onUpdated(queryName, data);
-      invalidateLoadUserId({});
-    },
-    onError: (error: Error) => {
-      if (authState) authState.onErrored(queryName, error.message);
+      if (data.success) {
+        if (authState) authState.onUpdated(queryName, data);
+      } else {
+        if (authState) authState.onErrored(queryName, data.error);
+      }
       invalidateLoadUserId({});
     },
   });

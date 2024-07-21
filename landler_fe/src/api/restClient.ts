@@ -20,13 +20,14 @@ export function get(query: string) {
 }
 
 export function post(query: string, variables: any) {
-  return axios.post(
-    `${hostUrl}${trimLeadingSlash(query)}`,
-    snakecaseKeys(variables),
-    {
+  return axios
+    .post(`${hostUrl}${trimLeadingSlash(query)}`, snakecaseKeys(variables), {
       headers: getHeaders(),
-    }
-  );
+    })
+    .then((response) => {
+      response.data = camelcaseKeys(response.data);
+      return response;
+    });
 }
 
 function getHeaders() {
