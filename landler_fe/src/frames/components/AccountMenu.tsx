@@ -71,10 +71,7 @@ export const AccountMenu = observer(
         >
           {!props.authState.isAuthenticated && (
             <StyledMenuItem onClick={() => navTo(props.authNav.signIn())}>
-              <Icon
-                className={cn(MenuItemS.Icon(), 'text-teal-500')}
-                name="signIn"
-              />
+              <Icon className={cn(MenuItemS.Icon())} name="signIn" />
               Sign In
             </StyledMenuItem>
           )}

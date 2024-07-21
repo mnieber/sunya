@@ -1,6 +1,7 @@
 import { useObservableMutation } from '/src/api/ObservableMutation';
 import { post, setAuthTokens } from '/src/api/restClient';
 import { AuthState } from '/src/auth/AuthState';
+import { invalidateLoadUserId } from '/src/auth/endpoints/queries';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 

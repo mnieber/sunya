@@ -196,7 +196,7 @@ export const IconS = {
     blueDarkest: () => 'fill-blue-darkest',
     bluePrimary: () => 'fill-blue-primary',
     tealDark: () => 'fill-teal-dark',
-    white: () => 'fill-white',
+    white: () => 'fill-gray-800',
   },
   size: {
     s15: () => 'w-[15px] h-[15px]',
