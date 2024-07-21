@@ -7,6 +7,7 @@ from users.actions.sign_in_user import (
     sign_in_user,
 )
 from users.tests.factories import InactiveUserFactory, UserFactory
+from users.actions.sign_in_user import AccountIsNotActiveError
 
 User = get_user_model()
 
@@ -25,11 +26,11 @@ class TestSignInUserAction:
         )
 
         # When
-        authenticated_user = sign_in_user(sign_in_user_form)
+        tokens = sign_in_user(sign_in_user_form)
 
         # Then
-        assert authenticated_user == user
-        assert authenticated_user.is_authenticated
+        assert tokens.get("access_token")
+        assert tokens.get("refresh_token")
 
     @pytest.mark.django_db
     def test_sign_in_user_action_invalid_credentials(self):
@@ -57,5 +58,5 @@ class TestSignInUserAction:
         )
 
         # When / Then
-        with pytest.raises(InvalidCredentialsError):
+        with pytest.raises(AccountIsNotActiveError):
             sign_in_user(sign_in_user_form)

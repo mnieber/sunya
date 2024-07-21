@@ -19,7 +19,7 @@ class TestCreateBlogPostAction:
         return BlogFactory(owner=blog_owner)
 
     @pytest.mark.django_db
-    def test_create_blog_post_success(self, blog):
+    def test_create_blog_post_action_success(self, blog):
         # Given
         create_blog_post_form = CreateBlogPostForm(
             title="Test BlogPost", content="A test blog post"
@@ -33,7 +33,7 @@ class TestCreateBlogPostAction:
         assert blog_post.content == "A test blog post"
 
     @pytest.mark.django_db
-    def test_create_blog_post_with_existing_title(self, blog):
+    def test_create_blog_post_action_with_existing_title(self, blog):
         # Given
         BlogPostFactory(title="Existing BlogPost", blog=blog)
 

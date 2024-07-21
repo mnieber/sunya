@@ -19,7 +19,7 @@ export function signIn(args: ArgsT) {
     },
   })
     .then((response) => {
-      setAuthTokens(response.data.token, response.data.refreshToken);
+      setAuthTokens(response.data.accessToken, response.data.refreshToken);
       return waitOnDev(1000, {
         success: true,
       });

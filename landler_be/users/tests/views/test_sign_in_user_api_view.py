@@ -12,7 +12,7 @@ class TestSignInUserApiView:
         return APIClient()
 
     @pytest.mark.django_db
-    def test_sign_in_user_success(self, api_client):
+    def test_sign_in_user_api_view_success(self, api_client):
         # Given
         user = UserFactory(email="user@example.com")
         user.set_password("password123")
@@ -31,11 +31,11 @@ class TestSignInUserApiView:
 
         # Then
         assert response.status_code == status.HTTP_200_OK
-        assert response.data["email"] == "user@example.com"
-        assert response.data["is_active"] == True
+        assert response.data.get("access_token")
+        assert response.data.get("refresh_token")
 
     @pytest.mark.django_db
-    def test_sign_in_user_invalid_credentials(self, api_client):
+    def test_sign_in_user_api_view_invalid_credentials(self, api_client):
         # Given
         UserFactory(email="user@example.com")
         url = reverse("sign-in-user")
@@ -54,7 +54,7 @@ class TestSignInUserApiView:
         assert "non_field_errors" in response.data
 
     @pytest.mark.django_db
-    def test_sign_in_user_inactive_user(self, api_client):
+    def test_sign_in_user_api_view_inactive_user(self, api_client):
         # Given
         user = InactiveUserFactory(email="inactive@example.com")
         user.set_password("password123")

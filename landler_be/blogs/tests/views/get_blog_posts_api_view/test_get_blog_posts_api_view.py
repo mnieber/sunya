@@ -16,7 +16,7 @@ class TestGetBlogPostsApiView:
         return UserFactory()
 
     @pytest.mark.django_db
-    def test_get_blog_posts_view_success(self, api_client, blog_owner):
+    def test_get_blog_posts_api_view_success(self, api_client, blog_owner):
         blog = BlogFactory(owner=blog_owner)
         BlogPostFactory.create_batch(3, blog=blog)
         url = reverse("get-blog-posts", kwargs=dict(blog_key=blog.slug))

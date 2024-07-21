@@ -6,7 +6,11 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 from api.utils.extend_schema import extend_schema
 from common.form_serializer import FormSerializer
-from users.actions.sign_in_user import InvalidCredentialsError, sign_in_user
+from users.actions.sign_in_user import (
+    AccountIsNotActiveError,
+    InvalidCredentialsError,
+    sign_in_user,
+)
 from users.serializers import SignInUserFormSerializer
 
 
@@ -28,5 +32,7 @@ class SignInUserApiView(APIView):
             response_data = sign_in_user(request_data.sign_in_user_form)
         except InvalidCredentialsError:
             raise ValidationError({"non_field_errors": ["Invalid email or password."]})
+        except AccountIsNotActiveError:
+            raise ValidationError({"non_field_errors": ["Inactive acount."]})
 
         return Response(response_data, status=status.HTTP_200_OK)

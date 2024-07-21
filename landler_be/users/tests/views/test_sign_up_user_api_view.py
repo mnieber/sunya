@@ -10,7 +10,7 @@ class TestSignUpUserApiView:
         return APIClient()
 
     @pytest.mark.django_db
-    def test_sign_up_user_success(self, api_client):
+    def test_sign_up_user_api_view_success(self, api_client):
         # Given
         url = reverse("sign-up-user")
         data = {
