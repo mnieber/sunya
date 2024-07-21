@@ -41,9 +41,11 @@ export const useSignIn = (authState?: AuthState) => {
     },
     onSuccess: (data: ObjT) => {
       if (authState) authState.onUpdated(queryName, data);
+      invalidateLoadUserId({});
     },
     onError: (error: Error) => {
       if (authState) authState.onErrored(queryName, error.message);
+      invalidateLoadUserId({});
     },
   });
 };

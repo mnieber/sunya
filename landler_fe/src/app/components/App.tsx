@@ -6,6 +6,7 @@ import { AuthSwitch } from '/src/auth/components/AuthSwitch';
 import { BlogPostsStateProvider } from '/src/blogPosts/components/BlogPostsStateProvider';
 import { BlogsStateProvider } from '/src/blogs/components/BlogsStateProvider';
 import { BlogsSwitch } from '/src/blogs/components/BlogsSwitch';
+import { DashboardFrame } from '/src/frames/components/DashboardFrame';
 import { L } from '/src/frames/layout';
 import { cn } from '/src/utils/classnames';
 
@@ -15,16 +16,18 @@ import './App.scss';
 export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <AppBody>
-        <AuthStateProvider>
-          <AuthSwitch />
-          <BlogsStateProvider>
-            <BlogPostsStateProvider>
-              <BlogsSwitch />
-            </BlogPostsStateProvider>
-          </BlogsStateProvider>
-        </AuthStateProvider>
-      </AppBody>
+      <AuthStateProvider>
+        <AppBody>
+          <DashboardFrame>
+            <AuthSwitch />
+            <BlogsStateProvider>
+              <BlogPostsStateProvider>
+                <BlogsSwitch />
+              </BlogPostsStateProvider>
+            </BlogsStateProvider>
+          </DashboardFrame>
+        </AppBody>
+      </AuthStateProvider>
     </QueryClientProvider>
   );
 };
