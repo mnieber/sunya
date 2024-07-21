@@ -8,7 +8,7 @@ export const getBlogsRouteTable = () => {
 };
 
 export const routes = {
-  blogList: () => '/blogs/*?',
+  blogList: () => '/blogs/:blogSlug?',
   blog: () => '/blogs/:blogSlug',
 };
 

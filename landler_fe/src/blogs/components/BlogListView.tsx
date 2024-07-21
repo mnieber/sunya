@@ -3,12 +3,16 @@ import { withContextProps } from 'react-props-from-context';
 import { BlogT } from '/src/api/types';
 import { BlogListViewItem } from '/src/blogs/components';
 import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
+import { L } from '/src/frames/layout';
 import { isLoading } from '/src/resourceStates/getState';
+import { cn } from '/src/utils/classnames';
 
 // Import styles
 import './BlogListView.scss';
 
-export type PropsT = {};
+export type PropsT = {
+  className?: any;
+};
 
 const ContextProps = {
   blogs: blogsCtx.blogs,
@@ -27,7 +31,10 @@ export const BlogListView = observer(
     });
 
     return (
-      <div className="BlogListView" tabIndex={1}>
+      <div
+        className={cn('BlogListView', [L.col.skewer(), 'p-4', props.className])}
+        tabIndex={1}
+      >
         {blogDivs}
       </div>
     );
