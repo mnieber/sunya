@@ -2,6 +2,7 @@ import { useObservableMutation } from '/src/api/ObservableMutation';
 import { post, setAuthTokens } from '/src/api/restClient';
 import { AuthState } from '/src/auth/AuthState';
 import { invalidateLoadUserId } from '/src/auth/endpoints/queries';
+import { States } from '/src/auth/endpoints/states';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
@@ -25,11 +26,19 @@ export function signIn(args: ArgsT) {
       });
     })
     .catch((error) => {
-      setAuthTokens(undefined, undefined);
-      return waitOnDev(1000, {
-        success: false,
-        error: error,
-      });
+      const errorCodes = error.response.data;
+      if (
+        errorCodes.includes('INVALID_CREDENTIALS') ||
+        errorCodes.includes('INACTIVE_ACCOUNT')
+      ) {
+        setAuthTokens(undefined, undefined);
+        return waitOnDev(1000, {
+          success: false,
+          errors: [States.INVALID_CREDENTIALS],
+        });
+      }
+
+      throw error;
     });
 }
 
@@ -42,12 +51,11 @@ export const useSignIn = (authState?: AuthState) => {
       if (authState) authState.onUpdating(queryName);
     },
     onSuccess: (data: ObjT) => {
-      if (data.success) {
-        if (authState) authState.onUpdated(queryName, data);
-      } else {
-        if (authState) authState.onErrored(queryName, data.error);
-      }
+      if (authState) authState.onUpdated(queryName, data);
       invalidateLoadUserId({});
+    },
+    onError: (error: Error) => {
+      if (authState) authState.onErrored(queryName, error.message);
     },
   });
 };

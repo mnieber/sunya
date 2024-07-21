@@ -31,8 +31,8 @@ class SignInUserApiView(APIView):
         try:
             response_data = sign_in_user(request_data.sign_in_user_form)
         except InvalidCredentialsError:
-            raise ValidationError({"non_field_errors": ["Invalid email or password."]})
+            raise ValidationError("INVALID_CREDENTIALS")
         except AccountIsNotActiveError:
-            raise ValidationError({"non_field_errors": ["Inactive acount."]})
+            raise ValidationError("INACTIVE_ACCOUNT")
 
         return Response(response_data, status=status.HTTP_200_OK)
