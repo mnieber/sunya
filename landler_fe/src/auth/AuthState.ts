@@ -3,6 +3,9 @@ import * as R from 'ramda';
 import { States } from '/src/auth/endpoints/states';
 import { ObjT } from '/src/utils/types';
 
+export class Anonymous {}
+export const anonymous = new Anonymous();
+
 const lutSuccess = {
   signIn: States.SIGN_IN_SUCCEEDED,
 };
@@ -16,7 +19,7 @@ export class AuthState {
   @observable initialState: string;
   @observable state: string;
   @observable details: ObjT = {};
-  @observable userId: string = '';
+  @observable userId: string | Anonymous = anonymous;
 
   constructor(initialState: string) {
     makeObservable(this);
@@ -32,6 +35,10 @@ export class AuthState {
     this.state = this.initialState;
     this.details = {};
   };
+
+  @computed get isAuthenticated() {
+    return this.userId !== anonymous;
+  }
 
   isTrackedQuery = (queryName: string) => {
     return ['signIn'].includes(queryName);
@@ -53,7 +60,7 @@ export class AuthState {
     }
   }
 
-  @action setUserId(userId: string) {
+  @action setUserId(userId: string | Anonymous) {
     this.userId = userId;
   }
 

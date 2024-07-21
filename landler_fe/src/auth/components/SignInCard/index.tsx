@@ -7,6 +7,7 @@ import { useSignIn } from '/src/auth/endpoints';
 import { authStateCtx } from '/src/auth/hooks/useAuthStateContext';
 import { useResetAuthState } from '/src/auth/hooks/useResetAuthState';
 import { L } from '/src/frames/layout';
+import { navTo } from '/src/routes/routeTable';
 import { cn } from '/src/utils/classnames';
 import { ObjT } from '/src/utils/types';
 
@@ -40,7 +41,7 @@ export const SignInCard = observer(
             return signIn({ userId: email, password }).then(
               (response: ObjT) => {
                 if (response.success) {
-                  props.authNav.home();
+                  navTo(props.authNav.home());
                 }
               }
             );

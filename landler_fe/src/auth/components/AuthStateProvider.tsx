@@ -12,7 +12,7 @@ type PropsT = React.PropsWithChildren<{}>;
 
 export const AuthStateProvider = (props: PropsT) => {
   const authState = useBuilder(() => new AuthState(States.INITIAL));
-  useLoadUserId();
+  useLoadUserId(authState);
 
   const authNav = useBuilder(
     () => new AuthNav({ routeFns: getRouteFns<AuthRoutesT>() })

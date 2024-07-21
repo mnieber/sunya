@@ -1,13 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '/src/api/queryClient';
 import { get, getRefreshToken, setAuthTokens } from '/src/api/restClient';
-import { AuthState } from '/src/auth/AuthState';
+import { AuthState, anonymous } from '/src/auth/AuthState';
 import { refreshToken } from '/src/auth/endpoints/mutations/refreshToken';
 import { createQueryKey } from '/src/auth/utils/createQueryKey';
 import { ObjT } from '/src/utils/types';
-
-export class Anonymous {}
-export const anonymous = new Anonymous();
 
 export type ArgsT = {
   maybeRefreshToken: boolean;
@@ -20,7 +17,6 @@ export function loadUserId(args: ArgsT): Promise<any> {
     .then((response: ObjT) => {
       return {
         userId: response.username ?? anonymous,
-        isAuthenticated: !!response.username,
       };
     })
     .catch((error: ObjT) => {
@@ -48,7 +44,6 @@ export function loadUserId(args: ArgsT): Promise<any> {
     .catch(() => {
       return {
         userId: anonymous,
-        isAuthenticated: false,
       };
     });
 }

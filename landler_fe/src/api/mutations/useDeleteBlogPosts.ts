@@ -3,7 +3,7 @@ import { queryClient } from '/src/api/queryClient';
 import { post } from '/src/api/restClient';
 import { BlogT } from '/src/api/types/BlogT';
 import { ObjT } from '/src/utils/types';
-import { wait } from '/src/utils/wait';
+import { waitOnDev } from '/src/utils/wait';
 
 export type ArgsT = {
   blog: BlogT;
@@ -17,7 +17,7 @@ export const deleteBlogPosts = (args: ArgsT) => {
       blogPostIds: args.blogPostIds,
     },
   }).then((response) => {
-    return wait(import.meta.env.DEV ? 1000 : 0, {});
+    return waitOnDev(1000, {});
   });
 };
 
