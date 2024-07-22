@@ -1,6 +1,6 @@
 from dataclassy import dataclass
-from sunya.entities.actor_to_str import actor_to_str, shorten_term_str
-from sunya.utils.case import snake_name_from_instance
+from sunya.entities.actor_to_str import actor_to_str
+from sunya.utils.case import get_type_name
 
 
 @dataclass(kw_only=True)
@@ -22,7 +22,7 @@ class Fn(Entity):
     name: str = ""
 
     def __post_init__(self):
-        self.name = self.name or snake_name_from_instance(self)
+        self.name = self.name or get_type_name(self)
 
 
 @actor_to_str.method((Fn,))
@@ -32,4 +32,4 @@ def fn_to_str(fn):
 
 @actor_to_str.method((List,))
 def list_to_str(list):
-    return shorten_term_str(f"{list.name}+:list")
+    return f"{list.name}+:list"

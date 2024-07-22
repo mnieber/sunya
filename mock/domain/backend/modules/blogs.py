@@ -62,7 +62,7 @@ def blog_to_str(blog):
 
 @actor_to_str.method((Blogs.Models.BlogPost,))
 def blog_post_to_str(blog_post):
-    return f"{blog.name}+:blog"
+    return f"{blog_post.name}+:blog"
 
 
 @get_actor_key.method((Blogs.Models.Blog,))

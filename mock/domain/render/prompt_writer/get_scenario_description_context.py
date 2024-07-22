@@ -1,4 +1,4 @@
-from sunya import actor_to_str, fact_to_string
+from sunya import get_actor_str, fact_to_string
 from sunya.scenarios.store import NoValue, get_entity_delta
 
 
@@ -39,7 +39,7 @@ def _get_step_actors(step, add_created, add_updated):
         if field_deltas:
             result.append(
                 dict(
-                    name=actor_to_str(entity),
+                    name=get_actor_str(entity),
                     deltas=field_deltas,
                 )
             )

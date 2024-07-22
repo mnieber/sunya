@@ -2,7 +2,7 @@ import copy
 import typing as T
 
 from dataclassy import Internal, dataclass
-from sunya import actor_to_str
+from sunya import get_actor_str
 from sunya.entities import Entity
 from sunya.entities.get_actor_key import get_actor_key
 from sunya.scenarios.scenario import Scenario, Step
@@ -122,6 +122,7 @@ def finalize_step(step):
     for entity in step.entities:
         key = get_key(entity)
         step.post_entity_memo_by_key[key] = create_memo(entity)
+    step.is_finalized = True
 
 
 class NoValue:
@@ -129,12 +130,15 @@ class NoValue:
 
 
 def get_entity_delta(step, entity):
+    if not step.is_finalized:
+        raise StepNotFinalizedError(step)
+
     key = get_key(entity)
     pre_entity_memo = step.pre_entity_memo_by_key.get(key)
     post_entity_memo = step.post_entity_memo_by_key.get(key)
 
     delta = dict()
-    for field, value in post_entity_memo.items():
+    for field, value in (post_entity_memo or dict()).items():
         existing_value = (
             pre_entity_memo.get(field, NoValue) if pre_entity_memo else NoValue
         )
@@ -163,4 +167,10 @@ def create_memo(entity):
 
 
 def _get_memo_field_value(x):
-    return actor_to_str(x) if isinstance(x, Entity) else copy.deepcopy(x)
+    return get_actor_str(x) if isinstance(x, Entity) else copy.deepcopy(x)
+
+
+class StepNotFinalizedError(Exception):
+    def __init__(self, step):
+        self.step = step
+        super().__init__(f"Step {step} has not been finalized")

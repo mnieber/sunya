@@ -1,5 +1,5 @@
-from sunya import Entity, Fn, Value, actor_to_str, shorten_term_str
-from sunya.utils.case import camel_to_snake, l0, snake_name_from_instance
+from sunya import Entity, Fn, Value, actor_to_str
+from sunya.utils.case import get_type_name
 
 
 class Module(Entity):
@@ -38,37 +38,38 @@ class Page(Entity):
 
     @property
     def url(self):
-        return f"{self.host}/{self.path}"
+        infix = "" if self.host.endswith("/") or self.path.startswith("/") else "/"
+        return f"{self.host}{infix}{self.path}"
 
 
 @actor_to_str.method((Module,))
 def module_to_str(module):
-    return f"{snake_name_from_instance(module)}:module"
+    return f"{get_type_name(module)}:module"
 
 
 @actor_to_str.method((Form,))
 def form_to_str(form):
-    return shorten_term_str(f"{l0(camel_to_snake(form.name))}:form")
+    return f"{form.name}:form"
 
 
 @actor_to_str.method((Enum,))
 def enum_to_str(enum):
-    return f"{snake_name_from_instance(enum)}:enum"
+    return f"{get_type_name(enum)}:enum"
 
 
 @actor_to_str.method((Action,))
 def action_to_str(action):
-    return shorten_term_str(f"{snake_name_from_instance(action)}:action")
+    return f"{get_type_name(action)}:action"
 
 
 @actor_to_str.method((ApiView,))
 def api_view_to_str(api_view):
-    return shorten_term_str(f"{snake_name_from_instance(api_view)}:api-view")
+    return f"{get_type_name(api_view)}:api-view"
 
 
 @actor_to_str.method((Page,))
 def page_to_str(page):
-    return f"{page.url}:page"
+    return f"{page.url}+:page"
 
 
 @actor_to_str.method((Request,))

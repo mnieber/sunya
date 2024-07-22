@@ -37,6 +37,7 @@ module_by_name = dict(
 )
 
 all_scenario_names = [
+    "ms1_a_user_creates_a_blog",
     "s1_a_user_signs_up_and_creates_an_org",
     "s2_a_user_creates_a_project",
     "s3_a_user_adds_a_plot_to_a_project",

@@ -1,5 +1,5 @@
 from .entities import Entity, Fn, List, Value  # noqa
-from .entities.actor_to_str import actor_to_str, shorten_term_str  # noqa
+from .entities.actor_to_str import actor_to_str, get_actor_str  # noqa
 from .entities.get_actor_key import get_actor_key  # noqa
 from .extension.extend import extend  # noqa
 from .extension.mem_field import MemField  # noqa

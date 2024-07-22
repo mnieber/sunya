@@ -11,6 +11,7 @@ class Step:
     level: int
     pre_entity_memo_by_key: Internal[T.Dict] = {}
     post_entity_memo_by_key: Internal[T.Dict] = {}
+    is_finalized: bool = False
 
     @property
     def entities(self):
