@@ -1,5 +1,6 @@
 from blogs.permissions import user_is_blog_owner
 from blogs.shortcuts import get_blog_or_404
+from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -37,9 +38,8 @@ class DeleteBlogPostsApiView(APIView):
                 request_data.delete_blog_posts_form, blog=blog
             )
         except BlogPostsNotFoundError as e:
-            return Response(
-                {"detail": f"One or more blog posts were not found: {e.missing_ids}"},
-                status=status.HTTP_404_NOT_FOUND,
+            return ValidationError(
+                code="BLOG_POSTS_NOT_FOUND", detail=f"{e.missing_ids}"
             )
         return Response(
             {"deleted_count": deleted_count}, status=status.HTTP_204_NO_CONTENT

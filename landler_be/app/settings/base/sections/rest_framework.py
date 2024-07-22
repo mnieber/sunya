@@ -4,6 +4,7 @@ REST_FRAMEWORK = {
     ],
     "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
     "DEFAULT_SCHEMA_CLASS": "api.openapi.AutoSchemaWithErrorResponses",
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
     # "PAGE_SIZE": 1000,
 }

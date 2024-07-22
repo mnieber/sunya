@@ -16,9 +16,20 @@ export const deleteBlogPosts = (args: ArgsT) => {
     deleteBlogPostsForm: {
       blogPostIds: args.blogPostIds,
     },
-  }).then((response) => {
-    return waitOnDev(1000, {});
-  });
+  })
+    .then((response) => {
+      return waitOnDev(1000, {});
+    })
+    .catch((error) => {
+      const errorCodes = error.response.data;
+      if (errorCodes.includes('BLOG_POSTS_NOT_FOUND')) {
+        return waitOnDev(1000, {
+          success: false,
+        });
+      }
+
+      throw error;
+    });
 };
 
 export const useDeleteBlogPosts = () => {

@@ -42,7 +42,7 @@ class CreateBlogPostApiView(APIView):
                 blog=blog,
             )
         except BlogPostWithTitleAlreadyExistsError:
-            raise ValidationError("BLOG_POST_TITLE_ALREADY_EXISTS")
+            raise ValidationError(code="BLOG_POST_TITLE_ALREADY_EXISTS")
 
         return Response(
             BlogPostSerializer(blog_post).data, status=status.HTTP_201_CREATED

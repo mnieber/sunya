@@ -20,6 +20,7 @@ export function loadUserId(args: ArgsT): Promise<any> {
       };
     })
     .catch((error: ObjT) => {
+      // TODO: update this to use the actual error message
       const message = error.response.errors[0].message;
       if (
         ['Signature has expired', 'Error decoding signature'].includes(

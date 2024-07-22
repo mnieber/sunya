@@ -42,9 +42,9 @@ class SignUpUserApiView(APIView):
             user.is_active = True
             user.save()
         except UserWithEmailAlreadyExistsError:
-            raise ValidationError({"email": "A user with this email already exists."})
+            raise ValidationError(code="USER_EMAIL_ALREADY_EXISTS")
         except PasswordsDoNotMatchError:
-            raise ValidationError({"password": "The passwords do not match."})
+            raise ValidationError(code="PASSWORDS_DO_NOT_MATCH")
 
         try:
             organization = create_organization(
@@ -52,8 +52,8 @@ class SignUpUserApiView(APIView):
             )
             add_user_to_organization(organization, user, UserInOrganizationRoles.ADMIN)
         except OrganizationWithNameAlreadyExistsError:
-            raise ValidationError("ORGANIZATION_NAME_ALREADY_EXISTS")
+            raise ValidationError(code="ORGANIZATION_NAME_ALREADY_EXISTS")
         except UserAlreadyInOrganizationError:
-            raise ValidationError("USER_ALREADY_IN_ORGANIZATION")
+            raise ValidationError(code="USER_ALREADY_IN_ORGANIZATION")
 
         return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)

@@ -44,8 +44,8 @@ class SignInUserApiView(APIView):
             response_serializer.is_valid(raise_exception=True)
             response_data = response_serializer.validated_data
         except InvalidCredentialsError:
-            raise ValidationError("INVALID_CREDENTIALS")
+            raise ValidationError(code="INVALID_CREDENTIALS")
         except AccountIsNotActiveError:
-            raise ValidationError("INACTIVE_ACCOUNT")
+            raise ValidationError(code="INACTIVE_ACCOUNT")
 
         return Response(response_data, status=status.HTTP_200_OK)

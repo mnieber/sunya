@@ -25,3 +25,10 @@ class DeepDiffOperator:
 
     def give_up_diffing(self, level, diff_instance) -> bool:
         return self.cmp(level.t1, level.t2)
+
+
+def has_error_code(response, error_code):
+    for error in response.data["errors"]:
+        if error["code"] == error_code:
+            return True
+    return False

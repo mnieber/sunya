@@ -3,6 +3,7 @@ import { post, setAuthTokens } from '/src/api/restClient';
 import { AuthState, anonymous } from '/src/auth/AuthState';
 import { invalidateLoadUserId } from '/src/auth/endpoints/queries';
 import { States } from '/src/auth/endpoints/states';
+import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
@@ -27,10 +28,11 @@ export function signIn(args: ArgsT) {
       });
     })
     .catch((error) => {
-      const errorCodes = error.response.data;
       if (
-        errorCodes.includes('INVALID_CREDENTIALS') ||
-        errorCodes.includes('INACTIVE_ACCOUNT')
+        hasErrorCode(error.response.data, [
+          'INVALID_CREDENTIALS',
+          'INACTIVE_ACCOUNT',
+        ])
       ) {
         setAuthTokens(undefined, undefined);
         return waitOnDev(1000, {

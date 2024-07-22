@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from users.tests.factories import InactiveUserFactory, UserFactory
+from common.utils.test_utils import has_error_code
 
 
 class TestSignInUserApiView:
@@ -51,7 +52,7 @@ class TestSignInUserApiView:
 
         # Then
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "INVALID_CREDENTIALS" in response.data
+        assert has_error_code(response, "INVALID_CREDENTIALS")
 
     @pytest.mark.django_db
     def test_sign_in_user_api_view_inactive_user(self, api_client):
@@ -73,4 +74,4 @@ class TestSignInUserApiView:
 
         # Then
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "INACTIVE_ACCOUNT" in response.data
+        assert has_error_code(response, "INACTIVE_ACCOUNT")

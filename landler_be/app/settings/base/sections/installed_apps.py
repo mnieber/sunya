@@ -19,6 +19,7 @@ THIRD_PARTY_APPS = [
     "rest_framework_gis",
     "drf_spectacular",
     "drf_spectacular_sidecar",
+    "drf_standardized_errors",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
 ]

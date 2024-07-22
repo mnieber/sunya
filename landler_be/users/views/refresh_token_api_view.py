@@ -1,6 +1,5 @@
 import logging
 
-from django.utils.translation import gettext as _
 from rest_framework import serializers
 from rest_framework_simplejwt.settings import api_settings as jwt_api_settings
 from rest_framework_simplejwt.views import TokenRefreshView
@@ -31,7 +30,7 @@ class RefreshTokenApiView(TokenRefreshView):
         user_id = refresh_token[jwt_api_settings.USER_ID_CLAIM]
         user = User.objects.filter(pk=user_id).first()
         if not user or user.is_anonymous:
-            raise serializers.ValidationError(_("User not found"))
+            raise serializers.ValidationError(code="USER_NOT_FOUND")
 
         response = super().post(request)
 

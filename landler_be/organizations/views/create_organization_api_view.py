@@ -44,16 +44,14 @@ class CreateOrganizationApiView(APIView):
         try:
             organization = create_organization(request_data.create_organization_form)
         except OrganizationWithNameAlreadyExistsError:
-            raise ValidationError(
-                {"name": "An organization with this name already exists."}
-            )
+            raise ValidationError(code="ORGANIZATION_NAME_ALREADY_EXISTS")
 
         try:
             add_user_to_organization(
                 organization, request.user, UserInOrganizationRoles.ADMIN
             )
         except UserAlreadyInOrganizationError:
-            raise ValidationError({"user": "The user is already in the organization."})
+            raise ValidationError(code="USER_ALREADY_IN_ORGANIZATION")
 
         return Response(
             OrganizationSerializer(organization).data, status=status.HTTP_201_CREATED
