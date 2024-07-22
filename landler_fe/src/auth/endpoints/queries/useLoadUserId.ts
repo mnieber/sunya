@@ -16,7 +16,7 @@ export function loadUserId(args: ArgsT): Promise<any> {
   return get(url)
     .then((response: ObjT) => {
       return {
-        userId: response.username ?? anonymous,
+        userId: response.data.userId ?? anonymous,
       };
     })
     .catch((error: ObjT) => {

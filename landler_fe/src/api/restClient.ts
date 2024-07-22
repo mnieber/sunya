@@ -34,7 +34,7 @@ function getHeaders() {
   const accessToken = getAccessToken();
   return accessToken
     ? {
-        Authorization: 'JWT ' + accessToken,
+        Authorization: `Bearer ${accessToken}`,
       }
     : {};
 }
