@@ -52,12 +52,8 @@ class SignUpUserApiView(APIView):
             )
             add_user_to_organization(organization, user, UserInOrganizationRoles.ADMIN)
         except OrganizationWithNameAlreadyExistsError:
-            raise ValidationError(
-                {"non_field_errors": [_("Organization with this name already exists")]}
-            )
+            raise ValidationError("ORGANIZATION_NAME_ALREADY_EXISTS")
         except UserAlreadyInOrganizationError:
-            raise ValidationError(
-                {"non_field_errors": [_("User is already in the organization")]}
-            )
+            raise ValidationError("USER_ALREADY_IN_ORGANIZATION")
 
         return Response(UserSerializer(user).data, status=status.HTTP_201_CREATED)

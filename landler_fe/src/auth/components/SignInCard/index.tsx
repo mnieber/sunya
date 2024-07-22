@@ -40,7 +40,7 @@ export const SignInCard = observer(
           signIn={(email: string, password: string) => {
             return signIn({ userId: email, password }).then(
               (response: ObjT) => {
-                if (response.success) {
+                if (props.authState.isAuthenticated) {
                   navTo(props.authNav.home());
                 }
               }

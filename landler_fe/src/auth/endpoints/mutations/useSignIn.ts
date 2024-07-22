@@ -1,6 +1,6 @@
 import { useObservableMutation } from '/src/api/ObservableMutation';
 import { post, setAuthTokens } from '/src/api/restClient';
-import { AuthState } from '/src/auth/AuthState';
+import { AuthState, anonymous } from '/src/auth/AuthState';
 import { invalidateLoadUserId } from '/src/auth/endpoints/queries';
 import { States } from '/src/auth/endpoints/states';
 import { ObjT } from '/src/utils/types';
@@ -23,6 +23,7 @@ export function signIn(args: ArgsT) {
       setAuthTokens(response.data.accessToken, response.data.refreshToken);
       return waitOnDev(1000, {
         success: !!response.data.accessToken,
+        userId: response.data.userId,
       });
     })
     .catch((error) => {
@@ -34,6 +35,7 @@ export function signIn(args: ArgsT) {
         setAuthTokens(undefined, undefined);
         return waitOnDev(1000, {
           success: false,
+          userId: anonymous,
           errors: [States.INVALID_CREDENTIALS],
         });
       }
@@ -52,10 +54,12 @@ export const useSignIn = (authState?: AuthState) => {
     },
     onSuccess: (data: ObjT) => {
       if (authState) authState.onUpdated(queryName, data);
+      authState?.setUserId(data.userId);
       invalidateLoadUserId({});
     },
     onError: (error: Error) => {
       if (authState) authState.onErrored(queryName, error.message);
+      authState?.setUserId(anonymous);
     },
   });
 };

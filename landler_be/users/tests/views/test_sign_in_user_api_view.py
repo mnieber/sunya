@@ -51,7 +51,7 @@ class TestSignInUserApiView:
 
         # Then
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "non_field_errors" in response.data
+        assert "INVALID_CREDENTIALS" in response.data
 
     @pytest.mark.django_db
     def test_sign_in_user_api_view_inactive_user(self, api_client):
@@ -73,4 +73,4 @@ class TestSignInUserApiView:
 
         # Then
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        assert "non_field_errors" in response.data
+        assert "INACTIVE_ACCOUNT" in response.data
