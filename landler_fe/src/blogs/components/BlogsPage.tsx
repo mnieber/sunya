@@ -1,35 +1,48 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { withContextProps } from 'react-props-from-context';
 import { Route } from 'wouter';
 import { BlogPostListView } from '/src/blogPosts/components';
+import { BlogPostFormView } from '/src/blogPosts/components/BlogPostFormView';
 import { DeleteBlogPostsButton } from '/src/blogPosts/components/DeleteBlogPostsButton';
+import { EditBlogPostButton } from '/src/blogPosts/components/EditBlogPostButton';
+import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
 import { BlogListView, SelectBlogEffect } from '/src/blogs/components';
-import { type BlogsRoutesT } from '/src/blogs/routeTable';
+import { blogsRoutes } from '/src/blogs/routes';
 import { L } from '/src/frames/layout';
-import { getRouteFns } from '/src/routes/routeTable';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
 import './BlogsPage.scss';
 
-type PropsT = React.PropsWithChildren<{
+export const ContextProps = {
+  //
+  blogPostsEdit: blogPostsCtx.blogPostsEdit,
+};
+
+export type PropsT = React.PropsWithChildren<{
   className?: any;
 }>;
 
-export const BlogsPage = (props: PropsT) => {
-  const routeFns = getRouteFns<BlogsRoutesT>();
-
-  return (
-    <div className={cn('BlogsPage', L.row.bar(), props.className)}>
-      <BlogListView className={cn()} />
-      <Route path={routeFns.blog()}>
-        <SelectBlogEffect />
-        <div className={cn(L.col.skewer(), 'p-4')}>
-          <BlogPostListView />
-          <DeleteBlogPostsButton className="mt-8" />
-        </div>
-      </Route>
-    </div>
-  );
-};
+export const BlogsPage = observer(
+  withContextProps((props: PropsT & typeof ContextProps) => {
+    return (
+      <div className={cn('BlogsPage', L.row.bar(), props.className)}>
+        <BlogListView className={cn()} />
+        <Route path={blogsRoutes.blog()}>
+          <SelectBlogEffect />
+          <div className={cn(L.col.skewer(), 'p-4')}>
+            <BlogPostListView className="mb-4" />
+            {props.blogPostsEdit.isEditing && (
+              <BlogPostFormView className="mt-4" />
+            )}
+            <EditBlogPostButton className="mt-8" />
+            <DeleteBlogPostsButton className="" />
+          </div>
+        </Route>
+      </div>
+    );
+  }, ContextProps)
+);
 
 export const BlogsPageS = {};

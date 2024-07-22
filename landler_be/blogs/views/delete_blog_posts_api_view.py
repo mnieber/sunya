@@ -1,5 +1,5 @@
 from blogs.permissions import user_is_blog_owner
-from blogs.shortcuts import get_blog_or_404
+from blogs.shortcuts import get_blog_or_400
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ class DeleteBlogPostsApiView(APIView):
             204: None,
         },
         data=dict(
-            blog=get_blog_or_404,
+            blog=get_blog_or_400,
         ),
         permissions=[
             (

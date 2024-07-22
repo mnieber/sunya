@@ -1,4 +1,4 @@
-import { useObservableMutation } from '/src/api/ObservableMutation';
+import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { queryClient } from '/src/api/queryClient';
 import { setAuthTokens } from '/src/api/restClient';
 import { AuthState } from '/src/auth/AuthState';

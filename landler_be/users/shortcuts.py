@@ -1,8 +1,11 @@
 from django.contrib.auth import get_user_model
-from rest_framework.generics import get_object_or_404
+from rest_framework.exceptions import ValidationError
 
 User = get_user_model()
 
 
-def get_user_or_404(user_id):
-    return get_object_or_404(User, pk=user_id)
+def get_user_or_400(user_id):
+    user = User.objects.filter(pk=user_id).first()
+    if not user:
+        raise ValidationError(code="USER_NOT_FOUND")
+    return user

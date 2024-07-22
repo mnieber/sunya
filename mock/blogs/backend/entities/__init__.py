@@ -1,0 +1,30 @@
+from sunya import Entity, Fn, actor_to_str
+from sunya.utils.case import get_type_name
+
+
+class Action(Fn):
+    pass
+
+
+class ApiView(Entity):
+    pass
+
+
+class Request(Entity):
+    endpoint: str
+    data: dict = {}
+
+
+@actor_to_str.method((Action,))
+def action_to_str(action):
+    return f"{get_type_name(action)}:action"
+
+
+@actor_to_str.method((ApiView,))
+def api_view_to_str(api_view):
+    return f"{get_type_name(api_view)}:api-view"
+
+
+@actor_to_str.method((Request,))
+def request_to_str(request):
+    return f"{request.endpoint}:request"

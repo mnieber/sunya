@@ -3,7 +3,6 @@ import React from 'react';
 import { Highlight, Selection } from 'skandha-facets';
 import { BlogT } from '/src/api/types';
 import { BlogsState } from '/src/blogs/BlogsState';
-import { BlogsNav } from '/src/blogs/routeTable';
 
 export const BlogsContext = React.createContext<any>(null);
 
@@ -24,6 +23,5 @@ export const blogsCtx = R.mergeAll([
     blog: [useBlogsContext, 'blog'] as any as BlogT,
     blogsHighlight: [useBlogsContext, 'blogsHighlight'] as any as Highlight,
     blogsSelection: [useBlogsContext, 'blogsSelection'] as any as Selection,
-    blogsNav: [useBlogsContext, 'blogsNav'] as any as BlogsNav,
   },
 ]);

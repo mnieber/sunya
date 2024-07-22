@@ -4,6 +4,8 @@ from common.form_serializer import FormSerializer
 from common.serializers import BaseModelSerializer, ReadSerializerMixin
 from users.actions.create_user import CreateUserForm
 from users.actions.sign_in_user import SignInUserForm
+from rest_framework.serializers import Serializer, UUIDField
+
 
 User = get_user_model()
 
@@ -22,3 +24,7 @@ class UserSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = User
         fields = ["id", "email", "is_active"]
+
+
+class TokenValidateSerializer(Serializer):
+    token = UUIDField()

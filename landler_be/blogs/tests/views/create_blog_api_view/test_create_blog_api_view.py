@@ -7,7 +7,7 @@ from common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
 from users.tests.factories import UserFactory
 
 
-class TestCreateBlogPostApiView:
+class TestCreateBlogApiView:
     @pytest.fixture()
     def api_client(self):
         api_client = APIClient()

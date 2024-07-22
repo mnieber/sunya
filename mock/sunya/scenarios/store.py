@@ -4,7 +4,6 @@ import typing as T
 from dataclassy import Internal, dataclass
 from sunya import get_actor_str
 from sunya.entities import Entity
-from sunya.entities.get_actor_key import get_actor_key
 from sunya.scenarios.scenario import Scenario, Step
 
 
@@ -100,7 +99,7 @@ def register(entity, preregistered_entity=None, name=None):
 
 
 def get_key(entity):
-    return (entity.__class__, get_actor_key(entity))
+    return (entity.__class__, get_actor_str(entity))
 
 
 def get_entity(entity_class, default="__not_set__", **kwargs):

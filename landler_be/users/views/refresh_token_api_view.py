@@ -1,3 +1,4 @@
+from api.utils.extend_schema import extend_schema
 import logging
 
 from rest_framework import serializers
@@ -5,7 +6,6 @@ from rest_framework_simplejwt.settings import api_settings as jwt_api_settings
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from users.actions.block_token import block_token
-from users.serializers import RefreshTokenSerializer
 from users.utils.parse_access_token_or_401 import parse_access_token_or_401
 from users.utils.parse_refresh_token_or_401 import parse_refresh_token_or_401
 from users.models import User
@@ -13,10 +13,15 @@ from users.models import User
 logger = logging.getLogger(__name__)
 
 
-class RefreshTokenApiView(TokenRefreshView):
-    permission_classes = []
-    serializer_class = RefreshTokenSerializer
+class RefreshTokenSerializer(serializers.Serializer):
+    access = serializers.CharField()
+    refresh = serializers.CharField()
 
+
+class RefreshTokenApiView(TokenRefreshView):
+    @extend_schema(
+        request=RefreshTokenSerializer, responses={200: None}, permissions=[]
+    )
     def post(self, request):
         serializer = RefreshTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

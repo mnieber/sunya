@@ -1,4 +1,8 @@
-import { useObservableMutation } from '/src/api/ObservableMutation';
+import { useObservableMutation } from '/src/api/lib/ObservableMutation';
+import {
+  getBlogPostsQueryKey,
+  invalidateGetBlogPosts,
+} from '/src/api/queries/useGetBlogPosts';
 import { queryClient } from '/src/api/queryClient';
 import { post } from '/src/api/restClient';
 import { BlogT } from '/src/api/types/BlogT';
@@ -36,13 +40,17 @@ export const useDeleteBlogPosts = () => {
   return useObservableMutation({
     mutationFn: deleteBlogPosts,
     onSuccess: (response: ObjT, args: ArgsT) => {
-      queryClient.setQueryData(['getBlogPosts'], (data: any) => {
-        return {
-          blogPosts: data.blogPosts.filter(
-            (x: any) => !args.blogPostIds.includes(x.id)
-          ),
-        };
-      });
+      invalidateGetBlogPosts({ blogSlug: args.blog.slug });
+      queryClient.setQueryData(
+        getBlogPostsQueryKey({ blogSlug: args.blog.slug }),
+        (data: any) => {
+          return {
+            blogPosts: data.blogPosts.filter(
+              (x: any) => !args.blogPostIds.includes(x.id)
+            ),
+          };
+        }
+      );
     },
   });
 };

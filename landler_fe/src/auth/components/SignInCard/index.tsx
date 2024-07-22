@@ -6,8 +6,9 @@ import { SignInForm } from '/src/auth/components/SignInForm';
 import { useSignIn } from '/src/auth/endpoints';
 import { authStateCtx } from '/src/auth/hooks/useAuthStateContext';
 import { useResetAuthState } from '/src/auth/hooks/useResetAuthState';
+import { authNav } from '/src/auth/routes';
 import { L } from '/src/frames/layout';
-import { navTo } from '/src/routes/routeTable';
+import { navTo } from '/src/routes/navHandler';
 import { cn } from '/src/utils/classnames';
 import { ObjT } from '/src/utils/types';
 
@@ -18,7 +19,6 @@ export type PropsT = {};
 
 const ContextProps = {
   authState: authStateCtx.authState,
-  authNav: authStateCtx.authNav,
 };
 
 export const SignInCard = observer(
@@ -41,7 +41,7 @@ export const SignInCard = observer(
             return signIn({ userId: email, password }).then(
               (response: ObjT) => {
                 if (props.authState.isAuthenticated) {
-                  navTo(props.authNav.home());
+                  navTo(authNav.home({}));
                 }
               }
             );

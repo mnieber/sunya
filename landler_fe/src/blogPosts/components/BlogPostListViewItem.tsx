@@ -1,10 +1,10 @@
 import classnames from 'classnames';
 import { observer } from 'mobx-react-lite';
+import { isUpdating } from 'mobx-resource-states';
 import React from 'react';
 import { selectionUIHandlers, SelectionUIPropsT } from 'skandha-facets';
 import './BlogPostListViewItem.scss';
 import { BlogPostT } from '/src/api/types';
-import { isUpdating } from '/src/resourceStates/getState';
 
 export type PropsT = {
   blogPost: BlogPostT;

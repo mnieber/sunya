@@ -1,4 +1,4 @@
-from blogs.shortcuts import get_blog_or_404
+from blogs.shortcuts import get_blog_or_400
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -18,7 +18,7 @@ class GetBlogPostsApiView(APIView):
             200: BlogPostSerializer(many=True),
         },
         data=dict(
-            blog=get_blog_or_404,
+            blog=get_blog_or_400,
         ),
         permissions=[],
     )

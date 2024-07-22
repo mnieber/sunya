@@ -4,6 +4,7 @@ import { get, getRefreshToken, setAuthTokens } from '/src/api/restClient';
 import { AuthState, anonymous } from '/src/auth/AuthState';
 import { refreshToken } from '/src/auth/endpoints/mutations/refreshToken';
 import { createQueryKey } from '/src/auth/utils/createQueryKey';
+import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
 import { ObjT } from '/src/utils/types';
 
 export type ArgsT = {
@@ -20,12 +21,8 @@ export function loadUserId(args: ArgsT): Promise<any> {
       };
     })
     .catch((error: ObjT) => {
-      // TODO: update this to use the actual error message
-      const message = error.response.errors[0].message;
       if (
-        ['Signature has expired', 'Error decoding signature'].includes(
-          message
-        ) &&
+        hasErrorCode(error.response.data, ['authentication_failed']) &&
         getRefreshToken() &&
         args.maybeRefreshToken
       ) {
@@ -40,7 +37,7 @@ export function loadUserId(args: ArgsT): Promise<any> {
       // and we've already tried to refresh them. In that case, clear the tokens and
       // throw an error.
       setAuthTokens(undefined, undefined);
-      throw new Error(message);
+      throw new Error(error.response);
     })
     .catch(() => {
       return {
@@ -51,13 +48,13 @@ export function loadUserId(args: ArgsT): Promise<any> {
 
 export type QueryKeyT = {};
 
-export function queryKey(args: QueryKeyT) {
+export function loadUserIdQueryKey(args: QueryKeyT) {
   return createQueryKey<QueryKeyT>('loadUserId', args);
 }
 
 export const useLoadUserId = (authState?: AuthState) => {
   return useQuery({
-    queryKey: queryKey({}),
+    queryKey: loadUserIdQueryKey({}),
     queryFn: () => {
       return loadUserId({ maybeRefreshToken: true }).then((data) => {
         if (authState) authState.setUserId(data.userId);
@@ -69,6 +66,6 @@ export const useLoadUserId = (authState?: AuthState) => {
 
 export const invalidateLoadUserId = (args: QueryKeyT) => {
   return queryClient.invalidateQueries({
-    queryKey: queryKey(args),
+    queryKey: loadUserIdQueryKey(args),
   });
 };

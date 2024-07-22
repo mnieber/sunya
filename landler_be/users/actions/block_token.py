@@ -1,4 +1,4 @@
-from login.models import BlockedToken
+from users.models import BlockedToken
 
 
 def block_token(jti):

@@ -1,13 +1,13 @@
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import { updateSources } from 'mobx-resource-states';
 import React from 'react';
 import { withContextProps } from 'react-props-from-context';
-import { isRunning } from '/src/api/ObservableMutation';
-import { isQueryLoading } from '/src/api/ObservableQuery';
+import { isRunning } from '/src/api/lib/ObservableMutation';
+import { isQueryLoading } from '/src/api/lib/ObservableQuery';
 import { BlogPostsContext } from '/src/blogPosts/hooks/useBlogPostsContext';
 import { useBlogPostsState } from '/src/blogPosts/hooks/useBlogPostsState';
 import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
-import { updateSources } from '/src/resourceStates';
 import { createGetProps } from '/src/utils/createGetProps';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 
@@ -32,6 +32,11 @@ export const BlogPostsStateProvider = observer(
             ['updating', () => isRunning(deleteBlogPosts), 'deleteBlogPosts']
           );
         },
+        get blogPost() {
+          return updateSources({
+            resource: blogPostsState.blogPostsCtr.highlight.item,
+          });
+        },
       })
     );
 
@@ -39,7 +44,9 @@ export const BlogPostsStateProvider = observer(
       return createGetProps({
         blogPostsState: () => blogPostsState,
         blogPosts: () => cache.blogPosts,
+        blogPost: () => cache.blogPost,
         blogPostsDeletion: () => blogPostsState.blogPostsCtr.deletion,
+        blogPostsEdit: () => blogPostsState.blogPostsCtr.edit,
         blogPostsHighlight: () => blogPostsState.blogPostsCtr.highlight,
         blogPostsSelection: () => blogPostsState.blogPostsCtr.selection,
       });

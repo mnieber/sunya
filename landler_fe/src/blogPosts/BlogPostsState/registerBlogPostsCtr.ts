@@ -1,38 +1,87 @@
 import { Cbs } from 'aspiration';
 import * as R from 'ramda';
 import { mapDataToProps } from 'skandha';
-import { Deletion, Selection, handleSelectItem } from 'skandha-facets';
-import { correctHighlight } from 'skandha-facets/policies';
+import {
+  Deletion,
+  Edit,
+  Selection,
+  handleSelectItem,
+  topOfTheList,
+} from 'skandha-facets';
+import * as FacetPolicies from 'skandha-facets/policies';
+import {
+  DragSourceFromNewItem,
+  correctHighlight,
+  createInsertionPreview,
+} from 'skandha-facets/policies';
 import { registerCtr } from 'skandha-mobx';
 import { BlogPostT } from '/src/api/types';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
+import { ObjT } from '/src/utils/types';
 
 const mapData = (state: BlogPostsState) => {
   const ctr = state.blogPostsCtr;
-  const getBlogPostById = (x: string) => ctr.data.blogPostById[x];
+  const getBlogPostById = (x: string | undefined) =>
+    x ? ctr.data.blogPostById[x] : undefined;
 
   mapDataToProps(ctr, {
-    filtering: {
-      inputItems: () => ctr.data.blogPosts,
-    },
     data: {
       blogPosts: () => state.props.getBlogPosts(),
       filteredBlogPosts: () => ctr.filtering.filteredItems,
     },
+    filtering: {
+      inputItems: () => ctr.data.blogPosts,
+    },
     selection: {
       selectableIds: () => R.map(R.prop('id'), ctr.data.filteredBlogPosts),
+      items: () =>
+        ctr.selection.itemIds
+          .map(getBlogPostById)
+          .filter((x?: BlogPostT) => !!x) as BlogPostT[],
     },
     highlight: {
-      item: () =>
-        ctr.highlight.itemId
-          ? getBlogPostById(ctr.highlight.itemId)
-          : undefined,
+      highlightableIds: () => R.map(R.prop('id'), ctr.data.filteredBlogPosts),
+      item: () => getBlogPostById(ctr.highlight.itemId),
+    },
+    insertion: {
+      inputItems: () => ctr.data.blogPosts ?? [],
+      preview: () =>
+        createInsertionPreview(
+          [DragSourceFromNewItem],
+          ctr
+        )(ctr.insertion.inputItems),
+    },
+    display: {
+      items: () => ctr.insertion.preview,
     },
   });
 };
 
 const setCallbacks = (state: BlogPostsState) => {
   const ctr = state.blogPostsCtr;
+
+  ctr.addition.callbackMap = {
+    add: {
+      stageAdd() {
+        ctr.addition.parentId = ctr.highlight.itemId || topOfTheList;
+      },
+      highlightNewItem() {
+        ctr.selection.selectItem({ itemId: ctr.addition.item?.id });
+        ctr.edit.enable();
+      },
+    },
+    cancel: {
+      unstageAdd(parentId: string | undefined) {
+        ctr.edit.cancel();
+        // The UI will restore the previous url
+      },
+    },
+    confirm: {
+      confirmAdd() {
+        FacetPolicies.newItemsAreInsertedWhenConfirmed(ctr.addition);
+      },
+    },
+  };
 
   ctr.deletion.callbackMap = {
     delete: {
@@ -42,14 +91,28 @@ const setCallbacks = (state: BlogPostsState) => {
     },
   };
 
+  ctr.edit.callbackMap = {
+    save: {
+      saveItem(this: Cbs<Edit['save']>) {
+        return state.props
+          .saveBlogPost(this.args.values)
+          .then((response: ObjT) => {
+            ctr.addition.confirm();
+            return response;
+          });
+      },
+    },
+    cancel: {
+      onCancel() {
+        ctr.addition.cancel();
+      },
+    },
+  };
+
   ctr.selection.callbackMap = {
-    // Here we implement the callbacks of the Selection.selectItem function.
     selectItem: {
-      // Implement the 'selectItem' callback.
       selectItem(this: Cbs<Selection['selectItem']>) {
-        // Perform the selection
         handleSelectItem(ctr.selection, this.args);
-        // Apply the policy that highlight follows selection
         if (!this.args.isCtrl && !this.args.isShift) {
           ctr.highlight.set({ itemId: this.args.itemId });
         }
@@ -58,17 +121,11 @@ const setCallbacks = (state: BlogPostsState) => {
   };
 
   ctr.filtering.callbackMap = {
-    // Here we implement the callbacks of the Filtering.setEnabled function.
     setEnabled: {
-      // Implement the 'exit' callback. This is a special callback that is
-      // called automatically when the Filtering.setEnabled function exits.
       exit() {
-        // When exiting 'setEnabled' we make a correction to the highlight
-        // if it points to an item that is filtered out.
         correctHighlight(
           ctr.highlight,
-          (ctr.filtering.inputItems ?? []).map((x: BlogPostT) => x.id),
-          ctr.filtering.filteredItems.map((x: BlogPostT) => x.id)
+          (ctr.data.blogPosts ?? []).map((x: BlogPostT) => x.id)
         );
       },
     },

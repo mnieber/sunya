@@ -1,6 +1,6 @@
 import { runInAction } from 'mobx';
 import React from 'react';
-import { ObservableQuery, QueryDataT } from '/src/api/ObservableQuery';
+import { ObservableQuery, QueryDataT } from '/src/api/lib/ObservableQuery';
 import { flags } from '/src/app/flags';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 

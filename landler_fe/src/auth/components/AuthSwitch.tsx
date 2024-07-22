@@ -1,18 +1,14 @@
 import { Redirect, Route, Switch } from 'wouter';
 import { SignInPage } from '/src/auth/components/SignInPage';
-import { type AuthRoutesT } from '/src/auth/routeTable';
-import { type BlogsRoutesT } from '/src/blogs/routeTable';
-import { getRouteFns } from '/src/routes/routeTable';
+import { authRoutes } from '/src/auth/routes';
 
 export const AuthSwitch = () => {
-  const routeFns = getRouteFns<BlogsRoutesT & AuthRoutesT>();
-
   return (
     <Switch>
-      <Route path={routeFns.home()}>
+      <Route path={authRoutes.home()}>
         <Redirect to="/blogs" />
       </Route>
-      <Route path={routeFns.signIn()}>
+      <Route path={authRoutes.signIn()}>
         <SignInPage />
       </Route>
     </Switch>

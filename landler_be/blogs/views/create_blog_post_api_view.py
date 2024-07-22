@@ -4,7 +4,7 @@ from blogs.actions.create_blog_post import (
 )
 from blogs.permissions import user_is_blog_owner
 from blogs.serializers import BlogPostSerializer, CreateBlogPostFormSerializer
-from blogs.shortcuts import get_blog_or_404
+from blogs.shortcuts import get_blog_or_400
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -25,7 +25,7 @@ class CreateBlogPostApiView(APIView):
             200: BlogPostSerializer,
         },
         data=dict(
-            blog=get_blog_or_404,
+            blog=get_blog_or_400,
         ),
         permissions=[
             (

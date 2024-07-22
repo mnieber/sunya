@@ -1,0 +1,113 @@
+import typing as T
+
+if T.TYPE_CHECKING:
+    pass
+
+from blogs.frontend.app import Module, Mutation, Facet, Trim, Route, Query, Form
+from sunya import EntityWithId, actor_to_str
+
+
+class Blogs(Module):
+    class Types:
+        class Blog(EntityWithId):
+            name: str
+            description: T.Optional[str]
+
+        class BlogPost(EntityWithId):
+            blog: "Blogs.Types.Blog"
+            title: str
+            content: T.Optional[str]
+
+    class Mutations:
+        class CreateBlog(Mutation):
+            class Args:
+                createBlogForm: Form
+
+        class CreateBlogPost(Mutation):
+            class Args:
+                createBlogPostForm: Form
+                blog: "Blogs.Types.Blog"
+
+        class DeleteBlogPosts(Mutation):
+            class Args:
+                deleteBlogPostsForm: Form
+
+    class Queries:
+        class GetBlogs(Query):
+            pass
+
+        class GetBlogPosts(Query):
+            pass
+
+    class States:
+        class BlogsState:
+            class Containers:
+                class BlogsCtr:
+                    data: Facet
+                    selection: Facet
+                    highlight: Facet
+
+        class BlogPostsState:
+            class Containers:
+                class BlogPostsCtr:
+                    data: Facet
+                    addition: Facet
+                    deletion: Facet
+                    display: Facet
+                    dragAndDrop: Facet
+                    edit: Facet
+                    filtering: Facet
+                    highlight: Facet
+                    insertion: Facet
+                    selection: Facet
+
+    class Routes:
+        class Blogs(Route):
+            pass
+
+        class Blog(Route):
+            pass
+
+    class StateProviders:
+        class BlogsStateProvider:
+            pass
+
+        class BlogPostsStateProvider:
+            pass
+
+    class Views:
+        class BlogPostFormView:
+            pass
+
+        class BlogListView:
+            pass
+
+        class BlogPostListView:
+            pass
+
+    class Effects:
+        class SelectBlogEffect:
+            pass
+
+    class Components:
+        class DialogButton:
+            trim: Trim
+
+        class ToolButton:
+            trim: Trim
+
+
+create_blog_mutation = Blogs.Mutations.CreateBlog()
+create_blog_post_mutation = Blogs.Mutations.CreateBlogPost()
+delete_blog_posts_action = Blogs.Mutations.DeleteBlogPosts()
+blogs_route = Blogs.Routes.Blogs()
+
+
+@actor_to_str.method((Blogs.Types.Blog,))
+def blog_to_str(blog):
+    return f"{blog.name}+:blog"
+
+
+@actor_to_str.method((Blogs.Types.BlogPost,))
+def blog_post_to_str(blog_post):
+    return f"{blog_post.title}+:blog"

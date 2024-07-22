@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import React from 'react';
-import { Deletion, Highlight, Selection } from 'skandha-facets';
+import { Addition, Deletion, Edit, Highlight, Selection } from 'skandha-facets';
 import { BlogPostT } from '/src/api/types';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
 
@@ -18,15 +18,25 @@ export const useBlogPostsContext = () => {
 
 export const blogPostsCtx = R.mergeAll([
   {
-    blogPostsState: [
+    blogPost: [
+      //
       useBlogPostsContext,
-      'blogPostsState',
-    ] as any as BlogPostsState,
-    blogPosts: [useBlogPostsContext, 'blogPosts'] as any as BlogPostT[],
+      'blogPost',
+    ] as any as BlogPostT,
+    blogPosts: [
+      //
+      useBlogPostsContext,
+      'blogPosts',
+    ] as any as BlogPostT[],
+    blogPostsAddition: [
+      useBlogPostsContext,
+      'blogPostsAddition',
+    ] as any as Addition,
     blogPostsDeletion: [
       useBlogPostsContext,
       'blogPostsDeletion',
     ] as any as Deletion,
+    blogPostsEdit: [useBlogPostsContext, 'blogPostsEdit'] as any as Edit,
     blogPostsHighlight: [
       useBlogPostsContext,
       'blogPostsHighlight',
@@ -35,5 +45,9 @@ export const blogPostsCtx = R.mergeAll([
       useBlogPostsContext,
       'blogPostsSelection',
     ] as any as Selection,
+    blogPostsState: [
+      useBlogPostsContext,
+      'blogPostsState',
+    ] as any as BlogPostsState,
   },
 ]);

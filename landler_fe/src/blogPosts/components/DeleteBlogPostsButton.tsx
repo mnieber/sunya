@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
+import { isUpdating } from 'mobx-resource-states';
 import { withContextProps } from 'react-props-from-context';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
-import { isUpdating } from '/src/resourceStates/getState';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
@@ -28,7 +28,6 @@ export const DeleteBlogPostsButton = observer(
         disabled={disabled}
         className={cn(
           'DeleteBlogPostsButton',
-          'my-4',
           {
             'DeleteBlogPostsButton--enabled': !disabled,
             'DeleteBlogPostsButton--disabled': disabled,

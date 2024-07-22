@@ -7,6 +7,7 @@ import { BlogPostsStateProvider } from '/src/blogPosts/components/BlogPostsState
 import { BlogsStateProvider } from '/src/blogs/components/BlogsStateProvider';
 import { BlogsSwitch } from '/src/blogs/components/BlogsSwitch';
 import { DashboardFrame } from '/src/frames/components/DashboardFrame';
+import { MainView } from '/src/frames/components/MainView';
 import { L } from '/src/frames/layout';
 import { cn } from '/src/utils/classnames';
 
@@ -22,7 +23,9 @@ export const App = () => {
             <AuthSwitch />
             <BlogsStateProvider>
               <BlogPostsStateProvider>
-                <BlogsSwitch />
+                <MainView className="mx-auto my-auto">
+                  <BlogsSwitch />
+                </MainView>
               </BlogPostsStateProvider>
             </BlogsStateProvider>
           </DashboardFrame>

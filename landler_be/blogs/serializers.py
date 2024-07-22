@@ -1,7 +1,7 @@
 from blogs.actions.create_blog import CreateBlogForm
 from blogs.actions.create_blog_post import CreateBlogPostForm
 from blogs.models import Blog, BlogPost
-
+from blogs.actions.update_blog_post import UpdateBlogPostForm
 from common.form_serializer import FormSerializer
 from common.serializers import BaseModelSerializer, ReadSerializerMixin
 from blogs.actions.delete_blog_posts import DeleteBlogPostsForm
@@ -16,6 +16,11 @@ class CreateBlogFormSerializer(FormSerializer):
 class CreateBlogPostFormSerializer(FormSerializer):
     class Meta:
         form_class = CreateBlogPostForm
+
+
+class UpdateBlogPostFormSerializer(FormSerializer):
+    class Meta:
+        form_class = UpdateBlogPostForm
 
 
 class BlogSerializer(ReadSerializerMixin, BaseModelSerializer):

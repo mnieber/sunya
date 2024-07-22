@@ -1,7 +1,6 @@
 import * as R from 'ramda';
 import React from 'react';
 import { AuthState } from '/src/auth/AuthState';
-import { AuthNav } from '/src/auth/routeTable';
 
 export const AuthStateContext = React.createContext<any>(null);
 
@@ -18,6 +17,5 @@ export const useAuthStateContext = () => {
 export const authStateCtx = R.mergeAll([
   {
     authState: [useAuthStateContext, 'authState'] as any as AuthState,
-    authNav: [useAuthStateContext, 'authNav'] as any as AuthNav,
   },
 ]);

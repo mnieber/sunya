@@ -1,6 +1,6 @@
 export {
   invalidateLoadUserId,
   loadUserId,
-  queryKey as loadUserIdQueryKey,
+  loadUserIdQueryKey,
   useLoadUserId,
 } from './useLoadUserId';

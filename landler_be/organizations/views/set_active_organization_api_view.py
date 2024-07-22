@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from api.utils.extend_schema import extend_schema
 from organizations.permissions import user_is_organization_member
 from organizations.serializers import OrganizationSerializer
-from organizations.shortcuts import get_organization_or_404
+from organizations.shortcuts import get_organization_or_400
 from common.serializers import EmptySerializer
 
 
@@ -16,7 +16,7 @@ class SetActiveOrganizationApiView(APIView):
             200: OrganizationSerializer,
         },
         data=dict(
-            organization=get_organization_or_404,
+            organization=get_organization_or_400,
         ),
         permissions=[
             (

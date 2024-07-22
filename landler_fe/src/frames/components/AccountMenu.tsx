@@ -3,12 +3,13 @@ import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
 import { useSignOut } from '/src/auth/endpoints/mutations/useSignOut';
 import { authStateCtx } from '/src/auth/hooks/useAuthStateContext';
+import { authNav } from '/src/auth/routes';
 import { Icon } from '/src/frames/components';
 import { DialogButtonS } from '/src/frames/components/DialogButton';
 import { MenuItemS } from '/src/frames/components/MenuItem';
 import { L } from '/src/frames/layout';
 import { createContextMenu } from '/src/frames/utils/createContextMenu';
-import { navTo } from '/src/routes/routeTable';
+import { navTo } from '/src/routes/navHandler';
 import { cn } from '/src/utils/classnames';
 import { useBuilder } from '/src/utils/hooks';
 
@@ -22,7 +23,6 @@ export type PropsT = {
 
 const ContextProps = {
   authState: authStateCtx.authState,
-  authNav: authStateCtx.authNav,
 };
 
 export const AccountMenu = observer(
@@ -70,7 +70,7 @@ export const AccountMenu = observer(
           transition
         >
           {!props.authState.isAuthenticated && (
-            <StyledMenuItem onClick={() => navTo(props.authNav.signIn())}>
+            <StyledMenuItem onClick={() => navTo(authNav.signIn({}))}>
               <Icon className={cn(MenuItemS.Icon())} name="signIn" />
               Sign In
             </StyledMenuItem>
@@ -79,7 +79,7 @@ export const AccountMenu = observer(
             <StyledMenuItem
               onClick={() => {
                 signOut({}).then(() => {
-                  navTo(props.authNav.signIn());
+                  navTo(authNav.signIn({}));
                 });
               }}
             >

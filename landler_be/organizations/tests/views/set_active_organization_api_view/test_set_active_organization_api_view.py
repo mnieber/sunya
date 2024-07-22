@@ -1,3 +1,4 @@
+from common.utils.test_utils import has_error_code
 import pytest
 from django.urls import reverse
 from rest_framework import status
@@ -83,4 +84,5 @@ class TestSetActiveOrganizationApiView:
         response = api_client.post(url)
 
         # Then
-        assert response.status_code == status.HTTP_404_NOT_FOUND
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert has_error_code(response, "ORGANIZATION_NOT_FOUND")

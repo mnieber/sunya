@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { isLoading } from 'mobx-resource-states';
 import * as R from 'ramda';
 import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { withContextProps } from 'react-props-from-context';
@@ -9,13 +10,17 @@ import {
 import { BlogPostT } from '/src/api/types';
 import { BlogPostListViewItem } from '/src/blogPosts/components';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
-import { isLoading } from '/src/resourceStates/getState';
+import { LoaderBar } from '/src/frames/components/LoaderBar';
+import { L } from '/src/frames/layout';
 import { createKeyDownHandler } from '/src/utils';
+import { cn } from '/src/utils/classnames';
 
 // Import styles
 import './BlogPostListView.scss';
 
-export type PropsT = {};
+export type PropsT = {
+  className?: any;
+};
 
 const ContextProps = {
   blogPosts: blogPostsCtx.blogPosts,
@@ -25,18 +30,14 @@ const ContextProps = {
 
 export const BlogPostListView = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
-    if (isLoading(props.blogPosts)) {
-      return <div>Loading...</div>;
+    if (!props.blogPosts.length || isLoading(props.blogPosts)) {
+      return <BlogPostListViewLoader />;
     }
 
-    // This UI connecter creates a mouseclick-handler for
-    // each BlogPostListViewItem.
     const selectionUIConnector = new SelectionUIConnector({
       selection: props.blogPostsSelection,
     });
 
-    // I prefer to handle key-events in a KeyboardEventHandler instead
-    // of handling them in the BlogPostListViewItem.
     const keyHandlers = createSelectionKeyHandlers(props.blogPostsSelection);
 
     const blogPostDivs = props.blogPosts.map((blogPost: BlogPostT) => (
@@ -58,10 +59,28 @@ export const BlogPostListView = observer(
         handleKeys={R.keys(keyHandlers)}
         onKeyEvent={createKeyDownHandler(keyHandlers)}
       >
-        <div className="BlogPostListView" tabIndex={1}>
+        <div className={cn('BlogPostListView', props.className)} tabIndex={1}>
           {blogPostDivs}
         </div>
       </KeyboardEventHandler>
     );
   }, ContextProps)
 );
+
+export const BlogPostListViewLoader = (props: { className?: any }) => {
+  const loaderBars = ['1', '2', '3'].map((id: string) => {
+    return <LoaderBar key={`item-${id}`} className={cn('my-1 h-6')} />;
+  });
+
+  return (
+    <div
+      className={cn('BlogPostListViewLoader', [
+        L.col.banner(),
+        'min-w-[50px]',
+        props.className,
+      ])}
+    >
+      {loaderBars}
+    </div>
+  );
+};

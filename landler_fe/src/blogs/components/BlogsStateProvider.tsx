@@ -1,12 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import { updateSources } from 'mobx-resource-states';
 import React from 'react';
-import { isQueryLoading } from '/src/api/ObservableQuery';
+import { isQueryLoading } from '/src/api/lib/ObservableQuery';
 import { BlogsContext } from '/src/blogs/hooks/useBlogsContext';
 import { useBlogsState } from '/src/blogs/hooks/useBlogsState';
-import { BlogsNav, BlogsRoutesT } from '/src/blogs/routeTable';
-import { updateSources } from '/src/resourceStates';
-import { getRouteFns } from '/src/routes/routeTable';
 import { createGetProps } from '/src/utils/createGetProps';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 
@@ -36,10 +34,6 @@ export const BlogsStateProvider = observer((props: PropsT) => {
     })
   );
 
-  const blogsNav = useBuilder(
-    () => new BlogsNav({ routeFns: getRouteFns<BlogsRoutesT>() })
-  );
-
   const getBlogsContext = () => {
     return createGetProps({
       blogsState: () => blogsState,
@@ -47,7 +41,6 @@ export const BlogsStateProvider = observer((props: PropsT) => {
       blog: () => cache.blog,
       blogsHighlight: () => blogsState.blogsCtr.highlight,
       blogsSelection: () => blogsState.blogsCtr.selection,
-      blogsNav: () => blogsNav,
     });
   };
 
