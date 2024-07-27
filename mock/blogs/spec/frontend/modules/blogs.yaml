@@ -1,0 +1,76 @@
+name: blogs
+types:
+- name: Blog
+  fields:
+  - name: id
+    type: UUID
+  - name: name
+    type: str
+  - name: description
+    type: Optional[str]
+- name: BlogPost
+  fields:
+  - name: id
+    type: UUID
+  - name: blog
+    type: Blog
+  - name: title
+    type: str
+  - name: content
+    type: Optional[str]
+mutations:
+- name: CreateBlog
+  args:
+  - name: createBlogForm
+    type: Form
+- name: CreateBlogPost
+  args:
+  - name: createBlogPostForm
+    type: Form
+  - name: blog
+    type: Blog
+- name: DeleteBlogPosts
+  args:
+  - name: deleteBlogPostsForm
+    type: Form
+queries:
+- name: GetBlogs
+- name: GetBlogPosts
+states:
+- name: BlogsState
+  containers:
+  - name: BlogsCtr
+    facets:
+    - name: data
+    - name: selection
+    - name: highlight
+- name: BlogPostsState
+  containers:
+  - name: BlogPostsCtr
+    facets:
+    - name: data
+    - name: addition
+    - name: deletion
+    - name: display
+    - name: dragAndDrop
+    - name: edit
+    - name: filtering
+    - name: highlight
+    - name: insertion
+    - name: selection
+routes:
+- name: Blogs
+- name: Blog
+state_providers:
+- name: BlogsStateProvider
+- name: BlogPostsStateProvider
+views:
+- name: BlogPostFormView
+- name: BlogListView
+- name: BlogPostListView
+effects:
+- name: SelectBlogEffect
+components:
+- name: DialogButton
+- name: ToolButton
+

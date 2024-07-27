@@ -1,0 +1,54 @@
+name: blogs
+models:
+- name: Blog
+  fields:
+  - name: id
+    type: UUID
+  - name: name
+    type: str
+  - name: description
+    type: Optional[str]
+- name: BlogPost
+  fields:
+  - name: id
+    type: UUID
+  - name: blog
+    type: Blog
+  - name: title
+    type: str
+  - name: content
+    type: Optional[str]
+enums:
+- name: BlogAudiences
+  members:
+  - name: EXPERT
+    value: expert
+  - name: NOVICE
+    value: novice
+  - name: ANY
+    value: any
+actions:
+- name: create_blog
+  args:
+  - name: create_blog_form
+    type: Form
+- name: create_blog_post
+  args:
+  - name: create_blog_post_form
+    type: Form
+  - name: blog
+    type: Blog
+- name: update_blog
+  args:
+  - name: update_blog_form
+    type: Form
+  - name: blog
+    type: Blog
+api_views:
+- name: CreateBlog
+  filters: []
+- name: CreateBlogPost
+  filters: []
+- name: UpdateBlog
+  filters: []
+

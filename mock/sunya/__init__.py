@@ -16,6 +16,7 @@ from .scenarios.store import (  # noqa
     register,
 )
 from .utils.ids import create_uuid  # noqa
+from .utils.yaml import dict2yaml  # noqa
 from .utils.get_module_and_scenario_names import get_module_and_scenario_names  # noqa
 from .utils.case import camel_to_snake, l0  # noqa
 from .utils.extract_field_types import extract_field_types  # noqa

@@ -1,7 +1,7 @@
 import typing as T
 
 if T.TYPE_CHECKING:
-    from mock.landler.backend.app import Plots
+    from landler.backend.app import Plots
 
 from landler.backend.modules.organizations import Organizations
 from landler.backend.app import Action, ApiView, Enum, Form, Module

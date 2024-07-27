@@ -2,6 +2,7 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
 
+from sunya.utils.yaml import dict2yaml
 from .get_module_description_context import get_module_description_context
 from .get_scenario_description_context import get_scenario_description_context
 
@@ -12,9 +13,8 @@ class PromptWriter:
         self.templates_dir = Path(templates_dir).absolute()
         self.jinja_env = Environment(loader=FileSystemLoader(self.templates_dir))
 
-    def get_module_description(self, module):
-        context = get_module_description_context(module)
-        return self._render_template("spec.md.j2", context)
+    def get_module_spec(self, module):
+        return dict2yaml(get_module_description_context(module))
 
     def get_scenario_description(self, scenario_name, scenario):
         context = get_scenario_description_context(scenario_name, scenario)

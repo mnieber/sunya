@@ -78,10 +78,10 @@ def _get_members(container):
 def _get_filters(api_view):
     result = []
     filters = getattr(api_view, "Filters", None) or []
-    result.append(
-        dict(
-            name=camel_to_snake(filter_name),
+    for filter_name in filters:
+        result.append(
+            dict(
+                name=camel_to_snake(filter_name),
+            )
         )
-        for filter_name in filters
-    )
     return result

@@ -1,10 +1,10 @@
 # Instructions for writing backend scenario files
 
-When writing the backend scenario file for a milestone in the roadmap, please follow the example in the backend/scenarios/m1_a_user_creates_a_blog.py file.
+When writing the frontend scenario file for a milestone in the roadmap, please follow the example in the frontend/scenarios/m1_a_user_creates_a_blog.py file.
 
-Taking the roadmap.md file as input, your task is to write a backend scenario script for each milestone in the roadmap.
+Taking the roadmap.md file as input, your task is to write a frontend scenario script for each milestone in the roadmap.
 
-## Purpose of a backend scenario
+## Purpose of a frontend scenario
 
 The purpose of a backend scenario is to document and communicate the use-cases that the backend must support to the backend development team. The task of writing backend scenarios fits into a greater overarching task of creating the complete specification of the full application. For this reason, there also exist frontend scenarios that are used by the frontend team.
 
