@@ -51,8 +51,8 @@ def run(args):
         scenario = run_scenario(
             _get_scenario_path(scenario_path_by_name, scenario_name)
         )
-        scenario_md = prompt_writer.get_scenario_description(scenario_name, scenario)
-        file_writer.write_scenario(scenario_name, scenario_md)
+        scenario_yaml = prompt_writer.get_scenario_description(scenario_name, scenario)
+        file_writer.write_scenario(scenario_name, scenario_yaml)
 
 
 def _get_scenario_path(scenario_path_by_name, scenario_name):

@@ -2,4 +2,4 @@ from yaml import dump
 
 
 def dict2yaml(x):
-    return dump(x, sort_keys=False)
+    return dump(x, sort_keys=False, width=1000)

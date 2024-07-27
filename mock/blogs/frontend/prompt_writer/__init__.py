@@ -4,7 +4,9 @@ from jinja2 import Environment, FileSystemLoader
 
 from sunya.utils.yaml import dict2yaml
 from .get_module_description_context import get_module_description_context
-from .get_scenario_description_context import get_scenario_description_context
+from blogs.stack.prompt_writer.get_scenario_description_context import (
+    get_scenario_description_context,
+)
 
 
 class PromptWriter:
@@ -17,8 +19,7 @@ class PromptWriter:
         return dict2yaml(get_module_description_context(module))
 
     def get_scenario_description(self, scenario_name, scenario):
-        context = get_scenario_description_context(scenario_name, scenario)
-        return self._render_template("scenario.md.j2", context)
+        return dict2yaml(get_scenario_description_context(scenario_name, scenario))
 
     def _render_template(self, fn, context):
         template = self.jinja_env.get_template(fn)
