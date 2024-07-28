@@ -1,0 +1,24 @@
+name: plot_lists
+models:
+  - name: PlotList
+    fields:
+      - name: name
+        type: str
+      - name: plots
+        type: list[Plot]
+      - name: project
+        type: Project
+  - name: Project2PlotList
+    fields:
+      - name: plot_list
+        type: PlotList
+      - name: project
+        type: Project
+enums: []
+actions:
+  - name: create_plot
+    args:
+      - name: create_plot_form
+        type: Form
+api_views: []
+

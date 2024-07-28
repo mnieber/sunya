@@ -16,12 +16,17 @@ def parse_args():
 
 all_module_names = [
     "backend/calculations",
-    "backend/users",
+    "backend/facts",
     "backend/organizations",
-    "backend/projects",
-    "backend/plots",
-    "backend/project_analyses",
     "backend/plot_analyses",
+    "backend/plot_lists",
+    "backend/plot_questionnaires",
+    "backend/plots",
+    "backend/polygons",
+    "backend/project_analyses",
+    "backend/project_analysis_jobs",
+    "backend/projects",
+    "backend/users",
 ]
 
 all_scenario_names = [
@@ -33,12 +38,17 @@ all_scenario_names = [
 
 module_by_name = {
     "backend/calculations": Calculations,
-    "backend/users": Users,
+    "backend/facts": Facts,
     "backend/organizations": Organizations,
-    "backend/projects": Projects,
-    "backend/plots": Plots,
-    "backend/project_analyses": ProjectAnalyses,
     "backend/plot_analyses": PlotAnalyses,
+    "backend/plot_lists": PlotLists,
+    "backend/plot_questionnaires": PlotQuestionnaires,
+    "backend/plots": Plots,
+    "backend/polygons": Polygons,
+    "backend/project_analyses": ProjectAnalyses,
+    "backend/project_analysis_jobs": ProjectAnalysisJobs,
+    "backend/projects": Projects,
+    "backend/users": Users,
 }
 
 scenario_path_by_name = {}

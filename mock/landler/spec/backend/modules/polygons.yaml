@@ -1,0 +1,14 @@
+name: polygons
+models:
+  - name: Polygon
+    fields:
+      - name: polygon
+        type: JSON
+      - name: crc
+        type: str
+      - name: area
+        type: float
+enums: []
+actions: []
+api_views: []
+

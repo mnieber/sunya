@@ -1,0 +1,24 @@
+name: project_analysis_jobs
+models:
+  - name: ProjectAnalysisJob
+    fields:
+      - name: project
+        type: Project
+      - name: scheduled_at
+        type: datetime
+      - name: repeats_every
+        type: timedelta]
+      - name: is_active
+        type: bool
+  - name: ProjectAnalysisQueue
+    fields:
+      - name: project_analysis_jobs
+        type: list[ProjectAnalysisJob]
+enums: []
+actions:
+  - name: create_project_analysis_job
+    args:
+      - name: project
+        type: Project
+api_views: []
+
