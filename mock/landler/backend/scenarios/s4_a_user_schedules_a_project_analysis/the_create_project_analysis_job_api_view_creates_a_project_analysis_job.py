@@ -1,5 +1,6 @@
 from landler.backend.app import *
 from sunya import add_step, register
+from sunya.utils import get_time
 
 
 def the_create_project_analysis_job_api_view_creates_a_project_analysis_job(
@@ -22,7 +23,7 @@ def the_create_project_analysis_job_api_view_creates_a_project_analysis_job(
             project_analysis_job = register(
                 ProjectAnalysisJobs.Models.ProjectAnalysisJob(
                     project=project,
-                    scheduled_at=datetime.now(),
+                    scheduled_at=get_time.now(bump=True),
                 ),
                 p_project_analysis_job,
             )
