@@ -1,4 +1,4 @@
-from sunya import extract_field_types, camel_to_snake, l0
+from sunya.utils import extract_field_types, camel_to_snake, l0
 
 
 def get_module_description_context(module):

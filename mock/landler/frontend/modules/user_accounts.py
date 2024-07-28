@@ -13,10 +13,10 @@ class UserAccounts(Module):
             pass
 
 
-sign_up_route = Route()
-sign_in_route = Route()
-user_account_route = Route()
-organization_route = Route()
+sign_up_route = Route(name="sign-up")
+sign_in_route = Route(name="sign-in")
+user_account_route = Route(name="user-account")
+organization_route = Route(name="organization")
 
 user_account_view = UserAccounts.Components.UserAccountView()
 organization_picker = UserAccounts.Components.OrganizationPicker()

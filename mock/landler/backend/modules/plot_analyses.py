@@ -4,21 +4,19 @@ from datetime import datetime
 if T.TYPE_CHECKING:
     pass
 
-from uuid import UUID
 
 from landler.backend.modules.plots import Plots
 from landler.backend.modules.project_analyses import ProjectAnalyses
 from landler.stack.entities import Enum, Module
 from blogs.backend.entities import Action
-from sunya import Entity, MemField, actor_to_str, extend
+from sunya import EntityWithId, MemField, actor_to_str, extend
 
 
 class PlotAnalyses(Module):
     class Models:
-        class PlotAnalysis(Entity):
+        class PlotAnalysis(EntityWithId):
             """A Django model that contains a plot analysis."""
 
-            id: UUID
             plot: Plots.Models.Plot
             project_analysis: ProjectAnalyses.Models.ProjectAnalysis
             now: datetime

@@ -1,5 +1,4 @@
-from sunya import get_actor_str, fact_to_string
-from sunya.scenarios.store import NoValue, get_entity_delta
+from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
 
 
 def get_scenario_description_context(scenario_fn, scenario):

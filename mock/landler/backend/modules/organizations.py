@@ -1,18 +1,16 @@
 import typing as T
-from uuid import UUID
 
 from landler.backend.modules.users import Users
 from landler.backend.entities import Action, ApiView
 from landler.stack.entities import Enum, Form, Module
-from sunya import Entity, actor_to_str
+from sunya import Entity, EntityWithId, actor_to_str
 
 
 class Organizations(Module):
     class Models:
-        class Organization(Entity):
+        class Organization(EntityWithId):
             """A Django model that contains a organization."""
 
-            id: UUID
             name: str
             memberships: T.List["Organizations.Models.OrganizationMembership"] = []
 

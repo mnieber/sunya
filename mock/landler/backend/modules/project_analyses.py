@@ -1,6 +1,5 @@
 import typing as T
 from datetime import datetime
-from uuid import UUID
 
 if T.TYPE_CHECKING:
     pass
@@ -10,12 +9,12 @@ from landler.backend.modules.projects import Projects
 from landler.stack.entities import Module, Enum
 from blogs.backend.entities import Action
 
-from sunya import Entity, MemField, actor_to_str, extend
+from sunya import EntityWithId, MemField, actor_to_str, extend
 
 
 class ProjectAnalyses(Module):
     class Models:
-        class ProjectAnalysis(Entity):
+        class ProjectAnalysis(EntityWithId):
             """A Django model that contains a project analysis.
 
             The project analysis will consider all historical data that
@@ -30,7 +29,6 @@ class ProjectAnalyses(Module):
             product is still running. In that case, we wait.
             """
 
-            id: UUID
             project: Projects.Models.Project
             job: ProjectAnalysisJobs.Models.ProjectAnalysisJob
             now: datetime

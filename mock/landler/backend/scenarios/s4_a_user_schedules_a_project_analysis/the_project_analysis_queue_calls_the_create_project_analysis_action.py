@@ -2,7 +2,7 @@ from landler.backend.app import *
 from landler.backend.modules.plot_lists import (
     get_project_plot_list_by_name,
 )
-from sunya import add_step, create_uuid, preregister, register
+from sunya import add_step, preregister, register
 
 
 def the_project_analysis_queue_calls_the_create_project_analysis_action(
@@ -74,7 +74,6 @@ def the_create_project_analysis_action_calls_the_create_plot_analysis_action(
     ):
         plot_analysis = register(
             PlotAnalyses.Models.PlotAnalysis(
-                id=create_uuid(),
                 plot=plot,
                 project_analysis=project_analysis,
                 now=project_analysis.now,

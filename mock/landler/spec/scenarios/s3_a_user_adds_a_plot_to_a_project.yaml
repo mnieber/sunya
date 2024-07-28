@@ -1,0 +1,86 @@
+scenario_name: a-user-adds-a-plot-to-a-project
+scenario_fn: s3_a_user_adds_a_plot_to_a_project
+steps:
+  - fact: The [:frontend] calls the [create-plot:api-view]
+    child_steps:
+      - fact: The [create-plot:api-view] calls the [create-plot:action] with the [create-plot-:form] to create a [my-plot@0+:plot] in the [my-project+:project]
+        actors_created:
+          - name: my-plot@0+:plot
+            deltas:
+              errors: '[] (None)'
+              is_draft: False (None)
+              name: my-plot (None)
+              owner: my-org+:organization (None)
+              plot_questionnaire: my-plot+:plot-questionnaire (None)
+              polygon: +:polygon (None)
+              sequence_number: 1 (None)
+        actors_updated:
+          - name: my-project+:project
+            deltas:
+              plot_lists: '[''default+:plot-list''] ([])'
+        child_steps:
+          - fact: The [create-plot:action] creates the [my-plot@0+:plot]
+            actors_created:
+              - name: my-plot@0+:plot
+                deltas:
+                  errors: '[] (None)'
+                  is_draft: False (None)
+                  name: my-plot (None)
+                  owner: my-org+:organization (None)
+                  plot_questionnaire: my-plot+:plot-questionnaire (None)
+                  polygon: +:polygon (None)
+                  sequence_number: 1 (None)
+          - fact: The [create-plot:action] calls the [add-plot-to-project:action] to add the [my-plot@0+:plot] to the [my-project+:project]
+            actors_updated:
+              - name: my-project+:project
+                deltas:
+                  plot_lists: '[''default+:plot-list''] ([])'
+  - fact: The [create-plot:api-view] calls the [create-plot:action] with the [create-plot-:form] to create a [my-plot@0+:plot] in the [my-project+:project]
+    actors_created:
+      - name: my-plot@0+:plot
+        deltas:
+          errors: '[] (None)'
+          is_draft: False (None)
+          name: my-plot (None)
+          owner: my-org+:organization (None)
+          plot_questionnaire: my-plot+:plot-questionnaire (None)
+          polygon: +:polygon (None)
+          sequence_number: 1 (None)
+    actors_updated:
+      - name: my-project+:project
+        deltas:
+          plot_lists: '[''default+:plot-list''] ([])'
+    child_steps:
+      - fact: The [create-plot:action] creates the [my-plot@0+:plot]
+        actors_created:
+          - name: my-plot@0+:plot
+            deltas:
+              errors: '[] (None)'
+              is_draft: False (None)
+              name: my-plot (None)
+              owner: my-org+:organization (None)
+              plot_questionnaire: my-plot+:plot-questionnaire (None)
+              polygon: +:polygon (None)
+              sequence_number: 1 (None)
+      - fact: The [create-plot:action] calls the [add-plot-to-project:action] to add the [my-plot@0+:plot] to the [my-project+:project]
+        actors_updated:
+          - name: my-project+:project
+            deltas:
+              plot_lists: '[''default+:plot-list''] ([])'
+  - fact: The [create-plot:action] creates the [my-plot@0+:plot]
+    actors_created:
+      - name: my-plot@0+:plot
+        deltas:
+          errors: '[] (None)'
+          is_draft: False (None)
+          name: my-plot (None)
+          owner: my-org+:organization (None)
+          plot_questionnaire: my-plot+:plot-questionnaire (None)
+          polygon: +:polygon (None)
+          sequence_number: 1 (None)
+  - fact: The [create-plot:action] calls the [add-plot-to-project:action] to add the [my-plot@0+:plot] to the [my-project+:project]
+    actors_updated:
+      - name: my-project+:project
+        deltas:
+          plot_lists: '[''default+:plot-list''] ([])'
+

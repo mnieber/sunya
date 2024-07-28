@@ -9,14 +9,10 @@ from blogs.stack.entities import *  # noqa
 
 
 class CalciumServer(Entity):
-    """ """
-
     url: str
 
 
 class CalciumPlotAnalysisJob(Entity):
-    """ """
-
     id: UUID
     polygon: "Polygons.Models.Polygon"
 

@@ -58,7 +58,6 @@ def run(args):
         file_writer.write_module_spec(module_name, module_spec_yaml)
 
     for scenario_name in scenario_names:
-        __import__("pudb").set_trace()  # zz
         scenario = run_scenario(
             _get_scenario_path(scenario_path_by_name, scenario_name)
         )

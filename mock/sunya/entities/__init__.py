@@ -1,7 +1,6 @@
 from dataclassy import dataclass
 from sunya.entities.actor_to_str import actor_to_str
-from sunya.utils.case import get_type_name
-from sunya.utils.ids import str_to_uuid
+from sunya.utils import get_type_name, str_to_uuid
 
 
 @dataclass(kw_only=True)

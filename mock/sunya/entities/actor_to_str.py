@@ -1,5 +1,5 @@
 from multimethods import MultiMethod
-from sunya.utils.case import camel_to_kebab
+from sunya.utils import camel_to_kebab
 
 
 def dispatch_actor_to_str(x):

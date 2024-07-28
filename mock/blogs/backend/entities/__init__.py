@@ -1,5 +1,5 @@
 from sunya import Entity, Fn, actor_to_str
-from sunya.utils.case import get_type_name
+from sunya.utils import get_type_name
 
 
 class Action(Fn):
