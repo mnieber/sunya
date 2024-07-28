@@ -1,0 +1,48 @@
+name: projects
+models:
+  - name: Project
+    fields:
+      - name: name
+        type: str
+      - name: memberships
+        type: list[ProjectMembership]
+  - name: ProjectMembership
+    fields:
+      - name: project
+        type: Project
+      - name: organization
+        type: Organization
+      - name: role
+        type: OrganizationInProjectRoles
+enums:
+  - name: OrganizationInProjectRoles
+    members:
+      - name: ADMIN
+        value: admin
+      - name: EDITOR
+        value: editor
+      - name: LAND_STEWARD
+        value: land_steward
+      - name: BUYER
+        value: buyer
+actions:
+  - name: create_project
+    args:
+      - name: create_project_form
+        type: Form
+  - name: add_organization_to_project
+    args:
+      - name: project
+        type: Project
+      - name: organization
+        type: Organization
+      - name: role
+        type: OrganizationInProjectRoles
+  - name: add_plot_to_project
+    args:
+      - name: project
+        type: Project
+      - name: plot
+        type: Plot
+api_views: []
+

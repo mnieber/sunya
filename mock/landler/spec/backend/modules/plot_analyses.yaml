@@ -1,0 +1,34 @@
+name: plot_analyses
+models:
+  - name: PlotAnalysis
+    fields:
+      - name: id
+        type: UUID
+      - name: plot
+        type: Plot
+      - name: project_analysis
+        type: ProjectAnalysis
+      - name: now
+        type: datetime
+      - name: status
+        type: PlotAnalysisStatus
+enums:
+  - name: PlotAnalysisStatus
+    members:
+      - name: RUNNING
+        value: running
+      - name: COMPLETED
+        value: completed
+      - name: FAILED
+        value: failed
+actions:
+  - name: create_plot_analysis
+    args:
+      - name: project_analysis
+        type: ProjectAnalysis
+  - name: run_plot_analysis
+    args:
+      - name: project_analysis
+        type: ProjectAnalysis
+api_views: []
+

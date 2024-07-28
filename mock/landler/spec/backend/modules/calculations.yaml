@@ -1,0 +1,32 @@
+name: calculations
+models:
+  - name: Calculation
+    fields:
+      - name: name
+        type: CalculationNames
+      - name: version_id
+        type: str
+      - name: required_fact_names
+        type: list[str]
+      - name: provided_fact_names
+        type: list[str]
+  - name: CoolfarmToolCO2Calculation
+    fields:
+      - name: name
+        type: CalculationNames
+      - name: version_id
+        type: str
+      - name: required_fact_names
+        type: list[str]
+      - name: provided_fact_names
+        type: list[str]
+      - name: geomodel_version
+        type: str
+enums:
+  - name: CalculationNames
+    members:
+      - name: CoolfarmToolCO2
+        value: coolfarm_tool_co2
+actions: []
+api_views: []
+

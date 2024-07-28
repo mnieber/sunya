@@ -4,5 +4,8 @@ from landler.stack.entities import (  # noqa
     CalciumPlotAnalysisJob,
     calcium_server,
 )
-from landler.backend.entities.user_session import user_session  # noqa
-from blogs.backend.app import *  # noqa
+from landler.backend.entities import *  # noqa
+from landler.frontend.entities import *  # noqa
+from landler.stack.entities import *  # noqa
+from blogs.backend.entities import *  # noqa
+from landler.backend.modules import *  # noqa

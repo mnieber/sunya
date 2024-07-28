@@ -11,7 +11,7 @@ def start(project, variation="default"):
     with add_scenario(scenario_name):
 
         if variation == "default":
-            request = Request(url="/api/organizations/add-plot-to-project")
+            request = Request(endpoint="add-plot-to-project")
             with the_fe_posts_to_create_a_plot(request):
                 plot = the_create_plot_api_view_creates_a_plot_in_the_project(
                     request, project
@@ -31,9 +31,9 @@ def the_fe_posts_to_create_a_plot(request):
 
 
 def run():
-    import landler.scenarios.s2_a_user_creates_a_project
+    import landler.backend.scenarios.s2_a_user_creates_a_project
 
-    landler.scenarios.s2_a_user_creates_a_project.run()
+    landler.backend.scenarios.s2_a_user_creates_a_project.run()
     project = get_entity(Projects.Models.Project, name="my-project")
 
     return start(project=project)

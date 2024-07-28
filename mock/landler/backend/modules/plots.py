@@ -3,7 +3,8 @@ import typing as T
 from landler.backend.modules.organizations import Organizations
 from landler.backend.modules.plot_questionnaires import PlotQuestionnaires
 from landler.backend.modules.polygons import Polygons
-from landler.backend.app import Action, ApiView, Form, Module
+from landler.stack.entities import Module, Form
+from blogs.backend.entities import Action, ApiView
 from landler.utils.sequence_number_generator import SequenceNumberGenerator
 from sunya import Entity, actor_to_str
 

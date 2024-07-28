@@ -1,13 +1,14 @@
 from landler.backend.app import *
+from landler.frontend.app import *
 from sunya import add_step, register
 
 
 def the_fe_posts_to_sign_up_a_user(p_user):
-    request = Request(url="/api/accounts/sign-up/")
+    request = Request(endpoint="sign-up")
 
     with add_step(
         "The",
-        sign_up_page,
+        sign_up_route,
         "makes a",
         request,
         "to the",

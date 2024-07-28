@@ -1,5 +1,6 @@
-from landler.backend.app import Module
-from landler.frontend.app import Route
+from landler.stack.entities import Module
+from blogs.frontend.entities import Route
+
 from sunya import Entity, actor_to_str
 
 
@@ -12,10 +13,10 @@ class UserAccounts(Module):
             pass
 
 
-sign_up_route = Route(host="http://landler.io", path="/sign-up")
-sign_in_route = Route(host="http://landler.io", path="/sign-in")
-user_account_route = Route(host="http://landler.io", path="/user-account")
-organization_route = Route(host="http://my-org.landler.io", path="/home")
+sign_up_route = Route()
+sign_in_route = Route()
+user_account_route = Route()
+organization_route = Route()
 
 user_account_view = UserAccounts.Components.UserAccountView()
 organization_picker = UserAccounts.Components.OrganizationPicker()

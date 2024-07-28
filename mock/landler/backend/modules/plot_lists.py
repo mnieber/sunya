@@ -2,7 +2,10 @@ import typing as T
 
 from landler.backend.modules.plots import Plots
 from landler.backend.modules.projects import Projects
-from landler.backend.app import Action, ApiView, Form, Module
+from landler.stack.entities import Module, Form
+from blogs.backend.entities import Action, ApiView
+
+
 from sunya import Entity, MemField, actor_to_str, extend
 
 

@@ -1,13 +1,14 @@
 from landler.backend.app import *
+from landler.frontend.app import *
 from sunya import add_step
 
 
 def the_fe_posts_to_sign_in_a_user(user):
-    request = Request(url="/api/session/sign-in/")
+    request = Request(endpoint="sign-in")
 
     with add_step(
         "The",
-        sign_in_page,
+        sign_in_route,
         "makes a",
         request,
         "to the",

@@ -1,0 +1,26 @@
+name: plots
+models:
+  - name: Plot
+    fields:
+      - name: name
+        type: str
+      - name: sequence_number
+        type: int
+      - name: owner
+        type: Organization
+      - name: polygon
+        type: Polygon
+      - name: plot_questionnaire
+        type: PlotQuestionnaire
+      - name: is_draft
+        type: bool
+      - name: errors
+        type: list[str]
+enums: []
+actions:
+  - name: create_plot
+    args:
+      - name: create_plot_form
+        type: Form
+api_views: []
+

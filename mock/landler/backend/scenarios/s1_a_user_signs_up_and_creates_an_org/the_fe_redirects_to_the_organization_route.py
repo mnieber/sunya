@@ -1,19 +1,18 @@
 from landler.backend.app import *
+from landler.frontend.app import *
 from sunya import add_step
 
 
-def the_fe_redirects_to_the_organization_page_url(user, organization):
+def the_fe_redirects_to_the_organization_route(user, organization):
     with add_step(
         "The",
         user,
-        "is redirected to url of the",
-        organization_page,
-        "which is: ",
-        organization_page.url,
+        "is redirected to the",
+        organization_route,
     ):
         pass
 
-    request = Request(url="/api/session/set-active-organization")
+    request = Request(endpoint="set-active-organization")
     with add_step(
         "The",
         frontend,

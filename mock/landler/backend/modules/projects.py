@@ -1,10 +1,12 @@
 import typing as T
 
 if T.TYPE_CHECKING:
-    from landler.backend.app import Plots
+    from landler.backend.modules import Plots
 
 from landler.backend.modules.organizations import Organizations
-from landler.backend.app import Action, ApiView, Enum, Form, Module
+from landler.stack.entities import Module, Enum, Form
+from blogs.backend.entities import Action, ApiView
+
 from sunya import Entity, actor_to_str
 
 

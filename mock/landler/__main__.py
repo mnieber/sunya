@@ -1,8 +1,8 @@
 from argparse import ArgumentParser
 
+import importlib
 from landler.backend.app import *
 from sunya import FileWriter, run_scenario, get_module_and_scenario_names
-from landler.backend.prompt_writer import PromptWriter
 
 
 def parse_args():
@@ -15,24 +15,14 @@ def parse_args():
 
 
 all_module_names = [
-    "calculations",
-    "users",
-    "organizations",
-    "projects",
-    "plots",
-    "project_analyses",
-    "plot_analyses",
+    "backend/calculations",
+    "backend/users",
+    "backend/organizations",
+    "backend/projects",
+    "backend/plots",
+    "backend/project_analyses",
+    "backend/plot_analyses",
 ]
-
-module_by_name = dict(
-    calculations=Calculations,
-    users=Users,
-    organizations=Organizations,
-    projects=Projects,
-    plots=Plots,
-    project_analyses=ProjectAnalyses,
-    plot_analyses=PlotAnalyses,
-)
 
 all_scenario_names = [
     "s1_a_user_signs_up_and_creates_an_org",
@@ -41,22 +31,57 @@ all_scenario_names = [
     "s4_a_user_schedules_a_project_analysis",
 ]
 
-if __name__ == "__main__":
-    args = parse_args()
+module_by_name = {
+    "backend/calculations": Calculations,
+    "backend/users": Users,
+    "backend/organizations": Organizations,
+    "backend/projects": Projects,
+    "backend/plots": Plots,
+    "backend/project_analyses": ProjectAnalyses,
+    "backend/plot_analyses": PlotAnalyses,
+}
 
+scenario_path_by_name = {}
+
+
+def run(args):
     module_names, scenario_names = get_module_and_scenario_names(
         args, all_module_names, all_scenario_names
     )
 
-    file_writer = FileWriter("landler/.output")
-    prompt_writer = PromptWriter(templates_dir="landler/templates")
+    file_writer = FileWriter("landler/spec")
     for module_name in module_names:
-        module_spec_md = prompt_writer.get_module_description(
-            module_by_name[module_name]
-        )
-        file_writer.write_module_spec(module_name, module_spec_md)
+        module = module_by_name[module_name]
+        layer = module_name.split("/")[0]
+        prompt_writer = _get_prompt_writer(layer)
+        module_spec_yaml = prompt_writer.get_module_spec(module)
+        file_writer.write_module_spec(module_name, module_spec_yaml)
 
     for scenario_name in scenario_names:
-        scenario = run_scenario(f"landler.scenarios.{scenario_name}")
-        scenario_md = prompt_writer.get_scenario_description(scenario_name, scenario)
-        file_writer.write_scenario(scenario_name, scenario_md)
+        __import__("pudb").set_trace()  # zz
+        scenario = run_scenario(
+            _get_scenario_path(scenario_path_by_name, scenario_name)
+        )
+        scenario_yaml = prompt_writer.get_scenario_description(scenario_name, scenario)
+        file_writer.write_scenario(scenario_name, scenario_yaml)
+
+
+def _get_scenario_path(scenario_path_by_name, scenario_name):
+    scenario_path = scenario_path_by_name.get(scenario_name)
+    if scenario_path:
+        return scenario_path
+
+    parts = scenario_name.split("/")
+    return f"landler.backend.scenarios.{parts[-1]}"
+
+
+def _get_prompt_writer(layer):
+    prompt_writer_path = f"landler.{layer}.prompt_writer"
+    prompt_writer_pkg = importlib.import_module(prompt_writer_path)
+    prompt_writer_class = getattr(prompt_writer_pkg, "PromptWriter")
+    return prompt_writer_class()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    run(args)

@@ -9,7 +9,7 @@ from .the_create_project_api_view_calls_the_create_project_action import (
 def start():
     scenario_name = "a-user-creates-a-project"
     with add_scenario(scenario_name):
-        request = Request(url="/api/projects/create-project")
+        request = Request(endpoint="create-project")
 
         with the_fe_posts_to_create_a_project(request):
             project = the_create_project_api_view_calls_the_create_project_action(
@@ -30,9 +30,9 @@ def the_fe_posts_to_create_a_project(request):
 
 
 def run():
-    import landler.scenarios.s1_a_user_signs_up_and_creates_an_org
+    import landler.backend.scenarios.s1_a_user_signs_up_and_creates_an_org
 
-    landler.scenarios.s1_a_user_signs_up_and_creates_an_org.run()
+    landler.backend.scenarios.s1_a_user_signs_up_and_creates_an_org.run()
 
     return start()
 

@@ -8,7 +8,8 @@ from uuid import UUID
 
 from landler.backend.modules.plots import Plots
 from landler.backend.modules.project_analyses import ProjectAnalyses
-from landler.backend.app import Action, Enum, Module
+from landler.stack.entities import Enum, Module
+from blogs.backend.entities import Action
 from sunya import Entity, MemField, actor_to_str, extend
 
 

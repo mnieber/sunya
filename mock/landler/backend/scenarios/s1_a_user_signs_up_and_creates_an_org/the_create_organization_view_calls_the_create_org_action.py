@@ -1,12 +1,13 @@
 from landler.backend.app import *
+from landler.frontend.app import *
 from sunya import add_step, register
 
 
 def the_fe_posts_to_create_an_org(p_organization):
-    request = Request(url="/api/organizations/create-organization/")
+    request = Request(endpoint="create-organization")
     with add_step(
         "The",
-        user_account_page,
+        user_account_route,
         "makes a",
         request,
         "to the",

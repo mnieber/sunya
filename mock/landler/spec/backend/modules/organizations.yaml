@@ -1,0 +1,42 @@
+name: organizations
+models:
+  - name: Organization
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
+      - name: memberships
+        type: list[OrganizationMembership]
+  - name: OrganizationMembership
+    fields:
+      - name: organization
+        type: Organization
+      - name: user
+        type: User
+      - name: role
+        type: UserInOrganizationRoles
+enums:
+  - name: UserInOrganizationRoles
+    members:
+      - name: ADMIN
+        value: admin
+      - name: EDITOR
+        value: editor
+actions:
+  - name: create_organization
+    args:
+      - name: create_organization_form
+        type: Form
+  - name: add_user_to_organization
+    args:
+      - name: organization
+        type: Organization
+      - name: user
+        type: User
+      - name: role
+        type: UserInOrganizationRoles
+api_views:
+  - name: CreateOrganizationApiView
+    filters: []
+

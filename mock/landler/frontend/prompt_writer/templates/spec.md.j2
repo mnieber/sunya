@@ -1,0 +1,46 @@
+1 Types                                                                                          {% for type in types %}
+
+1.{{ loop.index }} Type: {{ type.name }}
+                                                                                                 {% for field in type.fields %}
+- {{ field.name }}: {{ field.type }}                                                             {% endfor %}{% endfor %}
+
+2 Mutations                                                                                      {% for mutation in mutations %}
+
+2.{{ loop.index }} Mutation: {{ mutation.name }}
+
+Arguments:                                                                                       {% for arg in mutation.args %}
+- {{ arg.name }}: {{ arg.type }}                                                                 {% endfor %}{% endfor %}
+
+3 Queries                                                                                        {% for query in queries %}
+
+3.{{ loop.index }} Query: {{ query.name }}
+                                                                                                 {% endfor %}
+4 States                                                                                         {% for state in states %}
+
+4.{{ loop.index }} State: {{ state.name }}
+
+Containers:                                                                                      {% for container in state.containers %}
+- {{ container.name }}:
+    Facets:                                                                                      {% for facet in container.facets %}
+    - {{ facet.name }}                                                                           {% endfor %}{% endfor %}
+                                                                                                 {% endfor %}
+5 Routes                                                                                         {% for route in routes %}
+
+5.{{ loop.index }} Route: {{ route.name }}
+                                                                                                 {% endfor %}
+6 State-Providers                                                                                {% for state_provider in state_providers %}
+
+6.{{ loop.index }} State-Provider: {{ state_provider.name }}
+                                                                                                 {% endfor %}
+7 Views                                                                                          {% for view in views %}
+
+7.{{ loop.index }} View: {{ view.name }}
+                                                                                                 {% endfor %}
+8 Effects                                                                                        {% for effect in effects %}
+
+8.{{ loop.index }} Effect: {{ effect.name }}
+                                                                                                 {% endfor %}
+9 Components                                                                                     {% for component in components %}
+
+9.{{ loop.index }} Component: {{ component.name }}
+                                                                                                 {% endfor %}

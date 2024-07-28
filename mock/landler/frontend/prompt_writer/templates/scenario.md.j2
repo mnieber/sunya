@@ -1,0 +1,16 @@
+Scenario: {{ scenario.name }} ({{ scenario_name }}.md)                                           {% for step in steps %}{% if step.level == 1 %}
+
+
+                                                                                                 {% endif %}
+{{ step.title }}                                                                                 {% if step.actors_created %}
+After this step, the following actors will have been created with the following values:          {% for actor_created in step.actors_created %}
+
+{{ actor_created.name }}:
+{% for k, v0, v1 in actor_created.deltas %}{{ k }}={{ v1 }}
+{% endfor %}                                                                                     {% endfor %}{% endif%}{% if step.actors_updated %}
+After this step, the following actors will have been updated to the following values:            {% for actor_updated in step.actors_updated %}
+
+The {{ actor_updated.name }}:
+{% for k, v0, v1 in actor_updated.deltas %}{{ k }}={{ v1 }} (from {{ v0 }})
+{% endfor %}                                                                                     {% endfor %}{% endif%}{% endfor %}
+

@@ -1,7 +1,6 @@
 from datetime import datetime
 
-from landler.backend.modules.facts import Facts
-from landler.backend.app import JSON, Enum, Module
+from landler.stack.entities import JSON, Enum, Module
 from sunya import Entity, actor_to_str
 
 

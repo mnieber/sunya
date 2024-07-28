@@ -1,4 +1,4 @@
-from landler.backend.app import Enum, Module
+from landler.stack.entities import Enum, Module
 from sunya import Entity, actor_to_str
 
 
