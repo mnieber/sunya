@@ -17,10 +17,7 @@ class FileWriter:
         self._write_file(fn, scenario_md)
 
     def _get_fn(self, dir_names, name):
-        output_dir = self.output_dir
-        for dir_name in dir_names:
-            output_dir = f"{output_dir}-{dir_name}"
-        return output_dir / name
+        return self.output_dir / "-".join([*dir_names, name])
 
     def _write_file(self, fn, content):
         with open(fn, "w") as f:

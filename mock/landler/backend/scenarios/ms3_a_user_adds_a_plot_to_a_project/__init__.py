@@ -31,9 +31,9 @@ def the_fe_posts_to_create_a_plot(request):
 
 
 def run():
-    import landler.backend.scenarios.s2_a_user_creates_a_project
+    import landler.backend.scenarios.ms2_a_user_creates_a_project
 
-    landler.backend.scenarios.s2_a_user_creates_a_project.run()
+    landler.backend.scenarios.ms2_a_user_creates_a_project.run()
     project = get_entity(Projects.Models.Project, name="my-project")
 
     return start(project=project)

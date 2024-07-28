@@ -30,9 +30,9 @@ def the_fe_posts_to_create_a_project(request):
 
 
 def run():
-    import landler.backend.scenarios.s1_a_user_signs_up_and_creates_an_org
+    import landler.backend.scenarios.ms1_a_user_signs_up_and_creates_an_org
 
-    landler.backend.scenarios.s1_a_user_signs_up_and_creates_an_org.run()
+    landler.backend.scenarios.ms1_a_user_signs_up_and_creates_an_org.run()
 
     return start()
 

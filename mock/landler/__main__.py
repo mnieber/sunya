@@ -30,10 +30,10 @@ all_module_names = [
 ]
 
 all_scenario_names = [
-    "s1_a_user_signs_up_and_creates_an_org",
-    "s2_a_user_creates_a_project",
-    "s3_a_user_adds_a_plot_to_a_project",
-    "s4_a_user_schedules_a_project_analysis",
+    "ms1_a_user_signs_up_and_creates_an_org",
+    "ms2_a_user_creates_a_project",
+    "ms3_a_user_adds_a_plot_to_a_project",
+    "ms4_a_user_schedules_a_project_analysis",
 ]
 
 module_by_name = {

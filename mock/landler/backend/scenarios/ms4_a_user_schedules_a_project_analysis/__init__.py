@@ -85,9 +85,9 @@ def the_project_analysis_queue_finds_jobs_to_run_next(p_jobs_to_run):
 
 
 def run():
-    import landler.backend.scenarios.s3_a_user_adds_a_plot_to_a_project
+    import landler.backend.scenarios.ms3_a_user_adds_a_plot_to_a_project
 
-    landler.backend.scenarios.s3_a_user_adds_a_plot_to_a_project.run()
+    landler.backend.scenarios.ms3_a_user_adds_a_plot_to_a_project.run()
     project = get_entity(Projects.Models.Project, name="my-project")
 
     return start(project=project)
