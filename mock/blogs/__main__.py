@@ -45,14 +45,14 @@ def run(args):
         layer = module_name.split("/")[0]
         prompt_writer = _get_prompt_writer(layer)
         module_spec_yaml = prompt_writer.get_module_spec(module)
-        file_writer.write_module_spec(module_name, module_spec_yaml)
+        file_writer.write_module_spec("spec/blogs/" + module_name, module_spec_yaml)
 
     for scenario_name in scenario_names:
         scenario = run_scenario(
             _get_scenario_path(scenario_path_by_name, scenario_name)
         )
         scenario_yaml = prompt_writer.get_scenario_description(scenario_name, scenario)
-        file_writer.write_scenario(scenario_name, scenario_yaml)
+        file_writer.write_scenario("spec/blogs/" + scenario_name, scenario_yaml)
 
 
 def _get_scenario_path(scenario_path_by_name, scenario_name):
