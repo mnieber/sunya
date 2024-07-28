@@ -1,17 +1,9 @@
 scenario_name: a-user-schedules-a-project-analysis
 scenario_fn: s4_a_user_schedules_a_project_analysis
 steps:
-  - fact: the [:frontend] call the [create-project-analysis-job:api-view] to create a [my-project+:project-analysis-job]
-    actors_created:
-      - name: my-project+:project-analysis-job
-        deltas:
-          is_active: True (None)
-          project: my-project+:project (None)
-          project_analyses: '[] (None)'
-          repeats_every: None (None)
-          scheduled_at: 2024-01-01 00:00:00 (None)
+  - fact: ''
     child_steps:
-      - fact: The [create-project-analysis-job:api-view] calls the [create-project-analysis-job:action] to create a [my-project+:project-analysis-job]
+      - fact: the [:frontend] call the [create-project-analysis-job:api-view] to create a [my-project+:project-analysis-job]
         actors_created:
           - name: my-project+:project-analysis-job
             deltas:
@@ -21,7 +13,7 @@ steps:
               repeats_every: None (None)
               scheduled_at: 2024-01-01 00:00:00 (None)
         child_steps:
-          - fact: The [create-project-analysis-job:action] creates the [my-project+:project-analysis-job]
+          - fact: The [create-project-analysis-job:api-view] calls the [create-project-analysis-job:action] to create a [my-project+:project-analysis-job]
             actors_created:
               - name: my-project+:project-analysis-job
                 deltas:
@@ -30,153 +22,63 @@ steps:
                   project_analyses: '[] (None)'
                   repeats_every: None (None)
                   scheduled_at: 2024-01-01 00:00:00 (None)
-  - fact: The [create-project-analysis-job:api-view] calls the [create-project-analysis-job:action] to create a [my-project+:project-analysis-job]
-    actors_created:
-      - name: my-project+:project-analysis-job
-        deltas:
-          is_active: True (None)
-          project: my-project+:project (None)
-          project_analyses: '[] (None)'
-          repeats_every: None (None)
-          scheduled_at: 2024-01-01 00:00:00 (None)
-    child_steps:
-      - fact: The [create-project-analysis-job:action] creates the [my-project+:project-analysis-job]
+            child_steps:
+              - fact: The [create-project-analysis-job:action] creates the [my-project+:project-analysis-job]
+                actors_created:
+                  - name: my-project+:project-analysis-job
+                    deltas:
+                      is_active: True (None)
+                      project: my-project+:project (None)
+                      project_analyses: '[] (None)'
+                      repeats_every: None (None)
+                      scheduled_at: 2024-01-01 00:00:00 (None)
+      - fact: the [:project-analysis-queue] finds [jobs_to_run+:list]
         actors_created:
-          - name: my-project+:project-analysis-job
+          - name: jobs_to_run+:list
             deltas:
-              is_active: True (None)
-              project: my-project+:project (None)
-              project_analyses: '[] (None)'
-              repeats_every: None (None)
-              scheduled_at: 2024-01-01 00:00:00 (None)
-  - fact: The [create-project-analysis-job:action] creates the [my-project+:project-analysis-job]
-    actors_created:
-      - name: my-project+:project-analysis-job
-        deltas:
-          is_active: True (None)
-          project: my-project+:project (None)
-          project_analyses: '[] (None)'
-          repeats_every: None (None)
-          scheduled_at: 2024-01-01 00:00:00 (None)
-  - fact: the [:project-analysis-queue] finds [jobs_to_run+:list]
-    actors_created:
-      - name: jobs_to_run+:list
-        deltas:
-          items: '[''my-project+:project-analysis-job''] (None)'
-          name: jobs_to_run (None)
-  - fact: the [:project-analysis-queue] runs the first [my-project+:project-analysis-job]
-    actors_updated:
-      - name: my-project+:project-analysis-job
-        deltas:
-          project_analyses: '[''my-project+:project-analysis''] ([])'
-    child_steps:
-      - fact: The [:project-analysis-queue] calls the [create-project-analysis:action] to create a [my-project+:project-analysis] from a [my-project+:project-analysis-job]
-        actors_created:
-          - name: my-project+:project-analysis
-            deltas:
-              id: f65f340b768b537fb6305706cd54962d (None)
-              job: my-project+:project-analysis-job (None)
-              now: 2024-01-01 00:00:00 (None)
-              plot_analyses: '[''my-plot@2024-01-01-00:00:00+:plot-analysis''] (None)'
-              project: my-project+:project (None)
-              status: running (None)
+              items: '[''my-project+:project-analysis-job''] (None)'
+              name: jobs_to_run (None)
+      - fact: the [:project-analysis-queue] runs the first [my-project+:project-analysis-job]
         actors_updated:
           - name: my-project+:project-analysis-job
             deltas:
               project_analyses: '[''my-project+:project-analysis''] ([])'
         child_steps:
-          - fact: the [create-project-analysis:action] gets the [my-project+:project] at the now ts of the [my-project+:project-analysis]
-          - fact: the [create-project-analysis:action] loops over all plots in the [my-project+:project]
-            child_steps:
-              - fact: the [create-project-analysis:action] creates a [my-plot@2024-01-01-00:00:00+:plot-analysis] for the [my-plot@0+:plot]
-                actors_created:
-                  - name: my-plot@2024-01-01-00:00:00+:plot-analysis
-                    deltas:
-                      id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-                      now: 2024-01-01 00:00:00 (None)
-                      plot: my-plot@0+:plot (None)
-                      project_analysis: my-project+:project-analysis (None)
-                      status: running (None)
-      - fact: the [:project-analysis-queue] calls the [run-project-analysis:action]
-        child_steps:
-          - fact: the [run-project-analysis:action] calls the [run-plot-analysis:action] on a [my-plot@2024-01-01-00:00:00+:plot-analysis] in the [my-project+:project-analysis]
-            child_steps:
-              - fact: the [run-plot-analysis:action] creates a [97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job] for the [my-plot@0+:plot] at the now timestamp of the [my-plot@2024-01-01-00:00:00+:plot-analysis]
-                actors_created:
-                  - name: 97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job
-                    deltas:
-                      id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-                      polygon: +:polygon (None)
-  - fact: The [:project-analysis-queue] calls the [create-project-analysis:action] to create a [my-project+:project-analysis] from a [my-project+:project-analysis-job]
-    actors_created:
-      - name: my-project+:project-analysis
-        deltas:
-          id: f65f340b768b537fb6305706cd54962d (None)
-          job: my-project+:project-analysis-job (None)
-          now: 2024-01-01 00:00:00 (None)
-          plot_analyses: '[''my-plot@2024-01-01-00:00:00+:plot-analysis''] (None)'
-          project: my-project+:project (None)
-          status: running (None)
-    actors_updated:
-      - name: my-project+:project-analysis-job
-        deltas:
-          project_analyses: '[''my-project+:project-analysis''] ([])'
-    child_steps:
-      - fact: the [create-project-analysis:action] gets the [my-project+:project] at the now ts of the [my-project+:project-analysis]
-      - fact: the [create-project-analysis:action] loops over all plots in the [my-project+:project]
-        child_steps:
-          - fact: the [create-project-analysis:action] creates a [my-plot@2024-01-01-00:00:00+:plot-analysis] for the [my-plot@0+:plot]
+          - fact: The [:project-analysis-queue] calls the [create-project-analysis:action] to create a [my-project+:project-analysis] from a [my-project+:project-analysis-job]
             actors_created:
-              - name: my-plot@2024-01-01-00:00:00+:plot-analysis
+              - name: my-project+:project-analysis
                 deltas:
-                  id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
+                  id: f65f340b768b537fb6305706cd54962d (None)
+                  job: my-project+:project-analysis-job (None)
                   now: 2024-01-01 00:00:00 (None)
-                  plot: my-plot@0+:plot (None)
-                  project_analysis: my-project+:project-analysis (None)
+                  plot_analyses: '[''my-plot@2024-01-01-00:00:00+:plot-analysis''] (None)'
+                  project: my-project+:project (None)
                   status: running (None)
-  - fact: the [create-project-analysis:action] gets the [my-project+:project] at the now ts of the [my-project+:project-analysis]
-  - fact: the [create-project-analysis:action] loops over all plots in the [my-project+:project]
-    child_steps:
-      - fact: the [create-project-analysis:action] creates a [my-plot@2024-01-01-00:00:00+:plot-analysis] for the [my-plot@0+:plot]
-        actors_created:
-          - name: my-plot@2024-01-01-00:00:00+:plot-analysis
-            deltas:
-              id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-              now: 2024-01-01 00:00:00 (None)
-              plot: my-plot@0+:plot (None)
-              project_analysis: my-project+:project-analysis (None)
-              status: running (None)
-  - fact: the [create-project-analysis:action] creates a [my-plot@2024-01-01-00:00:00+:plot-analysis] for the [my-plot@0+:plot]
-    actors_created:
-      - name: my-plot@2024-01-01-00:00:00+:plot-analysis
-        deltas:
-          id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-          now: 2024-01-01 00:00:00 (None)
-          plot: my-plot@0+:plot (None)
-          project_analysis: my-project+:project-analysis (None)
-          status: running (None)
-  - fact: the [:project-analysis-queue] calls the [run-project-analysis:action]
-    child_steps:
-      - fact: the [run-project-analysis:action] calls the [run-plot-analysis:action] on a [my-plot@2024-01-01-00:00:00+:plot-analysis] in the [my-project+:project-analysis]
-        child_steps:
-          - fact: the [run-plot-analysis:action] creates a [97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job] for the [my-plot@0+:plot] at the now timestamp of the [my-plot@2024-01-01-00:00:00+:plot-analysis]
-            actors_created:
-              - name: 97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job
+            actors_updated:
+              - name: my-project+:project-analysis-job
                 deltas:
-                  id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-                  polygon: +:polygon (None)
-  - fact: the [run-project-analysis:action] calls the [run-plot-analysis:action] on a [my-plot@2024-01-01-00:00:00+:plot-analysis] in the [my-project+:project-analysis]
-    child_steps:
-      - fact: the [run-plot-analysis:action] creates a [97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job] for the [my-plot@0+:plot] at the now timestamp of the [my-plot@2024-01-01-00:00:00+:plot-analysis]
-        actors_created:
-          - name: 97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job
-            deltas:
-              id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-              polygon: +:polygon (None)
-  - fact: the [run-plot-analysis:action] creates a [97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job] for the [my-plot@0+:plot] at the now timestamp of the [my-plot@2024-01-01-00:00:00+:plot-analysis]
-    actors_created:
-      - name: 97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job
-        deltas:
-          id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
-          polygon: +:polygon (None)
+                  project_analyses: '[''my-project+:project-analysis''] ([])'
+            child_steps:
+              - fact: the [create-project-analysis:action] gets the [my-project+:project] at the now ts of the [my-project+:project-analysis]
+              - fact: the [create-project-analysis:action] loops over all plots in the [my-project+:project]
+                child_steps:
+                  - fact: the [create-project-analysis:action] creates a [my-plot@2024-01-01-00:00:00+:plot-analysis] for the [my-plot@0+:plot]
+                    actors_created:
+                      - name: my-plot@2024-01-01-00:00:00+:plot-analysis
+                        deltas:
+                          id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
+                          now: 2024-01-01 00:00:00 (None)
+                          plot: my-plot@0+:plot (None)
+                          project_analysis: my-project+:project-analysis (None)
+                          status: running (None)
+          - fact: the [:project-analysis-queue] calls the [run-project-analysis:action]
+            child_steps:
+              - fact: the [run-project-analysis:action] calls the [run-plot-analysis:action] on a [my-plot@2024-01-01-00:00:00+:plot-analysis] in the [my-project+:project-analysis]
+                child_steps:
+                  - fact: the [run-plot-analysis:action] creates a [97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job] for the [my-plot@0+:plot] at the now timestamp of the [my-plot@2024-01-01-00:00:00+:plot-analysis]
+                    actors_created:
+                      - name: 97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job
+                        deltas:
+                          id: 97ac1d01f01a5efb80a39a807d6c5b15 (None)
+                          polygon: +:polygon (None)
 

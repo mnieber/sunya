@@ -1,37 +1,28 @@
 scenario_name: a-user-signs-up-and-creates-an-org
 scenario_fn: s1_a_user_signs_up_and_creates_an_org
 steps:
-  - fact: The [my-org-owner@example.com+:user] visits the [sign-up+:route] to create a [my-org-owner@example.com+:user]
-    actors_created:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          email: my-org-owner@example.com (None)
-          id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-          is_active: True (None)
-          is_authenticated: False (None)
-          password: my-password (None)
-      - name: my-org-owner@example.com+:user
-        deltas:
-          email: my-org-owner@example.com (None)
-          id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-          is_active: True (None)
-          is_authenticated: False (None)
-          password: my-password (None)
+  - fact: ''
     child_steps:
-      - fact: The [sign-up+:route] makes a [sign-up:request] to the [sign-up-user-:api-view]
+      - fact: The [my-org-owner@example.com+:user] visits the [sign-up+:route] to create a [my-org-owner@example.com+:user]
+        actors_created:
+          - name: my-org-owner@example.com+:user
+            deltas:
+              email: my-org-owner@example.com (None)
+              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
+              is_active: True (None)
+              is_authenticated: False (None)
+              password: my-password (None)
+          - name: my-org-owner@example.com+:user
+            deltas:
+              email: my-org-owner@example.com (None)
+              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
+              is_active: True (None)
+              is_authenticated: False (None)
+              password: my-password (None)
         child_steps:
-          - fact: The [sign-up-user-:api-view] calls the [create-user:action] with the [create-user-:form] to create a [my-org-owner@example.com+:user]
-            actors_created:
-              - name: my-org-owner@example.com+:user
-                deltas:
-                  email: my-org-owner@example.com (None)
-                  id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-                  is_active: False (None)
-                  is_authenticated: False (None)
-                  password: my-password (None)
+          - fact: The [sign-up+:route] makes a [sign-up:request] to the [sign-up-user-:api-view]
             child_steps:
-              - fact: The [create-user:action] validates the email and password of the [create-user-:form]
-              - fact: The [create-user:action] creates the [my-org-owner@example.com+:user]
+              - fact: The [sign-up-user-:api-view] calls the [create-user:action] with the [create-user-:form] to create a [my-org-owner@example.com+:user]
                 actors_created:
                   - name: my-org-owner@example.com+:user
                     deltas:
@@ -40,115 +31,40 @@ steps:
                       is_active: False (None)
                       is_authenticated: False (None)
                       password: my-password (None)
-          - fact: The [sign-up-user-:api-view] activates the account of the [my-org-owner@example.com+:user]
-            actors_updated:
-              - name: my-org-owner@example.com+:user
-                deltas:
-                  is_active: True (False)
-  - fact: The [sign-up+:route] makes a [sign-up:request] to the [sign-up-user-:api-view]
-    child_steps:
-      - fact: The [sign-up-user-:api-view] calls the [create-user:action] with the [create-user-:form] to create a [my-org-owner@example.com+:user]
-        actors_created:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              email: my-org-owner@example.com (None)
-              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-              is_active: False (None)
-              is_authenticated: False (None)
-              password: my-password (None)
-        child_steps:
-          - fact: The [create-user:action] validates the email and password of the [create-user-:form]
-          - fact: The [create-user:action] creates the [my-org-owner@example.com+:user]
-            actors_created:
-              - name: my-org-owner@example.com+:user
-                deltas:
-                  email: my-org-owner@example.com (None)
-                  id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-                  is_active: False (None)
-                  is_authenticated: False (None)
-                  password: my-password (None)
-      - fact: The [sign-up-user-:api-view] activates the account of the [my-org-owner@example.com+:user]
-        actors_updated:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              is_active: True (False)
-  - fact: The [sign-up-user-:api-view] calls the [create-user:action] with the [create-user-:form] to create a [my-org-owner@example.com+:user]
-    actors_created:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          email: my-org-owner@example.com (None)
-          id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-          is_active: False (None)
-          is_authenticated: False (None)
-          password: my-password (None)
-    child_steps:
-      - fact: The [create-user:action] validates the email and password of the [create-user-:form]
-      - fact: The [create-user:action] creates the [my-org-owner@example.com+:user]
-        actors_created:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              email: my-org-owner@example.com (None)
-              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-              is_active: False (None)
-              is_authenticated: False (None)
-              password: my-password (None)
-  - fact: The [create-user:action] validates the email and password of the [create-user-:form]
-  - fact: The [create-user:action] creates the [my-org-owner@example.com+:user]
-    actors_created:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          email: my-org-owner@example.com (None)
-          id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-          is_active: False (None)
-          is_authenticated: False (None)
-          password: my-password (None)
-  - fact: The [sign-up-user-:api-view] activates the account of the [my-org-owner@example.com+:user]
-    actors_updated:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          is_active: True (False)
-  - fact: The [my-org-owner@example.com+:user] visits the [sign-in+:route]
-    actors_updated:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          is_authenticated: True (False)
-    child_steps:
-      - fact: The [sign-in+:route] makes a [sign-in:request] to the [sign-in-user-:api-view] to sign in the [my-org-owner@example.com+:user]
+                child_steps:
+                  - fact: The [create-user:action] validates the email and password of the [create-user-:form]
+                  - fact: The [create-user:action] creates the [my-org-owner@example.com+:user]
+                    actors_created:
+                      - name: my-org-owner@example.com+:user
+                        deltas:
+                          email: my-org-owner@example.com (None)
+                          id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
+                          is_active: False (None)
+                          is_authenticated: False (None)
+                          password: my-password (None)
+              - fact: The [sign-up-user-:api-view] activates the account of the [my-org-owner@example.com+:user]
+                actors_updated:
+                  - name: my-org-owner@example.com+:user
+                    deltas:
+                      is_active: True (False)
+      - fact: The [my-org-owner@example.com+:user] visits the [sign-in+:route]
         actors_updated:
           - name: my-org-owner@example.com+:user
             deltas:
               is_authenticated: True (False)
         child_steps:
-          - fact: The [sign-in-user-:api-view] calls the [sign-in-user:action] to sign in the [my-org-owner@example.com+:user]
+          - fact: The [sign-in+:route] makes a [sign-in:request] to the [sign-in-user-:api-view] to sign in the [my-org-owner@example.com+:user]
             actors_updated:
               - name: my-org-owner@example.com+:user
                 deltas:
                   is_authenticated: True (False)
-  - fact: The [sign-in+:route] makes a [sign-in:request] to the [sign-in-user-:api-view] to sign in the [my-org-owner@example.com+:user]
-    actors_updated:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          is_authenticated: True (False)
-    child_steps:
-      - fact: The [sign-in-user-:api-view] calls the [sign-in-user:action] to sign in the [my-org-owner@example.com+:user]
-        actors_updated:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              is_authenticated: True (False)
-  - fact: The [sign-in-user-:api-view] calls the [sign-in-user:action] to sign in the [my-org-owner@example.com+:user]
-    actors_updated:
-      - name: my-org-owner@example.com+:user
-        deltas:
-          is_authenticated: True (False)
-  - fact: The [my-org-owner@example.com+:user] visits the [user-account+:route] to create an [my-org+:organization]
-    actors_created:
-      - name: my-org+:organization
-        deltas:
-          id: 93122c6d00825101b256ef9e8e830eca (None)
-          memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-          name: my-org (None)
-    child_steps:
-      - fact: The [user-account+:route] makes a [create-organization:request] to the [create-organization-:api-view] to create an [my-org+:organization]
+            child_steps:
+              - fact: The [sign-in-user-:api-view] calls the [sign-in-user:action] to sign in the [my-org-owner@example.com+:user]
+                actors_updated:
+                  - name: my-org-owner@example.com+:user
+                    deltas:
+                      is_authenticated: True (False)
+      - fact: The [my-org-owner@example.com+:user] visits the [user-account+:route] to create an [my-org+:organization]
         actors_created:
           - name: my-org+:organization
             deltas:
@@ -156,7 +72,7 @@ steps:
               memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
               name: my-org (None)
         child_steps:
-          - fact: The [create-organization-:api-view] calls the [create-organization:action] with the [create-organization-:form] to create a [my-org+:organization] with admin [my-org-owner@example.com+:user]
+          - fact: The [user-account+:route] makes a [create-organization:request] to the [create-organization-:api-view] to create an [my-org+:organization]
             actors_created:
               - name: my-org+:organization
                 deltas:
@@ -164,99 +80,34 @@ steps:
                   memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
                   name: my-org (None)
             child_steps:
-              - fact: The [create-organization:action] creates the [my-org+:organization]
+              - fact: The [create-organization-:api-view] calls the [create-organization:action] with the [create-organization-:form] to create a [my-org+:organization] with admin [my-org-owner@example.com+:user]
                 actors_created:
                   - name: my-org+:organization
                     deltas:
                       id: 93122c6d00825101b256ef9e8e830eca (None)
-                      memberships: '[] (None)'
+                      memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
                       name: my-org (None)
-              - fact: The [create-organization:action] calls the [add-user-to-organization:action] to add the [my-org-owner@example.com+:user] to the [my-org+:organization]
+                child_steps:
+                  - fact: The [create-organization:action] creates the [my-org+:organization]
+                    actors_created:
+                      - name: my-org+:organization
+                        deltas:
+                          id: 93122c6d00825101b256ef9e8e830eca (None)
+                          memberships: '[] (None)'
+                          name: my-org (None)
+                  - fact: The [create-organization:action] calls the [add-user-to-organization:action] to add the [my-org-owner@example.com+:user] to the [my-org+:organization]
+                    actors_updated:
+                      - name: my-org+:organization
+                        deltas:
+                          memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] ([])'
+      - fact: The [my-org-owner@example.com+:user] uses the [organization-picker:component] to switch to the [organization+:route] of the [my-org+:organization]
+        child_steps:
+          - fact: The [my-org-owner@example.com+:user] is redirected to the [organization+:route]
+          - fact: The [:frontend] makes a [set-active-organization:request] to the [set-active-organization-:api-view] to set [my-org+:organization] as the active organization
+            child_steps:
+              - fact: The [set-active-organization-:api-view] updates the [:user-session] to set the active [my-org+:organization]
                 actors_updated:
-                  - name: my-org+:organization
+                  - name: :user-session
                     deltas:
-                      memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] ([])'
-  - fact: The [user-account+:route] makes a [create-organization:request] to the [create-organization-:api-view] to create an [my-org+:organization]
-    actors_created:
-      - name: my-org+:organization
-        deltas:
-          id: 93122c6d00825101b256ef9e8e830eca (None)
-          memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-          name: my-org (None)
-    child_steps:
-      - fact: The [create-organization-:api-view] calls the [create-organization:action] with the [create-organization-:form] to create a [my-org+:organization] with admin [my-org-owner@example.com+:user]
-        actors_created:
-          - name: my-org+:organization
-            deltas:
-              id: 93122c6d00825101b256ef9e8e830eca (None)
-              memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-              name: my-org (None)
-        child_steps:
-          - fact: The [create-organization:action] creates the [my-org+:organization]
-            actors_created:
-              - name: my-org+:organization
-                deltas:
-                  id: 93122c6d00825101b256ef9e8e830eca (None)
-                  memberships: '[] (None)'
-                  name: my-org (None)
-          - fact: The [create-organization:action] calls the [add-user-to-organization:action] to add the [my-org-owner@example.com+:user] to the [my-org+:organization]
-            actors_updated:
-              - name: my-org+:organization
-                deltas:
-                  memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] ([])'
-  - fact: The [create-organization-:api-view] calls the [create-organization:action] with the [create-organization-:form] to create a [my-org+:organization] with admin [my-org-owner@example.com+:user]
-    actors_created:
-      - name: my-org+:organization
-        deltas:
-          id: 93122c6d00825101b256ef9e8e830eca (None)
-          memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-          name: my-org (None)
-    child_steps:
-      - fact: The [create-organization:action] creates the [my-org+:organization]
-        actors_created:
-          - name: my-org+:organization
-            deltas:
-              id: 93122c6d00825101b256ef9e8e830eca (None)
-              memberships: '[] (None)'
-              name: my-org (None)
-      - fact: The [create-organization:action] calls the [add-user-to-organization:action] to add the [my-org-owner@example.com+:user] to the [my-org+:organization]
-        actors_updated:
-          - name: my-org+:organization
-            deltas:
-              memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] ([])'
-  - fact: The [create-organization:action] creates the [my-org+:organization]
-    actors_created:
-      - name: my-org+:organization
-        deltas:
-          id: 93122c6d00825101b256ef9e8e830eca (None)
-          memberships: '[] (None)'
-          name: my-org (None)
-  - fact: The [create-organization:action] calls the [add-user-to-organization:action] to add the [my-org-owner@example.com+:user] to the [my-org+:organization]
-    actors_updated:
-      - name: my-org+:organization
-        deltas:
-          memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] ([])'
-  - fact: The [my-org-owner@example.com+:user] uses the [organization-picker:component] to switch to the [organization+:route] of the [my-org+:organization]
-    child_steps:
-      - fact: The [my-org-owner@example.com+:user] is redirected to the [organization+:route]
-      - fact: The [:frontend] makes a [set-active-organization:request] to the [set-active-organization-:api-view] to set [my-org+:organization] as the active organization
-        child_steps:
-          - fact: The [set-active-organization-:api-view] updates the [:user-session] to set the active [my-org+:organization]
-            actors_updated:
-              - name: :user-session
-                deltas:
-                  active_organization: my-org+:organization (None)
-  - fact: The [my-org-owner@example.com+:user] is redirected to the [organization+:route]
-  - fact: The [:frontend] makes a [set-active-organization:request] to the [set-active-organization-:api-view] to set [my-org+:organization] as the active organization
-    child_steps:
-      - fact: The [set-active-organization-:api-view] updates the [:user-session] to set the active [my-org+:organization]
-        actors_updated:
-          - name: :user-session
-            deltas:
-              active_organization: my-org+:organization (None)
-  - fact: The [set-active-organization-:api-view] updates the [:user-session] to set the active [my-org+:organization]
-    actors_updated:
-      - name: :user-session
-        deltas:
-          active_organization: my-org+:organization (None)
+                      active_organization: my-org+:organization (None)
 
