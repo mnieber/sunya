@@ -6,8 +6,6 @@ from sunya import actor_to_str, EntityWithId
 class Users(Module):
     class Models:
         class User(EntityWithId):
-            """A Django model that contains a user"""
-
             email: str
             password: str
             is_authenticated: bool = False

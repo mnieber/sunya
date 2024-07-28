@@ -9,14 +9,10 @@ from sunya import Entity, EntityWithId, actor_to_str
 class Organizations(Module):
     class Models:
         class Organization(EntityWithId):
-            """A Django model that contains a organization."""
-
             name: str
             memberships: T.List["Organizations.Models.OrganizationMembership"] = []
 
         class OrganizationMembership(Entity):
-            """A Django model that contains a membership of an organization."""
-
             organization: "Organizations.Models.Organization"
             user: Users.Models.User
             role: "Organizations.Enums.UserInOrganizationRoles"

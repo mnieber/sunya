@@ -25,8 +25,8 @@ class ProjectAnalyses(Module):
             analysis may nor may not finish (and add more historical data)
             before this one starts. This is a design decision: we generally don't wait
             for other project analyses to finish before starting a new one. The
-            exception is when a previous project analysis on the same project and
-            product is still running. In that case, we wait.
+            exception is when a previous project analysis on the same project (and
+            product) is still running. In that case, we wait.
             """
 
             project: Projects.Models.Project

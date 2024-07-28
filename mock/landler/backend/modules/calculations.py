@@ -10,7 +10,7 @@ class Calculations(Module):
             """
 
             name: "Calculations.Enums.CalculationNames"
-            version_id: str
+            source_id: str
             required_fact_names: list[str] = []
             provided_fact_names: list[str] = []
 

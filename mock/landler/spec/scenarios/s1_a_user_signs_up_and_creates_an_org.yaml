@@ -236,7 +236,7 @@ steps:
       - name: my-org+:organization
         deltas:
           memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] ([])'
-  - fact: The [my-org-owner@example.com+:user] uses the [:organization-picker] to switch to the [organization+:route] of the [my-org+:organization]
+  - fact: The [my-org-owner@example.com+:user] uses the [organization-picker:component] to switch to the [organization+:route] of the [my-org+:organization]
     child_steps:
       - fact: The [my-org-owner@example.com+:user] is redirected to the [organization+:route]
       - fact: The [:frontend] makes a [set-active-organization:request] to the [set-active-organization-:api-view] to set [my-org+:organization] as the active organization

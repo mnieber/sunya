@@ -4,7 +4,7 @@ models:
     fields:
       - name: name
         type: CalculationNames
-      - name: version_id
+      - name: source_id
         type: str
       - name: required_fact_names
         type: list[str]
@@ -14,7 +14,7 @@ models:
     fields:
       - name: name
         type: CalculationNames
-      - name: version_id
+      - name: source_id
         type: str
       - name: required_fact_names
         type: list[str]

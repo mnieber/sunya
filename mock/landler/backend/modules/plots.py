@@ -12,9 +12,9 @@ from sunya import Entity, actor_to_str
 class Plots(Module):
     class Models:
         class Plot(Entity):
-            """A Django model that contains a plot."""
-
             name: str
+            # The sequence_number is used to unique identify a plot in
+            # a user-friendly way.
             sequence_number: int
             owner: Organizations.Models.Organization
             polygon: Polygons.Models.Polygon

@@ -1,5 +1,5 @@
 from sunya import Entity, Fn, actor_to_str
-from sunya.utils import get_type_name
+from sunya.utils import type_name_to_kebab
 
 
 class Action(Fn):
@@ -17,12 +17,12 @@ class Request(Entity):
 
 @actor_to_str.method((Action,))
 def action_to_str(action):
-    return f"{get_type_name(action)}:action"
+    return f"{type_name_to_kebab(action)}:action"
 
 
 @actor_to_str.method((ApiView,))
 def api_view_to_str(api_view):
-    return f"{get_type_name(api_view)}:api-view"
+    return f"{type_name_to_kebab(api_view)}:api-view"
 
 
 @actor_to_str.method((Request,))

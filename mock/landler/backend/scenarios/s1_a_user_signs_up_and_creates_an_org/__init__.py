@@ -1,12 +1,10 @@
 from landler.backend.app import *
 from landler.frontend.app import *
-from sunya import add_scenario, add_step, get_scenario, preregister
+from sunya import add_scenario, add_step, get_scenario, preregister, register
 
 from .the_create_organization_view_calls_the_create_org_action import (
     the_fe_posts_to_create_an_org,
 )
-from .the_fe_posts_to_sign_in_a_user import the_fe_posts_to_sign_in_a_user
-from .the_fe_posts_to_sign_up_a_user import the_fe_posts_to_sign_up_a_user
 from .the_fe_redirects_to_the_organization_route import (
     the_fe_redirects_to_the_organization_route,
 )
@@ -69,6 +67,83 @@ def the_user_switches_to_their_organization_route(user, organization):
         "of the",
         organization,
     )
+
+
+def the_fe_posts_to_sign_in_a_user(user):
+    request = Request(endpoint="sign-in")
+
+    with add_step(
+        "The",
+        sign_in_route,
+        "makes a",
+        request,
+        "to the",
+        sign_in_user_api_view,
+        "to sign in the",
+        user,
+    ):
+        with add_step(
+            "The",
+            sign_in_user_api_view,
+            "calls the",
+            sign_in_user_action,
+            "to sign in the",
+            user,
+        ):
+            user_session.user = user
+            user.is_authenticated = True
+
+    return user
+
+
+def the_fe_posts_to_sign_up_a_user(p_user):
+    request = Request(endpoint="sign-up")
+
+    with add_step(
+        "The",
+        sign_up_route,
+        "makes a",
+        request,
+        "to the",
+        sign_up_user_api_view,
+    ):
+        create_user_form = Form(name="CreateUserForm", data=request.data)
+        with add_step(
+            "The",
+            sign_up_user_api_view,
+            "calls the",
+            create_user_action,
+            "with the",
+            create_user_form,
+            "to create a",
+            p_user,
+        ):
+            with add_step(
+                "The",
+                create_user_action,
+                "validates the email and password of the",
+                create_user_form,
+            ):
+                pass
+
+            with add_step("The", create_user_action, "creates the", p_user):
+                user = register(
+                    Users.Models.User(
+                        email="my-org-owner@example.com",
+                        password="my-password",
+                    ),
+                    p_user,
+                )
+
+        with add_step(
+            "The",
+            sign_up_user_api_view,
+            "activates the account of the",
+            user,
+        ):
+            user.is_active = True
+
+    return user
 
 
 def run():

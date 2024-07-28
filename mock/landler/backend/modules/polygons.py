@@ -5,8 +5,6 @@ from sunya import Entity, actor_to_str
 class Polygons(Module):
     class Models:
         class Polygon(Entity):
-            """A Django model that contains a polygon."""
-
             polygon: JSON
             crc: str
             area: float

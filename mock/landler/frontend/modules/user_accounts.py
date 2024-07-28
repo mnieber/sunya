@@ -1,32 +1,25 @@
 from landler.stack.entities import Module
-from blogs.frontend.entities import Route
-
-from sunya import Entity, actor_to_str
+from blogs.frontend.entities import Route, Component
 
 
 class UserAccounts(Module):
     class Components:
-        class UserAccountView(Entity):
+        class UserAccountView(Component):
             pass
 
-        class OrganizationPicker(Entity):
+    class Routes:
+        class SignUpRoute(Route):
+            pass
+
+        class SignInRoute(Route):
+            pass
+
+        class UserAccountRoute(Route):
             pass
 
 
-sign_up_route = Route(name="sign-up")
-sign_in_route = Route(name="sign-in")
-user_account_route = Route(name="user-account")
-organization_route = Route(name="organization")
+sign_up_route = UserAccounts.Routes.SignUpRoute()
+sign_in_route = UserAccounts.Routes.SignInRoute()
+user_account_route = UserAccounts.Routes.UserAccountRoute()
 
 user_account_view = UserAccounts.Components.UserAccountView()
-organization_picker = UserAccounts.Components.OrganizationPicker()
-
-
-@actor_to_str.method((UserAccounts.Components.UserAccountView,))
-def plot_to_str(user_accounts_view):
-    return f":user-accounts-view"
-
-
-@actor_to_str.method((UserAccounts.Components.OrganizationPicker,))
-def organization_picker_to_str(organization_picker):
-    return f":organization-picker"

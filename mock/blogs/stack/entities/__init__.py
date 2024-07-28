@@ -1,5 +1,5 @@
 from sunya import Entity, Value, actor_to_str
-from sunya.utils import get_type_name
+from sunya.utils import type_name_to_kebab
 
 
 class Module(Entity):
@@ -21,7 +21,7 @@ class JSON(Value):
 
 @actor_to_str.method((Module,))
 def module_to_str(module):
-    return f"{get_type_name(module)}:module"
+    return f"{type_name_to_kebab(module)}:module"
 
 
 @actor_to_str.method((Form,))
@@ -31,4 +31,4 @@ def form_to_str(form):
 
 @actor_to_str.method((Enum,))
 def enum_to_str(enum):
-    return f"{get_type_name(enum)}:enum"
+    return f"{type_name_to_kebab(enum)}:enum"

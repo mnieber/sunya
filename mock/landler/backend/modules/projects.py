@@ -13,14 +13,10 @@ from sunya import Entity, actor_to_str
 class Projects(Module):
     class Models:
         class Project(Entity):
-            """A Django model that contains a project."""
-
             name: str
             memberships: T.List["Projects.Models.ProjectMembership"] = []
 
         class ProjectMembership(Entity):
-            """A Django model that contains a membership of a project."""
-
             project: "Projects.Models.Project"
             organization: Organizations.Models.Organization
             role: "Projects.Enums.OrganizationInProjectRoles"

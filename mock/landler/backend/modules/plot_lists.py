@@ -16,6 +16,10 @@ class PlotLists(Module):
             plots: T.List[Plots.Models.Plot] = []
             project: Projects.Models.Project
 
+        class Project2PlotList(Entity):
+            plot_list: "PlotLists.Models.PlotList"
+            project: Projects.Models.Project
+
     class Actions:
         class CreatePlot(Action):
             class Args:

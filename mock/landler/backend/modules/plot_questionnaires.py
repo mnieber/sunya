@@ -11,8 +11,6 @@ if T.TYPE_CHECKING:
 class PlotQuestionnaires(Module):
     class Models:
         class PlotQuestionnaire(Entity):
-            """A Django model that contains a plot questionnaire."""
-
             plot: T.Optional["Plots.Models.Plot"] = None
             land_type: "PlotQuestionnaires.Enums.LandType"
 

@@ -14,6 +14,12 @@ from sunya import Entity, MemField, actor_to_str, extend
 class ProjectAnalysisJobs(Module):
     class Models:
         class ProjectAnalysisJob(Entity):
+            """
+            From this model, ProjectAnalyses are created. If repeats_every is not None,
+            then multiple ProjectAnalyses will be created, each with a scheduled_at
+            that is scheduled_at + repeats_every.
+            """
+
             project: Projects.Models.Project
             scheduled_at: datetime
             repeats_every: T.Optional[timedelta] = None

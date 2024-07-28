@@ -24,3 +24,7 @@ def l0(x):
 
 def u0(x):
     return x[0].upper() + x[1:] if x else x
+
+
+def type_name_to_kebab(x):
+    return camel_to_kebab(get_type_name(x))

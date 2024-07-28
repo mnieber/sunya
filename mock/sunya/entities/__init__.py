@@ -1,6 +1,6 @@
 from dataclassy import dataclass
 from sunya.entities.actor_to_str import actor_to_str
-from sunya.utils import get_type_name, str_to_uuid
+from sunya.utils import type_name_to_kebab, str_to_uuid
 
 
 @dataclass(kw_only=True)
@@ -28,7 +28,7 @@ class Fn(Entity):
     name: str = ""
 
     def __post_init__(self):
-        self.name = self.name or get_type_name(self)
+        self.name = self.name or type_name_to_kebab(self)
 
 
 @actor_to_str.method((Fn,))

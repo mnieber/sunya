@@ -1,5 +1,5 @@
 from landler.backend.app import *
-from landler.frontend.app import *
+from landler.frontend.app import user_account_route
 from sunya import add_step, register
 
 

@@ -15,8 +15,6 @@ from sunya import EntityWithId, MemField, actor_to_str, extend
 class PlotAnalyses(Module):
     class Models:
         class PlotAnalysis(EntityWithId):
-            """A Django model that contains a plot analysis."""
-
             plot: Plots.Models.Plot
             project_analysis: ProjectAnalyses.Models.ProjectAnalysis
             now: datetime
