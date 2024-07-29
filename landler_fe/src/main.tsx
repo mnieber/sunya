@@ -12,6 +12,15 @@ import { flags } from '/src/app/flags';
 
 const strict = false;
 
+if (import.meta.env.DEV) {
+  applyFormatters();
+}
+
+setOptions({
+  logging: flags.logSkandha,
+  formatObject: toJS,
+});
+
 const isProduction = process.env.NODE_ENV === 'production';
 
 async function enableMocking(): Promise<void> {
@@ -25,15 +34,6 @@ async function enableMocking(): Promise<void> {
   // once the Service Worker is up and ready to intercept requests.
   await worker.start();
 }
-
-if (import.meta.env.DEV) {
-  applyFormatters();
-}
-
-setOptions({
-  logging: flags.logSkandha,
-  formatObject: toJS,
-});
 
 enableMocking().then(() => {
   const root = ReactDOM.createRoot(
