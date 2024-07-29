@@ -52,6 +52,7 @@ services:
     image: sunya_landler_fe_dev
     ports:
       - 3001:3001
+      - 6006:6006
     volumes:
       - ./landler_fe:/app/src
   postgres:

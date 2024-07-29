@@ -27,6 +27,7 @@ MENU:
     serve:
       - dodo landler_be.serve
       - dodo landler_fe.serve
+      - dodo landler_fe.storybook
 
 ROOT:
   aliases: {}
