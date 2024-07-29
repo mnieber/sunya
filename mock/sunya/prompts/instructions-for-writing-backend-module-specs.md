@@ -37,6 +37,8 @@ The purpose of domain events is to inform external observers about what is going
 
 Following the module class, the module spec creates instances of global singleton mock objects. These are mock objects for which there exists only one instance. They are instantiated in the module spec so that all scenarios can use them just by importing them. For example, since the create_blog_action is a global function, and since all scenarios can use it, it is instantiated in this section of the module spec.
 
+When I ask you to write a module spec, please also consider which actors (that are based on the mock code-units in the module spec) will be needed in the current scenarios, and create these actors in the module spec file.
+
 ## The actor_to_str functions
 
 In this section of the module spec, we define instances of the actor_to_str multi-method for specific code-units that are defined in the module spec. The actor_to_str multi-method is used to convert any code-unit into a string that identifies that actor.
