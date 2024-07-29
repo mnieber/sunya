@@ -5,4 +5,5 @@ export const flags = observable({
   logSkandha: true,
   logResourceStates: true,
   logHistory: false,
+  useMsw: false,
 });

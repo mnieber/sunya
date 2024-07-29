@@ -12,6 +12,20 @@ import { flags } from '/src/app/flags';
 
 const strict = false;
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+async function enableMocking(): Promise<void> {
+  if (isProduction || !flags.useMsw) {
+    return;
+  }
+
+  const { worker } = await import('./mocks/browser');
+
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  await worker.start();
+}
+
 if (import.meta.env.DEV) {
   applyFormatters();
 }
@@ -21,10 +35,12 @@ setOptions({
   formatObject: toJS,
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+enableMocking().then(() => {
+  const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+  );
 
-const body = <App />;
+  const body = <App />;
 
-root.render(strict ? <React.StrictMode>{body}</React.StrictMode> : body);
+  root.render(strict ? <React.StrictMode>{body}</React.StrictMode> : body);
+});

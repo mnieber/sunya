@@ -16,6 +16,7 @@
     "mobx-observable-history": "^2.0.3",
     "mobx-react-lite": "^3.4.3",
     "mobx-resource-states": "^0.1.0",
+    "msw": "^2.3.4",
     "postcss": "^8.4.23",
     "prop-types": "^15.8.1",
     "ramda": "^0.29.0",
