@@ -14,7 +14,7 @@ export const createBlog = (values: ObjT): BlogT => {
   return initRS({
     id: createUUID(),
     isTransient: true,
-    name: 'New blog',
+    name: values.name ?? 'New blog',
     slug: '-',
   } as BlogT);
 };
