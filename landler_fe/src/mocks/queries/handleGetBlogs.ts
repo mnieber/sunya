@@ -10,7 +10,7 @@ export const handleGetBlogs = http.get(`${hostUrl}blogs/list/`, () => {
       name: 'Judo',
     }),
     createBlog({
-      name: 'Jonas',
+      name: 'Karate',
     }),
   ]);
 });
