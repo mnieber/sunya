@@ -79,11 +79,16 @@ class Blogs(Module):
         class BlogPostFormView:
             pass
 
-        class BlogListView:
-            pass
+        class BlogsPage:
+            class Root:
+                class __LeftSideBar:
+                    BlogListView = None
 
-        class BlogPostListView:
-            pass
+                class __RightCanvas:
+                    BlogPostListView = None
+                    BlogPostFormView = None
+                    EditBlogPostButton = None
+                    CreateBlogPostButton = None
 
     class Effects:
         class SelectBlogEffect:

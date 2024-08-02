@@ -65,9 +65,16 @@ state_providers:
   - name: BlogsStateProvider
   - name: BlogPostsStateProvider
 views:
-  - name: BlogPostFormView
-  - name: BlogListView
-  - name: BlogPostListView
+  BlogPostFormView: {}
+  BlogsPage:
+    Div:
+      __LeftSideBar:
+        BlogListView: null
+      __RightCanvas:
+        BlogPostListView: null
+        BlogPostFormView: null
+        EditBlogPostButton: null
+        CreateBlogPostButton: null
 effects:
   - name: SelectBlogEffect
 components:

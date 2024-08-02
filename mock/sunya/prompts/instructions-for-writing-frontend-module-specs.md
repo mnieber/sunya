@@ -53,7 +53,7 @@ The StateProviders section describes the state-provider components that provide 
 
 ### Views
 
-The StateProviders section describes components that can be considered Views. A View component typically shows a resource.
+The Views section describes components that can be considered Views. A View component typically shows a resource. Each view in the Views section can have a Root class that contains a high-level description of the layout of that view. When I ask you to write a frontend module spec I will usually also supply information (both in text and in images) about the layout of the views that the user is interacting with. This information can then be used to fill the Root class of the view. Since there is no right or wrong way to fill the Root class, just make a best effort on filling out this part of the spec, and take on the role of a UX designer who is free to imagine what a good layout might be.
 
 ### Effects
 

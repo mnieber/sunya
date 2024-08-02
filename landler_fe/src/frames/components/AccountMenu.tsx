@@ -50,7 +50,7 @@ export const AccountMenu = observer(
     }
 
     return (
-      <div className={cn('AccountMenu', ['ml-8', props.className])}>
+      <div className={cn('AccountMenu', [props.className])}>
         <Menu
           menuButton={
             <MenuButton

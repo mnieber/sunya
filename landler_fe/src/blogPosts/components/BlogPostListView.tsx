@@ -30,7 +30,7 @@ const ContextProps = {
 
 export const BlogPostListView = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
-    if (!props.blogPosts.length || isLoading(props.blogPosts)) {
+    if (isLoading(props.blogPosts)) {
       return <BlogPostListViewLoader />;
     }
 

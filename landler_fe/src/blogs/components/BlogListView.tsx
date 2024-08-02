@@ -33,7 +33,7 @@ export const BlogListView = observer(
 
     return (
       <div
-        className={cn('BlogListView', [L.col.skewer(), 'p-4', props.className])}
+        className={cn('BlogListView', [L.col.banner(), 'p-4', props.className])}
         tabIndex={1}
       >
         {blogDivs}

@@ -1,3 +1,4 @@
+import re
 from sunya.utils import extract_field_types, camel_to_snake, l0
 
 
@@ -108,11 +109,9 @@ def _get_state_providers(module):
 
 
 def _get_views(module):
-    result = []
     if views := getattr(module, "Views", None):
-        for view_name, view in _get_members(views):
-            result.append(dict(name=view_name))
-    return result
+        return _get_view_types(views)
+    return {}
 
 
 def _get_effects(module):
@@ -128,4 +127,16 @@ def _get_components(module):
     if components := getattr(module, "Components", None):
         for component_name, component in _get_members(components):
             result.append(dict(name=component_name))
+    return result
+
+
+def _get_view_types(container):
+    result = {}
+    for member_name, member in container.__dict__.items():
+        name = member.__name__ if isinstance(member, type) else member_name
+        if name.startswith("_"):
+            if not re.match(r"__[A-Z]", name):
+                continue
+
+        result[name] = _get_view_types(member) if isinstance(member, type) else member
     return result

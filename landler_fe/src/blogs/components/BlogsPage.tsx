@@ -28,18 +28,28 @@ export const BlogsPage = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     return (
       <div className={cn('BlogsPage', L.row.bar(), props.className)}>
-        <BlogListView className={cn()} />
-        <Route path={blogsRoutes.blog()}>
-          <SelectBlogEffect />
-          <div className={cn(L.col.skewer(), 'p-4')}>
-            <BlogPostListView className="mb-4" />
-            {props.blogPostsEdit.isEditing && (
-              <BlogPostFormView className="mt-4" />
-            )}
-            <EditBlogPostButton className="mt-8" />
-            <DeleteBlogPostsButton className="" />
-          </div>
-        </Route>
+        {
+          // 🔳 LeftSideBar
+        }
+        <div className={cn('BlogsPage__LeftSideBar')}>
+          <BlogListView className={cn()} />
+        </div>
+        {
+          // 🔳 RightCanvas
+        }
+        <div className={cn('BlogsPage__RightCanvas', L.col.canvas())}>
+          <Route path={blogsRoutes.blog()}>
+            <SelectBlogEffect />
+            <div className={cn(L.col.skewer(), 'p-4')}>
+              <BlogPostListView className="mb-4" />
+              {props.blogPostsEdit.isEditing && (
+                <BlogPostFormView className="mt-4" />
+              )}
+              <EditBlogPostButton className="mt-8" />
+              <DeleteBlogPostsButton className="" />
+            </div>
+          </Route>
+        </div>
       </div>
     );
   }, ContextProps)

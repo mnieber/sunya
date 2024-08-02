@@ -23,7 +23,7 @@ export const App = () => {
             <AuthSwitch />
             <BlogsStateProvider>
               <BlogPostsStateProvider>
-                <MainView className="mx-auto my-auto">
+                <MainView className="">
                   <BlogsSwitch />
                 </MainView>
               </BlogPostsStateProvider>
@@ -43,7 +43,8 @@ const AppBody = (props: React.PropsWithChildren<{}>) => {
         R.values({
           root: L.col.banner(),
           // 320px = breakpoints.xs
-          size: `min-width-[320px] h-screen`,
+          size: `min-width-[320px] h-screen max-w-[1600px]`,
+          pos: `mx-auto`,
           scroll: 'overflow-x-hidden',
         }),
       ])}
