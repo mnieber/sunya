@@ -3,7 +3,7 @@ import React from 'react';
 import { Highlight } from 'skandha-facets';
 import { useDeleteBlogPosts } from '/src/api/endpoints';
 import { useObservableQuery } from '/src/api/hooks';
-import { DeleteBlogPostsArgsT } from '/src/api/mutations';
+import { DeleteBlogPostsArgsT, useGetBlogTags } from '/src/api/mutations';
 import {
   CreateBlogPostArgsT,
   useCreateBlogPost,
@@ -17,6 +17,7 @@ import { useBuilder } from '/src/utils/hooks/useBuilder';
 import { useGraftResourceStatesFromMemo } from '/src/utils/hooks/useGraftResourceStatesFromMemo';
 import { lookUp } from '/src/utils/ids';
 import { ObjT } from '/src/utils/types';
+import { toPickerValue } from '/src/utils/valuePicker';
 
 export type PropsT = {
   getBlog: () => BlogT | undefined;
@@ -42,6 +43,13 @@ export const useBlogPostsState = (props: PropsT) => {
       debugLabel: 'getBlogPosts',
     }
   );
+  const getBlogTags = useGetBlogTags();
+
+  const loadBlogTagsOptions = (inputValue: string) => {
+    return getBlogTags.mutateAsync({ inputValue }).then((response: ObjT) => {
+      return response.tags.map(toPickerValue);
+    });
+  };
 
   const blogPostsState = useBuilder(() => {
     const state = new BlogPostsState({
@@ -98,5 +106,6 @@ export const useBlogPostsState = (props: PropsT) => {
     blogPostsState,
     getBlogPosts,
     deleteBlogPosts,
+    loadBlogTagsOptions,
   };
 };

@@ -4,15 +4,15 @@ import { get } from '/src/api/restClient';
 import { createQueryKey } from '/src/auth/utils/createQueryKey';
 import { waitOnDev } from '/src/utils/wait';
 
-export type ArgsT = {};
+export type GetBlogsArgsT = {};
 
-export const getBlogs = (args: ArgsT) => {
+export const getBlogs = (args: GetBlogsArgsT) => {
   return get(`/blogs/list/`).then((response) => {
     return waitOnDev(1000, { blogs: response.data });
   });
 };
 
-export type QueryKeyT = ArgsT;
+export type QueryKeyT = GetBlogsArgsT;
 
 export function getBlogsQueryKey(args: QueryKeyT) {
   return createQueryKey<QueryKeyT>('getBlogs', args);

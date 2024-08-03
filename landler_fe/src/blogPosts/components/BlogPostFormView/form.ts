@@ -11,9 +11,11 @@ import { ObjT } from '/src/utils/types';
 
 const getInitialValues = (props: PropsT & typeof ContextProps) => {
   return {
-    'blogPostForm.content': props.blogPost.content ?? null,
     'blogPostForm.title': props.blogPost.title ?? null,
     'blogPostForm.slug': props.blogPost.slug ?? null,
+    'blogPostForm.content': props.blogPost.content ?? null,
+    'blogPostForm.level': props.blogPost.level ?? null,
+    'blogPostForm.tags': props.blogPost.tags ?? null,
   };
 };
 
@@ -41,7 +43,10 @@ const getHandleSubmit =
         values: unflatten({
           ...values,
           'blogPostForm.title': values['blogPostForm.title'],
+          'blogPostForm.slug': values['blogPostForm.slug'],
           'blogPostForm.content': values['blogPostForm.content'],
+          'blogPostForm.level': values['blogPostForm.level'],
+          'blogPostForm.tags': values['blogPostForm.tags'],
         }),
       })
       .then((response: ObjT) => {

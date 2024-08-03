@@ -4,11 +4,11 @@ import { get } from '/src/api/restClient';
 import { createQueryKey } from '/src/auth/utils/createQueryKey';
 import { waitOnDev } from '/src/utils/wait';
 
-export type ArgsT = {
+export type GetBlogPostsArgsT = {
   blogSlug: string;
 };
 
-export const getBlogPosts = (args: ArgsT) => {
+export const getBlogPosts = (args: GetBlogPostsArgsT) => {
   return get(`/blogs/${args.blogSlug}/blog-posts/list/`).then((response) => {
     return waitOnDev(100, { blogPosts: response.data });
   });
@@ -18,13 +18,16 @@ export type OptionsT = {
   enabled?: boolean;
 };
 
-export type QueryKeyT = ArgsT;
+export type QueryKeyT = GetBlogPostsArgsT;
 
 export function getBlogPostsQueryKey(args: QueryKeyT) {
   return createQueryKey<QueryKeyT>('getBlogPosts', args);
 }
 
-export const useGetBlogPosts = (args: ArgsT, options?: OptionsT) => {
+export const useGetBlogPosts = (
+  args: GetBlogPostsArgsT,
+  options?: OptionsT
+) => {
   return useQuery({
     queryKey: getBlogPostsQueryKey(args),
     queryFn: () => getBlogPosts(args),

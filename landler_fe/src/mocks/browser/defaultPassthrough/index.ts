@@ -12,7 +12,7 @@ export const mapboxEventsHandler = http.post(
   }
 );
 
-export const landler = http.get(`${hostUrl}/*`, () => {
+export const landler = http.get(`${hostUrl}*`, () => {
   return passthrough();
 });
 

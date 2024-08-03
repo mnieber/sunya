@@ -7,12 +7,12 @@ import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
-export type ArgsT = {
+export type SignInArgsT = {
   userId: string;
   password: string;
 };
 
-export function signIn(args: ArgsT) {
+export function signIn(args: SignInArgsT) {
   const url = '/users/sign-in/';
   return post(url, {
     signInUserForm: {

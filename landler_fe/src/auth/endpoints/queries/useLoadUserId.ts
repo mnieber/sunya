@@ -7,11 +7,11 @@ import { createQueryKey } from '/src/auth/utils/createQueryKey';
 import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
 import { ObjT } from '/src/utils/types';
 
-export type ArgsT = {
+export type LoadUserIdArgsT = {
   maybeRefreshToken: boolean;
 };
 
-export function loadUserId(args: ArgsT): Promise<any> {
+export function loadUserId(args: LoadUserIdArgsT): Promise<any> {
   const url = '/users/user-id/';
 
   return get(url)

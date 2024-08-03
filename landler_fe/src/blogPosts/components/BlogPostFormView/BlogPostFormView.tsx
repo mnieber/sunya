@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { FormStateProvider } from 'react-form-state-context';
 import { withContextProps } from 'react-props-from-context';
 import { form } from './form';
+import { getBlogPostLevelOptions } from '/src/api/types/BlogPostT';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
 import {
   Field,
@@ -12,6 +13,7 @@ import {
   MarkdownField,
   NameField,
   SlugField,
+  ValuePickerField,
 } from '/src/forms/components';
 import { usePreviewButton } from '/src/forms/hooks/usePreviewButton';
 import { CardS } from '/src/frames/components/Card';
@@ -28,6 +30,7 @@ export type PropsT = {
 export const ContextProps = {
   blogPost: blogPostsCtx.blogPost,
   blogPostsEdit: blogPostsCtx.blogPostsEdit,
+  loadBlogTagsOptions: blogPostsCtx.loadBlogTagsOptions,
 };
 
 export const BlogPostFormView = observer(
@@ -106,6 +109,44 @@ export const BlogPostFormView = observer(
           >
             <FormFieldLabel label="CONTENT" buttons={[showPreviewButton]} />
             <MarkdownField tabIndex={6} controlled={true} preview={preview} />
+          </Field>
+          {
+            // 🔳 LevelField 🔳
+          }
+          <Field
+            fieldName="blogPostForm.level"
+            tabOnEnter={false}
+            className={MainFormS.Field()}
+          >
+            <FormFieldLabel label="LEVEL" />
+            <ValuePickerField
+              tabIndex={7}
+              isCreatable={false}
+              isMulti={false}
+              tabOnEnter={false}
+              labelFromValue={(x: any) => x}
+              loadOptions={getBlogPostLevelOptions}
+              defaultOptions
+            />
+          </Field>
+          {
+            // 🔳 TagsField 🔳
+          }
+          <Field
+            fieldName="blogPostForm.tags"
+            tabOnEnter={false}
+            className={MainFormS.Field()}
+          >
+            <FormFieldLabel label="TAGS" />
+            <ValuePickerField
+              tabIndex={7}
+              isCreatable={true}
+              isMulti={true}
+              tabOnEnter={false}
+              labelFromValue={(x: any) => x}
+              loadOptions={props.loadBlogTagsOptions}
+              defaultOptions
+            />
           </Field>
           {
             // 🔳 Buttons 🔳

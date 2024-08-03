@@ -19,9 +19,12 @@ const ContextProps = {
 
 export const BlogPostsStateProvider = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
-    const { blogPostsState, getBlogPosts, deleteBlogPosts } = useBlogPostsState(
-      { getBlog: () => props.blogsHighlight.item }
-    );
+    const {
+      blogPostsState,
+      getBlogPosts,
+      deleteBlogPosts,
+      loadBlogTagsOptions,
+    } = useBlogPostsState({ getBlog: () => props.blogsHighlight.item });
 
     const cache = useBuilder(() =>
       makeAutoObservable({
@@ -49,6 +52,7 @@ export const BlogPostsStateProvider = observer(
         blogPostsEdit: () => blogPostsState.blogPostsCtr.edit,
         blogPostsHighlight: () => blogPostsState.blogPostsCtr.highlight,
         blogPostsSelection: () => blogPostsState.blogPostsCtr.selection,
+        loadBlogTagsOptions: () => loadBlogTagsOptions,
       });
     };
 

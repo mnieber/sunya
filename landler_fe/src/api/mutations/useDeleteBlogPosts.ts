@@ -9,12 +9,12 @@ import { BlogT } from '/src/api/types/BlogT';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
-export type ArgsT = {
+export type DeleteBlogPostsArgsT = {
   blog: BlogT;
   blogPostIds: string[];
 };
 
-export const deleteBlogPosts = (args: ArgsT) => {
+export const deleteBlogPosts = (args: DeleteBlogPostsArgsT) => {
   const url = `/blogs/${args.blog.id}/blog-posts/delete/`;
   return post(url, {
     deleteBlogPostsForm: {
@@ -39,7 +39,7 @@ export const deleteBlogPosts = (args: ArgsT) => {
 export const useDeleteBlogPosts = () => {
   return useObservableMutation({
     mutationFn: deleteBlogPosts,
-    onSuccess: (response: ObjT, args: ArgsT) => {
+    onSuccess: (response: ObjT, args: DeleteBlogPostsArgsT) => {
       invalidateGetBlogPosts({ blogSlug: args.blog.slug });
       queryClient.setQueryData(
         getBlogPostsQueryKey({ blogSlug: args.blog.slug }),

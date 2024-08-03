@@ -15,3 +15,4 @@ export { NameField } from './NameField';
 export { PasswordField } from './PasswordField';
 export { SlugField } from './SlugField';
 export { UpdateSlugButton } from './UpdateSlugButton';
+export { ValuePickerField } from './ValuePickerField';

@@ -1,1 +1,2 @@
-export { getBlogPosts } from './useGetBlogPosts';
+export { useGetBlogPosts } from './useGetBlogPosts';
+export { useGetBlogs } from './useGetBlogs';

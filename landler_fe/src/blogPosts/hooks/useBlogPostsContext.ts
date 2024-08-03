@@ -3,6 +3,7 @@ import React from 'react';
 import { Addition, Deletion, Edit, Highlight, Selection } from 'skandha-facets';
 import { BlogPostT } from '/src/api/types';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
+import { LoadValuePickerOptionsT } from '/src/utils/components/ValuePicker';
 
 export const BlogPostsContext = React.createContext<any>(null);
 
@@ -49,5 +50,9 @@ export const blogPostsCtx = R.mergeAll([
       useBlogPostsContext,
       'blogPostsState',
     ] as any as BlogPostsState,
+    loadBlogTagsOptions: [
+      useBlogPostsContext,
+      'loadBlogTagsOptions',
+    ] as any as LoadValuePickerOptionsT<any>,
   },
 ]);

@@ -4,9 +4,9 @@ import { setAuthTokens } from '/src/api/restClient';
 import { AuthState } from '/src/auth/AuthState';
 import { ObjT } from '/src/utils/types';
 
-export type ArgsT = {};
+export type SignOutArgsT = {};
 
-export function signOut(args: ArgsT) {
+export function signOut(args: SignOutArgsT) {
   return Promise.resolve().then(() => {
     setAuthTokens(undefined, undefined);
     return {

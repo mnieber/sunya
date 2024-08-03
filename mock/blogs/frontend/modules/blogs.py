@@ -12,11 +12,20 @@ class Blogs(Module):
         class Blog(EntityWithId):
             name: str
             description: T.Optional[str]
+            tags: T.List[str]
 
         class BlogPost(EntityWithId):
             blog: "Blogs.Types.Blog"
             title: str
             content: T.Optional[str]
+            isPublished: bool
+            level: "Blogs.Enums.BlogPostLevel"
+
+    class Enums:
+        class BlogPostLevel:
+            easy = "easy"
+            medium = "medium"
+            hard = "hard"
 
     class Mutations:
         class CreateBlog(Mutation):
@@ -35,6 +44,10 @@ class Blogs(Module):
     class Queries:
         class GetBlogs(Query):
             pass
+
+        class GetBlogTags(Query):
+            class Args:
+                inputValue: str
 
         class GetBlogPosts(Query):
             pass

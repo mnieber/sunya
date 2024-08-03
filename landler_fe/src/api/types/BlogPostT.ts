@@ -8,7 +8,11 @@ export type BlogPostT = EntityT & {
   content: string | undefined;
   slug: string;
   isPublished: boolean;
+  level: BlogPostLevelT;
+  tags: string[];
 };
+
+export type BlogPostLevelT = 'easy' | 'medium' | 'hard';
 
 export type BlogPostByIdT = { [id: string]: BlogPostT };
 
@@ -20,5 +24,15 @@ export const createBlogPost = (values: ObjT): BlogPostT => {
     slug: '-',
     content: values.content,
     isPublished: false,
+    level: 'medium',
+    tags: [],
   } as BlogPostT);
+};
+
+export const getBlogPostLevelOptions = (args: {}) => {
+  return Promise.resolve([
+    { value: 'easy', label: 'Easy' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'hard', label: 'Hard' },
+  ]);
 };
