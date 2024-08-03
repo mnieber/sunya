@@ -3,7 +3,7 @@ import typing as T
 if T.TYPE_CHECKING:
     pass
 
-from landler.frontend.entities import Mutation, Facet, Trim, Route, Query
+from landler.frontend.entities import Mutation, Facet, Trim, Query
 from landler.stack.entities import Module
 from sunya import EntityWithId, actor_to_str
 
@@ -14,13 +14,11 @@ class Checklist(Module):
             title: str
             description: str
             is_completed: bool
-            is_minimized: bool
 
     class Mutations:
         class UpdateChecklistItems(Mutation):
             class Args:
-                is_minimized: T.Dict[str, bool]
-                is_hidden: T.Dict[str, bool]
+                is_completed: T.Dict[str, bool]
 
     class Queries:
         class GetChecklist(Query):
@@ -32,10 +30,6 @@ class Checklist(Module):
                 class ChecklistCtr:
                     data: Facet
                     visibility: Facet
-
-    class Routes:
-        class HomePageRoute(Route):
-            pass
 
     class StateProviders:
         class ChecklistStateProvider:
@@ -52,7 +46,6 @@ class Checklist(Module):
 
 get_checklist_query = Checklist.Queries.GetChecklist()
 update_checklist_items_mutation = Checklist.Mutations.UpdateChecklistItems()
-home_page_route = Checklist.Routes.HomePageRoute(path="/home")
 
 
 @actor_to_str.method((Checklist.Types.ChecklistItem,))

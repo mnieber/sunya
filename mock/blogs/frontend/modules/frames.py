@@ -1,19 +1,18 @@
 import typing as T
+from .blogs import Blogs
 
 if T.TYPE_CHECKING:
     pass
 
-from blogs.frontend.app import Module, Trim, Route
+from blogs.frontend.app import Module, Trim
 
 
 class Frames(Module):
-    class Routes:
-        class HomePage(Route):
-            pass
-
     class Views:
-        class MainView:
-            pass
+        class DashboardFrame:
+            class __TopBar:
+                NewBlogButton: Blogs.Components.NewBlogButton
+                AccountMenu: T.Any
 
     class Components:
         class ActionButton:

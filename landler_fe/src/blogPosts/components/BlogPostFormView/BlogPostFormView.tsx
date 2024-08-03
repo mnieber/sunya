@@ -86,7 +86,7 @@ export const BlogPostFormView = observer(
               controlled={true}
               autoSelect={true}
               slugFieldName={
-                initialValues['blogPostForm.slug'] === 'new-blog-post'
+                initialValues['blogPostForm.slug'] === '-'
                   ? 'blogPostForm.slug'
                   : undefined
               }

@@ -52,28 +52,24 @@ def the_frontend_loads_checklist():
                     title="Add your organization",
                     description="Set up your organization details",
                     is_completed=False,
-                    is_minimized=False,
                 ),
                 Checklist.Types.ChecklistItem(
                     id="2",
                     title="Create a project",
                     description="Start your first project",
                     is_completed=False,
-                    is_minimized=False,
                 ),
                 Checklist.Types.ChecklistItem(
                     id="3",
                     title="Add a plot",
                     description="Create your first plot",
                     is_completed=False,
-                    is_minimized=False,
                 ),
                 Checklist.Types.ChecklistItem(
                     id="4",
                     title="Trigger a project-analysis",
                     description="Analyze your project data",
                     is_completed=False,
-                    is_minimized=False,
                 ),
             ]
         )
@@ -90,18 +86,18 @@ def the_user_views_checklist(user, checklist):
     )
 
 
-def the_user_minimizes_or_completes_a_checklist_item(user, checklist):
-    item_to_minimize = checklist[0]
+def the_user_completes_a_checklist_item(user, checklist):
+    item_to_complete = checklist[0]
     step = add_step(
         "The",
         user,
-        "minimizes the checklist item",
-        item_to_minimize,
+        "completes the checklist item",
+        item_to_complete,
         "using the",
         update_checklist_items_mutation,
     )
     with step:
-        item_to_minimize.is_minimized = True
+        item_to_complete.is_completed = True
 
     return step
 

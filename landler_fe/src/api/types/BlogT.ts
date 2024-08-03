@@ -5,6 +5,7 @@ import { ObjT } from '/src/utils/types';
 
 export type BlogT = EntityT & {
   name: string;
+  description: string;
   slug: string;
 };
 
@@ -15,6 +16,7 @@ export const createBlog = (values: ObjT): BlogT => {
     id: createUUID(),
     isTransient: true,
     name: values.name ?? 'New blog',
+    description: values.description ?? '',
     slug: '-',
   } as BlogT);
 };

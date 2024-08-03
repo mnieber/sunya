@@ -1,9 +1,15 @@
 import { Cbs } from 'aspiration';
 import * as R from 'ramda';
 import { mapDataToProps } from 'skandha';
-import { Selection, handleSelectItem } from 'skandha-facets';
+import {
+  Edit,
+  Selection,
+  handleSelectItem,
+  topOfTheList,
+} from 'skandha-facets';
 import { registerCtr } from 'skandha-mobx';
 import { BlogsState } from '/src/blogs/BlogsState';
+import { ObjT } from '/src/utils/types';
 
 const mapData = (state: BlogsState) => {
   const ctr = state.blogsCtr;
@@ -25,6 +31,39 @@ const mapData = (state: BlogsState) => {
 
 const setCallbacks = (state: BlogsState) => {
   const ctr = state.blogsCtr;
+
+  ctr.addition.callbackMap = {
+    add: {
+      stageAdd() {
+        ctr.addition.parentId = topOfTheList;
+      },
+    },
+    cancel: {
+      unstageAdd(parentId: string | undefined) {
+        ctr.edit.cancel();
+        // The UI will restore the previous url
+      },
+    },
+    confirm: {
+      confirmAdd() {},
+    },
+  };
+
+  ctr.edit.callbackMap = {
+    save: {
+      saveItem(this: Cbs<Edit['save']>) {
+        return state.props.saveBlog(this.args.values).then((response: ObjT) => {
+          ctr.addition.confirm();
+          return response;
+        });
+      },
+    },
+    cancel: {
+      onCancel() {
+        ctr.addition.cancel();
+      },
+    },
+  };
 
   ctr.selection.callbackMap = {
     selectItem: {

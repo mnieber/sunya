@@ -1,4 +1,5 @@
 import React from 'react';
+import { CreateBlogButton } from '/src/blogPosts/components/CreateBlogButton';
 import { AccountMenu } from '/src/frames/components/AccountMenu';
 import { L } from '/src/frames/layout';
 import { cn } from '/src/utils/classnames';
@@ -13,7 +14,10 @@ type PropsT = React.PropsWithChildren<{
 export const DashboardFrame = (props: PropsT) => {
   return (
     <div className={cn('DashboardFrame', L.col.banner(), props.className)}>
-      <AccountMenu />
+      <div className={cn('DashboardFrame__TopBar', L.col.banner())}>
+        <CreateBlogButton />
+        <AccountMenu />
+      </div>
       {props.children}
     </div>
   );

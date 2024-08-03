@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import React from 'react';
-import { Highlight, Selection } from 'skandha-facets';
+import { Addition, Edit, Highlight, Selection } from 'skandha-facets';
 import { BlogT } from '/src/api/types';
 import { BlogsState } from '/src/blogs/BlogsState';
 
@@ -23,5 +23,7 @@ export const blogsCtx = R.mergeAll([
     blog: [useBlogsContext, 'blog'] as any as BlogT,
     blogsHighlight: [useBlogsContext, 'blogsHighlight'] as any as Highlight,
     blogsSelection: [useBlogsContext, 'blogsSelection'] as any as Selection,
+    blogsAddition: [useBlogsContext, 'blogsAddition'] as any as Addition,
+    blogsEdit: [useBlogsContext, 'blogsEdit'] as any as Edit,
   },
 ]);

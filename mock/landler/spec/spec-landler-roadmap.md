@@ -15,32 +15,36 @@ Organization switcher: a drop-down on the top of the page for selecting the acti
       1. If the account was already active, they are redirected to the sign-in page.
 3. The user is redirected to their home-page route
 
-### MS2: The user signs in
+### MS2: The user inspects the checklist
 
 1. The user sign-ins and is redirected to their home-page route.
-2. The home-page shows a check-list of things to do next:
-   1. The check-list is shown as a set of cards
-      1. Add your organization
-      2. Create a project
-      3. Add a plot
-      4. Trigger a project-analysis
-   2. Each card contains a short explanation
-   3. The cards can be hidden
-      1. The hidden cards are minimized
-      2. The user can also hide the entire checklist
-         1. The checklist can be unhidden using a toggle in their user-settings
-            1. The application shows a toast message to explain this
+2. The home-page shows a checklist of things to do next:
+   1. The checklist is shown as a list of checklist-items
+      1. Welcome
+      2. Add your organization
+      3. Create a project
+      4. Add a plot
+      5. Trigger a project-analysis
+   2. The user can click on a checklist item to highlight it
+   3. Below the checklist we show a checklist-card for the highlighted checklist-item
+      1. This card contains a short explanation
+      2. Every checklist-card is implemented by its own React component.
+   4. The checklist-items that are completed have a checkmark
+      1. The checklist-card has a button to mark the checklist item as completed
+   5. The user can also hide the entire checklist
+      1. This is explained on the Welcome checklist-card
+      2. The Welcome checklist-card has a link to the user-settings where the visibility of the checklist can be toggled.
 
 ### MS3: The user adds an organization
 
-1. The user clicks on the 1st check-list item to add their organization.
+1. The user clicks on the 1st checklist item to add their organization.
    1. They are redirected to the “organizations” section of their user-settings route.
 2. The user submits the form to add their organization
    1. Organization name
 3. For each organization, an organization link is shown
    1. Clicking this link changes the url and activates the corresponding organization
    2. The organization links are also shown in the organization switcher on top of the page
-4. When the organization is added, the related check-list card is checked.
+4. When the organization is added, the related checklist card is checked.
    1. The card now also contains a hint to try the organization switcher.
 
 ### MS4: The user invites a new member to their organization

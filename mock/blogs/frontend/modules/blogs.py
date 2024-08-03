@@ -21,6 +21,7 @@ class Blogs(Module):
             content: T.Optional[str]
             isPublished: bool
             level: "Blogs.Enums.BlogPostLevel"
+            tags: str[]
 
     class Enums:
         class BlogPostLevel:
@@ -36,6 +37,11 @@ class Blogs(Module):
         class CreateBlogPost(Mutation):
             class Args:
                 createBlogPostForm: Form
+                blog: "Blogs.Types.Blog"
+
+        class UpdateBlogPost(Mutation):
+            class Args:
+                updateBlogPostForm: Form
                 blog: "Blogs.Types.Blog"
 
         class DeleteBlogPosts(Mutation):
@@ -94,21 +100,27 @@ class Blogs(Module):
             pass
 
         class BlogsPage:
-            class Root:
-                class __LeftSideBar:
-                    BlogListView = None
+            class __LeftSideBar:
+                BlogListView: T.Any
 
-                class __RightCanvas:
-                    BlogPostListView = None
-                    BlogPostFormView = None
-                    EditBlogPostButton = None
-                    DeleteBlogPostsButton = None
+            class __RightCanvas:
+                BlogPostListView: T.Any
+                BlogPostFormView: T.Any
+                CreateBlogPostButton: T.Any
+                EditBlogPostButton: T.Any
+                DeleteBlogPostsButton: T.Any
 
     class Effects:
         class SelectBlogEffect:
             pass
 
     class Components:
+        class CreateBlogButton(Frames.Components.DialogButton):
+            pass
+
+        class CreateBlogPostButton(Frames.Components.ActionButton):
+            pass
+
         class EditBlogPostButton(Frames.Components.ActionButton):
             pass
 
