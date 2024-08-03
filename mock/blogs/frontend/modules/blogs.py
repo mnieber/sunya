@@ -3,8 +3,9 @@ import typing as T
 if T.TYPE_CHECKING:
     pass
 
-from blogs.frontend.app import Module, Mutation, Facet, Trim, Route, Query, Form
+from blogs.frontend.app import Module, Mutation, Facet, Route, Query, Form
 from sunya import EntityWithId, actor_to_str
+from .frames import Frames
 
 
 class Blogs(Module):
@@ -108,14 +109,11 @@ class Blogs(Module):
             pass
 
     class Components:
-        class DialogButton:
-            trim: Trim
+        class EditBlogPostButton(Frames.Components.ActionButton):
+            pass
 
-        class ToolButton:
-            trim: Trim
-
-        class ActionButton:
-            trim: Trim
+        class DeleteBlogPostsButton(Frames.Components.ActionButton):
+            pass
 
 
 create_blog_mutation = Blogs.Mutations.CreateBlog()
