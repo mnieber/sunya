@@ -101,7 +101,7 @@ class Blogs(Module):
                     BlogPostListView = None
                     BlogPostFormView = None
                     EditBlogPostButton = None
-                    CreateBlogPostButton = None
+                    DeleteBlogPostsButton = None
 
     class Effects:
         class SelectBlogEffect:
@@ -112,6 +112,9 @@ class Blogs(Module):
             trim: Trim
 
         class ToolButton:
+            trim: Trim
+
+        class ActionButton:
             trim: Trim
 
 

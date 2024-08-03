@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { isUpdating } from 'mobx-resource-states';
 import { withContextProps } from 'react-props-from-context';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
+import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
@@ -24,24 +25,17 @@ export const DeleteBlogPostsButton = observer(
       isUpdating(props.blogPosts);
 
     return (
-      <button
+      <ActionButton
         disabled={disabled}
-        className={cn(
-          'DeleteBlogPostsButton',
-          {
-            'DeleteBlogPostsButton--enabled': !disabled,
-            'DeleteBlogPostsButton--disabled': disabled,
-          },
-          props.className
-        )}
+        danger={true}
+        className={cn('DeleteBlogPostsButton', props.className)}
         onClick={() =>
           props.blogPostsDeletion.delete({
             itemIds: props.blogPostsSelection.itemIds,
           })
         }
-      >
-        Delete selected blog posts
-      </button>
+        label="Delete selected blog posts"
+      />
     );
   }, ContextProps)
 );

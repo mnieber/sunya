@@ -57,6 +57,7 @@ export const DefaultDialogButtonTrim = {
   base: {
     componentName: 'Default',
     root: {
+      color: DialogButtonS.color.blueWithDarkText(),
       border: DialogButtonS.border.none(),
       fontSize: DialogButtonS.fontSize.medium(),
       padding: DialogButtonS.padding.medium(),
