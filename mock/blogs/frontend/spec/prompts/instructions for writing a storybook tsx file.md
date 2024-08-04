@@ -10,4 +10,4 @@ With a reusable component I mean a component that is not merely used as a widget
 
 When in doubt whether a view or component should have a storybook page, please ask.
 
-Please determine which StateProviders should wrapped the component in the storybook file. Try to include only those StateProviders that are needed by the component. Stories should get their data from mocks provided by the msw framework.
+Please determine which StateProviders should wrap the component in the storybook file. Try to include only those StateProviders that are needed by the component. When StateProviders run queries, then msw mocks for these queries should be installed (the goal is that Stories get their data from msw mocks).
