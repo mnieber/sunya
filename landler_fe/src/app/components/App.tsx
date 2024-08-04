@@ -9,6 +9,7 @@ import { BlogsSwitch } from '/src/blogs/components/BlogsSwitch';
 import { DashboardFrame } from '/src/frames/components/DashboardFrame';
 import { MainView } from '/src/frames/components/MainView';
 import { L } from '/src/frames/layout';
+import { NavStateProvider } from '/src/routes/components/NavStateProvider';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
@@ -18,18 +19,20 @@ export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthStateProvider>
-        <AppBody>
-          <DashboardFrame>
-            <AuthSwitch />
-            <BlogsStateProvider>
-              <BlogPostsStateProvider>
-                <MainView className="">
-                  <BlogsSwitch />
-                </MainView>
-              </BlogPostsStateProvider>
-            </BlogsStateProvider>
-          </DashboardFrame>
-        </AppBody>
+        <NavStateProvider>
+          <AppBody>
+            <DashboardFrame>
+              <AuthSwitch />
+              <BlogsStateProvider>
+                <BlogPostsStateProvider>
+                  <MainView className="">
+                    <BlogsSwitch />
+                  </MainView>
+                </BlogPostsStateProvider>
+              </BlogsStateProvider>
+            </DashboardFrame>
+          </AppBody>
+        </NavStateProvider>
       </AuthStateProvider>
     </QueryClientProvider>
   );

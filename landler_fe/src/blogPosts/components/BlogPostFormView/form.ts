@@ -7,15 +7,19 @@ import {
   unflatten,
 } from 'react-form-state-context';
 import { ContextProps, PropsT } from './index';
+import { authNav } from '/src/auth/routes';
+import { navTo } from '/src/routes/navHandler';
 import { ObjT } from '/src/utils/types';
 
 const getInitialValues = (props: PropsT & typeof ContextProps) => {
+  const blogPost = props.blogPostsAddition.item ?? props.blogPost;
+
   return {
-    'blogPostForm.title': props.blogPost.title ?? null,
-    'blogPostForm.slug': props.blogPost.slug ?? null,
-    'blogPostForm.content': props.blogPost.content ?? null,
-    'blogPostForm.level': props.blogPost.level ?? null,
-    'blogPostForm.tags': props.blogPost.tags ?? null,
+    'blogPostForm.title': blogPost.title ?? null,
+    'blogPostForm.slug': blogPost.slug ?? null,
+    'blogPostForm.content': blogPost.content ?? null,
+    'blogPostForm.level': blogPost.level ?? null,
+    'blogPostForm.tags': blogPost.tags ?? null,
   };
 };
 
@@ -64,7 +68,13 @@ const getHandleSubmit =
 const getHandleCancel =
   (props: PropsT & typeof ContextProps) =>
   ({ formState }: HandleCancelArgsT) => {
+    const mustRestore = !!props.blogPostsAddition.item;
     props.blogPostsEdit.cancel();
+    if (mustRestore) {
+      if (!props.navState.restoreNavPoint()) {
+        navTo(authNav.home({}));
+      }
+    }
   };
 
 export const form = {

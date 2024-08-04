@@ -48,6 +48,7 @@ export const BlogPostsStateProvider = observer(
         blogPostsState: () => blogPostsState,
         blogPosts: () => cache.blogPosts,
         blogPost: () => cache.blogPost,
+        blogPostsAddition: () => blogPostsState.blogPostsCtr.addition,
         blogPostsDeletion: () => blogPostsState.blogPostsCtr.deletion,
         blogPostsEdit: () => blogPostsState.blogPostsCtr.edit,
         blogPostsHighlight: () => blogPostsState.blogPostsCtr.highlight,

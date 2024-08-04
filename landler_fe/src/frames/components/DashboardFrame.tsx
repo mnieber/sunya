@@ -14,7 +14,7 @@ type PropsT = React.PropsWithChildren<{
 export const DashboardFrame = (props: PropsT) => {
   return (
     <div className={cn('DashboardFrame', L.col.banner(), props.className)}>
-      <div className={cn('DashboardFrame__TopBar', L.col.banner())}>
+      <div className={cn('DashboardFrame__TopBar', L.row.bar())}>
         <CreateBlogButton />
         <AccountMenu />
       </div>

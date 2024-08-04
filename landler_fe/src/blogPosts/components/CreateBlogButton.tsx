@@ -1,8 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
-import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
 import { blogsNav } from '/src/blogs/routes';
-import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
+import { DialogButton } from '/src/frames/components/DialogButton/DialogButton';
+import { navStateCtx } from '/src/routes/hooks/useNavStateContext';
 import { navTo } from '/src/routes/navHandler';
 import { cn } from '/src/utils/classnames';
 
@@ -14,16 +14,18 @@ export type PropsT = {
 };
 
 export const ContextProps = {
-  blog: blogsCtx.blog,
-  blogsAddition: blogsCtx.blogsAddition,
+  navState: navStateCtx.navState,
 };
 
 export const CreateBlogButton = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     return (
-      <ActionButton
+      <DialogButton
         className={cn('CreateBlogButton', props.className)}
-        onClick={() => navTo(blogsNav.createBlog({}))}
+        onClick={() => {
+          props.navState.storeNavPoint();
+          navTo(blogsNav.createBlog({}));
+        }}
         label="Create blog"
       />
     );

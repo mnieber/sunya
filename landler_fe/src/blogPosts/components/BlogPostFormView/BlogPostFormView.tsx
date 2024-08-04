@@ -18,6 +18,7 @@ import {
 import { usePreviewButton } from '/src/forms/hooks/usePreviewButton';
 import { CardS } from '/src/frames/components/Card';
 import { MainFormS } from '/src/frames/components/MainForm';
+import { navStateCtx } from '/src/routes/hooks/useNavStateContext';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
@@ -28,7 +29,9 @@ export type PropsT = {
 };
 
 export const ContextProps = {
+  navState: navStateCtx.navState,
   blogPost: blogPostsCtx.blogPost,
+  blogPostsAddition: blogPostsCtx.blogPostsAddition,
   blogPostsEdit: blogPostsCtx.blogPostsEdit,
   loadBlogTagsOptions: blogPostsCtx.loadBlogTagsOptions,
 };
@@ -40,7 +43,8 @@ export const BlogPostFormView = observer(
       className: 'font-normal',
     });
 
-    if (!props.blogPost) {
+    const blogPost = props.blogPostsAddition.item ?? props.blogPost;
+    if (!blogPost) {
       return null;
     }
 

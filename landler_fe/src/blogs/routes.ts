@@ -3,45 +3,23 @@ import { navHandler, RouteSpecT } from '/src/routes/navHandler';
 import { generatePath } from '/src/routes/utils/generatePath';
 
 export const blogsRoutes = {
-  blogList: () => '/blogs/:blogSlug?',
   createBlog: () => '/blogs/create/_',
   blog: () => '/blogs/:blogSlug',
-  createBlogPost: () => '/blogs/:blogSlug/blog-posts/create/_',
 };
 
 export class BlogsNav {
-  blogList(params: {}, callerId?: string): RouteSpecT {
-    return navHandler().run('blogList', params, callerId);
-  }
   blog(params: { blogSlug: string }, callerId?: string): RouteSpecT {
     return navHandler().run('blog', params, callerId);
   }
   createBlog(params: {}, callerId?: string): RouteSpecT {
     return navHandler().run('createBlog', params, callerId);
   }
-  createBlogPost(params: { blogSlug: string }, callerId?: string): RouteSpecT {
-    return navHandler().run('createBlogPost', params, callerId);
-  }
 }
 
 export class DefaultBlogsNavHandler extends BlogsNav {
-  blogList(params: {}, callerId?: string) {
-    return {
-      url: generatePath(blogsRoutes.blogList(), {}),
-      nav: history.push,
-    };
-  }
-
   blog(params: { blogSlug: string }, callerId?: string) {
     return {
       url: generatePath(blogsRoutes.blog(), params),
-      nav: history.push,
-    };
-  }
-
-  createBlogPost(params: { blogSlug: string }, callerId?: string) {
-    return {
-      url: generatePath(blogsRoutes.createBlogPost(), params),
       nav: history.push,
     };
   }

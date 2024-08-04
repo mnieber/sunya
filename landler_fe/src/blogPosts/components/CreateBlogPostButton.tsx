@@ -1,0 +1,36 @@
+import { observer } from 'mobx-react-lite';
+import { isUpdating } from 'mobx-resource-states';
+import { withContextProps } from 'react-props-from-context';
+import { blogPostsNav } from '/src/blogPosts/routes';
+import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
+import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
+import { navTo } from '/src/routes/navHandler';
+import { cn } from '/src/utils/classnames';
+
+// Import styles
+import './CreateBlogPostButton.scss';
+
+export type PropsT = {
+  className?: any;
+};
+
+export const ContextProps = {
+  blog: blogsCtx.blog,
+};
+
+export const CreateBlogPostButton = observer(
+  withContextProps((props: PropsT & typeof ContextProps) => {
+    const disabled = !props.blog || isUpdating(props.blog);
+
+    return (
+      <ActionButton
+        disabled={disabled}
+        className={cn('CreateBlogPostButton', 'my-4', props.className)}
+        onClick={() =>
+          navTo(blogPostsNav.createBlogPost({ blogSlug: props.blog?.slug }))
+        }
+        label="Create blog post"
+      />
+    );
+  }, ContextProps)
+);

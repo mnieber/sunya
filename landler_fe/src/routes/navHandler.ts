@@ -1,5 +1,4 @@
-import { DefaultAuthNavHandler } from '/src/auth/routes';
-import { DefaultBlogsNavHandler } from '/src/blogs/routes';
+import { createNavHandler } from '/src/routes/createNavHandler';
 
 export type RouteSpecT = {
   url: string;
@@ -40,11 +39,8 @@ export const navTo = (routeAndNav: RouteSpecT) => {
   routeAndNav.nav(routeAndNav.url);
 };
 
-export const createNavHandler = () => {
-  const navHandler = new NavHandler();
-  navHandler.installDefaultNavHandler(new DefaultBlogsNavHandler());
-  navHandler.installDefaultNavHandler(new DefaultAuthNavHandler());
-  return navHandler;
+export const ext = (route: string) => {
+  return `${route}/*?`;
 };
 
 let _navHandler: NavHandler | undefined = undefined;

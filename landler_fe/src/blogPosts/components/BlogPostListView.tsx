@@ -10,6 +10,7 @@ import {
 import { BlogPostT } from '/src/api/types';
 import { BlogPostListViewItem } from '/src/blogPosts/components';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
+import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
 import { LoaderBar } from '/src/frames/components/LoaderBar';
 import { L } from '/src/frames/layout';
 import { createKeyDownHandler } from '/src/utils';
@@ -23,6 +24,7 @@ export type PropsT = {
 };
 
 const ContextProps = {
+  blog: blogsCtx.blog,
   blogPosts: blogPostsCtx.blogPosts,
   blogPostsSelection: blogPostsCtx.blogPostsSelection,
   blogPostsHighlight: blogPostsCtx.blogPostsHighlight,
@@ -49,6 +51,7 @@ export const BlogPostListView = observer(
           'BlogPostListViewItem--highlighted':
             props.blogPostsHighlight.itemId === blogPost.id,
         }}
+        blog={props.blog}
         blogPost={blogPost}
         selectionUIProps={selectionUIConnector.handle(blogPost.id)}
       />

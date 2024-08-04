@@ -8,8 +8,6 @@ import { useRefUrl } from '/src/routes/hooks/useRefUrl';
 type PropsT = {};
 
 const ContextProps = {
-  blogs: blogsCtx.blogs,
-  blog: blogsCtx.blog,
   blogsAddition: blogsCtx.blogsAddition,
 };
 
