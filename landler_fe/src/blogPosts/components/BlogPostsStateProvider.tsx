@@ -30,7 +30,7 @@ export const BlogPostsStateProvider = observer(
       makeAutoObservable({
         get blogPosts() {
           return updateSources(
-            { resource: blogPostsState.blogPostsCtr.data.filteredBlogPosts },
+            { resource: blogPostsState.blogPostsCtr.data.blogPosts },
             ['loading', () => isQueryLoading(getBlogPosts), 'getBlogPosts'],
             ['updating', () => isRunning(deleteBlogPosts), 'deleteBlogPosts']
           );

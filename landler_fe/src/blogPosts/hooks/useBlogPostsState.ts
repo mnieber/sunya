@@ -10,7 +10,6 @@ import {
 } from '/src/api/mutations/useCreateBlogPost';
 import { useUpdateBlogPost } from '/src/api/mutations/useUpdateBlogPost';
 import { useGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
-import { BlogPostT } from '/src/api/types';
 import { BlogT } from '/src/api/types/BlogT';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
@@ -89,13 +88,6 @@ export const useBlogPostsState = (props: PropsT) => {
         }).result;
       },
     });
-
-    state.blogPostsCtr.filtering.apply({
-      filter: (blogPosts: BlogPostT[]) => {
-        return blogPosts.filter((x: BlogPostT) => x.isPublished);
-      },
-    });
-    state.blogPostsCtr.filtering.setEnabled({ flag: false });
 
     return state;
   }) as BlogPostsState;

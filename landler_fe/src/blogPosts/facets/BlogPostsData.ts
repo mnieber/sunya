@@ -6,7 +6,6 @@ export class BlogPostsData {
   static className = () => 'BlogPostsData';
 
   @data blogPosts: BlogPostT[] = [];
-  @data filteredBlogPosts: BlogPostT[] = [];
 
   @data get blogPostById() {
     return R.indexBy(R.prop('id'), this.blogPosts);

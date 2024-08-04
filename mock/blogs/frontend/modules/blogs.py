@@ -73,12 +73,8 @@ class Blogs(Module):
                     data: Facet
                     addition: Facet
                     deletion: Facet
-                    display: Facet
-                    dragAndDrop: Facet
                     edit: Facet
-                    filtering: Facet
                     highlight: Facet
-                    insertion: Facet
                     selection: Facet
 
     class Routes:

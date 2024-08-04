@@ -9,11 +9,6 @@ import {
   topOfTheList,
 } from 'skandha-facets';
 import * as FacetPolicies from 'skandha-facets/policies';
-import {
-  DragSourceFromNewItem,
-  correctHighlight,
-  createInsertionPreview,
-} from 'skandha-facets/policies';
 import { registerCtr } from 'skandha-mobx';
 import { BlogPostT } from '/src/api/types';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
@@ -27,32 +22,17 @@ const mapData = (state: BlogPostsState) => {
   mapDataToProps(ctr, {
     data: {
       blogPosts: () => state.props.getBlogPosts(),
-      filteredBlogPosts: () => ctr.filtering.filteredItems,
-    },
-    filtering: {
-      inputItems: () => ctr.data.blogPosts,
     },
     selection: {
-      selectableIds: () => R.map(R.prop('id'), ctr.data.filteredBlogPosts),
+      selectableIds: () => R.map(R.prop('id'), ctr.data.blogPosts),
       items: () =>
         ctr.selection.itemIds
           .map(getBlogPostById)
           .filter((x?: BlogPostT) => !!x) as BlogPostT[],
     },
     highlight: {
-      highlightableIds: () => R.map(R.prop('id'), ctr.data.filteredBlogPosts),
+      highlightableIds: () => R.map(R.prop('id'), ctr.data.blogPosts),
       item: () => getBlogPostById(ctr.highlight.itemId),
-    },
-    insertion: {
-      inputItems: () => ctr.data.blogPosts ?? [],
-      preview: () =>
-        createInsertionPreview(
-          [DragSourceFromNewItem],
-          ctr
-        )(ctr.insertion.inputItems),
-    },
-    display: {
-      items: () => ctr.insertion.preview,
     },
   });
 };
@@ -116,17 +96,6 @@ const setCallbacks = (state: BlogPostsState) => {
         if (!this.args.isCtrl && !this.args.isShift) {
           ctr.highlight.set({ itemId: this.args.itemId });
         }
-      },
-    },
-  };
-
-  ctr.filtering.callbackMap = {
-    setEnabled: {
-      exit() {
-        correctHighlight(
-          ctr.highlight,
-          (ctr.data.blogPosts ?? []).map((x: BlogPostT) => x.id)
-        );
       },
     },
   };

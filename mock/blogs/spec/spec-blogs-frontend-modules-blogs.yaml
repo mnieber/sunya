@@ -51,12 +51,8 @@ states:
           - name: data
           - name: addition
           - name: deletion
-          - name: display
-          - name: dragAndDrop
           - name: edit
-          - name: filtering
           - name: highlight
-          - name: insertion
           - name: selection
 routes:
   - name: Blogs
@@ -80,4 +76,3 @@ effects:
 components:
   - name: DialogButton
   - name: ToolButton
-
