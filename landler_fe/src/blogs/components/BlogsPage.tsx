@@ -56,21 +56,23 @@ export const BlogsPage = observer(
                 <BlogFormView className="grow" />
               </div>
             </Route>
-            <Route path={ext(blogsRoutes.blog())}>
-              <SelectBlogEffect />
-              <div className={cn(L.col.skewer(), 'p-4')}>
-                <BlogPostListView className="mb-4" />
-                <CreateBlogPostButton className="mt-8" />
-                <Route path={blogPostsRoutes.blogPost()}>
-                  <SelectBlogPostEffect />
-                </Route>
-                <Route path={blogPostsRoutes.createBlogPost()}>
-                  <CreateBlogPostEffect />
-                </Route>
-                {showBlogPostForm && <BlogPostFormView className="mt-4" />}
-                <EditBlogPostButton className="mt-8" />
-                <DeleteBlogPostsButton className="" />
-              </div>
+            <Route path={ext(blogsRoutes.blogs())}>
+              <Route path={ext(blogsRoutes.blog())}>
+                <SelectBlogEffect />
+                <div className={cn(L.col.skewer(), 'p-4')}>
+                  <BlogPostListView className="mb-4" />
+                  <CreateBlogPostButton className="mt-8" />
+                  <Route path={blogPostsRoutes.blogPost()}>
+                    <SelectBlogPostEffect />
+                  </Route>
+                  <Route path={blogPostsRoutes.createBlogPost()}>
+                    <CreateBlogPostEffect />
+                  </Route>
+                  {showBlogPostForm && <BlogPostFormView className="mt-4" />}
+                  <EditBlogPostButton className="mt-8" />
+                  <DeleteBlogPostsButton className="" />
+                </div>
+              </Route>
             </Route>
           </Switch>
         </div>

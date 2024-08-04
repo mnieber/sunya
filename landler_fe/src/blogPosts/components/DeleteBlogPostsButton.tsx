@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { isUpdating } from 'mobx-resource-states';
 import { withContextProps } from 'react-props-from-context';
+import { authStateCtx } from '/src/auth/hooks/useAuthStateContext';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
 import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
 import { cn } from '/src/utils/classnames';
@@ -13,6 +14,7 @@ export type PropsT = {
 };
 
 export const ContextProps = {
+  authState: authStateCtx.authState,
   blogPosts: blogPostsCtx.blogPosts,
   blogPostsDeletion: blogPostsCtx.blogPostsDeletion,
   blogPostsSelection: blogPostsCtx.blogPostsSelection,
@@ -22,7 +24,8 @@ export const DeleteBlogPostsButton = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const disabled =
       props.blogPostsSelection.itemIds.length === 0 ||
-      isUpdating(props.blogPosts);
+      isUpdating(props.blogPosts) ||
+      !props.authState.isAuthenticated;
 
     return (
       <ActionButton
