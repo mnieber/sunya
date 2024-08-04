@@ -40,6 +40,7 @@ export const BlogsStateProvider = observer((props: PropsT) => {
       blogs: () => cache.blogs,
       blog: () => cache.blog,
       blogsAddition: () => blogsState.blogsCtr.addition,
+      blogsEdit: () => blogsState.blogsCtr.edit,
       blogsHighlight: () => blogsState.blogsCtr.highlight,
       blogsSelection: () => blogsState.blogsCtr.selection,
     });

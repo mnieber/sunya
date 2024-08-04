@@ -4,6 +4,7 @@ import { withContextProps } from 'react-props-from-context';
 import { blogPostsNav } from '/src/blogPosts/routes';
 import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
 import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
+import { navStateCtx } from '/src/routes/hooks/useNavStateContext';
 import { navTo } from '/src/routes/navHandler';
 import { cn } from '/src/utils/classnames';
 
@@ -15,6 +16,7 @@ export type PropsT = {
 };
 
 export const ContextProps = {
+  navState: navStateCtx.navState,
   blog: blogsCtx.blog,
 };
 
@@ -26,9 +28,10 @@ export const CreateBlogPostButton = observer(
       <ActionButton
         disabled={disabled}
         className={cn('CreateBlogPostButton', 'my-4', props.className)}
-        onClick={() =>
-          navTo(blogPostsNav.createBlogPost({ blogSlug: props.blog?.slug }))
-        }
+        onClick={() => {
+          props.navState.storeNavPoint();
+          navTo(blogPostsNav.createBlogPost({ blogSlug: props.blog?.slug }));
+        }}
         label="Create blog post"
       />
     );

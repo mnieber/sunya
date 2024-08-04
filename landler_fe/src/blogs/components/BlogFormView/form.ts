@@ -66,9 +66,7 @@ const getHandleCancel =
     const mustRestore = !!props.blogsAddition.item;
     props.blogsEdit.cancel();
     if (mustRestore) {
-      if (!props.navState.restoreNavPoint()) {
-        navTo(authNav.home({}));
-      }
+      navTo(props.navState.navPoint ?? authNav.home({}));
     }
   };
 
