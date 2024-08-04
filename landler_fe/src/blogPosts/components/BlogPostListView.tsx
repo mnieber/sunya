@@ -62,7 +62,10 @@ export const BlogPostListView = observer(
         handleKeys={R.keys(keyHandlers)}
         onKeyEvent={createKeyDownHandler(keyHandlers)}
       >
-        <div className={cn('BlogPostListView', props.className)} tabIndex={1}>
+        <div
+          className={cn('BlogPostListView', [L.col.banner()], props.className)}
+          tabIndex={1}
+        >
           {blogPostDivs}
         </div>
       </KeyboardEventHandler>
