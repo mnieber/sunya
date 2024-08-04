@@ -4,6 +4,7 @@ import { withContextProps } from 'react-props-from-context';
 import { form } from './form';
 import { getBlogPostLevelOptions } from '/src/api/types/BlogPostT';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
+import { blogsCtx } from '/src/blogs/hooks/useBlogsContext';
 import {
   Field,
   FormCancelButton,
@@ -30,6 +31,7 @@ export type PropsT = {
 
 export const ContextProps = {
   navState: navStateCtx.navState,
+  blog: blogsCtx.blog,
   blogPost: blogPostsCtx.blogPost,
   blogPostsAddition: blogPostsCtx.blogPostsAddition,
   blogPostsEdit: blogPostsCtx.blogPostsEdit,

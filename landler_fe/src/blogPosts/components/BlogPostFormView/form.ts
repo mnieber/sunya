@@ -8,6 +8,7 @@ import {
 } from 'react-form-state-context';
 import { ContextProps, PropsT } from './index';
 import { authNav } from '/src/auth/routes';
+import { blogPostsNav } from '/src/blogPosts/routes';
 import { navTo } from '/src/routes/navHandler';
 import { ObjT } from '/src/utils/types';
 
@@ -20,6 +21,7 @@ const getInitialValues = (props: PropsT & typeof ContextProps) => {
     'blogPostForm.content': blogPost.content ?? null,
     'blogPostForm.level': blogPost.level ?? null,
     'blogPostForm.tags': blogPost.tags ?? null,
+    'blogPostForm.isTransient': blogPost.isTransient ?? null,
   };
 };
 
@@ -55,6 +57,12 @@ const getHandleSubmit =
       })
       .then((response: ObjT) => {
         formState.reset(initialValues, initialErrors);
+        navTo(
+          blogPostsNav.blogPost({
+            blogSlug: props.blog.slug,
+            blogPostSlug: response.data.slug,
+          })
+        );
         return response;
       })
       .catch((error: any) => {

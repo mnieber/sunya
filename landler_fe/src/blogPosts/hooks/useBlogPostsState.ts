@@ -61,7 +61,9 @@ export const useBlogPostsState = (props: PropsT) => {
       },
       //
       saveBlogPost: (values: ObjT) => {
-        const mutation = values.isTransient ? createBlogPost : updateBlogPost;
+        const mutation = values.blogPostForm.isTransient
+          ? createBlogPost
+          : updateBlogPost;
         return trackPromise({
           name: 'saveBlogPost',
           promise: mutation.mutateAsync({

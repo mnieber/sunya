@@ -7,6 +7,7 @@ export type BlogT = EntityT & {
   name: string;
   description: string;
   slug: string;
+  isTransient?: boolean;
 };
 
 export type BlogByIdT = { [id: string]: BlogT };
@@ -14,9 +15,9 @@ export type BlogByIdT = { [id: string]: BlogT };
 export const createBlog = (values: ObjT): BlogT => {
   return initRS({
     id: createUUID(),
-    isTransient: true,
     name: values.name ?? 'New blog',
     description: values.description ?? '',
     slug: '-',
+    isTransient: true,
   } as BlogT);
 };

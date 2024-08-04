@@ -10,6 +10,7 @@ export type BlogPostT = EntityT & {
   isPublished: boolean;
   level: BlogPostLevelT;
   tags: string[];
+  isTransient?: boolean;
 };
 
 export type BlogPostLevelT = 'easy' | 'medium' | 'hard';
@@ -19,13 +20,13 @@ export type BlogPostByIdT = { [id: string]: BlogPostT };
 export const createBlogPost = (values: ObjT): BlogPostT => {
   return initRS({
     id: createUUID(),
-    isTransient: true,
     title: 'New blog-post',
     slug: '-',
     content: values.content,
     isPublished: false,
     level: 'medium',
     tags: [],
+    isTransient: true,
   } as BlogPostT);
 };
 

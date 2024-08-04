@@ -22,7 +22,7 @@ export const deleteBlogPosts = (args: DeleteBlogPostsArgsT) => {
     },
   })
     .then((response) => {
-      return waitOnDev(1000, {});
+      return waitOnDev(1000, response);
     })
     .catch((error) => {
       const errorCodes = error.response.data;

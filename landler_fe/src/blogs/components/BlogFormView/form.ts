@@ -18,6 +18,7 @@ const getInitialValues = (props: PropsT & typeof ContextProps) => {
     'blogForm.name': blog.name ?? null,
     'blogForm.slug': blog.slug ?? null,
     'blogForm.description': blog.description ?? null,
+    'blogForm.isTransient': blog.isTransient ?? null,
   };
 };
 

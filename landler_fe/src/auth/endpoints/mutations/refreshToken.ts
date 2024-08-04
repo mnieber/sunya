@@ -7,6 +7,6 @@ export function refreshToken() {
     refreshToken: getRefreshToken(),
   }).then((response) => {
     setAuthTokens(response.data.token, response.data.refreshToken);
-    return waitOnDev(1000, {});
+    return waitOnDev(1000, response);
   });
 }

@@ -23,7 +23,7 @@ export const updateBlogPost = (args: UpdateBlogPostArgsT) => {
     blogPostId: args.blogPost.id,
   })
     .then((response) => {
-      return waitOnDev(1000, {});
+      return waitOnDev(1000, response);
     })
     .catch((error) => {
       const errorCodes = error.response.data;
