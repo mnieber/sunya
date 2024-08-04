@@ -8,10 +8,10 @@
 }
 
 .BlogListViewItem--selected {
-  background-color: gray;
+  @apply text-blue-400;
 }
 
 .BlogListViewItem--highlighted {
-  @apply text-red-700;
-  border: 1 solid white;
+  text-decoration: underline;
+  @apply font-bold;
 }

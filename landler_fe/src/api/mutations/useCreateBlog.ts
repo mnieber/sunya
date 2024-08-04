@@ -1,5 +1,7 @@
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
+import { invalidateGetBlogs } from '/src/api/queries/useGetBlogs';
 import { post } from '/src/api/restClient';
+import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
 export type CreateBlogArgsT = {
@@ -15,7 +17,7 @@ export const createBlog = (args: CreateBlogArgsT) => {
     createBlogForm: args.form,
   })
     .then((response) => {
-      return waitOnDev(1000, {});
+      return waitOnDev(1000, response);
     })
     .catch((error) => {
       const errorCodes = error.response.data;
@@ -32,5 +34,8 @@ export const createBlog = (args: CreateBlogArgsT) => {
 export const useCreateBlog = () => {
   return useObservableMutation({
     mutationFn: createBlog,
+    onSuccess: (response: ObjT, args: CreateBlogArgsT) => {
+      invalidateGetBlogs({});
+    },
   });
 };

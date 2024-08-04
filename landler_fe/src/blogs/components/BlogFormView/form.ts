@@ -8,6 +8,7 @@ import {
 } from 'react-form-state-context';
 import { ContextProps, PropsT } from './index';
 import { authNav } from '/src/auth/routes';
+import { blogsNav } from '/src/blogs/routes';
 import { navTo } from '/src/routes/navHandler';
 import { ObjT } from '/src/utils/types';
 
@@ -50,6 +51,7 @@ const getHandleSubmit =
       })
       .then((response: ObjT) => {
         formState.reset(initialValues, initialErrors);
+        navTo(blogsNav.blog({ blogSlug: response.data.slug }));
         return response;
       })
       .catch((error: any) => {

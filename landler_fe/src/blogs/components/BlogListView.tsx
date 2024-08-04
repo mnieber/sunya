@@ -18,6 +18,8 @@ export type PropsT = {
 
 const ContextProps = {
   blogs: blogsCtx.blogs,
+  blogsSelection: blogsCtx.blogsSelection,
+  blogsHighlight: blogsCtx.blogsHighlight,
 };
 
 export const BlogListView = observer(
@@ -28,7 +30,20 @@ export const BlogListView = observer(
 
     const blogDivs = props.blogs.map((blog: BlogT) => {
       const url = blogsNav.blog({ blogSlug: blog.slug }).url;
-      return <BlogListViewItem key={blog.id} blog={blog} url={url} />;
+      return (
+        <BlogListViewItem
+          key={blog.id}
+          className={{
+            'BlogListViewItem--selected': props.blogsSelection.itemIds.includes(
+              blog.id
+            ),
+            'BlogListViewItem--highlighted':
+              props.blogsHighlight.itemId === blog.id,
+          }}
+          blog={blog}
+          url={url}
+        />
+      );
     });
 
     return (

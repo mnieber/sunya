@@ -1,6 +1,7 @@
 from blogs.actions.create_blog import create_blog
 from blogs.actions.create_blog_post import BlogPostWithTitleAlreadyExistsError
 from blogs.serializers import BlogSerializer, CreateBlogFormSerializer
+from common.permissions import user_is_authenticated
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -21,7 +22,7 @@ class CreateBlogApiView(APIView):
             200: BlogSerializer,
         },
         data=dict(),
-        permissions=[],
+        permissions=[(status.HTTP_401_UNAUTHORIZED, user_is_authenticated)],
     )
     def post(self, request, request_data):
         try:
