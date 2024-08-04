@@ -11,7 +11,7 @@ export class AuthNav {
   home(params: {}, callerId?: string): RouteSpecT {
     return navHandler().run('home', params, callerId);
   }
-  signIn(params: {}, callerId?: string): RouteSpecT {
+  signIn(params: { nextUrl?: string }, callerId?: string): RouteSpecT {
     return navHandler().run('signIn', params, callerId);
   }
 }
@@ -23,9 +23,12 @@ export class DefaultAuthNavHandler extends AuthNav {
       nav: history.push,
     };
   }
-  signIn(params: {}, callerId?: string) {
+  signIn(params: { nextUrl?: string }, callerId?: string) {
+    const suffix = params.nextUrl
+      ? '?nextUrl=' + encodeURIComponent(params.nextUrl)
+      : '';
     return {
-      url: generatePath(authRoutes.signIn(), {}),
+      url: generatePath(authRoutes.signIn(), {}) + suffix,
       nav: history.push,
     };
   }

@@ -8,8 +8,10 @@ import { authStateCtx } from '/src/auth/hooks/useAuthStateContext';
 import { useResetAuthState } from '/src/auth/hooks/useResetAuthState';
 import { authNav } from '/src/auth/routes';
 import { L } from '/src/frames/layout';
+import { history } from '/src/routes/history';
 import { navTo } from '/src/routes/navHandler';
 import { cn } from '/src/utils/classnames';
+import { useSearchAndUrlParams } from '/src/utils/hooks/useSearchAndUrlParams';
 import { ObjT } from '/src/utils/types';
 
 // Import styles
@@ -26,6 +28,7 @@ export const SignInCard = observer(
     useResetAuthState(props.authState);
     const { messages } = useMessages();
     const signIn = useSignIn(props.authState).mutateAsync;
+    const params = useSearchAndUrlParams();
 
     return (
       //
@@ -41,7 +44,10 @@ export const SignInCard = observer(
             return signIn({ userId: email, password }).then(
               (response: ObjT) => {
                 if (props.authState.isAuthenticated) {
-                  navTo(authNav.home({}));
+                  const routeSpec = params.nextUrl
+                    ? { url: params.nextUrl, nav: history.push }
+                    : authNav.home({});
+                  navTo(routeSpec);
                 }
               }
             );

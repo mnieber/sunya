@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { withContextProps } from 'react-props-from-context';
 import { Route, Switch } from 'wouter';
+import { RequireSignInEffect } from '/src/auth/components/RequireSignInEffect';
 import { BlogPostListView } from '/src/blogPosts/components';
 import { BlogPostFormView } from '/src/blogPosts/components/BlogPostFormView';
 import { CreateBlogPostButton } from '/src/blogPosts/components/CreateBlogPostButton';
@@ -51,6 +52,7 @@ export const BlogsPage = observer(
         <div className={cn('BlogsPage__RightCanvas', L.col.canvas())}>
           <Switch>
             <Route path={blogsRoutes.createBlog()}>
+              <RequireSignInEffect />
               <CreateBlogEffect />
               <div className={cn(L.col.skewer(), 'p-4')}>
                 <BlogFormView className="grow" />
@@ -66,6 +68,7 @@ export const BlogsPage = observer(
                     <SelectBlogPostEffect />
                   </Route>
                   <Route path={blogPostsRoutes.createBlogPost()}>
+                    <RequireSignInEffect />
                     <CreateBlogPostEffect />
                   </Route>
                   {showBlogPostForm && <BlogPostFormView className="mt-4" />}

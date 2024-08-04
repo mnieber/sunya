@@ -69,7 +69,7 @@ export function SignInForm(props: PropsT) {
         }
         <FormSaveButton
           theme="AuthCard"
-          dataCy={'signInBtn'}
+          data-cy={'signInBtn'}
           label={messages.labelSignIn}
           className={cn(AuthFormS.Button())}
         />
