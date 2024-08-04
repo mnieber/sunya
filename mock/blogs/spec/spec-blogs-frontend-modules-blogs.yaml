@@ -18,6 +18,12 @@ types:
         type: str
       - name: content
         type: Optional[str]
+      - name: isPublished
+        type: bool
+      - name: level
+        type: BlogPostLevel
+      - name: tags
+        type: list[str]
 mutations:
   - name: CreateBlog
     args:
@@ -29,12 +35,19 @@ mutations:
         type: Form
       - name: blog
         type: Blog
+  - name: UpdateBlogPost
+    args:
+      - name: updateBlogPostForm
+        type: Form
+      - name: blog
+        type: Blog
   - name: DeleteBlogPosts
     args:
       - name: deleteBlogPostsForm
         type: Form
 queries:
   - name: GetBlogs
+  - name: GetBlogTags
   - name: GetBlogPosts
 states:
   - name: BlogsState
@@ -63,16 +76,19 @@ state_providers:
 views:
   BlogPostFormView: {}
   BlogsPage:
-    Div:
-      __LeftSideBar:
-        BlogListView: null
-      __RightCanvas:
-        BlogPostListView: null
-        BlogPostFormView: null
-        EditBlogPostButton: null
-        CreateBlogPostButton: null
+    __LeftSideBar:
+      BlogListView: null
+    __RightCanvas:
+      BlogPostListView: null
+      BlogPostFormView: null
+      CreateBlogPostButton: null
+      EditBlogPostButton: null
+      DeleteBlogPostsButton: null
 effects:
   - name: SelectBlogEffect
 components:
-  - name: DialogButton
-  - name: ToolButton
+  CreateBlogButton(DialogButton): {}
+  CreateBlogPostButton(DialogButton): {}
+  EditBlogPostButton(DialogButton): {}
+  DeleteBlogPostsButton(DialogButton): {}
+

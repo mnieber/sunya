@@ -39,6 +39,9 @@ class Checklist(Module):
         class ChecklistView:
             pass
 
+        class ChecklistItem:
+            pass
+
     class Components:
         class ChecklistCard:
             trim: Trim

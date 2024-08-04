@@ -1,8 +1,7 @@
 import typing as T
-from .blogs import Blogs
 
 if T.TYPE_CHECKING:
-    pass
+    from .blogs import Blogs
 
 from blogs.frontend.app import Module, Trim
 
@@ -11,7 +10,7 @@ class Frames(Module):
     class Views:
         class DashboardFrame:
             class __TopBar:
-                NewBlogButton: Blogs.Components.NewBlogButton
+                NewBlogButton: "Blogs.Components.CreateBlogButton"
                 AccountMenu: T.Any
 
     class Components:

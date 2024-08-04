@@ -13,7 +13,6 @@ class Blogs(Module):
         class Blog(EntityWithId):
             name: str
             description: T.Optional[str]
-            tags: T.List[str]
 
         class BlogPost(EntityWithId):
             blog: "Blogs.Types.Blog"
@@ -21,7 +20,7 @@ class Blogs(Module):
             content: T.Optional[str]
             isPublished: bool
             level: "Blogs.Enums.BlogPostLevel"
-            tags: str[]
+            tags: T.List[str]
 
     class Enums:
         class BlogPostLevel:
@@ -97,14 +96,14 @@ class Blogs(Module):
 
         class BlogsPage:
             class __LeftSideBar:
-                BlogListView: T.Any
+                BlogListView = None
 
             class __RightCanvas:
-                BlogPostListView: T.Any
-                BlogPostFormView: T.Any
-                CreateBlogPostButton: T.Any
-                EditBlogPostButton: T.Any
-                DeleteBlogPostsButton: T.Any
+                BlogPostListView = None
+                BlogPostFormView = None
+                CreateBlogPostButton = None
+                EditBlogPostButton = None
+                DeleteBlogPostsButton = None
 
     class Effects:
         class SelectBlogEffect:
@@ -114,13 +113,13 @@ class Blogs(Module):
         class CreateBlogButton(Frames.Components.DialogButton):
             pass
 
-        class CreateBlogPostButton(Frames.Components.ActionButton):
+        class CreateBlogPostButton(Frames.Components.DialogButton):
             pass
 
-        class EditBlogPostButton(Frames.Components.ActionButton):
+        class EditBlogPostButton(Frames.Components.DialogButton):
             pass
 
-        class DeleteBlogPostsButton(Frames.Components.ActionButton):
+        class DeleteBlogPostsButton(Frames.Components.DialogButton):
             pass
 
 

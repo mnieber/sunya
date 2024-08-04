@@ -125,8 +125,7 @@ def _get_effects(module):
 def _get_components(module):
     result = []
     if components := getattr(module, "Components", None):
-        for component_name, component in _get_members(components):
-            result.append(dict(name=component_name))
+        return _get_view_types(components)
     return result
 
 
@@ -138,5 +137,24 @@ def _get_view_types(container):
             if not re.match(r"__[A-Z]", name):
                 continue
 
-        result[name] = _get_view_types(member) if isinstance(member, type) else member
+        base_classes = _get_base_classes(member)
+        if base_classes:
+            postfix = "(" + ", ".join(base_classes) + ")"
+        else:
+            postfix = ""
+
+        result[name + postfix] = (
+            _get_view_types(member) if isinstance(member, type) else member
+        )
     return result
+
+
+def _get_base_classes(member):
+    if not isinstance(member, type):
+        return []
+    base_classes = []
+    for base_class in member.__bases__:
+        if base_class.__name__ == "object":
+            continue
+        base_classes.append(base_class.__name__)
+    return base_classes
