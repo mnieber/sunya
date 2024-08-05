@@ -42,13 +42,8 @@ file_map = {
     f"{landler_fe}/src/api/types/BlogT.ts": "api/types",
     f"{landler_fe}/src/app/components/App.scss": "app/components",
     f"{landler_fe}/src/app/components/App.tsx": "app/components",
-    f"{landler_fe}/src/blogPosts/BlogPostsState/BlogPostsState.ts": "blogPosts/BlogPostsState",
-    f"{landler_fe}/src/blogPosts/BlogPostsState/index.tsx": "blogPosts/BlogPostsState",
-    f"{landler_fe}/src/blogPosts/BlogPostsState/registerBlogPostsCtr.ts": "blogPosts/BlogPostsState",
-    f"{landler_fe}/src/blogPosts/components/BlogPostFormView/BlogPostFormView.scss": "blogPosts/components/BlogPostFormView",
-    f"{landler_fe}/src/blogPosts/components/BlogPostFormView/BlogPostFormView.tsx": "blogPosts/components/BlogPostFormView",
-    f"{landler_fe}/src/blogPosts/components/BlogPostFormView/form.ts": "blogPosts/components/BlogPostFormView",
-    f"{landler_fe}/src/blogPosts/components/BlogPostFormView/index.tsx": "blogPosts/components/BlogPostFormView",
+    f"{landler_fe}/src/blogPosts/BlogPostsState": "blogPosts/BlogPostsState",
+    f"{landler_fe}/src/blogPosts/components/BlogPostFormView": "blogPosts/components/BlogPostFormView",
     f"{landler_fe}/src/blogPosts/components/BlogPostListView.scss": "blogPosts/components",
     f"{landler_fe}/src/blogPosts/components/BlogPostListView.tsx": "blogPosts/components",
     f"{landler_fe}/src/blogPosts/components/BlogPostListViewItem.scss": "blogPosts/components",
@@ -59,6 +54,7 @@ file_map = {
     f"{landler_fe}/src/blogPosts/hooks/useBlogPostsContext.ts": "blogPosts/hooks",
     f"{landler_fe}/src/blogPosts/hooks/useBlogPostsState.ts": "blogPosts/hooks",
     f"{landler_fe}/src/blogPosts/routes.ts": "blogPosts",
+    f"{landler_fe}/src/blogs/BlogsState": "blogs/BlogsState",
     f"{landler_fe}/src/blogs/components/BlogListView.scss": "blogs/components",
     f"{landler_fe}/src/blogs/components/BlogListView.tsx": "blogs/components",
     f"{landler_fe}/src/blogs/components/BlogListViewItem.scss": "blogs/components",
@@ -79,18 +75,9 @@ file_map = {
     f"{landler_fe}/src/forms/components/TextField.scss": "forms/components",
     f"{landler_fe}/src/forms/components/TextField.tsx": "forms/components",
     f"{landler_fe}/src/frames/components/AccountsMenu.tsx": "frames/components",
-    f"{landler_fe}/src/frames/components/DialogButton/DialogButton.scss": "frames/components/DialogButton",
-    f"{landler_fe}/src/frames/components/DialogButton/DialogButton.tsx": "frames/components/DialogButton",
-    f"{landler_fe}/src/frames/components/DialogButton/index.tsx": "frames/components/DialogButton",
-    f"{landler_fe}/src/frames/components/DialogButton/trim.ts": "frames/components/DialogButton",
-    f"{landler_fe}/src/frames/components/DialogButton/trims.ts": "frames/components/DialogButton",
+    f"{landler_fe}/src/frames/components/DialogButton": "frames/components/DialogButton",
     f"{landler_fe}/src/frames/components/MainView.tsx": "frames/components",
-    f"{landler_fe}/src/frames/components/ToolButton/index.tsx": "frames/components/ToolButton",
-    f"{landler_fe}/src/frames/components/ToolButton/Modest-ToolButton.scss": "frames/components/ToolButton",
-    f"{landler_fe}/src/frames/components/ToolButton/ToolButton.scss": "frames/components/ToolButton",
-    f"{landler_fe}/src/frames/components/ToolButton/ToolButton.tsx": "frames/components/ToolButton",
-    f"{landler_fe}/src/frames/components/ToolButton/trim.ts": "frames/components/ToolButton",
-    f"{landler_fe}/src/frames/components/ToolButton/trims.ts": "frames/components/ToolButton",
+    f"{landler_fe}/src/frames/components/ToolButton": "frames/components/ToolButton",
     f"{landler_fe}/src/frames/layout.ts": "frames",
     f"{landler_fe}/src/mocks/queries/handleGetBlogs.ts": "mocks/queries",
     f"{landler_fe}/src/routes/createNavHandler.ts": "routes",
@@ -158,7 +145,6 @@ def sync_files(target_dir):
     # Remove files that are no longer needed
     for file in file_inventory:
         if os.path.isfile(file):
-            __import__("pudb").set_trace()  # zz
             os.remove(file)
 
     # Remove empty directories
@@ -167,6 +153,8 @@ def sync_files(target_dir):
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):
                 os.rmdir(dir_path)
+
+    return files_to_copy
 
 
 def parse_args():
@@ -183,4 +171,7 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    sync_files(args.target_dir)
+    files_copied = sync_files(args.target_dir)
+
+    if args.verbose:
+        print(f"Synced {len(files_copied)} files.")
