@@ -8,6 +8,7 @@ import {
   CreateBlogPostArgsT,
   useCreateBlogPost,
 } from '/src/api/mutations/useCreateBlogPost';
+import { useMarkBlogPostAsPublished } from '/src/api/mutations/useMarkBlogPostAsPublished';
 import { useUpdateBlogPost } from '/src/api/mutations/useUpdateBlogPost';
 import { useGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
 import { BlogT } from '/src/api/types/BlogT';
@@ -30,6 +31,7 @@ export const useBlogPostsState = (props: PropsT) => {
   const createBlogPost = useCreateBlogPost();
   const updateBlogPost = useUpdateBlogPost();
   const blogPostsHighlightRef = React.useRef<Highlight | undefined>();
+  const markBlogPostAsPublished = useMarkBlogPostAsPublished();
 
   // Queries
   const getBlogPosts = useObservableQuery(
@@ -87,6 +89,20 @@ export const useBlogPostsState = (props: PropsT) => {
           } as DeleteBlogPostsArgsT),
         }).result;
       },
+      //
+      markBlogPostAsPublished: (blogPostId: string) => {
+        const blog = props.getBlog();
+        if (!blog) {
+          throw new Error('Blog not found');
+        }
+        return trackPromise({
+          name: 'markBlogPostAsPublished',
+          promise: markBlogPostAsPublished.mutateAsync({
+            blog,
+            blogPostId,
+          }),
+        }).result;
+      },
     });
 
     return state;
@@ -100,6 +116,7 @@ export const useBlogPostsState = (props: PropsT) => {
     blogPostsState,
     getBlogPosts,
     deleteBlogPosts,
+    markBlogPostAsPublished,
     loadBlogTagsOptions,
   };
 };

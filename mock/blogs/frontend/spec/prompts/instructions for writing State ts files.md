@@ -15,3 +15,7 @@ The state calls a register-container function to map the output of certain facet
 ## The props object
 
 The State class takes a props object that contains hook functions that are used to connect the State to the outside world. In the example code, the props object contains a getBlogPosts function that returns the list of blog-posts that will be stored in the data facet. It also contains a deleteBlogPosts function that will be called in the callback that is installed for the deletion.delete operation.
+
+## The actions object
+
+Using container classes and facets to provide an interface for querying and manipulating a resource generally works well but can be overkill in some cases. For example, to allow marking a blog-post as published we could introduce a new facet such as "publishing", but it's simpler to add a markPublicationAsPublished action to the State class. This is the purpose of the actions object. It exposes a set of functions that directly manipulate a resource. Generally, either the spec file or the code generation instructions will make it clear whether a facet or an action should be used to expose a particular functionality.

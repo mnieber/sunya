@@ -9,6 +9,7 @@ import { CreateBlogPostButton } from '/src/blogPosts/components/CreateBlogPostBu
 import { CreateBlogPostEffect } from '/src/blogPosts/components/CreateBlogPostEffect';
 import { DeleteBlogPostsButton } from '/src/blogPosts/components/DeleteBlogPostsButton';
 import { EditBlogPostButton } from '/src/blogPosts/components/EditBlogPostButton';
+import { MarkBlogPostAsPublishedButton } from '/src/blogPosts/components/MarkBlogPostAsPublishedButton';
 import { blogPostsCtx } from '/src/blogPosts/hooks/useBlogPostsContext';
 import { blogPostsRoutes } from '/src/blogPosts/routes';
 import { BlogListView, SelectBlogEffect } from '/src/blogs/components';
@@ -74,6 +75,7 @@ export const BlogsPage = observer(
                   {showBlogPostForm && <BlogPostFormView className="mt-4" />}
                   <EditBlogPostButton className="mt-8" />
                   <DeleteBlogPostsButton className="" />
+                  <MarkBlogPostAsPublishedButton className="mt-4" />
                 </div>
               </Route>
             </Route>

@@ -9,6 +9,7 @@ export type PropsT = {
   getBlogPosts: () => BlogPostT[];
   deleteBlogPosts: (ids: string[]) => Promise<any>;
   saveBlogPost: (values: ObjT) => Promise<any>;
+  markBlogPostAsPublished: (blogPostId: string) => Promise<any>;
 };
 
 export class BlogPostsState {
@@ -21,6 +22,12 @@ export class BlogPostsState {
     edit: new Edit(),
     highlight: new Highlight<BlogPostT>(),
     selection: new Selection<BlogPostT>(),
+  };
+
+  actions = {
+    markBlogPostAsPublished: (blogPostId: string) => {
+      return this.props.markBlogPostAsPublished(blogPostId);
+    },
   };
 
   destroy() {

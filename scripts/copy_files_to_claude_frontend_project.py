@@ -51,6 +51,7 @@ file_map = {
     f"{landler_fe}/src/blogPosts/components/BlogPostsStateProvider.tsx": "blogPosts/components",
     f"{landler_fe}/src/blogPosts/components/DeleteBlogPostsButton.tsx": "blogPosts/components",
     f"{landler_fe}/src/blogPosts/components/EditBlogPostButton.tsx": "blogPosts/components",
+    f"{landler_fe}/src/blogPosts/components/MarkBlogPostAsPublishedButton.tsx": "blogPosts/components",
     f"{landler_fe}/src/blogPosts/hooks/useBlogPostsContext.ts": "blogPosts/hooks",
     f"{landler_fe}/src/blogPosts/hooks/useBlogPostsState.ts": "blogPosts/hooks",
     f"{landler_fe}/src/blogPosts/routes.ts": "blogPosts",
