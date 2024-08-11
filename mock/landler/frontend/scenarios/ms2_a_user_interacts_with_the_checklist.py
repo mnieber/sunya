@@ -3,50 +3,35 @@ from sunya import add_scenario, add_step, get_scenario, register
 
 
 def start(user):
-    scenario_name = "ms2-a-user-signs-in"
+    scenario_name = "ms2-a-user-interacts-with-the-checklist"
+    register(user, alias="user")
+
     with add_scenario(scenario_name):
-        with the_user_signs_in(user):
+        e = get_entities()
+
+        with user.signs_in():
             pass
 
-        with the_user_is_redirected_to_home_page(user):
-            checklist = the_frontend_loads_checklist()
+        with user.is_redirected_to(home_page_route):
+            with add_goal("load the", e.checklist):
+                with frontend.calls(get_checklist_query):
+                    _create_checklist()
 
-        with the_user_views_checklist(user, checklist):
+        with the_user_views_checklist(e):
             pass
 
-        with the_user_minimizes_or_completes_a_checklist_item(user, checklist):
-            pass
+        item_to_complete = e.checklist[0]
+        with add_goal("The", e.user, "clicks to complete the", item_to_complete):
+            with frontend.calls(update_checklist_items_mutation):
+                item_to_complete.is_completed = True
 
     return get_scenario(scenario_name)
 
 
-def the_user_signs_in(user):
-    return add_step(
-        "The",
-        user,
-        "signs in",
-    )
-
-
-def the_user_is_redirected_to_home_page(user):
-    return add_step(
-        "The",
-        user,
-        "is redirected to the",
-        home_page_route,
-    )
-
-
-def the_frontend_loads_checklist():
-    with add_step(
-        "The",
-        frontend,
-        "calls the",
-        get_checklist_query,
-        "to load the checklist",
-    ):
-        checklist = register(
-            [
+def _create_checklist():
+    register(
+        Checklist.Types.Checklist(
+            items=[
                 Checklist.Types.ChecklistItem(
                     id="1",
                     title="Add your organization",
@@ -72,34 +57,19 @@ def the_frontend_loads_checklist():
                     is_completed=False,
                 ),
             ]
-        )
-    return checklist
+        ),
+        name="checklist",
+    )
 
 
-def the_user_views_checklist(user, checklist):
+def the_user_views_checklist(e):
     return add_step(
         "The",
-        user,
+        e.user,
         "views the",
-        checklist,
+        e.checklist,
         "on the home page",
     )
-
-
-def the_user_completes_a_checklist_item(user, checklist):
-    item_to_complete = checklist[0]
-    step = add_step(
-        "The",
-        user,
-        "completes the checklist item",
-        item_to_complete,
-        "using the",
-        update_checklist_items_mutation,
-    )
-    with step:
-        item_to_complete.is_completed = True
-
-    return step
 
 
 def run():
