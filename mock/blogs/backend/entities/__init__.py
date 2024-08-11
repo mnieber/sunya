@@ -1,4 +1,6 @@
-from sunya import Entity, Fn, actor_to_str
+import typing as T
+from datetime import datetime
+from sunya import Entity, Fn, actor_to_str, EntityWithId
 from sunya.utils import type_name_to_kebab
 
 
@@ -8,6 +10,15 @@ class Action(Fn):
 
 class ApiView(Entity):
     pass
+
+
+class BaseModel(EntityWithId):
+    pass
+
+
+class SoftDeletableBaseModel(BaseModel):
+    deleted_at: T.Optional[datetime] = None
+    is_anonymous: bool = False
 
 
 class Request(Entity):

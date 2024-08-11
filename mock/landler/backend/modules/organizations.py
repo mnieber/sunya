@@ -17,6 +17,10 @@ class Organizations(Module):
             user: Users.Models.User
             role: "Organizations.Enums.UserInOrganizationRoles"
 
+        class OrganizationStaffSettings(EntityWithId):
+            is_managed_by_tlg: bool
+            is_demo_org: bool
+
     class Actions:
         class CreateOrganization(Action):
             class Args:
