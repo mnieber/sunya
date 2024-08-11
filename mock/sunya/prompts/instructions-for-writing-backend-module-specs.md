@@ -2,7 +2,7 @@
 
 Taking the roadmap.md file as input, your task is to identify which backend module specification files (aka backend module specs) are needed, and to generate these module specs.
 
-When writing a backend module spec, please follow the example in the backend/modules/blogs.py file. This example should be followed closely in terms of the syntax and structure that it proposes. However, you have a lot of freedom to decide which code-units you add to the module spec (as long as you adhere to the prescribed structure and syntax). It's recognized that the problem of mapping the roadmap to the module spec is not well-defined, and that many alternative solutions are possible, so just do your best to come up with one possible solution.
+When writing a backend module spec, please follow the example in the blogs/backend/modules/blogs.py file. This example should be followed closely in terms of the syntax and structure that it proposes. However, you have a lot of freedom to decide which code-units you add to the module spec (as long as you adhere to the prescribed structure and syntax). It's recognized that the problem of mapping the roadmap to the module spec is not well-defined, and that many alternative solutions are possible, so just do your best to come up with one possible solution.
 
 ## Purpose of a backend module spec
 

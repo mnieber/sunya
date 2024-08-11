@@ -1,3 +1,4 @@
+import glob
 import shutil
 import os
 import argparse
@@ -24,26 +25,27 @@ def get_expanded_dir_list(dir_list):
 
 def get_files_to_copy(file_map, target_dir, expanded_dir_list):
     files_to_copy = []
-    for source, dest in file_map.items():
-        if os.path.isfile(source):
-            if dest in expanded_dir_list:
-                target = os.path.join(target_dir, dest, os.path.basename(source))
-            else:
-                if "." not in os.path.basename(dest):
-                    print(
-                        "Warning: No file extension found in destination file: ",
-                        dest,
-                        "Did you forget to add an entry in the dir_list?",
-                    )
-                target = os.path.join(target_dir, dest)
-            files_to_copy.append((source, target))
-        elif os.path.isdir(source):
-            for root, _, files in os.walk(source):
-                for file in files:
-                    src_file = os.path.join(root, file)
-                    rel_path = os.path.relpath(src_file, source)
-                    target = os.path.join(target_dir, dest, rel_path)
-                    files_to_copy.append((src_file, target))
+    for source_pattern, dest in file_map.items():
+        for source in glob.glob(source_pattern):
+            if os.path.isfile(source):
+                if dest in expanded_dir_list:
+                    target = os.path.join(target_dir, dest, os.path.basename(source))
+                else:
+                    if "." not in os.path.basename(dest):
+                        print(
+                            "Warning: No file extension found in destination file: ",
+                            dest,
+                            "Did you forget to add an entry in the dir_list?",
+                        )
+                    target = os.path.join(target_dir, dest)
+                files_to_copy.append((source, target))
+            elif os.path.isdir(source):
+                for root, _, files in os.walk(source):
+                    for file in files:
+                        src_file = os.path.join(root, file)
+                        rel_path = os.path.relpath(src_file, source)
+                        target = os.path.join(target_dir, dest, rel_path)
+                        files_to_copy.append((src_file, target))
     return files_to_copy
 
 

@@ -1,6 +1,6 @@
 # Instructions for writing backend scenario files
 
-When writing the backend scenario file for a milestone in the roadmap, please follow the example in the backend/scenarios/m1_a_user_creates_a_blog.py file.
+When writing the backend scenario file for a milestone in the roadmap, please follow the example in the blogs/backend/scenarios/m1_a_user_creates_a_blog.py file.
 
 Taking the roadmap.md file as input, your task is to write a backend scenario script for each milestone in the roadmap.
 

@@ -1,26 +1,44 @@
-from sunya.scripts import sync_files_to_claude
+import sync_files_to_claude
 
+in_landler_spec = "/home/maarten/projects/sunya/src/mock/landler/spec"
 in_landler_fe = "/home/maarten/projects/sunya/src/mock/landler/frontend"
 in_landler_be = "/home/maarten/projects/sunya/src/mock/landler/backend"
+out_landler = "landler"
+
+in_blogs_spec = "/home/maarten/projects/sunya/src/mock/blogs/spec"
+in_blogs_fe = "/home/maarten/projects/sunya/src/mock/blogs/frontend"
+in_blogs_be = "/home/maarten/projects/sunya/src/mock/blogs/backend"
+out_blogs = "blogs"
+
 in_prompts = "/home/maarten/projects/sunya/src/mock/sunya/prompts"
 
-out_landler = "landler/spec"
 
 dir_list = [
-    "frontend/modules",
-    "frontend/scenarios",
-    "backend/modules",
-    "backend/scenarios",
+    "blogs/spec",
+    "instructions",
+    "blogs/frontend/modules",
+    "blogs/frontend/scenarios",
+    "blogs/backend/modules",
+    "blogs/backend/scenarios",
+    "landler/spec",
+    "landler/frontend/modules",
+    "landler/frontend/scenarios",
+    "landler/backend/modules",
+    "landler/backend/scenarios",
 ]
 
 file_map = {
-    f"{in_landler_fe}/modules/checklist.py": f"{out_landler}/frontend/modules",
-    f"{in_landler_fe}/modules/frames.py": f"{out_landler}/frontend/modules",
-    f"{in_landler_fe}/modules/organizations.py": f"{out_landler}/frontend/modules",
-    f"{in_landler_fe}/modules/maps.py": f"{out_landler}/frontend/modules",
-    f"{in_landler_fe}/modules/user_settings.py": f"{out_landler}/frontend/modules",
-    f"{in_landler_fe}/scenarios/ms2_a_user_signs_in.py": f"{out_landler}/scenarios",
-    f"{in_prompts}": "instructions",
+    f"{in_blogs_spec}/roadmap.md": f"{out_blogs}/spec",
+    f"{in_blogs_fe}/modules/*.py": f"{out_blogs}/frontend/modules",
+    f"{in_blogs_fe}/scenarios/*.py": f"{out_blogs}/frontend/scenarios",
+    f"{in_blogs_be}/modules/*.py": f"{out_blogs}/backend/modules",
+    f"{in_blogs_be}/scenarios/*.py": f"{out_blogs}/backend/scenarios",
+    f"{in_landler_spec}/roadmap.md": f"{out_landler}/spec",
+    f"{in_landler_fe}/modules/*.py": f"{out_landler}/frontend/modules",
+    f"{in_landler_fe}/scenarios/*.py": f"{out_landler}/frontend/scenarios",
+    f"{in_landler_be}/modules/*.py": f"{out_landler}/backend/modules",
+    f"{in_landler_be}/scenarios/*.py": f"{out_landler}/backend/scenarios",
+    f"{in_prompts}/instructions*.md": "instructions",
 }
 
 if __name__ == "__main__":

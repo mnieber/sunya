@@ -2,7 +2,7 @@
 
 Taking the roadmap.md file as input, your task is to identify which frontend module specification files (aka frontend module specs) are needed, and to generate these module specs.
 
-When writing a frontend module spec, please follow the example in the frontend/modules/blogs.py file.
+When writing a frontend module spec, please follow the example in the blogs/frontend/modules/blogs.py file.
 
 ## Purpose of a frontend module spec
 
