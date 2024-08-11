@@ -1,31 +1,60 @@
 from landler.backend.app import *
-from sunya import add_scenario, add_step, get_scenario
-
-from .the_create_project_api_view_calls_the_create_project_action import (
-    the_create_project_api_view_calls_the_create_project_action,
-)
+from sunya import add_scenario, get_entities, get_scenario
 
 
 def start():
     scenario_name = "a-user-creates-a-project"
     with add_scenario(scenario_name):
-        request = Request(endpoint="create-project")
+        e = get_entities()
+        _create_request()
 
-        with the_fe_posts_to_create_a_project(request):
-            project = the_create_project_api_view_calls_the_create_project_action(
-                request
-            )
-            assert project
+        with frontend.calls(create_project_api_view).wth(e.request):
+            preregister("project")
+
+            with add_goal(
+                "create a", e.project, "with admin", user_session.active_organization
+            ):
+                _create_the_create_project_form()
+
+                with create_project_api_view.calls(create_project_action).wth(
+                    e.create_project_form
+                ):
+                    with create_project_action.creates(e.project):
+                        _create_project(e)
+
+            with add_goal(
+                "add the", user_session.active_organization, "to the", e.project
+            ):
+                with create_project_action.calls(add_organization_to_project_action):
+                    _create_project_membership(e.project)
+                    e.project.memberships.append(e.project_membership)
 
     return get_scenario(scenario_name)
 
 
-def the_fe_posts_to_create_a_project(request):
-    return add_step(
-        "The",
-        frontend,
-        "calls the",
-        create_project_api_view,
+def _create_request():
+    register(Request(endpoint="create-project"), name="request")
+
+
+def _create_project(e):
+    register(Projects.Models.Project(name="my-project"), e.project)
+
+
+def _create_the_create_project_form(e):
+    register(
+        Form(name="CreateProjectForm", data=e.request.data),
+        name="create_project_form",
+    )
+
+
+def _create_project_membership():
+    register(
+        Projects.Models.ProjectMembership(
+            project=e.project,
+            organization=user_session.active_organization,
+            role=Projects.Enums.OrganizationInProjectRoles.ADMIN,
+        ),
+        name="project_membership",
     )
 
 

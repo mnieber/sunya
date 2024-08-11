@@ -4,7 +4,7 @@ import typing as T
 from dataclassy import Internal, dataclass
 from sunya import get_actor_str
 from sunya.entities import Entity
-from sunya.scenarios.scenario import Scenario, Step
+from sunya.scenarios.scenario import Scenario, Step, Goal
 
 
 @dataclass(kw_only=True)
@@ -17,36 +17,36 @@ class Store:
         return self.scenarios[-1]
 
     @property
-    def step(self):
+    def node(self):
         return self.stack[-1]
 
 
-class StepContext:
-    def __init__(self, step: Step):
-        self.step = step
+class NodeContext:
+    def __init__(self, node: Node):
+        self.node = node
 
     def __enter__(self):
-        store.stack.append(self.step)
+        store.stack.append(self.node)
 
     def __exit__(self, *args):
-        step = store.stack.pop()
-        finalize_step(step)
+        node = store.stack.pop()
+        finalize_node(node)
 
 
 @dataclass(kw_only=True)
 class PreregisteredEntity:
     key: str
-    linked_steps: Internal[T.List[Step]] = []
+    linked_nodes: Internal[T.List[Node]] = []
 
 
 store = Store()
 
 
 def add_scenario(name: str):
-    scenario = Scenario(name=name, root_step=Step(fact=tuple(), level=0))
+    scenario = Scenario(name=name, root_node=Node(fact=tuple(), level=0))
     store.scenarios.append(scenario)
 
-    return StepContext(scenario.root_step)
+    return NodeContext(scenario.root_node)
 
 
 def get_scenario(name: str):
@@ -57,23 +57,31 @@ def get_scenario(name: str):
 
 
 def add_step(*fact_bits):
-    step = Step(fact=fact_bits, steps=[], level=store.step.level + 1)
-    store.step.steps.append(step)
+    return _add_node(Step, *fact_bits)
+
+
+def add_goal(*fact_bits):
+    return _add_node(Goal, *fact_bits)
+
+
+def _add_node(klass, *fact_bits):
+    node = klass(fact=fact_bits, nodes=[], level=store.node.level + 1)
+    store.node.nodes.append(node)
 
     for fact_bit in fact_bits:
         if isinstance(fact_bit, PreregisteredEntity):
             entity = fact_bit
-            if step not in entity.linked_steps:
-                entity.linked_steps.append(step)
+            if node not in entity.linked_nodes:
+                entity.linked_nodes.append(node)
         if isinstance(fact_bit, Entity):
             entity = fact_bit
             register(entity)
-            step.pre_entity_memo_by_key[get_key(entity)] = create_memo(entity)
+            node.pre_entity_memo_by_key[get_key(entity)] = create_memo(entity)
 
-    return StepContext(step)
+    return NodeContext(node)
 
 
-def register(entity, preregistered_entity=None, name=None):
+def register(entity, preregistered_entity=None, name=None, force=False):
     key = get_key(entity)
     if key in store.scenario.entity_by_key:
         existing_entity = store.scenario.entity_by_key[key]
@@ -84,15 +92,20 @@ def register(entity, preregistered_entity=None, name=None):
 
     store.scenario.entity_by_key[key] = entity
 
-    if preregistered_entity:
-        # Register the fact that before this step, the entity did not yet exist
-        for linked_step in preregistered_entity.linked_steps:
-            linked_step.pre_entity_memo_by_key[key] = None
+    if name:
+        if name in store.scenario.entity_by_name and not force:
+            raise ValueError(f"Entity with name {name} already exists")
+        store.scenario.entity_by_name[name] = entity
 
-            # Update step.fact to replace preregistered_entity with entity
-            linked_step.fact = tuple(
+    if preregistered_entity:
+        # Register the fact that before this node, the entity did not yet exist
+        for linked_node in preregistered_entity.linked_nodes:
+            linked_node.pre_entity_memo_by_key[key] = None
+
+            # Update node.fact to replace preregistered_entity with entity
+            linked_node.fact = tuple(
                 entity if fact_bit is preregistered_entity else fact_bit
-                for fact_bit in linked_step.fact
+                for fact_bit in linked_node.fact
             )
 
     return entity
@@ -117,24 +130,24 @@ def preregister(key: str):
     return PreregisteredEntity(key=key)
 
 
-def finalize_step(step):
-    for entity in step.entities:
+def finalize_node(node):
+    for entity in node.entities:
         key = get_key(entity)
-        step.post_entity_memo_by_key[key] = create_memo(entity)
-    step.is_finalized = True
+        node.post_entity_memo_by_key[key] = create_memo(entity)
+    node.is_finalized = True
 
 
 class NoValue:
     pass
 
 
-def get_entity_delta(step, entity):
-    if not step.is_finalized:
-        raise StepNotFinalizedError(step)
+def get_entity_delta(node, entity):
+    if not node.is_finalized:
+        raise NodeNotFinalizedError(node)
 
     key = get_key(entity)
-    pre_entity_memo = step.pre_entity_memo_by_key.get(key)
-    post_entity_memo = step.post_entity_memo_by_key.get(key)
+    pre_entity_memo = node.pre_entity_memo_by_key.get(key)
+    post_entity_memo = node.post_entity_memo_by_key.get(key)
 
     delta = dict()
     for field, value in (post_entity_memo or dict()).items():
@@ -169,7 +182,20 @@ def _get_memo_field_value(x):
     return get_actor_str(x) if isinstance(x, Entity) else copy.deepcopy(x)
 
 
-class StepNotFinalizedError(Exception):
-    def __init__(self, step):
-        self.step = step
-        super().__init__(f"Step {step} has not been finalized")
+class NodeNotFinalizedError(Exception):
+    def __init__(self, node):
+        self.node = node
+        super().__init__(f"Node {node} has not been finalized")
+
+
+class EntityLookup:
+    def __getattr__(self, name):
+        for scenario in reversed(store.scenarios):
+            if entity := scenario.get_entity_by_name(name):
+                return entity
+
+        raise ValueError(f"Entity with name {name} not found")
+
+
+def get_entities():
+    return EntityLookup()

@@ -5,9 +5,9 @@ from sunya.entities import Entity
 
 
 @dataclass(kw_only=True)
-class Step:
+class Node:
     fact: T.Tuple
-    steps: T.List["Step"] = []
+    nodes: T.List["Node"] = []
     level: int
     pre_entity_memo_by_key: Internal[T.Dict] = {}
     post_entity_memo_by_key: Internal[T.Dict] = {}
@@ -21,3 +21,11 @@ class Step:
         for fact_bit in self.fact:
             if not fact_bit:
                 raise ValueError(f"Empty fact bit in fact {self.fact}")
+
+
+class Step(Node):
+    pass
+
+
+class Goal(Node):
+    pass

@@ -18,6 +18,7 @@ class Organizations(Module):
             role: "Organizations.Enums.UserInOrganizationRoles"
 
         class OrganizationStaffSettings(EntityWithId):
+            organization: "Organizations.Models.Organization"
             is_managed_by_tlg: bool
             is_demo_org: bool
 
@@ -51,10 +52,15 @@ class Organizations(Module):
         class UserRemovedFromOrganization:
             pass
 
+    class Tasks:
+        class CreateDemoOrganization:
+            pass
+
 
 create_organization_action = Organizations.Actions.CreateOrganization()
 create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
 add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
+create_demo_organization_task = Organizations.Tasks.CreateDemoOrganization()
 
 
 @actor_to_str.method((Organizations.Models.Organization,))

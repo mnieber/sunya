@@ -1,70 +1,55 @@
 from blogs.backend.app import *
 from blogs.frontend.modules import blogs_route
 
-from sunya import add_scenario, add_step, get_scenario, preregister, register
+from sunya import (
+    add_goal,
+    add_scenario,
+    get_entities,
+    get_scenario,
+    preregister,
+    register,
+)
 
 
 def start(user, blog):
     scenario_name = "a-user-creates-a-blog-post"
     with add_scenario(scenario_name):
-        p_blog_post = preregister("blog_post")
-        with the_user_visits_the_blogs_route(user):
+        e = get_entities()
+        register(user, alias="user")
+        register(blog, alias="blog")
+
+        preregister("blog_post")
+        with e.user.visits(blogs_route):
             pass
 
-        with the_user_submits_a_form_to_create_a_blog_post(user, p_blog_post, blog):
-            the_fe_posts_to_create_a_blog_post(blog, p_blog_post)
+        with add_goal("create a", e.blog_post, "in the", e.blog):
+            with user.submits_a_form():
+                register(Request(endpoint="create-blog-post"), name="request")
+
+                with frontend.calls(create_blog_post_api_view).wth(e.request):
+                    _create_the_create_blog_post_form()
+
+                    with create_blog_post_api_view.calls(create_blog_post_action).wth(
+                        e.create_blog_post_form
+                    ):
+                        _create_blog_post(blog, e)
 
     return get_scenario(scenario_name)
 
 
-def the_user_visits_the_blogs_route(user):
-    return add_step("The", user, "visits the", blogs_route)
+def _create_the_create_blog_post_form():
+    register(Form(name="CreateBlogPostForm"), name="create_blog_post_form")
 
 
-def the_user_submits_a_form_to_create_a_blog_post(user, p_blog_post, blog):
-    return add_step(
-        "The",
-        user,
-        "submits a form to create a",
-        p_blog_post,
-        "in the",
-        blog,
+def _create_blog_post(blog, e):
+    register(
+        Blogs.Models.BlogPost(
+            blog=blog,
+            title="My Blog Post",
+            content="Hello people",
+        ),
+        e.blog_post,
     )
-
-
-def the_fe_posts_to_create_a_blog_post(blog, p_blog_post):
-    request = Request(endpoint="create-blog-post")
-
-    with add_step(
-        "The",
-        frontend,
-        "makes a",
-        request,
-        "to the",
-        create_blog_post_api_view,
-    ):
-        create_blog_post_form = Form(name="CreateBlogPostForm")
-
-        with add_step(
-            "The",
-            create_blog_post_api_view,
-            "calls the",
-            create_blog_post_action,
-            "with the",
-            create_blog_post_form,
-            "to create the",
-            p_blog_post,
-        ):
-            blog_post = register(
-                Blogs.Models.BlogPost(
-                    blog=blog,
-                    title="My Blog Post",
-                    content="Hello people",
-                ),
-                p_blog_post,
-            )
-
-    return blog_post
 
 
 def run():

@@ -8,4 +8,4 @@ from landler.backend.modules.project_analyses import *  # noqa
 from landler.backend.modules.project_analysis_jobs import *  # noqa
 from landler.backend.modules.projects import *  # noqa
 from landler.backend.modules.users import *  # noqa
-from landler.frontend.modules.user_accounts import *  # noqa
+from mock.landler.frontend.modules.user_settings import *  # noqa

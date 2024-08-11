@@ -1,32 +1,71 @@
 from landler.backend.app import *
-from sunya import add_scenario, add_step, get_entity, get_scenario
-
-from .the_create_plot_api_view_creates_a_plot_in_the_project import (
-    the_create_plot_api_view_creates_a_plot_in_the_project,
+from sunya import add_scenario, get_entity, get_scenario, preregister, register
+from landler.backend.modules.plot_lists import (
+    get_project_plot_list_by_name,
 )
+from mock.sunya.scenarios.store import get_entities
 
 
 def start(project, variation="default"):
     scenario_name = "a-user-adds-a-plot-to-a-project"
     with add_scenario(scenario_name):
+        e = get_entities()
+        register(project, alias="project")
 
         if variation == "default":
-            request = Request(endpoint="add-plot-to-project")
-            with the_fe_posts_to_create_a_plot(request):
-                plot = the_create_plot_api_view_creates_a_plot_in_the_project(
-                    request, project
-                )
-                assert plot
+            _create_request()
+            preregister("my_plot", alias="plot")
+
+            with add_goal("create a", e.plot, "in the", e.project):
+                with frontend.calls(create_plot_api_view):
+                    _create_the_create_plot_form(e)
+
+                    with create_plot_api_view.calls(create_plot_action).wth(e.create_plot_form):
+                        with create_plot_action.creates(e.plot):
+                            _create_plot(e)
+                            _create_plot_questionnaire(e)
+                            e.plot.plot_questionnaire = e.plot_questionnaire
+
+                        with add_goal("add the", e.plot, "to the", e.project):
+                            with create_plot_action.calls(add_plot_to_project_action):
+                                _create_default_plot_list(e)
+                                e.default_plot_list.plots.append(e.plot)
 
     return get_scenario(scenario_name)
 
+def _create_default_plot_list(e):
+    register(get_project_plot_list_by_name(e.project, "default"), name="default_plot_list")
 
-def the_fe_posts_to_create_a_plot(request):
-    return add_step(
-        "The",
-        frontend,
-        "calls the",
-        create_plot_api_view,
+
+def _create_the_create_plot_form(e):
+    register(Form(name="CreatePlotForm", data=e.request.data), alias="create_plot_form")
+
+
+def _create_request():
+    register(Request(endpoint="add-plot-to-project"), alias="request")
+
+
+def _create_plot_questionnaire(e):
+    register(
+        PlotQuestionnaires.Models.PlotQuestionnaire(
+            land_type=PlotQuestionnaires.Enums.LandType.CROPLAND,
+            plot=e.plot,
+        ),
+        alias="plot_questionnaire",
+    )
+
+
+def _create_plot(e):
+    register(Plots.Models.Plot(
+        name="my-plot",
+        owner=user_session.active_organization,
+        sequence_number=plot_sequence_number_generator.next(),
+        polygon=Polygons.Models.Polygon(
+            polygon=e.request.data.get("polygon"),
+            crc="",
+            area=10.0,
+        ),
+        e.plot)
     )
 
 

@@ -1,63 +1,40 @@
 from blogs.frontend.app import *
-from sunya import add_scenario, add_step, get_scenario, preregister, register
+from sunya import add_goal, add_scenario, get_scenario, preregister, register
+from mock.sunya.scenarios.store import get_entities
 
 
 def start(user):
     scenario_name = "ms1-a-user-creates-a-blog"
     with add_scenario(scenario_name):
-        p_blog = preregister("blog")
-        with the_user_visits_the_blogs_route(user, p_blog):
-            pass
+        e = get_entities()
+        register(user, alias="user")
 
-        with the_user_submits_a_form_to_create_a_blog(user, p_blog):
-            blog = the_frontend_calls_create_blog_mutation(p_blog)
-            assert blog
+        preregister("blog")
+        with add_goal("create a", e.blog, "for the", e.user):
+            with user.visits(blogs_route):
+                pass
+
+            with user.submits_a_form():
+                _create_the_create_blog_form()
+
+                with frontend.calls(create_blog_mutation).wth(e.create_blog_form):
+                    _create_blog(e)
 
     return get_scenario(scenario_name)
 
 
-def the_user_visits_the_blogs_route(user, p_blog):
-    return add_step(
-        "The",
-        user,
-        "visits the",
-        blogs_route,
-        "to create a",
-        p_blog,
+def _create_the_create_blog_form():
+    register(Form(name="CreateBlogForm"), name="create_blog_form")
+
+
+def _create_blog(e):
+    register(
+        Blogs.Types.Blog(
+            name="My Personal Blog",
+            description="Random things that interest me",
+        ),
+        e.blog,
     )
-
-
-def the_user_submits_a_form_to_create_a_blog(user, p_blog):
-    return add_step(
-        "The",
-        user,
-        "submits a form to create a",
-        p_blog,
-    )
-
-
-def the_frontend_calls_create_blog_mutation(p_blog):
-    create_blog_form = Form(name="CreateBlogForm")
-
-    with add_step(
-        "The",
-        frontend,
-        "calls the",
-        create_blog_mutation,
-        "with the",
-        create_blog_form,
-        "to create a",
-        p_blog,
-    ):
-        blog = register(
-            Blogs.Types.Blog(
-                name="My Personal Blog",
-                description="Random things that interest me",
-            ),
-            p_blog,
-        )
-
-    return blog
 
 
 def run():
