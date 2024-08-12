@@ -7,6 +7,7 @@ from .extension.prop import Prop  # noqa
 from .render.file_writer import FileWriter  # noqa
 from .scenarios.fact_to_string import fact_to_string  # noqa
 from .scenarios.run_scenario import run_scenario  # noqa
+import .scenarios.step_builder   # noqa
 from .scenarios.store import (  # noqa
     add_scenario,
     add_step,

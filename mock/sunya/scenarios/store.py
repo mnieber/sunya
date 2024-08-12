@@ -4,7 +4,8 @@ import typing as T
 from dataclassy import Internal, dataclass
 from sunya import get_actor_str
 from sunya.entities import Entity
-from sunya.scenarios.scenario import Scenario, Step, Goal
+from sunya.scenarios.scenario import Scenario
+from mock.sunya.scenarios.node import Node, Step, Goal
 
 
 @dataclass(kw_only=True)
@@ -25,12 +26,20 @@ class NodeContext:
     def __init__(self, node: Node):
         self.node = node
 
-    def __enter__(self):
-        store.stack.append(self.node)
+    @classmethod
+    def enter(cls, node):
+        return store.stack.append(node)
 
-    def __exit__(self, *args):
+    @classmethod
+    def exit(cls):
         node = store.stack.pop()
         finalize_node(node)
+
+    def __enter__(self):
+        return self.enter(self.node)
+
+    def __exit__(self, *args):
+        self.exit()
 
 
 @dataclass(kw_only=True)
