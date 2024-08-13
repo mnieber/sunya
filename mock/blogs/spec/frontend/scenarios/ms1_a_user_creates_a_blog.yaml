@@ -1,32 +1,13 @@
 scenario_name: a-user-creates-a-blog
 scenario_fn: frontend/ms1_a_user_creates_a_blog
-steps:
+nodes:
   - fact: ''
-    child_steps:
-      - fact: The [alice@example.com+:user] visits the [blogs+:route] to create a [my-personal-blog+:blog]
-      - fact: The [alice@example.com+:user] submits a form to create a [my-personal-blog+:blog]
+    child_nodes:
+      - fact: create a [my-personal-blog+:blog] for the [alice@example.com+:user]
         actors_created:
           - name: my-personal-blog+:blog
             deltas:
               description: Random things that interest me (None)
               id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
               name: My Personal Blog (None)
-        child_steps:
-          - fact: The [:frontend] makes a [create-blog:request] to the [create-blog:api-view]
-            child_steps:
-              - fact: The [create-blog:api-view] calls the [create-blog:action] with the [create-blog-:form] to create a [my-personal-blog+:blog]
-                actors_created:
-                  - name: my-personal-blog+:blog
-                    deltas:
-                      description: Random things that interest me (None)
-                      id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
-                      name: My Personal Blog (None)
-                child_steps:
-                  - fact: The [create-blog:action] creates the [my-personal-blog+:blog]
-                    actors_created:
-                      - name: my-personal-blog+:blog
-                        deltas:
-                          description: Random things that interest me (None)
-                          id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
-                          name: My Personal Blog (None)
 

@@ -8,7 +8,7 @@ from sunya.entities import Entity
 class Node:
     fact: T.Tuple
     nodes: T.List["Node"] = []
-    level: int
+    level: int = 0
     pre_entity_memo_by_key: Internal[T.Dict] = {}
     post_entity_memo_by_key: Internal[T.Dict] = {}
     is_finalized: bool = False

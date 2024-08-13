@@ -1,23 +1,25 @@
 from blogs.frontend.app import *
-from sunya import add_goal, add_scenario, get_scenario, preregister, register
-from mock.sunya.scenarios.store import get_entities
+from sunya import add_goal, add_scenario, get_scenario, preregister, register, the
+from sunya.scenarios.store import get_entities
 
 
 def start(user):
     scenario_name = "ms1-a-user-creates-a-blog"
     with add_scenario(scenario_name):
         e = get_entities()
-        register(user, alias="user")
+        register(user, name="user")
 
         preregister("blog")
         with add_goal("create a", e.blog, "for the", e.user):
-            with user.visits(blogs_route):
+            with the(user).visits_the(blogs_route):
                 pass
 
-            with user.submits_a_form():
+            with the(user).submits_a_form():
                 _create_the_create_blog_form()
 
-                with frontend.calls(create_blog_mutation).wth(e.create_blog_form):
+                with the(frontend).calls_the(create_blog_mutation).with_the(
+                    e.create_blog_form
+                ):
                     _create_blog(e)
 
     return get_scenario(scenario_name)

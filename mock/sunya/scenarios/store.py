@@ -1,11 +1,12 @@
 import copy
 import typing as T
 
-from dataclassy import Internal, dataclass
+from dataclassy import dataclass
 from sunya import get_actor_str
 from sunya.entities import Entity
 from sunya.scenarios.scenario import Scenario
-from mock.sunya.scenarios.node import Node, Step, Goal
+from sunya.scenarios.node import Node, Step, Goal
+from sunya.scenarios.preregistered_entity import PreregisteredEntity
 
 
 @dataclass(kw_only=True)
@@ -40,12 +41,6 @@ class NodeContext:
 
     def __exit__(self, *args):
         self.exit()
-
-
-@dataclass(kw_only=True)
-class PreregisteredEntity:
-    key: str
-    linked_nodes: Internal[T.List[Node]] = []
 
 
 store = Store()
@@ -94,7 +89,10 @@ def register(entity, preregistered_entity=None, name=None, force=False):
     key = get_key(entity)
     if key in store.scenario.entity_by_key:
         existing_entity = store.scenario.entity_by_key[key]
-        if existing_entity is not entity:
+        if (
+            existing_entity is not entity
+            and existing_entity is not preregistered_entity
+        ):
             raise ValueError(
                 f"Entity {existing_entity} already registered under key {key}"
             )
@@ -135,8 +133,11 @@ def get_entity(entity_class, default="__not_set__", **kwargs):
     raise ValueError(f"Entity {entity_class} not found with {kwargs}")
 
 
-def preregister(key: str):
-    return PreregisteredEntity(key=key)
+def preregister(name: str):
+    entity = PreregisteredEntity(name=name)
+    store.scenario.entity_by_key[get_key(entity)] = entity
+    store.scenario.entity_by_name[name] = entity
+    return entity
 
 
 def finalize_node(node):

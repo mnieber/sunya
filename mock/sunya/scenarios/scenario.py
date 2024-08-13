@@ -3,13 +3,14 @@ import typing as T
 from dataclassy import dataclass
 from sunya.entities import Entity
 from sunya.scenarios.node import Node
+from sunya.scenarios.preregistered_entity import PreregisteredEntity
 
 
 @dataclass(kw_only=True)
 class Scenario:
     name: str
-    entity_by_key: T.Dict[T.Tuple, Entity] = {}
-    entity_by_name: T.Dict[T.Tuple, Entity] = {}
+    entity_by_key: T.Dict[T.Tuple, T.Union[Entity, PreregisteredEntity]] = {}
+    entity_by_name: T.Dict[str, T.Union[Entity, PreregisteredEntity]] = {}
     root_node: Node
 
     def get_entity(self, entity_class, **kwargs):

@@ -1,60 +1,55 @@
-from sunya.entities import Entity
-from mock.sunya.extension.extend import extend
+from sunya.scenarios.node import Node
+from sunya.extension.extend import extend
 from sunya.extension.memfun import MemFun
-from mock.sunya.scenarios.store import NodeContext
+from sunya.scenarios.store import NodeContext
+import typing as T
 
 
-def entity_calls(entity, other_entity):
-    step_builder = StepBuilder(entity)
-    return step_builder.calls(other_entity)
+def entity_calls(step_builder, other_entity):
+    step_builder.fact = (*step_builder.fact, "calls the", other_entity)
+    return step_builder
 
 
-def entity_creates(entity, other_entity):
-    step_builder = StepBuilder(entity)
-    return step_builder.creates(other_entity)
+def entity_creates(step_builder, other_entity):
+    step_builder.fact = (*step_builder.fact, "creates the", other_entity)
+    return step_builder
+
+
+def entity_visits(step_builder, other_entity):
+    step_builder.fact = (*step_builder.fact, "visits the", other_entity)
+    return step_builder
+
+
+def entity_submits_a_form(step_builder):
+    step_builder.fact = (*step_builder.fact, "submits a form")
+    return step_builder
 
 
 class StepBuilder:
-    def __init__(self, entity):
+    def __init__(self, entity, fact=None):
         self.entity = entity
-        self.calls_other_entity = None
-        self.creates_other_entity = None
-        self.wth_entities = []
+        self.fact = fact or tuple()
 
     def __enter__(self):
-        if self.calls_other_entity:
-            verb = "calls"
-            other_entity = self.calls_other_entity
-        elif self.creates_other_entity:
-            verb = "creates"
-            other_entity = self.creates_other_entity
-        else:
-            raise Exception("No verb")
-
-        suffix = []
-        if self.wth:
-            suffix = ("with", self.wth)
-
-        node = ("The", self.entity, verb, "the", other_entity, *suffix)
-        return NodeContext.enter(node)
+        return NodeContext.enter(Node(fact=self.fact))
 
     def __exit__(self, *args):
         return NodeContext.exit()
 
-    def calls(self, other_entity):
-        self.calls_other_entity = other_entity
-        return self
-
-    def creates(self, other_entity):
-        self.creates_other_entity = other_entity
-        return self
-
-    def wth(self, wth):
-        self.wth_entities = wth if isinstance(wth, tuple) else (wth,)
+    def with_the(self, with_the):
+        with_the_entities = with_the if isinstance(with_the, tuple) else (with_the,)
+        self.fact = (*self.fact, "with", *with_the_entities)
         return self
 
 
-@extend(Entity)
-class ExtendEntity:
-    calls = MemFun(entity_calls)
-    creates = MemFun(entity_creates)
+@extend(StepBuilder)
+class ExtendStepBuilder:
+    calls_the = MemFun(entity_calls)
+    creates_the = MemFun(entity_creates)
+    visits_the = MemFun(entity_visits)
+    submits_a_form = MemFun(entity_submits_a_form)
+
+
+def the(entity):
+    step_builder = StepBuilder(entity, fact=("The", entity))
+    return T.cast(T.Any, step_builder)

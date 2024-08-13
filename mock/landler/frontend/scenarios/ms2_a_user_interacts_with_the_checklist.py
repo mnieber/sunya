@@ -1,20 +1,28 @@
 from landler.frontend.app import *
-from sunya import add_scenario, add_step, get_scenario, register
+from sunya import (
+    add_goal,
+    add_scenario,
+    add_step,
+    get_entities,
+    get_scenario,
+    register,
+    the,
+)
 
 
 def start(user):
     scenario_name = "ms2-a-user-interacts-with-the-checklist"
-    register(user, alias="user")
+    register(user, name="user")
 
     with add_scenario(scenario_name):
         e = get_entities()
 
-        with user.signs_in():
+        with the(user).signs_in():
             pass
 
-        with user.is_redirected_to(home_page_route):
+        with the(user).is_redirected_to(home_page_route):
             with add_goal("load the", e.checklist):
-                with frontend.calls(get_checklist_query):
+                with the(frontend).calls_the(get_checklist_query):
                     _create_checklist()
 
         with the_user_views_checklist(e):
@@ -22,7 +30,7 @@ def start(user):
 
         item_to_complete = e.checklist[0]
         with add_goal("The", e.user, "clicks to complete the", item_to_complete):
-            with frontend.calls(update_checklist_items_mutation):
+            with the(frontend).calls_the(update_checklist_items_mutation):
                 item_to_complete.is_completed = True
 
     return get_scenario(scenario_name)

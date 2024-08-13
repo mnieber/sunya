@@ -1,5 +1,5 @@
 from landler.backend.app import *
-from sunya import add_scenario, get_entities, get_scenario
+from sunya import add_goal, add_scenario, get_entities, get_scenario, preregister, the
 
 
 def start():
@@ -8,7 +8,7 @@ def start():
         e = get_entities()
         _create_request()
 
-        with frontend.calls(create_project_api_view).wth(e.request):
+        with the(frontend).calls_the(create_project_api_view).with_the(e.request):
             preregister("project")
 
             with add_goal(
@@ -16,16 +16,18 @@ def start():
             ):
                 _create_the_create_project_form()
 
-                with create_project_api_view.calls(create_project_action).wth(
-                    e.create_project_form
-                ):
-                    with create_project_action.creates(e.project):
+                with the(create_project_api_view).calls_the(
+                    create_project_action
+                ).with_the(e.create_project_form):
+                    with the(create_project_action).creates_the(e.project):
                         _create_project(e)
 
             with add_goal(
                 "add the", user_session.active_organization, "to the", e.project
             ):
-                with create_project_action.calls(add_organization_to_project_action):
+                with the(create_project_action).calls_the(
+                    add_organization_to_project_action
+                ):
                     _create_project_membership(e.project)
                     e.project.memberships.append(e.project_membership)
 

@@ -1,33 +1,33 @@
 from landler.backend.app import *
-from sunya import add_scenario, get_entity, get_scenario, preregister, register
+from sunya import add_scenario, get_entity, get_scenario, preregister, register, the
 from landler.backend.modules.plot_lists import (
     get_project_plot_list_by_name,
 )
-from mock.sunya.scenarios.store import get_entities
+from sunya.scenarios.store import get_entities
 
 
 def start(project, variation="default"):
     scenario_name = "a-user-adds-a-plot-to-a-project"
     with add_scenario(scenario_name):
         e = get_entities()
-        register(project, alias="project")
+        register(project, name="project")
 
         if variation == "default":
             _create_request()
-            preregister("my_plot", alias="plot")
+            preregister("my_plot", name="plot")
 
             with add_goal("create a", e.plot, "in the", e.project):
-                with frontend.calls(create_plot_api_view):
+                with the(frontend).calls_the(create_plot_api_view):
                     _create_the_create_plot_form(e)
 
-                    with create_plot_api_view.calls(create_plot_action).wth(e.create_plot_form):
-                        with create_plot_action.creates(e.plot):
+                    with the(create_plot_api_view).calls_the(create_plot_action).with_the(e.create_plot_form):
+                        with the(create_plot_action).creates_the(e.plot):
                             _create_plot(e)
                             _create_plot_questionnaire(e)
                             e.plot.plot_questionnaire = e.plot_questionnaire
 
                         with add_goal("add the", e.plot, "to the", e.project):
-                            with create_plot_action.calls(add_plot_to_project_action):
+                            with the(create_plot_action).calls_the(add_plot_to_project_action):
                                 _create_default_plot_list(e)
                                 e.default_plot_list.plots.append(e.plot)
 
@@ -38,11 +38,11 @@ def _create_default_plot_list(e):
 
 
 def _create_the_create_plot_form(e):
-    register(Form(name="CreatePlotForm", data=e.request.data), alias="create_plot_form")
+    register(Form(name="CreatePlotForm", data=e.request.data), name="create_plot_form")
 
 
 def _create_request():
-    register(Request(endpoint="add-plot-to-project"), alias="request")
+    register(Request(endpoint="add-plot-to-project"), name="request")
 
 
 def _create_plot_questionnaire(e):
@@ -51,7 +51,7 @@ def _create_plot_questionnaire(e):
             land_type=PlotQuestionnaires.Enums.LandType.CROPLAND,
             plot=e.plot,
         ),
-        alias="plot_questionnaire",
+        name="plot_questionnaire",
     )
 
 

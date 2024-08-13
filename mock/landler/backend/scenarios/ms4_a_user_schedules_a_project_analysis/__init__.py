@@ -9,6 +9,7 @@ from sunya import (
     List,
     preregister,
     register,
+    the,
 )
 
 from sunya.utils import get_time
@@ -18,15 +19,15 @@ def start(project, variation="default"):
     scenario_name = "a-user-schedules-a-project-analysis"
     with add_scenario(scenario_name):
         e = get_entities()
-        register(project, alias="project")
+        register(project, name="project")
 
         preregister("project_analysis_job")
         with add_goal("create a", e.project_analysis_job):
-            with frontend.calls(create_project_analysis_job_api_view):
-                with create_project_analysis_job_api_view.calls(
+            with the(frontend).calls_the(create_project_analysis_job_api_view):
+                with the(create_project_analysis_job_api_view).calls_the(
                     create_project_analysis_job_action
                 ):
-                    with create_project_analysis_job_action.creates(
+                    with the(create_project_analysis_job_action).creates_the(
                         e.project_analysis_job
                     ):
                         _create_project_analysis_job(e)
@@ -47,7 +48,9 @@ def start(project, variation="default"):
                 with add_goal(
                     "create a", e.project_analysis, "from a", e.project_analysis_job
                 ):
-                    with project_analysis_queue.calls(create_project_analysis_action):
+                    with the(project_analysis_queue).calls_the(
+                        create_project_analysis_action
+                    ):
                         _create_project_analysis(e, project_analysis_job)
                         e.project_analysis_job.project_analyses.append(
                             e.project_analysis
@@ -83,9 +86,9 @@ def start(project, variation="default"):
                                     "to the",
                                     e.project_analysis,
                                 ):
-                                    with create_project_analysis_action.creates(
-                                        e.plot_analysis
-                                    ):
+                                    with the(
+                                        create_project_analysis_action
+                                    ).creates_the(e.plot_analysis):
                                         _create_plot_analysis(e, plot)
                                         e.project_analysis.plot_analyses.append(
                                             e.plot_analysis
@@ -104,16 +107,16 @@ def start(project, variation="default"):
                     with add_step(
                         "the",
                         e.project_analysis_queue,
-                        "calls the",
+                        "calls_the the",
                         run_project_analysis_action,
                     ):
                         for plot_analysis in e.project_analysis.plot_analyses:
-                            with run_project_analysis_action.calls(
+                            with the(run_project_analysis_action).calls_the(
                                 run_plot_analysis_action
-                            ).wth(plot_analysis):
+                            ).with_the(plot_analysis):
                                 preregister("calcium_job")
 
-                                with run_plot_analysis_action.creates(
+                                with the(run_plot_analysis_action).creates_the(
                                     e.calcium_plot_analysis_job
                                 ):
                                     plot_at_now = _create_plot_at_now(plot_analysis)

@@ -2,8 +2,8 @@ from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
 
 
 def get_scenario_description_context(scenario_fn, scenario):
-    context = dict(scenario_name=scenario.name, scenario_fn=scenario_fn, steps=[])
-    context["steps"].append(_get_step_context(scenario.root_step))
+    context = dict(scenario_name=scenario.name, scenario_fn=scenario_fn, nodes=[])
+    context["nodes"].append(_get_step_context(scenario.root_node))
     return context
 
 
@@ -18,8 +18,8 @@ def _get_step_context(step):
     if actors_updated := _get_step_actors(step, add_created=False, add_updated=True):
         result["actors_updated"] = actors_updated
 
-    if child_steps := [_get_step_context(child_step) for child_step in step.steps]:
-        result["child_steps"] = child_steps
+    if child_nodes := [_get_step_context(child_step) for child_step in step.nodes]:
+        result["child_nodes"] = child_nodes
 
     return result
 
