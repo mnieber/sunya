@@ -26,12 +26,16 @@ def start():
 
         with add_goal("sign up as a", e.user):
             with the(e.user).visits_the(sign_up_route):
-                with the(frontend).calls_the(sign_up_user_api_view).with_the(
-                    sign_up_request_(e)
+                with (
+                    the(frontend)
+                    .calls_the(sign_up_user_api_view)
+                    .with_the(sign_up_request_(e))
                 ):
-                    with the(sign_up_user_api_view).calls_the(
-                        create_user_action
-                    ).with_the(create_user_form_(e)):
+                    with (
+                        the(sign_up_user_api_view)
+                        .calls_the(create_user_action)
+                        .with_the(create_user_form_(e))
+                    ):
                         with the(create_user_action).validates_the(e.create_user_form):
                             pass
 
@@ -43,8 +47,10 @@ def start():
 
         with add_goal("sign in as a", e.user):
             with the(e.user).visits_the(sign_in_route):
-                with the(frontend).calls_the(sign_in_user_api_view).with_the(
-                    sign_in_request_(e)
+                with (
+                    the(frontend)
+                    .calls_the(sign_in_user_api_view)
+                    .with_the(sign_in_request_(e))
                 ):
                     with the(sign_in_user_api_view).calls_the(sign_in_user_action):
                         user_session.user = e.user
@@ -53,12 +59,16 @@ def start():
         organization = preregister("organization")
         with add_goal("create an", e.organization, "with admin", user_session.user):
             with the(e.user).visits_the(user_account_route):
-                with the(frontend).calls_the(create_organization_api_view).with_the(
-                    create_organization_request_(e)
+                with (
+                    the(frontend)
+                    .calls_the(create_organization_api_view)
+                    .with_the(create_organization_request_(e))
                 ):
-                    with the(create_organization_api_view).calls_the(
-                        create_organization_action
-                    ).with_the(create_organization_form_(e)):
+                    with (
+                        the(create_organization_api_view)
+                        .calls_the(create_organization_action)
+                        .with_the(create_organization_form_(e))
+                    ):
                         with the(create_organization_action).creates_the(
                             e.organization
                         ):
@@ -69,19 +79,26 @@ def start():
                             ):
                                 e.organization.memberships = [admin_membership_(e)]
 
-        with the(e.user).uses_the(organization_picker).to_switch_to_the(
-            organization_route
-        ).of_the(e.organization):
+        with (
+            the(e.user)
+            .uses_the(organization_picker)
+            .to_switch_to_the(organization_route)
+            .of_the(e.organization)
+        ):
             with the(e.user).is_redirected_to_the(organization_route):
                 pass
 
             with add_goal("set", e.organization, "as the active organization"):
-                with the(frontend).calls_the(set_active_organization_api_view).with_the(
-                    set_active_organization_request_(e)
+                with (
+                    the(frontend)
+                    .calls_the(set_active_organization_api_view)
+                    .with_the(set_active_organization_request_(e))
                 ):
-                    with the(set_active_organization_api_view).updates_the(
-                        user_session
-                    ).to_set_the_active(organization):
+                    with (
+                        the(set_active_organization_api_view)
+                        .updates_the(user_session)
+                        .to_set_the_active(organization)
+                    ):
                         user_session.active_organization = e.organization
 
     return get_scenario(scenario_name)
