@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 
-from blogs.backend.modules import Blogs as BackendBlogs
-from blogs.frontend.modules import Blogs as FrontendBlogs
+from blogs.backend.modules.blogs import Blogs as BackendBlogs
+from blogs.frontend.modules.blogs import Blogs as FrontendBlogs
 import importlib
 from sunya import FileWriter, run_scenario, get_module_and_scenario_names
 

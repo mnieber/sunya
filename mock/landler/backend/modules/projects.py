@@ -1,7 +1,7 @@
 import typing as T
 
 if T.TYPE_CHECKING:
-    from landler.backend.modules import Plots
+    from landler.backend.modules.plots import Plots
 
 from landler.backend.modules.organizations import Organizations
 from landler.stack.entities import Module, Enum, Form

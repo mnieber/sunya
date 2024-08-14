@@ -1,2 +1,2 @@
-from .blogs import *  # noqa
-from .users import *  # noqa
+from .users import Users  # noqa
+from .blogs import Blogs  # noqa

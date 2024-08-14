@@ -1,4 +1,5 @@
 from landler.backend.app import *
+from landler.backend.modules import Organizations, Users
 from landler.frontend.app import *
 from sunya import add_goal, add_scenario, get_scenario, register, the, G as g
 

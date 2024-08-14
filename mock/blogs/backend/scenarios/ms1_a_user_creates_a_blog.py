@@ -1,4 +1,4 @@
-from blogs.backend.app import *
+from blogs.backend.modules import Blogs, Users
 
 from sunya import (
     the,
