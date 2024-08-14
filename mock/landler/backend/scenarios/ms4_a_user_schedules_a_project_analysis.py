@@ -7,7 +7,6 @@ from sunya import (
     get_entity,
     get_scenario,
     List,
-    preregister,
     register,
     the,
 )
@@ -21,7 +20,6 @@ def start(project, variation="default"):
         e = get_entities()
         register(project, name="project")
 
-        preregister("project_analysis_job")
         with add_goal("create a", e.project_analysis_job):
             with the(frontend).calls_the(create_project_analysis_job_api_view):
                 with the(create_project_analysis_job_api_view).calls_the(
@@ -30,56 +28,44 @@ def start(project, variation="default"):
                     with the(create_project_analysis_job_action).creates_the(
                         e.project_analysis_job
                     ):
-                        _create_project_analysis_job(e)
+                        project_analysis_job_(e)
 
-        preregister("jobs_to_run")
         with add_step("the", project_analysis_queue, "finds", e.jobs_to_run):
-            _create_jobs_to_run(e)
+            jobs_to_run_(e)
 
-        for idx, project_analysis_job in enumerate(e.jobs_to_run.items):
-            with add_step(
-                "the",
-                project_analysis_queue,
-                f"runs the {ith(idx)}",
-                project_analysis_job,
+        for idx, project_analysis_job in enumerate(e.jobs_to_run_.items):
+            with the(project_analysis_queue).runs_the(
+                f"{ith(idx)}", project_analysis_job
             ):
-                preregister("project_analysis")
-
                 with add_goal(
                     "create a", e.project_analysis, "from a", e.project_analysis_job
                 ):
                     with the(project_analysis_queue).calls_the(
                         create_project_analysis_action
                     ):
-                        _create_project_analysis(e, project_analysis_job)
-                        e.project_analysis_job.project_analyses.append(
+                        with the(create_project_analysis_action).creates_a(
                             e.project_analysis
-                        )
-
-                        with add_step(
-                            "the",
-                            create_project_analysis_action,
-                            "gets the",
-                            e.project_analysis.project,
-                            "at the now ts of the",
-                            e.project_analysis,
                         ):
-                            _create_project_at_now()
+                            e.project_analysis_job.project_analyses.append(
+                                project_analysis_(e)
+                            )
 
-                        with add_step(
-                            "the",
-                            create_project_analysis_action,
-                            "loops over all plots in the",
-                            e.project_at_now,
+                        with (
+                            the(create_project_analysis_action)
+                            .gets_the(e.project_analysis.project)
+                            .at_the_now_ts_of_the(e.project_analysis)
                         ):
+                            project_at_now_()
+
+                        with the(
+                            create_project_analysis_action
+                        ).loops_over_all_plots_in_the(e.project_at_now):
                             plot_list = get_project_plot_list_by_name(
                                 e.project_at_now, "default"
                             )
                             for plot in plot_list.plots:
-                                preregister("plot_analysis")
-
                                 with add_goal(
-                                    "add a ",
+                                    "add a",
                                     e.plot_analysis,
                                     "for the",
                                     plot,
@@ -89,9 +75,8 @@ def start(project, variation="default"):
                                     with the(
                                         create_project_analysis_action
                                     ).creates_the(e.plot_analysis):
-                                        _create_plot_analysis(e, plot)
                                         e.project_analysis.plot_analyses.append(
-                                            e.plot_analysis
+                                            plot_analysis_(e, plot)
                                         )
 
                 with add_goal(
@@ -104,25 +89,22 @@ def start(project, variation="default"):
                     "at the now timestamp of the",
                     e.plot_analysis,
                 ):
-                    with add_step(
-                        "the",
-                        e.project_analysis_queue,
-                        "calls_the the",
-                        run_project_analysis_action,
+                    with the(e.project_analysis_queue).calls_the(
+                        run_project_analysis_action
                     ):
                         for plot_analysis in e.project_analysis.plot_analyses:
-                            with the(run_project_analysis_action).calls_the(
-                                run_plot_analysis_action
-                            ).with_the(plot_analysis):
-                                preregister("calcium_job")
-
-                                with the(run_plot_analysis_action).creates_the(
-                                    e.calcium_plot_analysis_job
+                            with (
+                                the(run_project_analysis_action)
+                                .calls_the(run_plot_analysis_action)
+                                .with_the(plot_analysis)
+                            ):
+                                with (
+                                    the(run_plot_analysis_action)
+                                    .creates_the(e.calcium_plot_analysis_job)
+                                    .for_the(e.plot_at_now)
                                 ):
-                                    plot_at_now = _create_plot_at_now(plot_analysis)
-                                    _create_calcium_plot_analysis_job(
-                                        e, plot_analysis, plot_at_now
-                                    )
+                                    plot_at_now_(plot_analysis)
+                                    calcium_plot_analysis_job_(e)
 
             for idx, plot_analysis in enumerate(e.project_analysis.plot_analyses):
                 # TODO: the_backend_processes_a_calcium_job_result(idx, plot_analysis)
@@ -131,11 +113,11 @@ def start(project, variation="default"):
     return get_scenario(scenario_name)
 
 
-def _create_calcium_plot_analysis_job(e, plot_analysis, plot_at_now):
+def calcium_plot_analysis_job_(e):
     calcium_plot_analysis_job = register(
         CalciumPlotAnalysisJob(
-            id=plot_analysis.id,
-            polygon=plot_at_now.polygon,
+            id=e.plot_analysis.id,
+            polygon=e.plot_at_now.polygon,
         ),
         e.calcium_plot_analysis_job,
     )
@@ -143,7 +125,7 @@ def _create_calcium_plot_analysis_job(e, plot_analysis, plot_at_now):
     return calcium_plot_analysis_job
 
 
-def _create_plot_at_now(plot_analysis):
+def plot_at_now_(plot_analysis):
     plot_at_now = register(
         at_ts(plot_analysis.plot, plot_analysis.now),
         name="plot_at_now",
@@ -152,7 +134,7 @@ def _create_plot_at_now(plot_analysis):
     return plot_at_now
 
 
-def _create_plot_analysis(e, plot):
+def plot_analysis_(e, plot):
     register(
         PlotAnalyses.Models.PlotAnalysis(
             plot=plot,
@@ -164,33 +146,33 @@ def _create_plot_analysis(e, plot):
     )
 
 
-def _create_project_at_now():
+def project_at_now_():
     register(
         at_ts(project_analysis.project, project_analysis.now),
         name="project_at_now",
     )
 
 
-def _create_project_analysis(e, project_analysis_job):
+def project_analysis_(e):
     register(
         ProjectAnalyses.Models.ProjectAnalysis(
-            job=project_analysis_job,
-            project=project_analysis_job.project,
-            now=project_analysis_job.scheduled_at,
+            job=e.project_analysis_job,
+            project=e.project_analysis_job.project,
+            now=e.project_analysis_job.scheduled_at,
             status=ProjectAnalyses.Enums.ProjectAnalysisStatus.RUNNING,
         ),
         e.project_analysis,
     )
 
 
-def _create_jobs_to_run(e):
+def jobs_to_run_(e):
     register(
         List(name="jobs_to_run", items=[e.project_analysis_job]),
         e.jobs_to_run,
     )
 
 
-def _create_project_analysis_job(e):
+def project_analysis_job_(e):
     register(
         ProjectAnalysisJobs.Models.ProjectAnalysisJob(
             project=e.project,

@@ -9,7 +9,7 @@ from landler.backend.modules.projects import Projects
 from landler.stack.entities import Module, Enum
 from blogs.backend.entities import Action
 
-from sunya import EntityWithId, MemField, actor_to_str, extend
+from sunya import EntityWithId, actor_to_str
 
 
 class ProjectAnalyses(Module):
@@ -61,8 +61,3 @@ run_project_analysis_action = ProjectAnalyses.Actions.RunProjectAnalysis()
 @actor_to_str.method((ProjectAnalyses.Models.ProjectAnalysis,))
 def project_analysis_to_str(project_analysis):
     return f"{project_analysis.project.name}+:project-analysis"
-
-
-@extend(ProjectAnalysisJobs.Models.ProjectAnalysisJob)
-class ExtendProjectAnalysisJob:
-    project_analyses = MemField(lambda: list())

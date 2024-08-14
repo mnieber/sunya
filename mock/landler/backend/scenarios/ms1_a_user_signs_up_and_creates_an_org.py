@@ -5,7 +5,6 @@ from sunya import (
     add_scenario,
     get_scenario,
     register,
-    preregister,
     the,
 )
 
@@ -22,7 +21,6 @@ def start():
     scenario_name = "a-user-signs-up-and-creates-an-org"
     with add_scenario(scenario_name):
         e = get_entities()
-        preregister("user")
 
         with add_goal("sign up as a", e.user):
             with the(e.user).visits_the(sign_up_route):
@@ -41,7 +39,6 @@ def start():
                         user_session.user = e.user
                         e.user.is_authenticated = True
 
-        organization = preregister("organization")
         with add_goal("create an", e.organization, "with admin", user_session.user):
             with the(e.user).visits_the(user_account_route):
                 with the(frontend).calls_the(create_organization_api_view):

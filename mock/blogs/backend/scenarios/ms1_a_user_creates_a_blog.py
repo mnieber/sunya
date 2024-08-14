@@ -7,7 +7,6 @@ from sunya import (
     add_scenario,
     get_entities,
     get_scenario,
-    preregister,
     register,
 )
 
@@ -18,27 +17,20 @@ def start(user):
         e = get_entities()
         register(user, name="user")
 
-        preregister("blog")
         with add_goal("create a", e.blog, "for the", e.user):
             with the(e.user).visits_the(blogs_route):
                 pass
 
             with the(e.user).submits_a_form():
-                _create_request()
-
-                with the(frontend).calls_the(create_blog_api_view).with_the(e.request):
-                    create_the_create_blog_form(e.request)
-
-                    with the(create_blog_api_view).calls_the(
-                        create_blog_action
-                    ).with_the(e.create_blog_form):
+                with the(frontend).calls_the(create_blog_api_view):
+                    with the(create_blog_api_view).calls_the(create_blog_action):
                         with the(create_blog_action).creates_the(e.blog):
-                            _create_blog(e)
+                            blog_(e)
 
     return get_scenario(scenario_name)
 
 
-def _create_blog(e):
+def blog_(e):
     register(
         Blogs.Models.Blog(
             name="My Personal Blog",
@@ -46,14 +38,6 @@ def _create_blog(e):
         ),
         e.blog,
     )
-
-
-def _create_request():
-    register(Request(endpoint="create-blog"), name="request")
-
-
-def create_the_create_blog_form(request):
-    register(Form(name="CreateBlogForm", data=request.data), name="create_blog_form")
 
 
 def run():

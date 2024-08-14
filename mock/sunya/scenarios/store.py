@@ -213,7 +213,7 @@ class EntityLookup:
             if entity := scenario.get_entity_by_name(name):
                 return entity
 
-        raise ValueError(f"Entity with name {name} not found")
+        return preregister(name)
 
 
 def get_entities():
