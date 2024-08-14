@@ -1,9 +1,10 @@
 scenario_name: a-user-creates-a-blog-post
 scenario_fn: backend/ms2_a_user_creates_a_blog_post
 nodes:
-  - fact: ''
+  - root: ''
     child_nodes:
-      - fact: create a [my-blog-post+:blog-post] in the [my-original-blog+:blog]
+      - step: The [alice@example.com+:user] visits the [blogs+:route]
+      - goal: create a [my-blog-post+:blog-post] in the [my-original-blog+:blog]
         actors_created:
           - name: my-blog-post+:blog-post
             deltas:
@@ -11,4 +12,10 @@ nodes:
               content: Hello people (None)
               id: 691f5870d7a1588290e2e812267710ad (None)
               title: My Blog Post (None)
+        child_nodes:
+          - step: The [alice@example.com+:user] submits a form
+            child_nodes:
+              - step: The [:frontend] calls the [create-blog:api-view] with [create-blog-post:request]
+                child_nodes:
+                  - step: The [create-blog:api-view] calls the [create-blog:action] with [create-blog-post-:form]
 

@@ -6,6 +6,7 @@ from sunya.entities import Entity
 
 @dataclass(kw_only=True)
 class Node:
+    name = "root"
     fact: T.Tuple
     nodes: T.List["Node"] = []
     level: int = 0
@@ -24,8 +25,8 @@ class Node:
 
 
 class Step(Node):
-    pass
+    name = "step"
 
 
 class Goal(Node):
-    pass
+    name = "goal"

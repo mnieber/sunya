@@ -61,18 +61,27 @@ def get_scenario(name: str):
 
 
 def add_step(*fact_bits):
-    return _add_node(Step, *fact_bits)
+    node = add_node(create_step(fact_bits))
+    return NodeContext(node)
+
+
+def create_step(fact_bits):
+    return Step(fact=fact_bits, nodes=[], level=store.node.level + 1)
 
 
 def add_goal(*fact_bits):
-    return _add_node(Goal, *fact_bits)
+    node = add_node(create_goal(fact_bits))
+    return NodeContext(node)
 
 
-def _add_node(klass, *fact_bits):
-    node = klass(fact=fact_bits, nodes=[], level=store.node.level + 1)
+def create_goal(fact_bits):
+    return Goal(fact=fact_bits, nodes=[], level=store.node.level + 1)
+
+
+def add_node(node):
     store.node.nodes.append(node)
 
-    for fact_bit in fact_bits:
+    for fact_bit in node.fact:
         if isinstance(fact_bit, PreregisteredEntity):
             entity = fact_bit
             if node not in entity.linked_nodes:
@@ -82,7 +91,7 @@ def _add_node(klass, *fact_bits):
             register(entity)
             node.pre_entity_memo_by_key[get_key(entity)] = create_memo(entity)
 
-    return NodeContext(node)
+    return node
 
 
 def register(entity, preregistered_entity=None, name=None, force=False):

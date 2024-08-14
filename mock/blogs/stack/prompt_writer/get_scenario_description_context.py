@@ -3,31 +3,32 @@ from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
 
 def get_scenario_description_context(scenario_fn, scenario):
     context = dict(scenario_name=scenario.name, scenario_fn=scenario_fn, nodes=[])
-    context["nodes"].append(_get_step_context(scenario.root_node))
+    context["nodes"].append(_get_node_context(scenario.root_node))
     return context
 
 
-def _get_step_context(step):
+def _get_node_context(node):
     result = dict()
 
-    result["fact"] = fact_to_string(step.fact)
+    result[node.name] = fact_to_string(node.fact)
 
-    if actors_created := _get_step_actors(step, add_created=True, add_updated=False):
+    if actors_created := _get_node_actors(node, add_created=True, add_updated=False):
         result["actors_created"] = actors_created
 
-    if actors_updated := _get_step_actors(step, add_created=False, add_updated=True):
+    if actors_updated := _get_node_actors(node, add_created=False, add_updated=True):
         result["actors_updated"] = actors_updated
 
-    if child_nodes := [_get_step_context(child_step) for child_step in step.nodes]:
+    child_nodes = [_get_node_context(child_node) for child_node in node.nodes]
+    if child_nodes:
         result["child_nodes"] = child_nodes
 
     return result
 
 
-def _get_step_actors(step, add_created, add_updated):
+def _get_node_actors(node, add_created, add_updated):
     result = []
-    for entity in step.entities:
-        delta = get_entity_delta(step, entity)
+    for entity in node.entities:
+        delta = get_entity_delta(node, entity)
         field_deltas = {}
         for field_name, (old_value_memo, new_value_memo) in delta.items():
 
