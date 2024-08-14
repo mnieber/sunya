@@ -3,14 +3,19 @@ from landler.frontend.app import *
 from sunya import (
     add_goal,
     add_scenario,
-    add_step,
     get_scenario,
     preregister,
     the,
 )
 
-from . import factories as F
+from .factories import *
 from sunya.scenarios.store import get_entities
+
+
+sign_up_route = Route()
+sign_in_route = Route()
+user_account_route = Route()
+organization_route = Route()
 
 
 def start():
@@ -22,24 +27,24 @@ def start():
         with add_goal("sign up as a", e.user):
             with the(e.user).visits_the(sign_up_route):
                 with the(frontend).calls_the(sign_up_user_api_view).with_the(
-                    F.sign_up_request(e)
+                    sign_up_request_(e)
                 ):
                     with the(sign_up_user_api_view).calls_the(
                         create_user_action
-                    ).with_the(F.create_user_form(e)):
+                    ).with_the(create_user_form_(e)):
                         with the(create_user_action).validates_the(e.create_user_form):
                             pass
 
                         with the(create_user_action).creates_the(e.user):
-                            F.user(e)
+                            user_(e)
 
-                    with sign_up_user_api_view_activates_the_user_account(e):
+                    with the(e.user_api_view).activates_the_account_of_the(e.user):
                         e.user.is_active = True
 
         with add_goal("sign in as a", e.user):
             with the(e.user).visits_the(sign_in_route):
                 with the(frontend).calls_the(sign_in_user_api_view).with_the(
-                    F.sign_in_request(e)
+                    sign_in_request_(e)
                 ):
                     with the(sign_in_user_api_view).calls_the(sign_in_user_action):
                         user_session.user = e.user
@@ -49,62 +54,37 @@ def start():
         with add_goal("create an", e.organization, "with admin", user_session.user):
             with the(e.user).visits_the(user_account_route):
                 with the(frontend).calls_the(create_organization_api_view).with_the(
-                    F.create_organization_request(e)
+                    create_organization_request_(e)
                 ):
                     with the(create_organization_api_view).calls_the(
                         create_organization_action
-                    ).with_the(F.create_organization_form(e)):
+                    ).with_the(create_organization_form_(e)):
                         with the(create_organization_action).creates_the(
                             e.organization
                         ):
-                            F.organization(e)
+                            organization_(e)
 
                             with the(create_organization_action).calls_the(
                                 add_user_to_organization_action
                             ):
-                                e.organization.memberships = [F.admin_membership(e)]
+                                e.organization.memberships = [admin_membership_(e)]
 
-        with the_user_switches_to_their_organization_route(user, organization):
-            with the(e.user).is_redirected_to(organization_route):
+        with the(e.user).uses_the(organization_picker).to_switch_to_the(
+            organization_route
+        ).of_the(e.organization):
+            with the(e.user).is_redirected_to_the(organization_route):
                 pass
 
             with add_goal("set", e.organization, "as the active organization"):
                 with the(frontend).calls_the(set_active_organization_api_view).with_the(
-                    F.set_active_organization_request(e)
+                    set_active_organization_request_(e)
                 ):
-                    with add_step(
-                        "The",
-                        set_active_organization_api_view,
-                        "updates the",
-                        user_session,
-                        "to set the active",
-                        organization,
-                    ):
+                    with the(set_active_organization_api_view).updates_the(
+                        user_session
+                    ).to_set_the_active(organization):
                         user_session.active_organization = e.organization
 
     return get_scenario(scenario_name)
-
-
-def sign_up_user_api_view_activates_the_user_account(e):
-    return add_step(
-        "The",
-        e.user_api_view,
-        "activates the account of the",
-        e.user,
-    )
-
-
-def the_user_switches_to_their_organization_route(e):
-    return add_step(
-        "The",
-        e.user,
-        "uses the",
-        organization_picker,
-        "to switch to the",
-        organization_route,
-        "of the",
-        e.organization,
-    )
 
 
 def run():
