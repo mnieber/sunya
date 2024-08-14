@@ -48,7 +48,7 @@ def frontend_to_str(frontend):
 
 @actor_to_str.method((Mutation,))
 def mutation_to_str(mutation):
-    return f":mutation"
+    return f"{type_name_to_kebab(mutation)}:mutation"
 
 
 @actor_to_str.method((Route,))

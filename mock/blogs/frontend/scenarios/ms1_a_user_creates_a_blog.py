@@ -1,4 +1,5 @@
 from blogs.frontend.app import *
+from blogs.frontend.modules import *
 from sunya import add_goal, add_scenario, get_scenario, register, the
 from sunya.scenarios.store import get_entities
 

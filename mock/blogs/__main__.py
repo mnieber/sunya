@@ -61,7 +61,8 @@ def _get_scenario_path(scenario_path_by_name, scenario_name):
         return scenario_path
 
     parts = scenario_name.split("/")
-    return f"blogs.backend.scenarios.{parts[-1]}"
+    assert len(parts) == 2
+    return f"blogs.{parts[0]}.scenarios.{parts[1]}"
 
 
 def _get_prompt_writer(layer):

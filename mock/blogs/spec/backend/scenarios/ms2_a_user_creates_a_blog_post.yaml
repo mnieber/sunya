@@ -15,7 +15,7 @@ nodes:
         child_nodes:
           - step: The [alice@example.com+:user] submits a form
             child_nodes:
-              - step: The [:frontend] calls the [create-blog:api-view] with [create-blog-post:request]
+              - step: The [:frontend] calls the [create-blog:api-view]
                 child_nodes:
-                  - step: The [create-blog:api-view] calls the [create-blog:action] with [create-blog-post-:form]
+                  - step: The [create-blog:api-view] calls the [create-blog:action]
 

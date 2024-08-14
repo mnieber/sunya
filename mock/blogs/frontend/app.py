@@ -7,4 +7,5 @@ from blogs.frontend.entities import (
     Query,
 )  # noqa
 from blogs.stack.entities import Module, Enum, JSON, Form  # noqa
-from blogs.frontend.modules import *  # noqa
+from blogs.frontend.modules.users import *  # noqa
+from blogs.frontend.modules.blogs import *  # noqa

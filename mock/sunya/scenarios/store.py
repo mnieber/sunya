@@ -88,13 +88,25 @@ def add_node(node):
                 entity.linked_nodes.append(node)
         if isinstance(fact_bit, Entity):
             entity = fact_bit
-            register(entity)
             node.pre_entity_memo_by_key[get_key(entity)] = create_memo(entity)
 
     return node
 
 
 def register(entity, preregistered_entity=None, name=None, force=False):
+    if preregistered_entity:
+        if not isinstance(preregistered_entity, PreregisteredEntity):
+            raise ValueError("preregistered_entity must be of type PreregisteredEntity")
+        if name:
+            raise ValueError("Cannot specify both a name and a preregistering entity")
+        name = preregistered_entity.name
+
+    if not name:
+        raise ValueError("Entity must be given a name")
+    if name in store.scenario.entity_by_name and not force:
+        if not preregistered_entity:
+            raise ValueError(f"Entity with name {name} already exists")
+
     key = get_key(entity)
     if key in store.scenario.entity_by_key:
         existing_entity = store.scenario.entity_by_key[key]
@@ -107,11 +119,7 @@ def register(entity, preregistered_entity=None, name=None, force=False):
             )
 
     store.scenario.entity_by_key[key] = entity
-
-    if name:
-        if name in store.scenario.entity_by_name and not force:
-            raise ValueError(f"Entity with name {name} already exists")
-        store.scenario.entity_by_name[name] = entity
+    store.scenario.entity_by_name[name] = entity
 
     if preregistered_entity:
         # Register the fact that before this node, the entity did not yet exist
@@ -209,9 +217,8 @@ class NodeNotFinalizedError(Exception):
 
 class EntityLookup:
     def __getattr__(self, name):
-        for scenario in reversed(store.scenarios):
-            if entity := scenario.get_entity_by_name(name):
-                return entity
+        if entity := store.scenario.get_entity_by_name(name):
+            return entity
 
         return preregister(name)
 
