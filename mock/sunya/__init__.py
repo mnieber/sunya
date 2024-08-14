@@ -20,3 +20,4 @@ from .scenarios.store import (  # noqa
 )
 from .utils.get_module_and_scenario_names import get_module_and_scenario_names  # noqa
 from .scenarios.store import NoValue, get_entity_delta  # noqa
+from .scenarios.global_namespace import G  # noqa

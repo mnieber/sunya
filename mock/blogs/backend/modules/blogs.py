@@ -5,7 +5,7 @@ if T.TYPE_CHECKING:
 
 from blogs.backend.entities import Action, ApiView
 from blogs.stack.entities import Enum, Form, Module
-from sunya import EntityWithId, actor_to_str
+from sunya import EntityWithId, actor_to_str, G as g
 
 
 class Blogs(Module):
@@ -58,12 +58,12 @@ class Blogs(Module):
             pass
 
 
-create_blog_action = Blogs.Actions.CreateBlog()
-create_blog_post_action = Blogs.Actions.CreateBlog()
-create_blog_api_view = Blogs.ApiViews.CreateBlog()
-create_blog_post_api_view = Blogs.ApiViews.CreateBlog()
-update_blog_action = Blogs.Actions.UpdateBlog()
-update_blog_api_view = Blogs.ApiViews.UpdateBlog()
+g.create_blog_action = Blogs.Actions.CreateBlog()
+g.create_blog_post_action = Blogs.Actions.CreateBlog()
+g.create_blog_api_view = Blogs.ApiViews.CreateBlog()
+g.create_blog_post_api_view = Blogs.ApiViews.CreateBlog()
+g.update_blog_action = Blogs.Actions.UpdateBlog()
+g.update_blog_api_view = Blogs.ApiViews.UpdateBlog()
 
 
 @actor_to_str.method((Blogs.Models.Blog,))

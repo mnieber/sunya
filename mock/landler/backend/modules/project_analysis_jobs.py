@@ -8,7 +8,7 @@ from landler.backend.modules.projects import Projects
 from landler.stack.entities import Module
 from blogs.backend.entities import Action, ApiView
 
-from sunya import Entity, MemField, actor_to_str, extend
+from sunya import Entity, MemField, actor_to_str, extend, G as g
 
 
 class ProjectAnalysisJobs(Module):
@@ -44,14 +44,13 @@ class ProjectAnalysisJobs(Module):
             pass
 
 
-create_project_analysis_job_action = (
+g.create_project_analysis_job_action = (
     ProjectAnalysisJobs.Actions.CreateProjectAnalysisJob()
 )
-create_project_analysis_job_api_view = (
+g.create_project_analysis_job_api_view = (
     ProjectAnalysisJobs.Api.CreateProjectAnalysisJob()
 )
-
-project_analysis_queue = ProjectAnalysisJobs.Models.ProjectAnalysisQueue()
+g.project_analysis_queue = ProjectAnalysisJobs.Models.ProjectAnalysisQueue()
 
 
 @actor_to_str.method((ProjectAnalysisJobs.Models.ProjectAnalysisJob,))

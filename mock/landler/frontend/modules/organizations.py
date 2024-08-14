@@ -1,5 +1,6 @@
 from landler.stack.entities import Module
 from blogs.frontend.entities import Component
+from sunya import G as g
 
 
 class Organizations(Module):
@@ -16,4 +17,4 @@ class Organizations(Module):
             pass
 
 
-organization_picker = Organizations.Components.OrganizationPicker()
+g.organization_picker = Organizations.Components.OrganizationPicker()

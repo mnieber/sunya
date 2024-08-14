@@ -1,6 +1,6 @@
 from blogs.frontend.app import *
 from blogs.frontend.modules import *
-from sunya import add_goal, add_scenario, get_scenario, register, the
+from sunya import add_goal, add_scenario, get_scenario, register, the, G as g
 from sunya.scenarios.store import get_entities
 
 
@@ -11,11 +11,11 @@ def start(user):
         register(user, name="user")
 
         with add_goal("create a", e.blog, "for the", e.user):
-            with the(user).visits_the(blogs_route):
+            with the(e.user).visits_the(g.blogs_route):
                 pass
 
-            with the(user).submits_a_form():
-                with the(frontend).calls_the(create_blog_mutation):
+            with the(e.user).submits_a_form():
+                with the(g.frontend).calls_the(g.create_blog_mutation):
                     blog_(e)
 
     return get_scenario(scenario_name)

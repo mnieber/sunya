@@ -6,7 +6,7 @@ from landler.backend.modules.polygons import Polygons
 from landler.stack.entities import Module, Form
 from blogs.backend.entities import Action, ApiView
 from landler.utils.sequence_number_generator import SequenceNumberGenerator
-from sunya import Entity, actor_to_str
+from sunya import Entity, actor_to_str, G as g
 
 
 class Plots(Module):
@@ -35,8 +35,8 @@ class Plots(Module):
             pass
 
 
-create_plot_action = Plots.Actions.CreatePlot()
-create_plot_api_view = Plots.Api.CreatePlot()
+g.create_plot_action = Plots.Actions.CreatePlot()
+g.create_plot_api_view = Plots.Api.CreatePlot()
 
 
 @actor_to_str.method((Plots.Models.Plot,))

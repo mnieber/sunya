@@ -9,7 +9,7 @@ from landler.backend.modules.plots import Plots
 from landler.backend.modules.project_analyses import ProjectAnalyses
 from landler.stack.entities import Enum, Module
 from blogs.backend.entities import Action
-from sunya import EntityWithId, MemField, actor_to_str, extend
+from sunya import EntityWithId, MemField, actor_to_str, extend, G as g
 
 
 class PlotAnalyses(Module):
@@ -40,8 +40,8 @@ class PlotAnalyses(Module):
             pass
 
 
-create_plot_analysis_action = PlotAnalyses.Actions.CreatePlotAnalysis()
-run_plot_analysis_action = PlotAnalyses.Actions.RunPlotAnalysis()
+g.create_plot_analysis_action = PlotAnalyses.Actions.CreatePlotAnalysis()
+g.run_plot_analysis_action = PlotAnalyses.Actions.RunPlotAnalysis()
 
 
 @actor_to_str.method((PlotAnalyses.Models.PlotAnalysis,))

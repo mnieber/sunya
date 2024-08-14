@@ -1,7 +1,7 @@
 from blogs.backend.app import *
-from blogs.frontend.modules import blogs_route
 
 from sunya import (
+    G as g,
     add_goal,
     add_scenario,
     get_entities,
@@ -18,14 +18,14 @@ def start(user, blog):
         register(user, name="user")
         register(blog, name="blog")
 
-        with the(e.user).visits_the(blogs_route):
+        with the(e.user).visits_the(g.blogs_route):
             pass
 
         with add_goal("create a", e.blog_post, "in the", e.blog):
             with the(e.user).submits_a_form():
-                with the(frontend).calls_the(create_blog_post_api_view):
-                    with the(create_blog_post_api_view).calls_the(
-                        create_blog_post_action
+                with the(g.frontend).calls_the(g.create_blog_post_api_view):
+                    with the(g.create_blog_post_api_view).calls_the(
+                        g.create_blog_post_action
                     ):
                         blog_post_(blog, e)
 

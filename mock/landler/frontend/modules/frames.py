@@ -1,7 +1,7 @@
 from landler.stack.entities import Module
 from blogs.frontend.entities import Route
 
-from sunya import Entity
+from sunya import Entity, G as g
 
 
 class Frames(Module):
@@ -14,4 +14,4 @@ class Frames(Module):
             pass
 
 
-home_page_route = Frames.Routes.HomePageRoute()
+g.home_page_route = Frames.Routes.HomePageRoute()

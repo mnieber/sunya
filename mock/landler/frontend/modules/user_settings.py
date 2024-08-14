@@ -1,5 +1,6 @@
 from landler.stack.entities import Module
 from blogs.frontend.entities import Route, Component
+from sunya import G as g
 
 
 class UserSettings(Module):
@@ -32,8 +33,7 @@ class UserSettings(Module):
             pass
 
 
-user_settings = UserSettings.Routes.UserSettings()
-user_profile = UserSettings.Routes.UserProfile()
-user_organizations = UserSettings.Routes.UserOrganizations()
-
-user_settings_page = UserSettings.Views.UserSettingsPage()
+g.user_settings = UserSettings.Routes.UserSettings()
+g.user_profile = UserSettings.Routes.UserProfile()
+g.user_organizations = UserSettings.Routes.UserOrganizations()
+g.user_settings_page = UserSettings.Views.UserSettingsPage()

@@ -9,7 +9,7 @@ from landler.backend.modules.projects import Projects
 from landler.stack.entities import Module, Enum
 from blogs.backend.entities import Action
 
-from sunya import EntityWithId, actor_to_str
+from sunya import EntityWithId, actor_to_str, G as g
 
 
 class ProjectAnalyses(Module):
@@ -54,8 +54,8 @@ class ProjectAnalyses(Module):
             pass
 
 
-create_project_analysis_action = ProjectAnalyses.Actions.CreateProjectAnalysis()
-run_project_analysis_action = ProjectAnalyses.Actions.RunProjectAnalysis()
+g.create_project_analysis_action = ProjectAnalyses.Actions.CreateProjectAnalysis()
+g.run_project_analysis_action = ProjectAnalyses.Actions.RunProjectAnalysis()
 
 
 @actor_to_str.method((ProjectAnalyses.Models.ProjectAnalysis,))

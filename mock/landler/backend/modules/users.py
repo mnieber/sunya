@@ -1,6 +1,6 @@
 from landler.backend.entities import Action, ApiView
 from landler.stack.entities import Form, Module
-from sunya import actor_to_str, EntityWithId
+from sunya import actor_to_str, EntityWithId, G as g
 
 
 class Users(Module):
@@ -35,11 +35,11 @@ class Users(Module):
             user: "Users.Models.User"
 
 
-sign_up_user_api_view = Users.ApiViews.SignUpUserApiView()
-sign_in_user_api_view = Users.ApiViews.SignInUserApiView()
-create_user_action = Users.Actions.CreateUser()
-sign_in_user_action = Users.Actions.SignInUser()
-set_active_organization_api_view = Users.ApiViews.SetActiveOrganizationApiView()
+g.sign_up_user_api_view = Users.ApiViews.SignUpUserApiView()
+g.sign_in_user_api_view = Users.ApiViews.SignInUserApiView()
+g.create_user_action = Users.Actions.CreateUser()
+g.sign_in_user_action = Users.Actions.SignInUser()
+g.set_active_organization_api_view = Users.ApiViews.SetActiveOrganizationApiView()
 
 
 @actor_to_str.method((Users.Models.User,))

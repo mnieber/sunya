@@ -1,5 +1,13 @@
 from landler.backend.app import *
-from sunya import add_goal, add_scenario, get_entities, get_scenario, register, the
+from sunya import (
+    add_goal,
+    add_scenario,
+    get_entities,
+    get_scenario,
+    register,
+    the,
+    G as g,
+)
 
 
 def start():
@@ -7,22 +15,22 @@ def start():
     with add_scenario(scenario_name):
         e = get_entities()
 
-        with the(frontend).calls_the(create_project_api_view):
+        with the(g.frontend).calls_the(g.create_project_api_view):
             with add_goal(
                 "create a",
                 e.project,
                 "with admin",
                 user_session.active_organization,
             ):
-                with the(create_project_api_view).calls_the(create_project_action):
-                    with the(create_project_action).creates_the(e.project):
+                with the(g.create_project_api_view).calls_the(g.create_project_action):
+                    with the(g.create_project_action).creates_the(e.project):
                         project_(e)
 
             with add_goal(
                 "add the", user_session.active_organization, "to the", e.project
             ):
-                with the(create_project_action).calls_the(
-                    add_organization_to_project_action
+                with the(g.create_project_action).calls_the(
+                    g.add_organization_to_project_action
                 ):
                     e.project.memberships.append(project_membership_(e.project))
 

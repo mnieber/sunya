@@ -5,7 +5,7 @@ if T.TYPE_CHECKING:
 
 from landler.frontend.entities import Mutation, Facet, Trim, Query
 from landler.stack.entities import Module
-from sunya import EntityWithId, actor_to_str
+from sunya import EntityWithId, actor_to_str, G as g
 
 
 class Checklist(Module):
@@ -47,8 +47,8 @@ class Checklist(Module):
             trim: Trim
 
 
-get_checklist_query = Checklist.Queries.GetChecklist()
-update_checklist_items_mutation = Checklist.Mutations.UpdateChecklistItems()
+g.get_checklist_query = Checklist.Queries.GetChecklist()
+g.update_checklist_items_mutation = Checklist.Mutations.UpdateChecklistItems()
 
 
 @actor_to_str.method((Checklist.Types.ChecklistItem,))

@@ -1,5 +1,4 @@
 from blogs.frontend.entities import (
-    frontend,
     Mutation,
     Facet,
     Trim,

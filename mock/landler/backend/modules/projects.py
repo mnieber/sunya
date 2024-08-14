@@ -7,7 +7,7 @@ from landler.backend.modules.organizations import Organizations
 from landler.stack.entities import Module, Enum, Form
 from blogs.backend.entities import Action, ApiView
 
-from sunya import Entity, actor_to_str
+from sunya import Entity, actor_to_str, G as g
 
 
 class Projects(Module):
@@ -56,10 +56,10 @@ class Projects(Module):
             pass
 
 
-create_project_action = Projects.Actions.CreateProject()
-create_project_api_view = Projects.Api.CreateProject()
-add_organization_to_project_action = Projects.Actions.AddOrganizationToProject()
-add_plot_to_project_action = Projects.Actions.AddPlotToProject()
+g.create_project_action = Projects.Actions.CreateProject()
+g.create_project_api_view = Projects.Api.CreateProject()
+g.add_organization_to_project_action = Projects.Actions.AddOrganizationToProject()
+g.add_plot_to_project_action = Projects.Actions.AddPlotToProject()
 
 
 @actor_to_str.method((Projects.Models.Project,))

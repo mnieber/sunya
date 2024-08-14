@@ -3,7 +3,7 @@ import typing as T
 from landler.backend.modules.users import Users
 from landler.backend.entities import Action, ApiView
 from landler.stack.entities import Enum, Form, Module
-from sunya import Entity, EntityWithId, actor_to_str
+from sunya import Entity, EntityWithId, actor_to_str, G as g
 
 
 class Organizations(Module):
@@ -57,10 +57,10 @@ class Organizations(Module):
             pass
 
 
-create_organization_action = Organizations.Actions.CreateOrganization()
-create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
-add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
-create_demo_organization_task = Organizations.Tasks.CreateDemoOrganization()
+g.create_organization_action = Organizations.Actions.CreateOrganization()
+g.create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
+g.add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
+g.create_demo_organization_task = Organizations.Tasks.CreateDemoOrganization()
 
 
 @actor_to_str.method((Organizations.Models.Organization,))

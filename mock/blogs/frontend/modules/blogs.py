@@ -4,7 +4,7 @@ if T.TYPE_CHECKING:
     pass
 
 from blogs.frontend.app import Module, Mutation, Facet, Route, Query, Form
-from sunya import EntityWithId, actor_to_str
+from sunya import EntityWithId, actor_to_str, G as g
 from .frames import Frames
 
 
@@ -123,10 +123,10 @@ class Blogs(Module):
             pass
 
 
-create_blog_mutation = Blogs.Mutations.CreateBlog()
-create_blog_post_mutation = Blogs.Mutations.CreateBlogPost()
-delete_blog_posts_action = Blogs.Mutations.DeleteBlogPosts()
-blogs_route = Blogs.Routes.Blogs()
+g.create_blog_mutation = Blogs.Mutations.CreateBlog()
+g.create_blog_post_mutation = Blogs.Mutations.CreateBlogPost()
+g.delete_blog_posts_action = Blogs.Mutations.DeleteBlogPosts()
+g.blogs_route = Blogs.Routes.Blogs()
 
 
 @actor_to_str.method((Blogs.Types.Blog,))

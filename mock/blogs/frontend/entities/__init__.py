@@ -1,4 +1,4 @@
-from sunya import Entity, actor_to_str
+from sunya import Entity, actor_to_str, G as g
 from sunya.utils import type_name_to_kebab
 import typing as T
 
@@ -38,7 +38,7 @@ class Trim(Entity):
     name: str
 
 
-frontend = Frontend()
+g.frontend = Frontend()
 
 
 @actor_to_str.method((Frontend,))
