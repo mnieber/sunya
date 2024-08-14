@@ -4,11 +4,11 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
+    register,
     preregister,
     the,
 )
 
-from .factories import *
 from sunya.scenarios.store import get_entities
 
 
@@ -26,19 +26,8 @@ def start():
 
         with add_goal("sign up as a", e.user):
             with the(e.user).visits_the(sign_up_route):
-                with (
-                    the(frontend)
-                    .calls_the(sign_up_user_api_view)
-                    .with_the(sign_up_request_(e))
-                ):
-                    with (
-                        the(sign_up_user_api_view)
-                        .calls_the(create_user_action)
-                        .with_the(create_user_form_(e))
-                    ):
-                        with the(create_user_action).validates_the(e.create_user_form):
-                            pass
-
+                with the(frontend).calls_the(sign_up_user_api_view):
+                    with the(sign_up_user_api_view).calls_the(create_user_action):
                         with the(create_user_action).creates_the(e.user):
                             user_(e)
 
@@ -47,11 +36,7 @@ def start():
 
         with add_goal("sign in as a", e.user):
             with the(e.user).visits_the(sign_in_route):
-                with (
-                    the(frontend)
-                    .calls_the(sign_in_user_api_view)
-                    .with_the(sign_in_request_(e))
-                ):
+                with the(frontend).calls_the(sign_in_user_api_view):
                     with the(sign_in_user_api_view).calls_the(sign_in_user_action):
                         user_session.user = e.user
                         e.user.is_authenticated = True
@@ -59,15 +44,9 @@ def start():
         organization = preregister("organization")
         with add_goal("create an", e.organization, "with admin", user_session.user):
             with the(e.user).visits_the(user_account_route):
-                with (
-                    the(frontend)
-                    .calls_the(create_organization_api_view)
-                    .with_the(create_organization_request_(e))
-                ):
-                    with (
-                        the(create_organization_api_view)
-                        .calls_the(create_organization_action)
-                        .with_the(create_organization_form_(e))
+                with the(frontend).calls_the(create_organization_api_view):
+                    with the(create_organization_api_view).calls_the(
+                        create_organization_action
                     ):
                         with the(create_organization_action).creates_the(
                             e.organization
@@ -89,11 +68,7 @@ def start():
                 pass
 
             with add_goal("set", e.organization, "as the active organization"):
-                with (
-                    the(frontend)
-                    .calls_the(set_active_organization_api_view)
-                    .with_the(set_active_organization_request_(e))
-                ):
+                with the(frontend).calls_the(set_active_organization_api_view):
                     with (
                         the(set_active_organization_api_view)
                         .updates_the(user_session)
@@ -102,6 +77,31 @@ def start():
                         user_session.active_organization = e.organization
 
     return get_scenario(scenario_name)
+
+
+def admin_membership_(e):
+    return Organizations.Models.OrganizationMembership(
+        organization=e.organization,
+        user=user_session.user,
+        role=Organizations.Enums.UserInOrganizationRoles.ADMIN,
+    )
+
+
+def organization_(e):
+    return register(
+        Organizations.Models.Organization(name="my-org"),
+        e.organization,
+    )
+
+
+def user_(e):
+    return register(
+        Users.Models.User(
+            email="my-org-owner@example.com",
+            password="my-password",
+        ),
+        e.user,
+    )
 
 
 def run():
