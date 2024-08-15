@@ -1,4 +1,4 @@
-from landler.frontend.app import *
+import landler.frontend.namespace as F
 from sunya import (
     add_goal,
     add_scenario,
@@ -7,6 +7,7 @@ from sunya import (
     get_scenario,
     register,
     the,
+    G as g,
 )
 
 
@@ -16,13 +17,14 @@ def start(user):
 
     with add_scenario(scenario_name):
         e = get_entities()
+        register(user, name="user")
 
-        with the(user).signs_in():
+        with the(e.user).signs_in():
             pass
 
-        with the(user).is_redirected_to(home_page_route):
+        with the(e.user).is_redirected_to(g.home_page_route):
             with add_goal("load the", e.checklist):
-                with the(frontend).calls_the(get_checklist_query):
+                with the(g.frontend).calls_the(g.get_checklist_query):
                     _create_checklist()
 
         with the_user_views_checklist(e):
@@ -30,7 +32,7 @@ def start(user):
 
         item_to_complete = e.checklist[0]
         with add_goal("The", e.user, "clicks to complete the", item_to_complete):
-            with the(frontend).calls_the(update_checklist_items_mutation):
+            with the(g.frontend).calls_the(g.update_checklist_items_mutation):
                 item_to_complete.is_completed = True
 
     return get_scenario(scenario_name)
@@ -38,27 +40,27 @@ def start(user):
 
 def _create_checklist():
     register(
-        Checklist.Types.Checklist(
+        F.Checklist.Types.Checklist(
             items=[
-                Checklist.Types.ChecklistItem(
+                F.Checklist.Types.ChecklistItem(
                     id="1",
                     title="Add your organization",
                     description="Set up your organization details",
                     is_completed=False,
                 ),
-                Checklist.Types.ChecklistItem(
+                F.Checklist.Types.ChecklistItem(
                     id="2",
                     title="Create a project",
                     description="Start your first project",
                     is_completed=False,
                 ),
-                Checklist.Types.ChecklistItem(
+                F.Checklist.Types.ChecklistItem(
                     id="3",
                     title="Add a plot",
                     description="Create your first plot",
                     is_completed=False,
                 ),
-                Checklist.Types.ChecklistItem(
+                F.Checklist.Types.ChecklistItem(
                     id="4",
                     title="Trigger a project-analysis",
                     description="Analyze your project data",
@@ -81,7 +83,7 @@ def the_user_views_checklist(e):
 
 
 def run():
-    user = Users.Types.User(email="alice@example.com")
+    user = F.Users.Types.User(email="alice@example.com")
     return start(user)
 
 

@@ -1,7 +1,7 @@
 from argparse import ArgumentParser
 
 import importlib
-from landler.backend.app import *
+import landler.backend.namespace as B
 from sunya import FileWriter, run_scenario, get_module_and_scenario_names
 
 
@@ -37,18 +37,18 @@ all_scenario_names = [
 ]
 
 module_by_name = {
-    "backend/calculations": Calculations,
-    "backend/facts": Facts,
-    "backend/organizations": Organizations,
-    "backend/plot_analyses": PlotAnalyses,
-    "backend/plot_lists": PlotLists,
-    "backend/plot_questionnaires": PlotQuestionnaires,
-    "backend/plots": Plots,
-    "backend/polygons": Polygons,
-    "backend/project_analyses": ProjectAnalyses,
-    "backend/project_analysis_jobs": ProjectAnalysisJobs,
-    "backend/projects": Projects,
-    "backend/users": Users,
+    "backend/calculations": B.Calculations,
+    "backend/facts": B.Facts,
+    "backend/organizations": B.Organizations,
+    "backend/plot_analyses": B.PlotAnalyses,
+    "backend/plot_lists": B.PlotLists,
+    "backend/plot_questionnaires": B.PlotQuestionnaires,
+    "backend/plots": B.Plots,
+    "backend/polygons": B.Polygons,
+    "backend/project_analyses": B.ProjectAnalyses,
+    "backend/project_analysis_jobs": B.ProjectAnalysisJobs,
+    "backend/projects": B.Projects,
+    "backend/users": B.Users,
 }
 
 scenario_path_by_name = {}

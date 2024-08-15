@@ -1,5 +1,4 @@
-from blogs.backend.modules import Blogs, Users
-
+import blogs.backend.namespace as B
 from sunya import (
     G as g,
     add_goal,
@@ -34,7 +33,7 @@ def start(user, blog):
 
 def blog_post_(blog, e):
     register(
-        Blogs.Models.BlogPost(
+        B.Blogs.Models.BlogPost(
             blog=blog,
             title="My Blog Post",
             content="Hello people",
@@ -44,17 +43,13 @@ def blog_post_(blog, e):
 
 
 def run():
-    user = Users.Models.User(
-        email="alice@example.com",
-        password="password",
-    )
+    from .ms1_a_user_creates_a_blog import run as run_ms1
 
-    existing_blog = Blogs.Models.Blog(
-        name="My Original Blog",
-        description="Original description",
-    )
+    ms1_scenario = run_ms1()
+    user = ms1_scenario.get_entity_by_name("user")
+    blog = ms1_scenario.get_entity_by_name("blog")
 
-    return start(user, existing_blog)
+    return start(user, blog)
 
 
 if __name__ == "__main__":

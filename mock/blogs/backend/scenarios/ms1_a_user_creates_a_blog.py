@@ -1,4 +1,4 @@
-from blogs.backend.modules import Blogs, Users
+import blogs.backend.namespace as B
 
 from sunya import (
     the,
@@ -32,7 +32,7 @@ def start(user):
 
 def blog_(e):
     register(
-        Blogs.Models.Blog(
+        B.Blogs.Models.Blog(
             name="My Personal Blog",
             description="Random things that interest me",
         ),
@@ -41,7 +41,7 @@ def blog_(e):
 
 
 def run():
-    user = Users.Models.User(
+    user = B.Users.Models.User(
         email="alice@example.com",
         password="password",
     )

@@ -2,7 +2,7 @@ import typing as T
 
 from landler.backend.modules.organizations import Organizations
 from landler.backend.modules.users import Users
-from sunya import Entity, actor_to_str
+from sunya import Entity, actor_to_str, G as g
 
 
 class UserSession(Entity):
@@ -12,7 +12,7 @@ class UserSession(Entity):
     active_organization: T.Optional[Organizations.Models.Organization] = None
 
 
-user_session = UserSession()
+g.user_session = UserSession()
 
 
 @actor_to_str.method((UserSession,))

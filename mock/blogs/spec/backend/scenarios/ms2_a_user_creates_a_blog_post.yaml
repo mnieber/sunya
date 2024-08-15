@@ -4,11 +4,11 @@ nodes:
   - root: ''
     child_nodes:
       - step: The [alice@example.com+:user] visits the [blogs+:route]
-      - goal: create a [my-blog-post+:blog-post] in the [my-original-blog+:blog]
+      - goal: create a [my-blog-post+:blog-post] in the [my-personal-blog+:blog]
         actors_created:
           - name: my-blog-post+:blog-post
             deltas:
-              blog: my-original-blog+:blog (None)
+              blog: my-personal-blog+:blog (None)
               content: Hello people (None)
               id: 691f5870d7a1588290e2e812267710ad (None)
               title: My Blog Post (None)

@@ -218,9 +218,9 @@ class NodeNotFinalizedError(Exception):
 class EntityLookup:
     def __getattr__(self, name):
         if entity := store.scenario.get_entity_by_name(name):
-            return entity
+            return T.cast(T.Any, entity)
 
-        return preregister(name)
+        return T.cast(T.Any, preregister(name))
 
 
 def get_entities():

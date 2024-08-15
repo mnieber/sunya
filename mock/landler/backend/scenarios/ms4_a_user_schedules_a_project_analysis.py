@@ -1,14 +1,14 @@
-from landler.backend.app import *
+import landler.backend.namespace as B
 from sunya import (
     add_goal,
     add_scenario,
     add_step,
     get_entities,
-    get_entity,
     get_scenario,
     List,
     register,
     the,
+    G as g,
 )
 
 from sunya.utils import get_time
@@ -21,29 +21,29 @@ def start(project, variation="default"):
         register(project, name="project")
 
         with add_goal("create a", e.project_analysis_job):
-            with the(frontend).calls_the(create_project_analysis_job_api_view):
-                with the(create_project_analysis_job_api_view).calls_the(
-                    create_project_analysis_job_action
+            with the(g.frontend).calls_the(g.create_project_analysis_job_api_view):
+                with the(g.create_project_analysis_job_api_view).calls_the(
+                    g.create_project_analysis_job_action
                 ):
-                    with the(create_project_analysis_job_action).creates_the(
+                    with the(g.create_project_analysis_job_action).creates_the(
                         e.project_analysis_job
                     ):
                         project_analysis_job_(e)
 
-        with add_step("the", project_analysis_queue, "finds", e.jobs_to_run):
+        with add_step("the", g.project_analysis_queue, "finds", e.jobs_to_run):
             jobs_to_run_(e)
 
         for idx, project_analysis_job in enumerate(e.jobs_to_run_.items):
-            with the(project_analysis_queue).runs_the(
+            with the(g.project_analysis_queue).runs_the(
                 f"{ith(idx)}", project_analysis_job
             ):
                 with add_goal(
                     "create a", e.project_analysis, "from a", e.project_analysis_job
                 ):
-                    with the(project_analysis_queue).calls_the(
-                        create_project_analysis_action
+                    with the(g.project_analysis_queue).calls_the(
+                        g.create_project_analysis_action
                     ):
-                        with the(create_project_analysis_action).creates_a(
+                        with the(g.create_project_analysis_action).creates_a(
                             e.project_analysis
                         ):
                             e.project_analysis_job.project_analyses.append(
@@ -51,16 +51,16 @@ def start(project, variation="default"):
                             )
 
                         with (
-                            the(create_project_analysis_action)
+                            the(g.create_project_analysis_action)
                             .gets_the(e.project_analysis.project)
                             .at_the_now_ts_of_the(e.project_analysis)
                         ):
-                            project_at_now_()
+                            project_at_now_(e)
 
                         with the(
-                            create_project_analysis_action
+                            g.create_project_analysis_action
                         ).loops_over_all_plots_in_the(e.project_at_now):
-                            plot_list = get_project_plot_list_by_name(
+                            plot_list = B.get_project_plot_list_by_name(
                                 e.project_at_now, "default"
                             )
                             for plot in plot_list.plots:
@@ -73,7 +73,7 @@ def start(project, variation="default"):
                                     e.project_analysis,
                                 ):
                                     with the(
-                                        create_project_analysis_action
+                                        g.create_project_analysis_action
                                     ).creates_the(e.plot_analysis):
                                         e.project_analysis.plot_analyses.append(
                                             plot_analysis_(e, plot)
@@ -90,16 +90,16 @@ def start(project, variation="default"):
                     e.plot_analysis,
                 ):
                     with the(e.project_analysis_queue).calls_the(
-                        run_project_analysis_action
+                        g.run_project_analysis_action
                     ):
                         for plot_analysis in e.project_analysis.plot_analyses:
                             with (
-                                the(run_project_analysis_action)
-                                .calls_the(run_plot_analysis_action)
+                                the(g.run_project_analysis_action)
+                                .calls_the(g.run_plot_analysis_action)
                                 .with_the(plot_analysis)
                             ):
                                 with (
-                                    the(run_plot_analysis_action)
+                                    the(g.run_plot_analysis_action)
                                     .creates_the(e.calcium_plot_analysis_job)
                                     .for_the(e.plot_at_now)
                                 ):
@@ -115,7 +115,7 @@ def start(project, variation="default"):
 
 def calcium_plot_analysis_job_(e):
     calcium_plot_analysis_job = register(
-        CalciumPlotAnalysisJob(
+        S.CalciumPlotAnalysisJob(
             id=e.plot_analysis.id,
             polygon=e.plot_at_now.polygon,
         ),
@@ -136,30 +136,30 @@ def plot_at_now_(plot_analysis):
 
 def plot_analysis_(e, plot):
     register(
-        PlotAnalyses.Models.PlotAnalysis(
+        B.PlotAnalyses.Models.PlotAnalysis(
             plot=plot,
-            project_analysis=project_analysis,
-            now=project_analysis.now,
-            status=PlotAnalyses.Enums.PlotAnalysisStatus.RUNNING,
+            project_analysis=e.project_analysis,
+            now=e.project_analysis.now,
+            status=B.PlotAnalyses.Enums.PlotAnalysisStatus.RUNNING,
         ),
         e.plot_analysis,
     )
 
 
-def project_at_now_():
+def project_at_now_(e):
     register(
-        at_ts(project_analysis.project, project_analysis.now),
+        at_ts(e.project_analysis.project, e.project_analysis.now),
         name="project_at_now",
     )
 
 
 def project_analysis_(e):
     register(
-        ProjectAnalyses.Models.ProjectAnalysis(
+        B.ProjectAnalyses.Models.ProjectAnalysis(
             job=e.project_analysis_job,
             project=e.project_analysis_job.project,
             now=e.project_analysis_job.scheduled_at,
-            status=ProjectAnalyses.Enums.ProjectAnalysisStatus.RUNNING,
+            status=B.ProjectAnalyses.Enums.ProjectAnalysisStatus.RUNNING,
         ),
         e.project_analysis,
     )
@@ -174,7 +174,7 @@ def jobs_to_run_(e):
 
 def project_analysis_job_(e):
     register(
-        ProjectAnalysisJobs.Models.ProjectAnalysisJob(
+        B.ProjectAnalysisJobs.Models.ProjectAnalysisJob(
             project=e.project,
             scheduled_at=get_time.now(bump=True),
         ),
@@ -185,8 +185,8 @@ def project_analysis_job_(e):
 def run():
     import landler.backend.scenarios.ms3_a_user_adds_a_plot_to_a_project
 
-    landler.backend.scenarios.ms3_a_user_adds_a_plot_to_a_project.run()
-    project = get_entity(Projects.Models.Project, name="my-project")
+    ms3_scenario = landler.backend.scenarios.ms3_a_user_adds_a_plot_to_a_project.run()
+    project = ms3_scenario.get_entity_by_name("project")
 
     return start(project=project)
 

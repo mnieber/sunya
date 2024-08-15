@@ -1,4 +1,4 @@
-from landler.backend.app import *
+import landler.backend.namespace as B
 from sunya import (
     add_goal,
     add_scenario,
@@ -20,33 +20,33 @@ def start():
                 "create a",
                 e.project,
                 "with admin",
-                user_session.active_organization,
+                g.user_session.active_organization,
             ):
                 with the(g.create_project_api_view).calls_the(g.create_project_action):
                     with the(g.create_project_action).creates_the(e.project):
                         project_(e)
 
             with add_goal(
-                "add the", user_session.active_organization, "to the", e.project
+                "add the", g.user_session.active_organization, "to the", e.project
             ):
                 with the(g.create_project_action).calls_the(
                     g.add_organization_to_project_action
                 ):
-                    e.project.memberships.append(project_membership_(e.project))
+                    e.project.memberships.append(project_membership_(e))
 
     return get_scenario(scenario_name)
 
 
 def project_(e):
-    register(Projects.Models.Project(name="my-project"), e.project)
+    register(B.Projects.Models.Project(name="my-project"), e.project)
 
 
-def project_membership_():
+def project_membership_(e):
     register(
-        Projects.Models.ProjectMembership(
+        B.Projects.Models.ProjectMembership(
             project=e.project,
-            organization=user_session.active_organization,
-            role=Projects.Enums.OrganizationInProjectRoles.ADMIN,
+            organization=g.user_session.active_organization,
+            role=B.Projects.Enums.OrganizationInProjectRoles.ADMIN,
         ),
         name="project_membership",
     )

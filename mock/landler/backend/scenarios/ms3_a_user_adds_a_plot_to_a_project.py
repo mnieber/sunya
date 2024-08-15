@@ -1,16 +1,16 @@
-from landler.backend.app import *
 from sunya import (
     add_goal,
     add_scenario,
-    get_entity,
     get_scenario,
     register,
     the,
+    G as g,
 )
 from landler.backend.modules.plot_lists import (
     get_project_plot_list_by_name,
 )
 from sunya.scenarios.store import get_entities
+import landler.backend.namespace as B
 
 
 def start(project, variation="default"):
@@ -21,14 +21,14 @@ def start(project, variation="default"):
 
         if variation == "default":
             with add_goal("create a", e.plot, "in the", e.project):
-                with the(frontend).calls_the(create_plot_api_view):
-                    with the(create_plot_api_view).calls_the(create_plot_action):
-                        with the(create_plot_action).creates_the(e.plot):
+                with the(g.frontend).calls_the(g.create_plot_api_view):
+                    with the(g.create_plot_api_view).calls_the(g.create_plot_action):
+                        with the(g.create_plot_action).creates_the(e.plot):
                             plot_(e).plot_questionnaire = plot_questionnaire_(e)
 
                         with add_goal("add the", e.plot, "to the", e.project):
-                            with the(create_plot_action).calls_the(
-                                add_plot_to_project_action
+                            with the(g.create_plot_action).calls_the(
+                                g.add_plot_to_project_action
                             ):
                                 default_plot_list_(e).plots.append(e.plot)
 
@@ -36,15 +36,15 @@ def start(project, variation="default"):
 
 
 def default_plot_list_(e):
-    register(
+    return register(
         get_project_plot_list_by_name(e.project, "default"), name="default_plot_list"
     )
 
 
 def plot_questionnaire_(e):
     register(
-        PlotQuestionnaires.Models.PlotQuestionnaire(
-            land_type=PlotQuestionnaires.Enums.LandType.CROPLAND,
+        B.PlotQuestionnaires.Models.PlotQuestionnaire(
+            land_type=B.PlotQuestionnaires.Enums.LandType.CROPLAND,
             plot=e.plot,
         ),
         name="plot_questionnaire",
@@ -53,11 +53,11 @@ def plot_questionnaire_(e):
 
 def plot_(e):
     register(
-        Plots.Models.Plot(
+        B.Plots.Models.Plot(
             name="my-plot",
-            owner=user_session.active_organization,
-            sequence_number=plot_sequence_number_generator.next(),
-            polygon=Polygons.Models.Polygon(
+            owner=g.user_session.active_organization,
+            sequence_number=B.plot_sequence_number_generator.next(),
+            polygon=B.Polygons.Models.Polygon(
                 polygon=e.request.data.get("polygon"),
                 crc="",
                 area=10.0,
@@ -70,8 +70,8 @@ def plot_(e):
 def run():
     import landler.backend.scenarios.ms2_a_user_creates_a_project
 
-    landler.backend.scenarios.ms2_a_user_creates_a_project.run()
-    project = get_entity(Projects.Models.Project, name="my-project")
+    ms2_scenario = landler.backend.scenarios.ms2_a_user_creates_a_project.run()
+    project = ms2_scenario.get_entity_by_name("project")
 
     return start(project=project)
 

@@ -10,6 +10,9 @@ from sunya import EntityWithId, actor_to_str, G as g
 
 class Checklist(Module):
     class Types:
+        class Checklist(EntityWithId):
+            items: T.List["Checklist.Types.ChecklistItem"] = []
+
         class ChecklistItem(EntityWithId):
             title: str
             description: str

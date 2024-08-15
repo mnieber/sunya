@@ -1,7 +1,5 @@
-from landler.backend.app import *
 from sunya import (
     add_scenario,
-    get_entity,
     get_scenario,
 )
 
@@ -19,11 +17,11 @@ def start(user, project, variation="default"):
 
 
 def run():
-    import scenarios.s2_a_user_creates_a_project
+    import scenarios.ms2_a_user_creates_a_project
 
-    scenarios.s2_a_user_creates_a_project.run()
-    user = get_entity(Users.Models.User, email="my-org-owner@example.com")
-    project = get_entity(Projects.Models.Project, name="my-project")
+    ms2_scenario = scenarios.ms2_a_user_creates_a_project.run()
+    user = ms2_scenario.get_entity_by_name("user")
+    project = ms2_scenario.get_entity_by_name("project")
 
     return start(user=user, project=project)
 

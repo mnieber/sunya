@@ -5,7 +5,6 @@ if T.TYPE_CHECKING:
     from landler.backend.modules.polygons import Polygons
 
 from sunya import Entity, actor_to_str
-from blogs.stack.entities import *  # noqa
 
 
 class CalciumServer(Entity):

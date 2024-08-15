@@ -1,15 +1,14 @@
-from landler.backend.app import *
-from landler.backend.modules import Organizations, Users
-from landler.frontend.app import *
+import landler.backend.namespace as B
+import landler.frontend.namespace as F
 from sunya import add_goal, add_scenario, get_scenario, register, the, G as g
 
 from sunya.scenarios.store import get_entities
 
 
-g.sign_up_route = Route()
-g.sign_in_route = Route()
-g.user_account_route = Route()
-g.organization_route = Route()
+g.sign_up_route = F.Route()
+g.sign_in_route = F.Route()
+g.user_account_route = F.Route()
+g.organization_route = F.Route()
 
 
 def start():
@@ -33,10 +32,10 @@ def start():
             with the(e.user).visits_the(g.sign_in_route):
                 with the(g.frontend).calls_the(g.sign_in_user_api_view):
                     with the(g.sign_in_user_api_view).calls_the(g.sign_in_user_action):
-                        user_session.user = e.user
+                        g.user_session.user = e.user
                         e.user.is_authenticated = True
 
-        with add_goal("create an", e.organization, "with admin", user_session.user):
+        with add_goal("create an", e.organization, "with admin", g.user_session.user):
             with the(e.user).visits_the(g.user_account_route):
                 with the(g.frontend).calls_the(g.create_organization_api_view):
                     with the(g.create_organization_api_view).calls_the(
@@ -74,23 +73,23 @@ def start():
 
 
 def admin_membership_(e):
-    return Organizations.Models.OrganizationMembership(
+    return B.Organizations.Models.OrganizationMembership(
         organization=e.organization,
-        user=user_session.user,
-        role=Organizations.Enums.UserInOrganizationRoles.ADMIN,
+        user=g.user_session.user,
+        role=B.Organizations.Enums.UserInOrganizationRoles.ADMIN,
     )
 
 
 def organization_(e):
     return register(
-        Organizations.Models.Organization(name="my-org"),
+        B.Organizations.Models.Organization(name="my-org"),
         e.organization,
     )
 
 
 def user_(e):
     return register(
-        Users.Models.User(
+        B.Users.Models.User(
             email="my-org-owner@example.com",
             password="my-password",
         ),
