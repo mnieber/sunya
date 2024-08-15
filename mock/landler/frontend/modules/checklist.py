@@ -4,7 +4,7 @@ if T.TYPE_CHECKING:
     pass
 
 from landler.frontend.entities import Mutation, Facet, Trim, Query
-from landler.stack.entities import Module
+from landler.stack.namespace import Module
 from sunya import EntityWithId, actor_to_str, G as g
 
 

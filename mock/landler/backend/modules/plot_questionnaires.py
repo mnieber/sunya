@@ -1,6 +1,6 @@
 import typing as T
 
-from landler.stack.entities import Enum, Form, Module
+from landler.stack.namespace import Enum, Form, Module
 from blogs.backend.entities import Action
 from sunya import Entity, actor_to_str, G as g
 

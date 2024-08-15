@@ -6,7 +6,7 @@ if T.TYPE_CHECKING:
 
 from landler.backend.modules.project_analysis_jobs import ProjectAnalysisJobs
 from landler.backend.modules.projects import Projects
-from landler.stack.entities import Module, Enum
+from landler.stack.namespace import Module, Enum
 from blogs.backend.entities import Action
 
 from sunya import EntityWithId, actor_to_str, G as g

@@ -1,4 +1,4 @@
-from landler.stack.entities import JSON, Module
+from landler.stack.namespace import JSON, Module
 from sunya import Entity, actor_to_str
 
 

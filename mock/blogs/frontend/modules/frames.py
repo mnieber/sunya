@@ -1,9 +1,10 @@
+from blogs.frontend.entities import Trim
 import typing as T
 
 if T.TYPE_CHECKING:
     from .blogs import Blogs
 
-from blogs.frontend.app import Module, Trim
+from blogs.stack.namespace import Module
 
 
 class Frames(Module):

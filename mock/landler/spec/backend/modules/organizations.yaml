@@ -16,6 +16,16 @@ models:
         type: User
       - name: role
         type: UserInOrganizationRoles
+  - name: OrganizationStaffSettings
+    fields:
+      - name: id
+        type: UUID
+      - name: organization
+        type: Organization
+      - name: is_managed_by_tlg
+        type: bool
+      - name: is_demo_org
+        type: bool
 enums:
   - name: UserInOrganizationRoles
     members:

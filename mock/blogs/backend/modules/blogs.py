@@ -1,10 +1,8 @@
+from blogs.stack.namespace import Module, Form
 import typing as T
 
-if T.TYPE_CHECKING:
-    pass
-
 from blogs.backend.entities import Action, ApiView
-from blogs.stack.entities import Enum, Form, Module
+from blogs.stack.namespace import Enum
 from sunya import EntityWithId, actor_to_str, G as g
 
 

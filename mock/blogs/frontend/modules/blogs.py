@@ -1,9 +1,10 @@
+from blogs.frontend.entities import Mutation, Query, Facet, Route
+from blogs.stack.namespace import Module, Form
 import typing as T
 
 if T.TYPE_CHECKING:
     pass
 
-from blogs.frontend.app import Module, Mutation, Facet, Route, Query, Form
 from sunya import EntityWithId, actor_to_str, G as g
 from .frames import Frames
 

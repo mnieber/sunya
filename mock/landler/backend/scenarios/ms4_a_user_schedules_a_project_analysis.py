@@ -126,16 +126,14 @@ def calcium_plot_analysis_job_(e):
 
 
 def plot_at_now_(plot_analysis):
-    plot_at_now = register(
+    return register(
         at_ts(plot_analysis.plot, plot_analysis.now),
         name="plot_at_now",
     )
 
-    return plot_at_now
-
 
 def plot_analysis_(e, plot):
-    register(
+    return register(
         B.PlotAnalyses.Models.PlotAnalysis(
             plot=plot,
             project_analysis=e.project_analysis,
@@ -147,14 +145,14 @@ def plot_analysis_(e, plot):
 
 
 def project_at_now_(e):
-    register(
+    return register(
         at_ts(e.project_analysis.project, e.project_analysis.now),
         name="project_at_now",
     )
 
 
 def project_analysis_(e):
-    register(
+    return register(
         B.ProjectAnalyses.Models.ProjectAnalysis(
             job=e.project_analysis_job,
             project=e.project_analysis_job.project,
@@ -166,14 +164,14 @@ def project_analysis_(e):
 
 
 def jobs_to_run_(e):
-    register(
+    return register(
         List(name="jobs_to_run", items=[e.project_analysis_job]),
         e.jobs_to_run,
     )
 
 
 def project_analysis_job_(e):
-    register(
+    return register(
         B.ProjectAnalysisJobs.Models.ProjectAnalysisJob(
             project=e.project,
             scheduled_at=get_time.now(bump=True),

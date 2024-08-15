@@ -5,7 +5,7 @@ if T.TYPE_CHECKING:
     pass
 
 from landler.backend.modules.projects import Projects
-from landler.stack.entities import Module
+from landler.stack.namespace import Module
 from blogs.backend.entities import Action, ApiView
 
 from sunya import Entity, MemField, actor_to_str, extend, G as g

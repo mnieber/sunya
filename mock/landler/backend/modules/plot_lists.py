@@ -2,11 +2,11 @@ import typing as T
 
 from landler.backend.modules.plots import Plots
 from landler.backend.modules.projects import Projects
-from landler.stack.entities import Module, Form
+from landler.stack.namespace import Module, Form
 from blogs.backend.entities import Action, ApiView
 
 
-from sunya import Entity, MemField, actor_to_str, extend, G as g
+from sunya import Entity, MemField, actor_to_str, extend
 
 
 class PlotLists(Module):
@@ -28,10 +28,6 @@ class PlotLists(Module):
     class Api:
         class CreatePlot(ApiView):
             pass
-
-
-g.create_plot_action = Plots.Actions.CreatePlot()
-g.create_plot_api_view = Plots.Api.CreatePlot()
 
 
 @actor_to_str.method((PlotLists.Models.PlotList,))

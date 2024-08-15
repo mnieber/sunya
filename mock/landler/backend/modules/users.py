@@ -1,5 +1,5 @@
 from landler.backend.entities import Action, ApiView
-from landler.stack.entities import Form, Module
+from landler.stack.namespace import Form, Module
 from sunya import actor_to_str, EntityWithId, G as g
 
 

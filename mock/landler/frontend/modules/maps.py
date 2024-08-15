@@ -1,4 +1,4 @@
-from landler.stack.entities import Module
+from landler.stack.namespace import Module
 
 from sunya import Entity
 

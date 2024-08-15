@@ -7,7 +7,7 @@ if T.TYPE_CHECKING:
 
 from landler.backend.modules.plots import Plots
 from landler.backend.modules.project_analyses import ProjectAnalyses
-from landler.stack.entities import Enum, Module
+from landler.stack.namespace import Module, Enum
 from blogs.backend.entities import Action
 from sunya import EntityWithId, MemField, actor_to_str, extend, G as g
 

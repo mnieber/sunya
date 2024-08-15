@@ -42,7 +42,7 @@ def default_plot_list_(e):
 
 
 def plot_questionnaire_(e):
-    register(
+    return register(
         B.PlotQuestionnaires.Models.PlotQuestionnaire(
             land_type=B.PlotQuestionnaires.Enums.LandType.CROPLAND,
             plot=e.plot,
@@ -52,13 +52,13 @@ def plot_questionnaire_(e):
 
 
 def plot_(e):
-    register(
+    return register(
         B.Plots.Models.Plot(
             name="my-plot",
             owner=g.user_session.active_organization,
             sequence_number=B.plot_sequence_number_generator.next(),
             polygon=B.Polygons.Models.Polygon(
-                polygon=e.request.data.get("polygon"),
+                polygon="polygon",
                 crc="",
                 area=10.0,
             ),

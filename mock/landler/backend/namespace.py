@@ -10,3 +10,4 @@ from landler.backend.modules.project_analyses import ProjectAnalyses  # noqa
 from landler.backend.modules.projects import Projects  # noqa
 from landler.backend.modules.users import Users  # noqa
 from landler.backend.modules.plots import Plots, plot_sequence_number_generator  # noqa
+import landler.backend.entities.user_session  # noqa
