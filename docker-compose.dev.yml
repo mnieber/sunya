@@ -11,6 +11,7 @@ services:
     image: sunya_mock_dev
     volumes:
       - ./mock:/app/src
+      - ./sunya:/app/src/sunya
       - mock_venv:/app/env
   frontend:
     build:
