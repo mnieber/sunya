@@ -10,7 +10,7 @@ from sunya import (
     List,
     register,
     the,
-    maybe_name,
+    unregister,
     G as g,
 )
 
@@ -92,7 +92,7 @@ def start(project, variation="default"):
                     "at the now timestamp of the",
                     e.plot_analysis,
                 ):
-                    with the(e.project_analysis_queue).calls_the(
+                    with the(g.project_analysis_queue).calls_the(
                         g.run_project_analysis_action
                     ):
                         for plot_analysis in e.project_analysis.plot_analyses:
@@ -117,25 +117,28 @@ def start(project, variation="default"):
 
 
 def calcium_plot_analysis_job_(e):
+    unregister("calcium_plot_analysis_job")
     calcium_plot_analysis_job = register(
         S.CalciumPlotAnalysisJob(
             id=e.plot_analysis.id,
             polygon=e.plot_at_now.polygon,
         ),
-        **maybe_name(e.calcium_plot_analysis_job, "calcium_plot_analysis_job"),
+        e.calcium_plot_analysis_job,
     )
 
     return calcium_plot_analysis_job
 
 
 def plot_at_now_(e, plot_analysis):
+    unregister("plot_at_now")
     return register(
         at_ts(plot_analysis.plot, plot_analysis.now),
-        **maybe_name(e.plot_at_now, "plot_at_now"),
+        e.plot_at_now,
     )
 
 
 def plot_analysis_(e, plot):
+    unregister("plot_analysis")
     return register(
         B.PlotAnalyses.Models.PlotAnalysis(
             plot=plot,
@@ -143,18 +146,20 @@ def plot_analysis_(e, plot):
             now=e.project_analysis.now,
             status=B.PlotAnalyses.Enums.PlotAnalysisStatus.RUNNING,
         ),
-        **maybe_name(e.plot_analysis, "plot_analysis"),
+        e.plot_analysis,
     )
 
 
 def project_at_now_(e):
+    unregister("project_at_now")
     return register(
         at_ts(e.project_analysis.project, e.project_analysis.now),
-        **maybe_name(e.project_at_now, "project_at_now"),
+        e.project_at_now,
     )
 
 
 def project_analysis_(e):
+    unregister("project_analysis")
     return register(
         B.ProjectAnalyses.Models.ProjectAnalysis(
             job=e.project_analysis_job,
@@ -162,7 +167,7 @@ def project_analysis_(e):
             now=e.project_analysis_job.scheduled_at,
             status=B.ProjectAnalyses.Enums.ProjectAnalysisStatus.RUNNING,
         ),
-        **maybe_name(e.project_analysis, "project_analysis"),
+        e.project_analysis,
     )
 
 

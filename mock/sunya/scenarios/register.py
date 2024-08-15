@@ -2,7 +2,7 @@ from sunya.scenarios.preregistered_entity import PreregisteredEntity
 from sunya.scenarios.store import store, get_key
 
 
-def register(entity, preregistered_entity=None, name=None, force=False):
+def register(entity, preregistered_entity=None, name=None):
     if preregistered_entity:
         if not isinstance(preregistered_entity, PreregisteredEntity):
             raise ValueError("preregistered_entity must be of type PreregisteredEntity")
@@ -13,7 +13,7 @@ def register(entity, preregistered_entity=None, name=None, force=False):
     if not name:
         raise ValueError("Entity must be given a name")
     if name in store.scenario.entity_by_name:
-        if not preregistered_entity and not force:
+        if not preregistered_entity:
             raise ValueError(f"Entity with name {name} already exists")
     store.scenario.entity_by_name[name] = entity
 
@@ -23,7 +23,6 @@ def register(entity, preregistered_entity=None, name=None, force=False):
         if (
             existing_entity is not entity
             and existing_entity is not preregistered_entity
-            and not force
         ):
             raise ValueError(
                 f"Entity with name {name} already registered under key {key}"
@@ -44,14 +43,17 @@ def register(entity, preregistered_entity=None, name=None, force=False):
     return entity
 
 
-def maybe_name(entity, name):
-    if isinstance(entity, PreregisteredEntity):
-        return dict(preregistered_entity=entity)
-    return dict(name=name, force=True)
-
-
 def preregister(name: str):
     entity = PreregisteredEntity(name=name)
     store.scenario.entity_by_key[get_key(entity)] = entity
     store.scenario.entity_by_name[name] = entity
     return entity
+
+
+def unregister(name):
+    entity = store.scenario.entity_by_name.get(name)
+    if not entity or isinstance(entity, PreregisteredEntity):
+        return
+
+    store.scenario.entity_by_name.pop(name)
+    store.scenario.entity_by_key.pop(get_key(entity))
