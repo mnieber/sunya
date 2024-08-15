@@ -1,4 +1,3 @@
-import copy
 import typing as T
 
 from dataclassy import dataclass
@@ -7,6 +6,7 @@ from sunya.entities import Entity
 from sunya.scenarios.scenario import Scenario
 from sunya.scenarios.node import Node, Step, Goal
 from sunya.scenarios.preregistered_entity import PreregisteredEntity
+from sunya.scenarios.memo import create_memo
 
 
 @dataclass(kw_only=True)
@@ -93,48 +93,6 @@ def add_node(node):
     return node
 
 
-def register(entity, preregistered_entity=None, name=None, force=False):
-    if preregistered_entity:
-        if not isinstance(preregistered_entity, PreregisteredEntity):
-            raise ValueError("preregistered_entity must be of type PreregisteredEntity")
-        if name:
-            raise ValueError("Cannot specify both a name and a preregistering entity")
-        name = preregistered_entity.name
-
-    if not name:
-        raise ValueError("Entity must be given a name")
-    if name in store.scenario.entity_by_name and not force:
-        if not preregistered_entity:
-            raise ValueError(f"Entity with name {name} already exists")
-
-    key = get_key(entity)
-    if key in store.scenario.entity_by_key:
-        existing_entity = store.scenario.entity_by_key[key]
-        if (
-            existing_entity is not entity
-            and existing_entity is not preregistered_entity
-        ):
-            raise ValueError(
-                f"Entity {existing_entity} already registered under key {key}"
-            )
-
-    store.scenario.entity_by_key[key] = entity
-    store.scenario.entity_by_name[name] = entity
-
-    if preregistered_entity:
-        # Register the fact that before this node, the entity did not yet exist
-        for linked_node in preregistered_entity.linked_nodes:
-            linked_node.pre_entity_memo_by_key[key] = None
-
-            # Update node.fact to replace preregistered_entity with entity
-            linked_node.fact = tuple(
-                entity if fact_bit is preregistered_entity else fact_bit
-                for fact_bit in linked_node.fact
-            )
-
-    return entity
-
-
 def get_key(entity):
     return (entity.__class__, get_actor_str(entity))
 
@@ -150,78 +108,8 @@ def get_entity(entity_class, default="__not_set__", **kwargs):
     raise ValueError(f"Entity {entity_class} not found with {kwargs}")
 
 
-def preregister(name: str):
-    entity = PreregisteredEntity(name=name)
-    store.scenario.entity_by_key[get_key(entity)] = entity
-    store.scenario.entity_by_name[name] = entity
-    return entity
-
-
 def finalize_node(node):
     for entity in node.entities:
         key = get_key(entity)
         node.post_entity_memo_by_key[key] = create_memo(entity)
     node.is_finalized = True
-
-
-class NoValue:
-    pass
-
-
-def get_entity_delta(node, entity):
-    if not node.is_finalized:
-        raise NodeNotFinalizedError(node)
-
-    key = get_key(entity)
-    pre_entity_memo = node.pre_entity_memo_by_key.get(key)
-    post_entity_memo = node.post_entity_memo_by_key.get(key)
-
-    delta = dict()
-    for field, value in (post_entity_memo or dict()).items():
-        existing_value = (
-            pre_entity_memo.get(field, NoValue) if pre_entity_memo else NoValue
-        )
-        delta[field] = (existing_value, value)
-    return delta
-
-
-def _iter_fields(obj):
-    for name in dir(obj):
-        if not name.startswith("__"):
-            yield name, getattr(obj, name)
-
-
-def create_memo(entity):
-    memo = {}
-    for field, value in _iter_fields(entity):
-        if isinstance(value, list):
-            memo_value = [_get_memo_field_value(x) for x in value]
-        elif isinstance(value, dict):
-            memo_value = {k: _get_memo_field_value(v) for k, v in value.items()}
-        else:
-            memo_value = _get_memo_field_value(value)
-
-        memo[field] = memo_value
-    return memo
-
-
-def _get_memo_field_value(x):
-    return get_actor_str(x) if isinstance(x, Entity) else copy.deepcopy(x)
-
-
-class NodeNotFinalizedError(Exception):
-    def __init__(self, node):
-        self.node = node
-        super().__init__(f"Node {node} has not been finalized")
-
-
-class EntityLookup:
-    def __getattr__(self, name):
-        if entity := store.scenario.get_entity_by_name(name):
-            return T.cast(T.Any, entity)
-
-        return T.cast(T.Any, preregister(name))
-
-
-def get_entities():
-    return EntityLookup()

@@ -10,9 +10,8 @@ class StepBuilder:
         self.fact = fact or tuple()
 
     def __getattr__(self, name):
-        def relates_to(other_entity=None):
-            other = tuple() if other_entity is None else (other_entity,)
-            self.fact = (*self.fact, name.replace("_", " "), *other)
+        def relates_to(*other_entities):
+            self.fact = (*self.fact, name.replace("_", " "), *other_entities)
             return self
 
         return relates_to

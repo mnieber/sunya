@@ -1,6 +1,13 @@
 from blogs.frontend.modules import Blogs, Users
-from sunya import add_goal, add_scenario, get_scenario, register, the, G as g
-from sunya.scenarios.store import get_entities
+from sunya import (
+    add_goal,
+    add_scenario,
+    get_scenario,
+    register,
+    the,
+    G as g,
+    get_entities,
+)
 
 
 def start(user):

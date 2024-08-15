@@ -1,8 +1,14 @@
 import landler.backend.namespace as B
 import landler.frontend.namespace as F
-from sunya import add_goal, add_scenario, get_scenario, register, the, G as g
-
-from sunya.scenarios.store import get_entities
+from sunya import (
+    add_goal,
+    add_scenario,
+    get_scenario,
+    register,
+    the,
+    G as g,
+    get_entities,
+)
 
 
 g.sign_up_route = F.Route()

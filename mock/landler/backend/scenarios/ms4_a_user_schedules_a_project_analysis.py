@@ -1,4 +1,6 @@
 import landler.backend.namespace as B
+import landler.stack.namespace as S
+from landler.stack.namespace import ith, at_ts
 from sunya import (
     add_goal,
     add_scenario,
@@ -8,6 +10,7 @@ from sunya import (
     List,
     register,
     the,
+    maybe_name,
     G as g,
 )
 
@@ -33,7 +36,7 @@ def start(project, variation="default"):
         with add_step("the", g.project_analysis_queue, "finds", e.jobs_to_run):
             jobs_to_run_(e)
 
-        for idx, project_analysis_job in enumerate(e.jobs_to_run_.items):
+        for idx, project_analysis_job in enumerate(e.jobs_to_run.items):
             with the(g.project_analysis_queue).runs_the(
                 f"{ith(idx)}", project_analysis_job
             ):
@@ -103,7 +106,7 @@ def start(project, variation="default"):
                                     .creates_the(e.calcium_plot_analysis_job)
                                     .for_the(e.plot_at_now)
                                 ):
-                                    plot_at_now_(plot_analysis)
+                                    plot_at_now_(e, plot_analysis)
                                     calcium_plot_analysis_job_(e)
 
             for idx, plot_analysis in enumerate(e.project_analysis.plot_analyses):
@@ -119,16 +122,16 @@ def calcium_plot_analysis_job_(e):
             id=e.plot_analysis.id,
             polygon=e.plot_at_now.polygon,
         ),
-        e.calcium_plot_analysis_job,
+        **maybe_name(e.calcium_plot_analysis_job, "calcium_plot_analysis_job"),
     )
 
     return calcium_plot_analysis_job
 
 
-def plot_at_now_(plot_analysis):
+def plot_at_now_(e, plot_analysis):
     return register(
         at_ts(plot_analysis.plot, plot_analysis.now),
-        name="plot_at_now",
+        **maybe_name(e.plot_at_now, "plot_at_now"),
     )
 
 
@@ -140,14 +143,14 @@ def plot_analysis_(e, plot):
             now=e.project_analysis.now,
             status=B.PlotAnalyses.Enums.PlotAnalysisStatus.RUNNING,
         ),
-        e.plot_analysis,
+        **maybe_name(e.plot_analysis, "plot_analysis"),
     )
 
 
 def project_at_now_(e):
     return register(
         at_ts(e.project_analysis.project, e.project_analysis.now),
-        name="project_at_now",
+        **maybe_name(e.project_at_now, "project_at_now"),
     )
 
 
@@ -159,7 +162,7 @@ def project_analysis_(e):
             now=e.project_analysis_job.scheduled_at,
             status=B.ProjectAnalyses.Enums.ProjectAnalysisStatus.RUNNING,
         ),
-        e.project_analysis,
+        **maybe_name(e.project_analysis, "project_analysis"),
     )
 
 

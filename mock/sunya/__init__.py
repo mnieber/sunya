@@ -14,10 +14,9 @@ from .scenarios.store import (  # noqa
     add_goal,
     get_entity,
     get_scenario,
-    preregister,
-    register,
-    get_entities,
 )
 from .utils.get_module_and_scenario_names import get_module_and_scenario_names  # noqa
-from .scenarios.store import NoValue, get_entity_delta  # noqa
 from .scenarios.global_namespace import G  # noqa
+from .scenarios.get_entities import get_entities  # noqa
+from .scenarios.get_entity_delta import NoValue, get_entity_delta  # noqa
+from .scenarios.register import register, maybe_name  # noqa

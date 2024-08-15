@@ -5,11 +5,9 @@ from sunya import (
     register,
     the,
     G as g,
+    get_entities,
 )
-from landler.backend.modules.plot_lists import (
-    get_project_plot_list_by_name,
-)
-from sunya.scenarios.store import get_entities
+from landler.backend.modules.plot_lists import get_project_plot_list_by_name
 import landler.backend.namespace as B
 
 
