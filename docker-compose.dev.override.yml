@@ -8,9 +8,20 @@ services:
       - /opt/projects/sunya/mock/fish_history:/root/.local/share/fish/fish_history
       - /opt/projects/sunya/mock/ipython:/root/.ipython
       - /opt/projects/sunya/mock/pytest_report.html:/app/pytest_report.html
-  frontend:
+  darshana_be:
     volumes:
-      - /opt/projects/sunya/frontend/fish_history:/root/.local/share/fish/fish_history
+      - $HOME/.config/pudb:/root/.config/pudb
+      - /opt/projects/sunya/darshana_be/assets:/app/assets
+      - /opt/projects/sunya/darshana_be/dumps:/app/dumps
+      - /opt/projects/sunya/darshana_be/fish_history:/root/.local/share/fish/fish_history
+      - /opt/projects/sunya/darshana_be/ipython:/root/.ipython
+      - /opt/projects/sunya/darshana_be/log:/app/log
+      - /opt/projects/sunya/darshana_be/media:/app/media
+      - /opt/projects/sunya/darshana_be/pytest_report.html:/app/pytest_report.html
+      - /opt/projects/sunya/darshana_be/static:/app/static
+  darshana_fe:
+    volumes:
+      - /opt/projects/sunya/darshana_fe/fish_history:/root/.local/share/fish/fish_history
       # Map editable packages to the container
       - /home/maarten/projects/aspiration/src:/npm/aspiration
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets

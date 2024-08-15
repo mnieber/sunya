@@ -12,9 +12,9 @@ def _args():
             "landler_scenarios",
             "landler_backend",
             "landler_frontend",
-            "sunya_scenarios",
-            "sunya_frontend",
-            "sunya_backend",
+            "darshana_scenarios",
+            "darshana_frontend",
+            "darshana_backend",
         ],
     )
 
