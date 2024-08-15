@@ -1,16 +1,37 @@
 import sync_files_to_local_claude_dir
 
-in_darshana_spec = "/home/maarten/projects/darshana/src/mock/darshana/spec"
+in_darshana_spec = "/home/maarten/projects/sunya/src/mock/darshana/spec"
 
 in_prompts = "/home/maarten/projects/sunya/src/mock/darshana/prompts"
+in_blogs_be = "/home/maarten/projects/sunya/src/mock/blogs/backend"
+in_blogs_fe = "/home/maarten/projects/sunya/src/mock/blogs/frontend"
+blogs = "blogs"
+
+darshana = "darshana"
+in_darshana_fe = "/home/maarten/projects/sunya/src/mock/darshana/frontend"
 
 
 dir_list = [
     "darshana/spec",
     "instructions",
+    "spec",
+    f"{blogs}/frontend/modules",
+    f"{blogs}/frontend/scenarios",
+    f"{blogs}/backend/modules",
+    f"{blogs}/backend/scenarios",
+    f"{darshana}/frontend/modules",
+    f"{darshana}/frontend/scenarios",
+    f"{darshana}/backend/modules",
+    f"{darshana}/backend/scenarios",
 ]
 
 file_map = {
+    f"{in_blogs_fe}/modules/*.py": f"{blogs}/frontend/modules",
+    f"{in_blogs_fe}/scenarios/*.py": f"{blogs}/frontend/scenarios",
+    f"{in_blogs_be}/modules/*.py": f"{blogs}/backend/modules",
+    f"{in_blogs_be}/scenarios/*.py": f"{blogs}/backend/scenarios",
+    f"{in_darshana_fe}/modules/*.py": f"{darshana}/frontend/modules",
+    f"{in_darshana_fe}/scenarios/*.py": f"{darshana}/frontend/scenarios",
     f"{in_darshana_spec}/roadmap.md": f"spec",
     f"{in_prompts}/instructions*.md": "instructions",
 }

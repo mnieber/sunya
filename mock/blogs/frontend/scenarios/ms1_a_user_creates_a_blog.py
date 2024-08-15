@@ -1,4 +1,4 @@
-from blogs.frontend.modules import Blogs, Users
+import blogs.frontend.namespace as F
 from sunya import (
     add_goal,
     add_scenario,
@@ -29,7 +29,7 @@ def start(user):
 
 def blog_(e):
     register(
-        Blogs.Types.Blog(
+        F.Blogs.Types.Blog(
             name="My Personal Blog",
             description="Random things that interest me",
         ),
@@ -38,7 +38,7 @@ def blog_(e):
 
 
 def run():
-    user = Users.Types.User(email="alice@example.com")
+    user = F.Users.Types.User(email="alice@example.com")
 
     return start(user)
 

@@ -2,6 +2,7 @@ import glob
 import shutil
 import os
 import argparse
+import sys
 
 
 def get_file_inventory(directory):
@@ -33,10 +34,11 @@ def get_files_to_copy(file_map, target_dir, expanded_dir_list):
                 else:
                     if "." not in os.path.basename(dest):
                         print(
-                            "Warning: No file extension found in destination file: ",
+                            "Error: No file extension found in destination file: ",
                             dest,
                             "Did you forget to add an entry in the dir_list?",
                         )
+                        sys.exit(1)
                     target = os.path.join(target_dir, dest)
                 files_to_copy.append((source, target))
             elif os.path.isdir(source):
@@ -46,6 +48,8 @@ def get_files_to_copy(file_map, target_dir, expanded_dir_list):
                         rel_path = os.path.relpath(src_file, source)
                         target = os.path.join(target_dir, dest, rel_path)
                         files_to_copy.append((src_file, target))
+    else:
+        print(f"Warning: No files found for pattern: {source_pattern}")
     return files_to_copy
 
 
