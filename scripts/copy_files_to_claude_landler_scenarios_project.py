@@ -1,4 +1,4 @@
-import sync_files_to_claude
+import sync_files_to_local_claude_dir
 
 in_landler_spec = "/home/maarten/projects/sunya/src/mock/landler/spec"
 in_landler_fe = "/home/maarten/projects/sunya/src/mock/landler/frontend"
@@ -42,8 +42,10 @@ file_map = {
 }
 
 if __name__ == "__main__":
-    args = sync_files_to_claude.parse_args()
-    files_copied = sync_files_to_claude.sync_files(file_map, dir_list, args.target_dir)
+    args = sync_files_to_local_claude_dir.parse_args()
+    files_copied = sync_files_to_local_claude_dir.sync_files(
+        file_map, dir_list, args.target_dir
+    )
 
     if args.verbose:
         print(f"Synced {len(files_copied)} files.")
