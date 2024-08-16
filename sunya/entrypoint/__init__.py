@@ -14,7 +14,7 @@ def parse_args():
 
 
 config = dict(
-    prompt_writer_path_tpl="blogs.{layer}.prompt_writer",
+    prompt_writer_path_tpl="default.{layer}.prompt_writer",
     scenario_path_tpl="blogs.{layer}.scenarios.{scenario_fn}",
     scenario_path_by_name={},
     all_module_names=[
