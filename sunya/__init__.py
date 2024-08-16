@@ -15,7 +15,6 @@ from .scenarios.store import (  # noqa
     get_entity,
     get_scenario,
 )
-from .utils.get_module_and_scenario_names import get_module_and_scenario_names  # noqa
 from .scenarios.global_namespace import G  # noqa
 from .scenarios.get_entities import get_entities  # noqa
 from .scenarios.get_entity_delta import NoValue, get_entity_delta  # noqa
