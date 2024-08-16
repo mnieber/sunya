@@ -34,15 +34,15 @@ def run(args):
     for module_name in module_names:
         module = module_by_name[module_name]
         layer = module_name.split("/")[0]
-        prompt_writer = _get_prompt_writer(layer)
-        module_spec_yaml = prompt_writer.get_module_spec(module)
+        module_spec_yaml = _get_prompt_writer(layer).get_module_spec(module)
         file_writer.write_module_spec(module_name, module_spec_yaml)
 
     for scenario_name in scenario_names:
-        scenario = run_scenario(
-            _get_scenario_path(scenario_path_by_name, scenario_name)
+        layer, scenario_path = _get_scenario_path(scenario_path_by_name, scenario_name)
+        scenario = run_scenario(scenario_path)
+        scenario_yaml = _get_prompt_writer(layer).get_scenario_description(
+            scenario_name, scenario
         )
-        scenario_yaml = prompt_writer.get_scenario_description(scenario_name, scenario)
         file_writer.write_scenario(scenario_name, scenario_yaml)
 
 
@@ -53,7 +53,8 @@ def _get_scenario_path(scenario_path_by_name, scenario_name):
 
     parts = scenario_name.split("/")
     assert len(parts) == 2
-    return f"darshana.{parts[0]}.scenarios.{parts[1]}"
+    layer, scenario_fn = parts
+    return layer, f"darshana.{layer}.scenarios.{scenario_fn}"
 
 
 def _get_prompt_writer(layer):

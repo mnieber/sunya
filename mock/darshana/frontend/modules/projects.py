@@ -1,15 +1,15 @@
 from darshana.frontend.entities import Mutation, Query, Facet, Route
 from darshana.stack.namespace import Module, Form
 import typing as T
-from sunya import actor_to_str, G as g
+from sunya import actor_to_str, EntityWithId, G as g
 from .scenarios import Scenarios
 
 
 class Projects(Module):
     class Types:
-        class Project(T.TypedDict):
+        class Project(EntityWithId):
             name: str
-            scenarios: T.List["Scenarios.Types.Scenario"]
+            scenarios: T.List["Scenarios.Types.Scenario"] = []
 
     class Mutations:
         class CreateProject(Mutation):
@@ -79,6 +79,8 @@ class Projects(Module):
             pass
 
 
+g.import_files_button = Projects.Components.ImportFilesButton()
+g.create_project_button = Projects.Components.CreateProjectButton()
 g.projects_route = Projects.Routes.Projects()
 g.project_route = Projects.Routes.Project()
 g.create_project_mutation = Projects.Mutations.CreateProject()

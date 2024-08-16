@@ -23,7 +23,7 @@ def start(user):
             with the(e.user).enters_project_name():
                 pass
 
-            with the(e.user).presses_the(g.select_files_button):
+            with the(e.user).presses_the(g.import_files_button):
                 with the(g.frontend).uploads_spec_files():
                     pass
 

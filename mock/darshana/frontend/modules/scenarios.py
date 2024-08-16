@@ -1,16 +1,16 @@
 from darshana.frontend.entities import Facet, Route
 from darshana.stack.namespace import Module
 import typing as T
-from sunya import G as g
+from sunya import EntityWithId, G as g
 
 
 class Scenarios(Module):
     class Types:
-        class Scenario(T.TypedDict):
+        class Scenario(EntityWithId):
             name: str
             root_step: "Scenarios.Types.Step"
 
-        class Step(T.TypedDict):
+        class Step(EntityWithId):
             fact: T.List[str]
             child_steps: T.List["Scenarios.Types.Step"]
 
@@ -62,4 +62,3 @@ class Scenarios(Module):
 
 
 g.scenario_route = Scenarios.Routes.Scenario()
-g.create_project_mutation = Scenarios.Mutations.CreateProject()
