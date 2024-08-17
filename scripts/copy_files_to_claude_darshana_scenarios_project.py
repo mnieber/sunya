@@ -2,7 +2,7 @@ import sync_files_to_local_claude_dir
 
 in_darshana_spec = "/home/maarten/projects/sunya/src/mock/darshana/spec"
 
-in_prompts = "/home/maarten/projects/sunya/src/mock/darshana/prompts"
+in_blogs_prompts = "/home/maarten/projects/sunya/src/mock/blogs/spec/prompts"
 in_blogs_be = "/home/maarten/projects/sunya/src/mock/blogs/backend"
 in_blogs_fe = "/home/maarten/projects/sunya/src/mock/blogs/frontend"
 blogs = "blogs"
@@ -33,7 +33,7 @@ file_map = {
     f"{in_darshana_fe}/modules/*.py": f"{darshana}/frontend/modules",
     f"{in_darshana_fe}/scenarios/*.py": f"{darshana}/frontend/scenarios",
     f"{in_darshana_spec}/roadmap.md": f"spec",
-    f"{in_prompts}/instructions*.md": "instructions",
+    f"{in_blogs_prompts}/instructions*.md": "instructions",
 }
 
 if __name__ == "__main__":

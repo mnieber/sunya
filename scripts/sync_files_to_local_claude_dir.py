@@ -66,17 +66,22 @@ def sync_files(file_map, dir_list, target_dir):
         shutil.copy2(source, target)
         if target in file_inventory:
             file_inventory.remove(target)
+        else:
+            print("Added file: ", target)
 
     # Remove files that are no longer needed
     for file in file_inventory:
         if os.path.isfile(file):
-            os.remove(file)
+            if "claude_chats" not in file:
+                print("Removing file: ", file)
+                os.remove(file)
 
     # Remove empty directories
     for root, dirs, files in os.walk(target_dir, topdown=False):
         for dir in dirs:
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):
+                print("Removing empty directory: ", dir_path)
                 os.rmdir(dir_path)
 
     return files_to_copy
