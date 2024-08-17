@@ -1,2 +1,2 @@
-export { Effect } from './Effect';
-export { UtilsSwitch } from './UtilsSwitch';
+export { UrlEffectView } from './UrlEffectView';
+export { ValuePicker } from './ValuePicker';

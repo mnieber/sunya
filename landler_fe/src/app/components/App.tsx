@@ -14,9 +14,6 @@ import { MockApp } from '/src/mocks/app/components/MockApp';
 import { NavStateProvider } from '/src/routes/components/NavStateProvider';
 import { cn } from '/src/utils/classnames';
 
-// Import styles
-import './App.scss';
-
 export const App = () => {
   return flags.mockApp ? (
     <AppBody>

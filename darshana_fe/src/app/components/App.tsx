@@ -1,20 +1,25 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import * as R from 'ramda';
-import { Router } from 'react-router-dom';
 import { queryClient } from '/src/api/queryClient';
 import { L } from '/src/frames/layout';
+import { MockApp } from '/src/mocks/app/components/MockApp';
+import { NavStateProvider } from '/src/routes/components/NavStateProvider';
 import { RootSwitch } from '/src/routes/components';
 import { history } from '/src/routes/history';
 import { cn } from '/src/utils/classnames';
 
 export const App = () => {
-  return (
+  return flags.mockApp ? (
+    <AppBody>
+      <MockApp />
+    </AppBody>
+  ) : (
     <QueryClientProvider client={queryClient}>
-      <Router history={history}>
+      <NavStateProvider>
         <AppBody>
           <RootSwitch />
         </AppBody>
-      </Router>
+      </NavStateProvider>
     </QueryClientProvider>
   );
 };

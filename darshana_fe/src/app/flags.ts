@@ -1,9 +1,11 @@
 import { observable } from 'mobx';
 
 export const flags = observable({
+  logQueries: true,
+  logSkandha: true,
+  logResourceStates: true,
   logHistory: false,
-  logQueries: false,
-  logResourceStates: false,
-  logSkandha: false,
   logStateProviders: false,
+  useMsw: true,
+  mockApp: true,
 });

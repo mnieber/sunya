@@ -7,8 +7,6 @@ import { applyFormatters } from 'mobx-log';
 import { setOptions as setResourceStatesOptions } from 'mobx-resource-states';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { setOptions as setNavHandlerOptions } from 'react-nav-handler';
-import { matchPath, useRouteMatch } from 'react-router-dom';
 import { setOptions as setSkandhaOptions } from 'skandha';
 import { App } from '/src/app/components';
 import { flags } from '/src/app/flags';
@@ -25,20 +23,31 @@ setSkandhaOptions({
   formatObject: toJS,
 });
 
-setNavHandlerOptions({
-  useRouteMatch: useRouteMatch,
-  matchPath: matchPath,
-});
-
 setResourceStatesOptions({
   logging: flags.logResourceStates,
   log: log,
 });
 
-const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
-);
+const isProduction = process.env.NODE_ENV === 'production';
 
-const body = <App />;
+async function enableMocking(): Promise<void> {
+  if (isProduction || !flags.useMsw) {
+    return;
+  }
 
-root.render(strict ? <React.StrictMode>{body}</React.StrictMode> : body);
+  const { worker } = await import('./mocks/browser');
+
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  await worker.start();
+}
+
+enableMocking().then(() => {
+  const root = ReactDOM.createRoot(
+    document.getElementById('root') as HTMLElement
+  );
+
+  const body = <App />;
+
+  root.render(strict ? <React.StrictMode>{body}</React.StrictMode> : body);
+});

@@ -12,13 +12,13 @@ import { getMode, getModeCn } from '/src/utils/trim';
 import './DialogButton.scss';
 
 export type PropsT = {
-  className?: any;
   trim?: DialogButtonTrimT;
   danger?: boolean;
   dataCy?: string;
   disabled?: boolean;
   iconName?: string;
   label: string;
+  className?: any;
 } & ButtonPropsT;
 
 export type DialogButtonPropsT = PropsT;
@@ -47,6 +47,7 @@ export const DialogButton = (props: PropsT) => {
     🔳 DialogButton 🔳
     */
     <button
+      disabled={disabled}
       className={cn(
         trim.base.componentName,
         'DialogButton',

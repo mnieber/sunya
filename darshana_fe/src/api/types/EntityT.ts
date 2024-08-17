@@ -1,5 +1,4 @@
 export type EntityT = {
-  // MOONLEAP TODO
   id: string;
 };
 

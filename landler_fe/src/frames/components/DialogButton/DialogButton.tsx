@@ -28,6 +28,7 @@ export const DialogButton = (props: PropsT) => {
     className,
     danger: propsDanger,
     trim: propsTrim,
+    dataCy,
     disabled,
     iconName,
     label,
@@ -60,6 +61,7 @@ export const DialogButton = (props: PropsT) => {
         ],
         [iconName ? L.row.skewer() : '', className]
       )}
+      data-cy={dataCy}
       {...rest}
     >
       {iconName && <Icon className={getModeCn(mode.Icon)} name={iconName} />}

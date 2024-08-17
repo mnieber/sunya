@@ -1,11 +1,12 @@
+import * as R from 'ramda';
 import { mergeLeft } from 'ramda';
-import { useLocation, useParams } from 'react-router-dom';
-import { useSearchParams } from '/src/utils/hooks/useSearchParams';
+import { useParams } from 'wouter';
+import { history } from '/src/routes/history';
 import { ObjT } from '/src/utils/types';
 
 export const useSearchAndUrlParams = (): ObjT => {
   const params = useParams();
-  const location = useLocation();
-  const { all: searchParams } = useSearchParams(location);
-  return mergeLeft(params, searchParams);
+  const searchParams = new URLSearchParams(history.location.search);
+  const searchParamMap = R.fromPairs(Array.from(searchParams.entries()));
+  return mergeLeft(params, searchParamMap);
 };

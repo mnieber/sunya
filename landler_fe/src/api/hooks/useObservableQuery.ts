@@ -1,13 +1,13 @@
 import { runInAction } from 'mobx';
 import React from 'react';
-import { ObservableQuery, QueryDataT } from '/src/api/lib/ObservableQuery';
+import { ObservableQuery, QueryDataT } from '/src/api/ObservableQuery';
 import { flags } from '/src/app/flags';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 
 export interface TanstackQuery {
   data: QueryDataT;
-  status: string;
   isFetching: boolean;
+  isInitialLoading: boolean;
 }
 
 export type OptionsT = {
@@ -51,5 +51,7 @@ const updateObservableQuery = (
 ) => {
   observableQuery.data = tanstackQuery.data;
   observableQuery.status =
-    fetchAsLoad && tanstackQuery.isFetching ? 'loading' : tanstackQuery.status;
+    (fetchAsLoad && tanstackQuery.isFetching) || tanstackQuery.isInitialLoading
+      ? 'loading'
+      : 'idle';
 };

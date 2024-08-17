@@ -5,6 +5,7 @@ export const flags = observable({
   logSkandha: true,
   logResourceStates: true,
   logHistory: false,
+  logStateProviders: false,
   useMsw: true,
   mockApp: true,
 });
