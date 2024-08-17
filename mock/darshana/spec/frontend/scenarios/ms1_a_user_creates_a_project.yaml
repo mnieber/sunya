@@ -1,0 +1,24 @@
+scenario_name: ms1-a-user-creates-a-project
+scenario_fn: frontend/ms1_a_user_creates_a_project
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: create a new [my-darshana-project+:project] for the [alice@example.com+:user]
+        actors_created:
+          - name: my-darshana-project+:project
+            deltas:
+              id: 00dcca049c335a198d7d466b886ec3bb (None)
+              name: My Darshana Project (None)
+              scenarios: '[''my-first-:scenario''] (None)'
+        child_nodes:
+          - step: The [alice@example.com+:user] visits the [projects+:route]
+          - step: The [alice@example.com+:user] enters project name
+          - step: The [alice@example.com+:user] presses the [import-files-button:component]
+            child_nodes:
+              - step: The [:frontend] uploads spec files
+          - step: The [alice@example.com+:user] deletes some uploaded files
+          - step: The [alice@example.com+:user] presses the [create-project-button:component]
+            child_nodes:
+              - step: The [:frontend] calls the [create-project:mutation]
+          - step: The [:frontend] redirects to the [project+:route]
+

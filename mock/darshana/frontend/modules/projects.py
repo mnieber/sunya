@@ -1,4 +1,4 @@
-from darshana.frontend.entities import Mutation, Query, Facet, Route
+from darshana.frontend.entities import Mutation, Query, Facet, Route, Component
 from darshana.stack.namespace import Module, Form
 import typing as T
 from sunya import actor_to_str, EntityWithId, G as g
@@ -54,12 +54,17 @@ class Projects(Module):
     class Views:
         class ProjectsPage:
             class Root:
-                __ProjectList: None
-                __CreateProjectForm: None
+                root = dict(
+                    #
+                    project_list=None,
+                    create_project_form=None,
+                )
 
         class ProjectPage:
-            class Root:
-                __ScenarioList: None
+            root = dict(
+                #
+                scenario_list=None
+            )
 
         class ProjectListView:
             pass
@@ -68,14 +73,14 @@ class Projects(Module):
             pass
 
     class Components:
-        class ImportFilesButton:
+        class ImportFilesButton(Component):
             pass
 
-        class CreateProjectButton:
+        class CreateProjectButton(Component):
             pass
 
     class Effects:
-        class SelectProjectEffect:
+        class SelectProjectEffect(Component):
             pass
 
 

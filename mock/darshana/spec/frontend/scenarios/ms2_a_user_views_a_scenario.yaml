@@ -1,0 +1,42 @@
+scenario_name: ms2-a-user-views-a-scenario
+scenario_fn: frontend/ms2_a_user_views_a_scenario
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: view a [my-first-:scenario] in the [my-darshana-project+:project]
+        actors_created:
+          - name: my-first-:scenario
+            deltas:
+              id: 1cfa7d69e2335f7aadf80649346ae662 (None)
+              name: My First Scenario (None)
+              root_step: 1b4db7eb40575ddf91e036dec72071f5:step (None)
+        child_nodes:
+          - step: The [alice@example.com+:user] visits the [project+:route]
+            child_nodes:
+              - step: The [:frontend] displays the [scenario-list-view:component]
+          - step: The [alice@example.com+:user] clicks on a [my-first-:scenario]
+            actors_created:
+              - name: my-first-:scenario
+                deltas:
+                  id: 1cfa7d69e2335f7aadf80649346ae662 (None)
+                  name: My First Scenario (None)
+                  root_step: 1b4db7eb40575ddf91e036dec72071f5:step (None)
+            child_nodes:
+              - step: The [:frontend] shows the [step-tree-view:component]
+          - step: The [alice@example.com+:user] clicks on a root level step
+            child_nodes:
+              - step: The [:frontend] highlights the [643835a37a7f50e28d157fc58149ca93:step]
+                actors_created:
+                  - name: 643835a37a7f50e28d157fc58149ca93:step
+                    deltas:
+                      child_steps: '[''8f47ff88c2b7597d9a831cfcf6ebd328:step''] (None)'
+                      fact: ('Root Step 1',) (None)
+                      id: 62a0d08ba27f507f8d430601d767cbc9 (None)
+              - step: The [:frontend] opens a new [step-list-view:component]
+          - step: The [alice@example.com+:user] clicks on an actor link
+            child_nodes:
+              - step: The [:frontend] displays actor in [actor-view:component]
+          - step: The [alice@example.com+:user] clicks on actor link again
+            child_nodes:
+              - step: The [:frontend] redirects to the [actor+:route]
+

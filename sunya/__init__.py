@@ -19,3 +19,4 @@ from .scenarios.global_namespace import G  # noqa
 from .scenarios.get_entities import get_entities  # noqa
 from .scenarios.get_entity_delta import NoValue, get_entity_delta  # noqa
 from .scenarios.register import register, unregister  # noqa
+from .utils import str_to_uuid  # noqa

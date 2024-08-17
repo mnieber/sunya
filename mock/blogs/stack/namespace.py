@@ -1,1 +1,1 @@
-from blogs.stack.entities import Module, Enum, JSON, Form  # noqa
+from default.stack.namespace import *  # noqa

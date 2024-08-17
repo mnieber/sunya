@@ -1,5 +1,5 @@
 from blogs.frontend.entities import Mutation, Query, Facet, Route
-from blogs.stack.namespace import Module, Form
+from mock.default.stack.namespace import Module, Form
 import typing as T
 
 from sunya import EntityWithId, actor_to_str, G as g
@@ -92,16 +92,23 @@ class Blogs(Module):
         class BlogPostFormView:
             pass
 
-        class BlogsPage:
-            class __LeftSideBar:
-                BlogListView = None
+        class BlogListView:
+            pass
 
-            class __RightCanvas:
-                BlogPostListView = None
-                BlogPostFormView = None
-                CreateBlogPostButton = None
-                EditBlogPostButton = None
-                DeleteBlogPostsButton = None
+        class BlogPostListView:
+            pass
+
+        class BlogsPage:
+            root = dict(
+                __LeftSideBar=dict(blog_list_view=None),
+                __RightCanvas=dict(
+                    blog_post_list_view=None,
+                    blog_post_form_view=None,
+                    create_blog_post_button=None,
+                    edit_blog_post_button=None,
+                    delete_blog_posts_button=None,
+                ),
+            )
 
     class Effects:
         class SelectBlogEffect:

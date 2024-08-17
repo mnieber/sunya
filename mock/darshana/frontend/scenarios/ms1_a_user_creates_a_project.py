@@ -44,6 +44,22 @@ def project_(e):
     return register(
         F.Projects.Types.Project(
             name="My Darshana Project",
+            scenarios=[
+                F.Scenarios.Types.Scenario(
+                    name="My First Scenario",
+                    root_step=F.Scenarios.Types.Step(
+                        child_steps=[
+                            F.Scenarios.Types.Step(
+                                fact=("Root Step 1",),
+                                child_steps=[
+                                    F.Scenarios.Types.Step(fact=("Child Step 1",))
+                                ],
+                            ),
+                            F.Scenarios.Types.Step(fact=("Root Step 2",)),
+                        ]
+                    ),
+                )
+            ],
         ),
         e.project,
     )

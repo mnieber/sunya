@@ -1,1 +1,1 @@
-from blogs.stack.namespace import *  # noqa
+from default.stack.namespace import *  # noqa

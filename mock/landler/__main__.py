@@ -9,7 +9,7 @@ from sunya.entrypoint import (
 
 config = dict(
     prompt_writer_path_tpl="default.{layer}.prompt_writer",
-    scenario_path_tpl="blogs.{layer}.scenarios.{scenario_fn}",
+    scenario_path_tpl="landler.{layer}.scenarios.{scenario_fn}",
     scenario_path_by_name={},
     all_module_names=[
         "backend/calculations",
@@ -26,10 +26,10 @@ config = dict(
         "backend/users",
     ],
     all_scenario_names=[
-        "ms1_a_user_signs_up_and_creates_an_org",
-        "ms2_a_user_creates_a_project",
-        "ms3_a_user_adds_a_plot_to_a_project",
-        "ms4_a_user_schedules_a_project_analysis",
+        "backend/ms1_a_user_signs_up_and_creates_an_org",
+        "backend/ms2_a_user_creates_a_project",
+        "backend/ms3_a_user_adds_a_plot_to_a_project",
+        "backend/ms4_a_user_schedules_a_project_analysis",
     ],
     module_by_name={
         "backend/calculations": B.Calculations,
@@ -51,7 +51,7 @@ config = dict(
 def run(args):
     module_names, scenario_names = get_module_and_scenario_names(config, args)
 
-    file_writer = FileWriter("darshana/spec")
+    file_writer = FileWriter("landler/spec")
     write_modules(config, module_names, file_writer)
     write_scenarios(config, scenario_names, file_writer)
 

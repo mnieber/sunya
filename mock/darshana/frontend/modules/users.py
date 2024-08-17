@@ -1,4 +1,4 @@
-from blogs.stack.namespace import Module
+from darshana.stack.namespace import Module
 from sunya import actor_to_str, EntityWithId
 
 

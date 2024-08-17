@@ -14,7 +14,7 @@ config = dict(
     all_module_names=[],
     all_scenario_names=[
         "frontend/ms1_a_user_creates_a_project",
-        "frontend/ms1_a_user_views_a_scenario",
+        "frontend/ms2_a_user_views_a_scenario",
     ],
     module_by_name={},
 )

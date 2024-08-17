@@ -1,1 +1,1 @@
-from blogs.frontend.entities import *  # noqa
+from default.frontend.entities import *  # noqa

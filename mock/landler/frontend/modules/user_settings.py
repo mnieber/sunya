@@ -6,11 +6,10 @@ from sunya import G as g
 class UserSettings(Module):
     class Views:
         class UserSettingsPage(Component):
-            class __LeftSideBar:
-                UserSettingsSideBar = None
-
-            class __RightCanvas:
-                UserAccountCanvas = None
+            root = dict(
+                __LeftSideBar=dict(user_settings_side_bar=None),
+                __RightCanvas=dict(user_account_canvas=None),
+            )
 
         class UserSettingsNavBar(Component):
             class UserSettingsNavBarItem(Component):

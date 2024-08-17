@@ -1,28 +1,32 @@
 scenario_name: a-user-creates-a-project
-scenario_fn: s2_a_user_creates_a_project
-steps:
-  - fact: ''
-    child_steps:
-      - fact: The [:frontend] calls the [create-project:api-view]
-        child_steps:
-          - fact: The [create-project:api-view] calls the [create-project:action] with the [create-project-:form] to create a [my-project+:project] with admin [my-org+:organization]
+scenario_fn: backend/ms2_a_user_creates_a_project
+nodes:
+  - root: ''
+    child_nodes:
+      - step: The [:frontend] calls the [create-project:api-view]
+        child_nodes:
+          - goal: create a [my-project+:project] with admin [my-org+:organization]
             actors_created:
               - name: my-project+:project
                 deltas:
-                  memberships: '[''(my-project)-(my-org)-(admin)+:project-membership''] (None)'
+                  memberships: '[] (None)'
                   name: my-project (None)
                   plot_lists: '[] (None)'
-            child_steps:
-              - fact: The [create-project:action] creates the [my-project+:project]
-                actors_created:
-                  - name: my-project+:project
-                    deltas:
-                      memberships: '[] (None)'
-                      name: my-project (None)
-                      plot_lists: '[] (None)'
-              - fact: The [create-project:action] calls the [add-organization-to-project:action] to add the [my-org+:organization] to the [my-project+:project]
-                actors_updated:
-                  - name: my-project+:project
-                    deltas:
-                      memberships: '[''(my-project)-(my-org)-(admin)+:project-membership''] ([])'
+            child_nodes:
+              - step: The [create-project:api-view] calls the [create-project:action]
+                child_nodes:
+                  - step: The [create-project:action] creates the [my-project+:project]
+                    actors_created:
+                      - name: my-project+:project
+                        deltas:
+                          memberships: '[] (None)'
+                          name: my-project (None)
+                          plot_lists: '[] (None)'
+          - goal: add the [my-org+:organization] to the [my-project+:project]
+            actors_updated:
+              - name: my-project+:project
+                deltas:
+                  memberships: '[None] ([])'
+            child_nodes:
+              - step: The [create-project:action] calls the [add-organization-to-project:action]
 

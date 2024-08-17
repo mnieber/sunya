@@ -1,4 +1,4 @@
-from darshana.frontend.modules import Scenarios
+import darshana.frontend.modules as F
 from sunya import (
     add_goal,
     add_scenario,
@@ -19,17 +19,20 @@ def start(user, project):
 
         with add_goal("view a", e.scenario, "in the", e.project):
             with the(e.user).visits_the(g.project_route):
-                with the(g.frontend).displays_the(e.scenario_list):
-                    scenario_list_(e)
+                with the(g.frontend).displays_the(g.scenario_list_view):
+                    pass
 
             with the(e.user).clicks_on_a(e.scenario):
-                with the(g.frontend).opens_the(g.step_tree_view):
-                    step_tree_(e)
+                register(e.project.scenarios[0], e.scenario)
+
+                with the(g.frontend).shows_the(g.step_tree_view):
+                    pass
 
             with the(e.user).clicks_on_a_root_level_step():
                 with the(g.frontend).highlights_the(e.step):
-                    pass
-                with the(g.frontend).opens_new_step_list_view():
+                    register(e.scenario.root_step.child_steps[0], e.step)
+
+                with the(g.frontend).opens_a_new(g.step_list_view):
                     pass
 
             with the(e.user).clicks_on_an_actor_link():
@@ -43,36 +46,9 @@ def start(user, project):
     return get_scenario(scenario_name)
 
 
-def scenario_list_(e):
-    register(
-        Scenarios.Types.ScenarioList(
-            scenarios=[
-                Scenarios.Types.Scenario(name="Scenario 1"),
-                Scenarios.Types.Scenario(name="Scenario 2"),
-            ]
-        ),
-        e.scenario_list,
-    )
-
-
-def step_tree_(e):
-    register(
-        Scenarios.Types.StepTree(
-            root_steps=[
-                Scenarios.Types.Step(
-                    description="Root Step 1",
-                    child_steps=[Scenarios.Types.Step(description="Child Step 1")],
-                ),
-                Scenarios.Types.Step(description="Root Step 2"),
-            ]
-        ),
-        e.step_tree,
-    )
-
-
 def actor_(e):
     register(
-        Scenarios.Types.Actor(
+        F.Actors.Types.Actor(
             name="Example Actor",
             fields={
                 "field1": "value1",

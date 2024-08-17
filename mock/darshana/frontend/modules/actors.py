@@ -1,5 +1,6 @@
 from darshana.stack.namespace import Module
-from sunya import actor_to_str, EntityWithId
+from darshana.frontend.entities import Component, Route
+from sunya import actor_to_str, G as g, EntityWithId
 import typing as T
 
 
@@ -10,13 +11,22 @@ class Actors(Module):
             fields: T.Dict[str, T.Any]
             changed_fields: T.List[str]
 
+    class Routes:
+        class Actor(Route):
+            pass
+
     class Views:
-        class ActorView:
+        class ActorView(Component):
             pass
 
     class Components:
-        class ActorLink:
+        class ActorLink(Component):
             pass
+
+
+g.actor_view = Actors.Views.ActorView()
+g.actor_route = Actors.Routes.Actor()
+g.actor_link = Actors.Components.ActorLink()
 
 
 @actor_to_str.method((Actors.Types.Actor,))
