@@ -1,6 +1,6 @@
 # Instructions for writing backend module specs
 
-Taking the roadmap.md file as input, your task is to identify which backend module specification files (aka backend module specs) are needed, and to generate these module specs.
+Taking the roadmap.md file as input, your task is to identify which backend module specification files (aka backend module specs) are needed, and to generate these module specs. When I ask you to create module specs then I will usually also make suggestions as to which module specs should exist. However, feel free to add additional module specs you think are needed, or to ask me about which module specs to create.
 
 When writing a backend module spec, please follow the example in the blogs/backend/modules/blogs.py file. This example should be followed closely in terms of the syntax and structure that it proposes. However, you have a lot of freedom to decide which code-units you add to the module spec (as long as you adhere to the prescribed structure and syntax). It's recognized that the problem of mapping the roadmap to the module spec is not well-defined, and that many alternative solutions are possible, so just do your best to come up with one possible solution.
 
@@ -35,9 +35,7 @@ The purpose of domain events is to inform external observers about what is going
 
 ## Instantiation of mock objects
 
-Following the module class, the module spec creates instances of global singleton mock objects. These are mock objects for which there exists only one instance. They are instantiated in the module spec so that all scenarios can use them just by importing them. For example, since the create_blog_action is a global function, and since all scenarios can use it, it is instantiated in this section of the module spec.
-
-When I ask you to write a module spec, please also consider which actors (that are based on the mock code-units in the module spec) will be needed in the current scenarios, and create these actors in the module spec file.
+Following the module class, the module spec creates instances of global singleton mock objects. These are mock objects for which there exists only one instance. They are added to the global `G` namespace object so that all scenarios have easy access to them. Typically, scenarios will only dynamically create Model instances, and will - for reasons of convenience and code conciseness - refer to global (singleton) instances for any other code-units in the module spec.
 
 ## The actor_to_str functions
 

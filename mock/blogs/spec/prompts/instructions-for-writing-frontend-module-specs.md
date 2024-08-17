@@ -1,6 +1,6 @@
 # Instructions for writing frontend module specs
 
-Taking the roadmap.md file as input, your task is to identify which frontend module specification files (aka frontend module specs) are needed, and to generate these module specs.
+Taking the roadmap.md file as input, your task is to identify which frontend module specification files (aka frontend module specs) are needed, and to generate these module specs. The process is quite similar to the process of writing backend module specs, though the sections of the modules are different, as detailed below.
 
 When writing a frontend module spec, please follow the example in the blogs/frontend/modules/blogs.py file.
 
@@ -53,15 +53,9 @@ The StateProviders section describes the state-provider components that provide 
 
 ### Views
 
-The Views section describes components that can be considered Views. A View component typically shows a resource. Each view in the Views section can have a Root class that contains a high-level description of the layout of that view. The Root class corresponds to the root div of the view.
+The Views section describes components that can be considered Views. A View component typically shows a resource.
 
-There are two ways to specify views and components. They may be listed explicitly in the Views section or Components section, or they may be specified implicitly by their appearence within the Root class of some other View, or both of the above.
-
-Elements in the Root class that start with a double underscore denote divs that are embedded in the root div.
-
-#### View layouts
-
-When I ask you to write a frontend module spec I will usually also supply information (both in text and in images) about the layout of the views that the user is interacting with. This information can then be used to fill the Root class of the view. Since there is no right or wrong way to fill the Root class, just make a best effort on filling out this part of the spec, and take on the role of a UX designer who is free to imagine what a good layout might be.
+Each view in the Views section can have a root field that contains a high-level description of the layout of that view. The root field corresponds to the root div of the view. Elements in the root field that start with a double underscore denote divs that are embedded in the root div. The names of these div elements suggest a particular layout for the view. There is no right or wrong way to fill the root field, just make a best effort on filling out this part of the spec, and take on the role of a UX designer who is free to imagine what a good layout might be.
 
 ### Effects
 
