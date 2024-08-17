@@ -20,6 +20,7 @@ class FileWriter:
         result = Path(self.output_dir)
         for dir_name in dir_names:
             result = result / dir_name
+        result.mkdir(parents=True, exist_ok=True)
         return result / name
 
     def _write_file(self, fn, content):
