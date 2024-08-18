@@ -1,7 +1,13 @@
-from darshana.frontend.entities import Facet, Route, Component
+from darshana.frontend.entities import Facet, Route, Component, Action
 from darshana.stack.namespace import Module
 import typing as T
-from sunya import actor_to_str, EntityWithId, G as g, str_to_uuid
+from sunya import (
+    actor_to_str,
+    EntityWithId,
+    G as g,
+    str_to_uuid,
+    any_dict,
+)
 
 
 class Scenarios(Module):
@@ -12,7 +18,9 @@ class Scenarios(Module):
 
         class Step(EntityWithId):
             fact: T.Tuple[str] = tuple()
+            parent_step: T.Optional["Scenarios.Types.Step"] = None
             child_steps: T.List["Scenarios.Types.Step"] = []
+            field_delta_set_by_actor_key: T.Dict[str, T.Dict[str, T.Any]] = {}
 
     class States:
         class ScenariosState:
@@ -21,10 +29,22 @@ class Scenarios(Module):
                     data: Facet
                     highlight: Facet
 
+        class StepTreeState:
+            class Containers:
+                class StepTreeCtr:
+                    data: Facet = any_dict(reconstructed_actor=None)
+
+            class Actions:
+                set_highlighted_step = Action(key="set_highlighted_step:action")
+
         class StepListState:
             class Containers:
                 class StepListCtr:
                     data: Facet
+                    highlight: Facet
+
+                class ActorsCtr:
+                    data: Facet = any_dict(actor_by_key={})
                     highlight: Facet
 
     class Routes:
@@ -71,6 +91,12 @@ g.scenario_list_view = Scenarios.Views.ScenarioListView()
 g.step_tree_view = Scenarios.Views.StepTreeView()
 g.step_list_view = Scenarios.Views.StepListView()
 g.step_view = Scenarios.Views.StepView()
+g.step_list_state = Scenarios.States.StepListState()
+g.step_list_ctr = Scenarios.States.StepListState.Containers.StepListCtr()
+g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr()
+g.set_highlighted_step_action = (
+    Scenarios.States.StepTreeState.Actions.set_highlighted_step
+)
 
 
 @actor_to_str.method((Scenarios.Types.Scenario,))

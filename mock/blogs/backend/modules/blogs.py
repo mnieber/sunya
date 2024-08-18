@@ -1,8 +1,7 @@
-from blogs.stack.namespace import Module, Form
+from default.stack.namespace import Module, Form, Enum
 import typing as T
 
 from blogs.backend.entities import Action, ApiView
-from blogs.stack.namespace import Enum
 from sunya import EntityWithId, actor_to_str, G as g
 
 

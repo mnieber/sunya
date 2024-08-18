@@ -1,4 +1,4 @@
-from sunya import Entity, actor_to_str, G as g
+from sunya import Entity, actor_to_str, G as g, GenericEntity
 from sunya.utils import type_name_to_kebab
 import typing as T
 
@@ -27,6 +27,10 @@ class Query(Entity):
 
 
 class Component(Entity):
+    pass
+
+
+class Action(GenericEntity):
     pass
 
 

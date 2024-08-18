@@ -1,4 +1,4 @@
-from .entities import Entity, EntityWithId, Fn, List, Value  # noqa
+from .entities import Entity, EntityWithId, GenericEntity  # noqa
 from .entities.actor_to_str import actor_to_str, get_actor_str  # noqa
 from .extension.extend import extend  # noqa
 from .extension.mem_field import MemField  # noqa
@@ -19,4 +19,4 @@ from .scenarios.global_namespace import G  # noqa
 from .scenarios.get_entities import get_entities  # noqa
 from .scenarios.get_entity_delta import NoValue, get_entity_delta  # noqa
 from .scenarios.register import register, unregister  # noqa
-from .utils import str_to_uuid  # noqa
+from .utils import str_to_uuid, any_dict, MagicContainer  # noqa
