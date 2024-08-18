@@ -1,0 +1,17 @@
+name: users
+types:
+  - name: User
+    fields:
+      - name: id
+        type: UUID
+      - name: email
+        type: str
+mutations: []
+queries: []
+states: []
+routes: []
+state_providers: []
+views: {}
+effects: []
+components: []
+

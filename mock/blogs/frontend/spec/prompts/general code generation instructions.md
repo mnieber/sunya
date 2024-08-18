@@ -8,13 +8,11 @@ The code generation instructions sometimes mention the backend to clarify the wo
 
 When I ask you to write the source code for a code unit (such as a React component), then a specific set of instructions for writing such a code unit will be available. If you cannot find the specific instructions, please let me know.
 
-In general,
-
 ## Use of sample code
 
 The specific instructions will always contain references to sample code. It's important that this sample code is followed closely when generating the requested code. If you cannot find the referenced sample code, please let me know.
 
-The sample code is always based on the spec/frontend/modules/blogs.md spec file. By studying the sample code and blogs.md, you will be able to see how the information in a module spec is used for generating a specific source file.
+The sample code is always based on the spec/blogs/frontend/modules/blogs.yaml spec file. By studying the sample code and blogs.md, you will be able to see how the information in a module spec is used for generating a specific source file.
 
 ## Updating existing source files
 
@@ -34,7 +32,7 @@ For example:
 - the notation `hello-world+:blog-post` means that the type is `blog-post` and the name is `hello-world`.
 - the notation `wow+special:blog-post` means that the type is `special:blog-post` and the name is `wow`.
 
-For each step, the scenario will show how the actors are changed by the step. It's important to note that it shows the state of the actors after the entire step - including its sub-steps - has completed. This means that if the top-level step tells us that actor1.foo was changed to "bar", then it's possible that this change only happened in the last sub-step that is included in the high-level step.
+For each step, the scenario will show how the actors are changed by the step. It's important to note that it shows the state of the actors after the entire step - including its child-steps - has completed. This means that if the top-level step tells us that actor1.foo was changed to "bar", then it's possible that this change only happened in the last child-step that is included in the high-level step.
 
 ## Roadmap description
 

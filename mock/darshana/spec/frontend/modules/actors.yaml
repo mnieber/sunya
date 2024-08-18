@@ -1,0 +1,24 @@
+name: actors
+types:
+  - name: Actor
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
+      - name: fields
+        type: dict[str, Any]
+      - name: changed_fields
+        type: list[str]
+mutations: []
+queries: []
+states: []
+routes:
+  - name: Actor
+state_providers: []
+views:
+  ActorView(Component): {}
+effects: []
+components:
+  ActorLink(Component): {}
+

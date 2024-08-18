@@ -1,0 +1,57 @@
+name: projects
+types:
+  - name: Project
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
+      - name: scenarios
+        type: list[Scenario]
+mutations:
+  - name: CreateProject
+    args:
+      - name: createProjectForm
+        type: Form
+  - name: ImportSpecFiles
+    args:
+      - name: project
+        type: Project
+      - name: files
+        type: list[Any]
+  - name: DeleteUploadedFile
+    args:
+      - name: filename
+        type: str
+queries:
+  - name: GetProjects
+  - name: GetProject
+states:
+  - name: ProjectsState
+    containers:
+      - name: ProjectsCtr
+        facets:
+          - name: data
+          - name: highlight
+routes:
+  - name: Projects
+  - name: Project
+state_providers:
+  - name: ProjectsStateProvider
+views:
+  ProjectsPage:
+    Root:
+      root:
+        project_list: null
+        create_project_form: null
+  ProjectPage:
+    root:
+      scenario_list: null
+  ProjectListView: {}
+  CreateProjectFormView: {}
+effects:
+  - name: SelectProjectEffect
+components:
+  ImportFilesButton(Component): {}
+  CreateProjectButton(Component): {}
+

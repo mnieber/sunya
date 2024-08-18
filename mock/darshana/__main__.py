@@ -5,18 +5,28 @@ from sunya.entrypoint import (
     write_scenarios,
     parse_args,
 )
-
+import darshana.frontend.namespace as F
 
 config = dict(
     prompt_writer_path_tpl="default.{layer}.prompt_writer",
     scenario_path_tpl="darshana.{layer}.scenarios.{scenario_fn}",
     scenario_path_by_name={},
-    all_module_names=[],
+    all_module_names=[
+        "frontend/actors",
+        "frontend/projects",
+        "frontend/scenarios",
+        "frontend/users",
+    ],
     all_scenario_names=[
         "frontend/ms1_a_user_creates_a_project",
         "frontend/ms2_a_user_views_a_scenario",
     ],
-    module_by_name={},
+    module_by_name={
+        "frontend/actors": F.Actors,
+        "frontend/projects": F.Projects,
+        "frontend/scenarios": F.Scenarios,
+        "frontend/users": F.Users,
+    },
 )
 
 

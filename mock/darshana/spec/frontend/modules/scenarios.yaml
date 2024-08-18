@@ -1,0 +1,54 @@
+name: scenarios
+types:
+  - name: Scenario
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
+      - name: root_step
+        type: Step
+  - name: Step
+    fields:
+      - name: id
+        type: UUID
+      - name: fact
+        type: tuple[str]
+      - name: child_steps
+        type: list[Step]
+mutations: []
+queries: []
+states:
+  - name: ScenariosState
+    containers:
+      - name: ScenariosCtr
+        facets:
+          - name: data
+          - name: highlight
+  - name: StepListState
+    containers:
+      - name: StepListCtr
+        facets:
+          - name: data
+          - name: highlight
+routes:
+  - name: Scenario
+state_providers:
+  - name: ScenariosStateProvider
+  - name: StepListStateProvider
+views:
+  ScenarioListView(Component): {}
+  StepTreeView(Component): {}
+  StepListView(Component): {}
+  StepView(Component): {}
+  ScenarioPage(Component):
+    root:
+      step_tree_view:
+        step_list_views: null
+      step_view: null
+      actor_view: null
+effects:
+  - name: SelectScenarioEffect
+  - name: SelectStepEffect
+components: []
+
