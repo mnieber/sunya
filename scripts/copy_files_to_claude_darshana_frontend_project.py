@@ -12,13 +12,12 @@ from mock.darshana.frontend.copy_files_to_claude.add_instructions import (
 )
 
 in_mock = "/home/maarten/projects/sunya/src/mock"
-in_landler_fe = "/home/maarten/projects/sunya/src/landler_fe"
+in_blogs_fe = "/home/maarten/projects/sunya/src/blogs_fe"
+in_darshana_fe = "/home/maarten/projects/sunya/src/darshana_fe"
 
 
 dir_list = [
     "mocks/queries",
-    "routes",
-    "stories",
 ]
 
 file_map = {}
@@ -26,7 +25,8 @@ file_map = {}
 
 add_spec(file_map, dir_list, in_mock=in_mock)
 add_instructions(file_map, dir_list, in_mock=in_mock)
-add_sample_code(file_map, dir_list, sample_code_in=f"{in_landler_fe}/src")
+add_sample_code(file_map, dir_list, sample_code_in=f"{in_blogs_fe}/src")
+add_code(file_map, dir_list, code_in=f"{in_darshana_fe}/src")
 
 
 if __name__ == "__main__":
