@@ -27,7 +27,11 @@ def get_expanded_dir_list(dir_list):
 def get_files_to_copy(file_map, target_dir, expanded_dir_list):
     files_to_copy = []
     for source_pattern, dest in file_map.items():
-        for source in glob.glob(source_pattern):
+        matches = glob.glob(source_pattern)
+        if not matches:
+            print(f"Warning: No files found for pattern: {source_pattern}")
+
+        for source in matches:
             if os.path.isfile(source):
                 if dest in expanded_dir_list:
                     target = os.path.join(target_dir, dest, os.path.basename(source))
@@ -48,8 +52,6 @@ def get_files_to_copy(file_map, target_dir, expanded_dir_list):
                         rel_path = os.path.relpath(src_file, source)
                         target = os.path.join(target_dir, dest, rel_path)
                         files_to_copy.append((src_file, target))
-    else:
-        print(f"Warning: No files found for pattern: {source_pattern}")
     return files_to_copy
 
 

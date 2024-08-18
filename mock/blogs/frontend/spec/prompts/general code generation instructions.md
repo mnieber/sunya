@@ -12,7 +12,7 @@ When I ask you to write the source code for a code unit (such as a React compone
 
 The specific instructions will always contain references to sample code. It's important that this sample code is followed closely when generating the requested code. If you cannot find the referenced sample code, please let me know.
 
-The sample code is always based on the spec/blogs/frontend/modules/blogs.yaml spec file. By studying the sample code and blogs.md, you will be able to see how the information in a module spec is used for generating a specific source file.
+The sample code is always based on the module specs in the instructions/spec/frontend/modules directory and the scenarios in the instructions/spec/frontend/scenarios directory. By studying the sample code and these spec files, you will be able to see how the information in the spec files is used for generating a specific source file.
 
 ## Updating existing source files
 
