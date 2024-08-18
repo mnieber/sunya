@@ -1,5 +1,5 @@
-from darshana.frontend.entities import Mutation, Query, Facet, Route, Component
-from darshana.stack.namespace import Module, Form
+from default.frontend.entities import Mutation, Query, Facet, Route, Component
+from default.stack.namespace import Module, Form
 import typing as T
 from sunya import actor_to_str, EntityWithId, G as g
 from .scenarios import Scenarios

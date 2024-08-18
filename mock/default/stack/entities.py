@@ -1,8 +1,6 @@
-from sunya import Entity, Value, actor_to_str
+from sunya import Entity, actor_to_str
 from sunya.utils import type_name_to_kebab
 from dataclassy import dataclass
-from sunya.entities.actor_to_str import actor_to_str
-from sunya.utils import type_name_to_kebab
 
 
 class Module(Entity):
@@ -14,17 +12,17 @@ class Form(Entity):
     data: dict = {}
 
 
+@dataclass(kw_only=True)
+class Value:
+    pass
+
+
 class Enum(Value):
     name: str
 
 
 class JSON(Value):
     data: str = ""
-
-
-@dataclass(kw_only=True)
-class Value:
-    pass
 
 
 class List(Entity):

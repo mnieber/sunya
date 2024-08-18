@@ -48,15 +48,16 @@ def project_(e):
                 F.Scenarios.Types.Scenario(
                     name="My First Scenario",
                     root_step=F.Scenarios.Types.Step(
+                        fact=("Root",),
                         child_steps=[
                             F.Scenarios.Types.Step(
-                                fact=("Root Step 1",),
+                                fact=("Base Step 1",),
                                 child_steps=[
                                     F.Scenarios.Types.Step(fact=("Child Step 1",))
                                 ],
                             ),
                             F.Scenarios.Types.Step(fact=("Root Step 2",)),
-                        ]
+                        ],
                     ),
                 )
             ],

@@ -9,7 +9,7 @@ class Entity:
 
 
 class GenericEntity(Entity):
-    key: str = ""
+    _key: str = ""
 
 
 class EntityWithId(Entity):
@@ -20,4 +20,4 @@ class EntityWithId(Entity):
 
 @actor_to_str.method((GenericEntity,))
 def generic_entity_to_str(generic_entity):
-    return generic_entity.key
+    return generic_entity._key

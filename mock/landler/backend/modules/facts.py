@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from landler.stack.namespace import Module, JSON, Enum
+from default.stack.namespace import Module, JSON, Enum
 from sunya import Entity, actor_to_str
 
 

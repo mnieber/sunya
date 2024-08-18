@@ -1,4 +1,4 @@
-from sunya import Entity, actor_to_str, G as g, GenericEntity
+from sunya import Entity, actor_to_str, G as g
 from sunya.utils import type_name_to_kebab
 import typing as T
 
@@ -30,8 +30,16 @@ class Component(Entity):
     pass
 
 
-class Action(GenericEntity):
+class State(Entity):
     pass
+
+
+class Ctr(Entity):
+    pass
+
+
+class Action(Entity):
+    name: str
 
 
 class Facet(Entity):
@@ -55,6 +63,16 @@ def mutation_to_str(mutation):
     return f"{type_name_to_kebab(mutation)}:mutation"
 
 
+@actor_to_str.method((State,))
+def state_to_str(state):
+    return f"{type_name_to_kebab(state)}:state"
+
+
+@actor_to_str.method((Ctr,))
+def ctr_to_str(ctr):
+    return f"{type_name_to_kebab(ctr)}:ctr"
+
+
 @actor_to_str.method((Route,))
 def route_to_str(route):
     return f"{route.name_or_default_name}+:route"
@@ -63,3 +81,8 @@ def route_to_str(route):
 @actor_to_str.method((Component,))
 def component_to_str(component):
     return f"{type_name_to_kebab(component)}:component"
+
+
+@actor_to_str.method((Action,))
+def action_to_str(action):
+    return f"{action.name}:action"

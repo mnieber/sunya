@@ -4,7 +4,7 @@ types:
     fields:
       - name: id
         type: UUID
-      - name: name
+      - name: key
         type: str
       - name: fields
         type: dict[str, Any]

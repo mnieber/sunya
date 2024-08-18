@@ -1,8 +1,8 @@
-from landler.stack.namespace import Module, Form, Enum
+from default.stack.namespace import Module, Form, Enum
 import typing as T
 
 from landler.backend.modules.users import Users
-from landler.backend.entities import Action, ApiView
+from default.backend.namespace import Action, ApiView
 from sunya import Entity, EntityWithId, actor_to_str, G as g
 
 

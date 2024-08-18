@@ -2,8 +2,8 @@ import typing as T
 
 from landler.backend.modules.plots import Plots
 from landler.backend.modules.projects import Projects
-from landler.stack.namespace import Module, Form
-from blogs.backend.entities import Action, ApiView
+from default.stack.namespace import Module, Form
+from default.backend.namespace import Action, ApiView
 
 
 from sunya import Entity, MemField, actor_to_str, extend

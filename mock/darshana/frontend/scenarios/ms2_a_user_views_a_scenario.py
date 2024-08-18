@@ -72,7 +72,7 @@ def start(user, project):
 def actor_(e):
     register(
         F.Actors.Types.Actor(
-            name="Example Actor",
+            key="example:actor",
             fields={
                 "field1": "value1",
                 "field2": "value2",

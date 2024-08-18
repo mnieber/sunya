@@ -1,5 +1,5 @@
-from landler.stack.namespace import Module
-from blogs.frontend.entities import Route
+from default.stack.namespace import Module
+from default.frontend.entities import Route
 
 from sunya import Entity, G as g
 

@@ -9,34 +9,48 @@ nodes:
             deltas:
               id: 1cfa7d69e2335f7aadf80649346ae662 (None)
               name: My First Scenario (None)
-              root_step: 1b4db7eb40575ddf91e036dec72071f5:step (None)
+              root_step: root:step (None)
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
             child_nodes:
-              - step: The [:frontend] displays the [scenario-list-view:component]
+              - step: The [scenario-list-view:component] displays the scenarios
           - step: The [alice@example.com+:user] clicks on a [my-first-:scenario]
             actors_created:
               - name: my-first-:scenario
                 deltas:
                   id: 1cfa7d69e2335f7aadf80649346ae662 (None)
                   name: My First Scenario (None)
-                  root_step: 1b4db7eb40575ddf91e036dec72071f5:step (None)
+                  root_step: root:step (None)
             child_nodes:
-              - step: The [:frontend] shows the [step-tree-view:component]
+              - step: The [step-tree-view:component] shows the root steps for the current [my-first-:scenario] in the [step-list-view:component]
           - step: The [alice@example.com+:user] clicks on a root level step
             child_nodes:
-              - step: The [:frontend] highlights the [643835a37a7f50e28d157fc58149ca93:step]
+              - step: The [step-list-view:component] highlights the [base-step-1:step]
                 actors_created:
-                  - name: 643835a37a7f50e28d157fc58149ca93:step
+                  - name: base-step-1:step
                     deltas:
-                      child_steps: '[''8f47ff88c2b7597d9a831cfcf6ebd328:step''] (None)'
-                      fact: ('Root Step 1',) (None)
-                      id: 62a0d08ba27f507f8d430601d767cbc9 (None)
-              - step: The [:frontend] opens a new [step-list-view:component]
+                      child_steps: '[''child-step-1:step''] (None)'
+                      fact: ('Base Step 1',) (None)
+                      field_delta_set_by_actor_key: '{} (None)'
+                      id: 9bb869b27c1d529c97add3304a7808af (None)
+                      parent_step: None (None)
+              - step: The [step-tree-view:component] opens a new [step-list-view:component] to the right
           - step: The [alice@example.com+:user] clicks on an actor link
             child_nodes:
-              - step: The [:frontend] displays actor in [actor-view:component]
+              - goal: view the selected [example-:actor] in the highlighted [base-step-1:step]
+                actors_created:
+                  - name: example-:actor
+                    deltas:
+                      changed_fields: '[''field2''] (None)'
+                      fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
+                      id: 30fae99736d85098b249352d5f28e851 (None)
+                      key: example:actor (None)
+                child_nodes:
+                  - step: The callback_for_the_highlight_facet of the [step-list-:ctr] calls the [set_highlighted_step:action] of the [step-tree-:state]
+                    child_nodes:
+                      - step: The [set_highlighted_step:action] updates the [reconstructed-:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the current [base-step-1:step] and all its parent steps
+              - step: The [actor-view:component] displays the highlighted [example-:actor]
           - step: The [alice@example.com+:user] clicks on actor link again
             child_nodes:
-              - step: The [:frontend] redirects to the [actor+:route]
+              - step: The [step-view:component] redirects to the [actor+:route]
 

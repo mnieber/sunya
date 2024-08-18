@@ -14,8 +14,12 @@ types:
         type: UUID
       - name: fact
         type: tuple[str]
+      - name: parent_step
+        type: Step
       - name: child_steps
         type: list[Step]
+      - name: field_delta_set_by_actor_key
+        type: dict[str, dict[str, Any]]
 mutations: []
 queries: []
 states:
@@ -25,9 +29,18 @@ states:
         facets:
           - name: data
           - name: highlight
+  - name: StepTreeState
+    containers:
+      - name: StepTreeCtr
+        facets:
+          - name: data
   - name: StepListState
     containers:
       - name: StepListCtr
+        facets:
+          - name: data
+          - name: highlight
+      - name: ActorsCtr
         facets:
           - name: data
           - name: highlight

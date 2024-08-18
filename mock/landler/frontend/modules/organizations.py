@@ -1,5 +1,5 @@
-from landler.stack.namespace import Module
-from blogs.frontend.entities import Component
+from default.stack.namespace import Module
+from default.frontend.entities import Component
 from sunya import G as g
 
 

@@ -1,10 +1,10 @@
-from blogs.frontend.entities import Trim
+from default.frontend.entities import Trim
 import typing as T
 
 if T.TYPE_CHECKING:
     pass
 
-from mock.default.stack.namespace import Module
+from default.stack.namespace import Module
 
 
 class Frames(Module):

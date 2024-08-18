@@ -1,5 +1,6 @@
 import landler.backend.namespace as B
 import landler.stack.namespace as S
+from default.stack.namespace import List
 from landler.stack.namespace import ith, at_ts
 from sunya import (
     add_goal,
@@ -7,7 +8,6 @@ from sunya import (
     add_step,
     get_entities,
     get_scenario,
-    List,
     register,
     the,
     unregister,

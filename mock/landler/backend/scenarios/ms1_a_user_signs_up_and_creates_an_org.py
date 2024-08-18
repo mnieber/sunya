@@ -1,5 +1,7 @@
 import landler.backend.namespace as B
-import landler.frontend.namespace as F
+import landler.frontend.namespace as F  # noqa
+from default.frontend.namespace import Route
+
 from sunya import (
     add_goal,
     add_scenario,
@@ -11,10 +13,10 @@ from sunya import (
 )
 
 
-g.sign_up_route = F.Route()
-g.sign_in_route = F.Route()
-g.user_account_route = F.Route()
-g.organization_route = F.Route()
+g.sign_up_route = Route()
+g.sign_in_route = Route()
+g.user_account_route = Route()
+g.organization_route = Route()
 
 
 def start():

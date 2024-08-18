@@ -4,8 +4,8 @@ if T.TYPE_CHECKING:
     from landler.backend.modules.plots import Plots
 
 from landler.backend.modules.organizations import Organizations
-from landler.stack.namespace import Module, Enum, Form
-from blogs.backend.entities import Action, ApiView
+from default.stack.namespace import Module, Enum, Form
+from default.backend.namespace import Action, ApiView
 
 from sunya import Entity, actor_to_str, G as g
 

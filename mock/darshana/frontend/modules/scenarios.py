@@ -1,5 +1,5 @@
-from darshana.frontend.entities import Facet, Route, Component, Action
-from darshana.stack.namespace import Module
+from default.frontend.entities import Facet, Route, Component, Action, Ctr, State
+from default.stack.namespace import Module
 import typing as T
 from sunya import (
     actor_to_str,
@@ -17,33 +17,33 @@ class Scenarios(Module):
             root_step: "Scenarios.Types.Step"
 
         class Step(EntityWithId):
-            fact: T.Tuple[str] = tuple()
+            fact: T.Tuple[str]
             parent_step: T.Optional["Scenarios.Types.Step"] = None
             child_steps: T.List["Scenarios.Types.Step"] = []
             field_delta_set_by_actor_key: T.Dict[str, T.Dict[str, T.Any]] = {}
 
     class States:
-        class ScenariosState:
+        class ScenariosState(State):
             class Containers:
-                class ScenariosCtr:
+                class ScenariosCtr(Ctr):
                     data: Facet
                     highlight: Facet
 
-        class StepTreeState:
+        class StepTreeState(State):
             class Containers:
-                class StepTreeCtr:
+                class StepTreeCtr(Ctr):
                     data: Facet = any_dict(reconstructed_actor=None)
 
             class Actions:
-                set_highlighted_step = Action(key="set_highlighted_step:action")
+                set_highlighted_step = Action(name="set_highlighted_step")
 
         class StepListState:
             class Containers:
-                class StepListCtr:
+                class StepListCtr(Ctr):
                     data: Facet
                     highlight: Facet
 
-                class ActorsCtr:
+                class ActorsCtr(Ctr):
                     data: Facet = any_dict(actor_by_key={})
                     highlight: Facet
 
@@ -92,8 +92,11 @@ g.step_tree_view = Scenarios.Views.StepTreeView()
 g.step_list_view = Scenarios.Views.StepListView()
 g.step_view = Scenarios.Views.StepView()
 g.step_list_state = Scenarios.States.StepListState()
-g.step_list_ctr = Scenarios.States.StepListState.Containers.StepListCtr()
-g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr()
+g.step_tree_state = Scenarios.States.StepTreeState()
+g.step_list_ctr = Scenarios.States.StepListState.Containers.StepListCtr(
+    data=any_dict(), highlight=any_dict()
+)
+g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr(highlight=any_dict())
 g.set_highlighted_step_action = (
     Scenarios.States.StepTreeState.Actions.set_highlighted_step
 )
@@ -107,4 +110,4 @@ def scenario_to_str(scenario):
 @actor_to_str.method((Scenarios.Types.Step,))
 def step_to_str(step):
     id = str_to_uuid("-".join(step.fact))
-    return f"{id}:step"
+    return f"{"-".join(step.fact)}:step"

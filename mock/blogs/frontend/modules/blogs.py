@@ -1,5 +1,5 @@
-from blogs.frontend.entities import Mutation, Query, Facet, Route
-from mock.default.stack.namespace import Module, Form
+from default.frontend.entities import Mutation, Query, Facet, Route
+from default.stack.namespace import Module, Form
 import typing as T
 
 from sunya import EntityWithId, actor_to_str, G as g

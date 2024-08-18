@@ -1,7 +1,7 @@
 import typing as T
 
-from landler.stack.namespace import Enum, Form, Module
-from blogs.backend.entities import Action
+from default.stack.namespace import Enum, Form, Module
+from default.backend.namespace import Action
 from sunya import Entity, actor_to_str, G as g
 
 if T.TYPE_CHECKING:
