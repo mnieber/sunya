@@ -104,7 +104,8 @@ def _get_actions(state):
 def _get_facets(container):
     result = []
     for facet_name in extract_field_types(container).keys():
-        result.append(dict(name=facet_name))
+        value = getattr(container, facet_name, None)
+        result.append(dict(name=facet_name, **(dict(value=value) if value else {})))
     return result
 
 

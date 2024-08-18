@@ -34,6 +34,8 @@ states:
       - name: StepTreeCtr
         facets:
           - name: data
+            value:
+              reconstructed_actor: null
     actions:
       - name: set_highlighted_step
   - name: StepListState
@@ -45,6 +47,8 @@ states:
       - name: ActorsCtr
         facets:
           - name: data
+            value:
+              actor_by_key: {}
           - name: highlight
 routes:
   - name: Scenario
