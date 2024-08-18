@@ -34,6 +34,8 @@ states:
       - name: StepTreeCtr
         facets:
           - name: data
+    actions:
+      - name: set_highlighted_step
   - name: StepListState
     containers:
       - name: StepListCtr

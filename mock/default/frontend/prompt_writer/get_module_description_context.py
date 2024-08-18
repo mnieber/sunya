@@ -64,16 +64,23 @@ def _get_states(module):
     if states := getattr(module, "States", None):
         for state_name, state in _get_members(states):
             if isinstance(state, type):
-                result.append(dict(name=state_name, containers=_get_containers(state)))
+                actions = _get_actions(state)
+                result.append(
+                    dict(
+                        name=state_name,
+                        containers=_get_containers(state),
+                        **(dict(actions=actions) if actions else {}),
+                    )
+                )
     return result
 
 
 def _get_members(container):
     classes = []
-    for cls_name, cls in container.__dict__.items():
-        if cls_name.startswith("_"):
+    for member_name, cls in container.__dict__.items():
+        if member_name.startswith("_"):
             continue
-        classes.append((cls_name, cls))
+        classes.append((member_name, cls))
     return classes
 
 
@@ -82,6 +89,15 @@ def _get_containers(state):
     containers = getattr(state, "Containers", None) or []
     for container_name, container in _get_members(containers):
         result.append(dict(name=container_name, facets=_get_facets(container)))
+    return result
+
+
+def _get_actions(state):
+    result = []
+    actions = getattr(state, "Actions", None)
+    if actions:
+        for action_name, action in _get_members(actions):
+            result.append(dict(name=action_name))
     return result
 
 
