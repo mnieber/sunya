@@ -1,8 +1,8 @@
 from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
 
 
-def get_scenario_description_context(scenario_fn, scenario):
-    context = dict(scenario_name=scenario.name, scenario_fn=scenario_fn, nodes=[])
+def get_scenario_description_context(scenario):
+    context = dict(scenario_name=scenario.name, nodes=[])
     context["nodes"].append(_get_node_context(scenario.root_node))
     return context
 

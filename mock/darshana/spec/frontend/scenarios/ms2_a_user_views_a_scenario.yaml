@@ -1,5 +1,4 @@
 scenario_name: ms2-a-user-views-a-scenario
-scenario_fn: frontend/ms2_a_user_views_a_scenario
 nodes:
   - root: ''
     child_nodes:
