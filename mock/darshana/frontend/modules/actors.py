@@ -30,9 +30,10 @@ g.actor_route = Actors.Routes.Actor()
 g.actor_link = Actors.Components.ActorLink()
 g.reconstructed_actor = Actors.Types.Actor(key="reconstructed:actor")
 g.field_delta_set = GenericEntity(_key=":field_delta_set")
+g.actor = Actors.Types.Actor(key="")
 
 
 @actor_to_str.method((Actors.Types.Actor,))
 def actor_to_str(actor):
     name = actor.key.replace(":", "-").replace("+", "-")
-    return f"{name}:actor"
+    return f"{name}+:actor"

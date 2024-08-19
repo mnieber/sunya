@@ -16,11 +16,11 @@ def start(user):
         e = get_entities()
         register(user, name="user")
 
-        with add_goal("create a new", e.project, "for the", e.user):
+        with add_goal("create a new", g.project, "for the", g.user):
             with the(e.user).visits_the(g.projects_route):
                 pass
 
-            with the(e.user).enters_project_name():
+            with the(e.user).enters_the_project_name():
                 pass
 
             with the(e.user).presses_the(g.import_files_button):
@@ -46,7 +46,7 @@ def project_(e):
             name="My Darshana Project",
             scenarios=[
                 F.Scenarios.Types.Scenario(
-                    name="My First Scenario",
+                    name="My First",
                     root_step=F.Scenarios.Types.Step(
                         fact=("Root",),
                         child_steps=[

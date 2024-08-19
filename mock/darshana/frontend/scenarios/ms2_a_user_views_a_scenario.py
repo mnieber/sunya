@@ -17,17 +17,17 @@ def start(user, project):
         register(user, name="user")
         register(project, name="project")
 
-        with add_goal("view a", e.scenario, "in the", e.project):
+        with add_goal("view a", g.scenario, "in the current", g.project):
             with the(e.user).visits_the(g.project_route):
                 with the(g.scenario_list_view).displays_the("scenarios"):
                     pass
 
-            with the(e.user).clicks_on_a(e.scenario):
+            with the(e.user).clicks_on_the(e.scenario):
                 register(e.project.scenarios[0], e.scenario)
 
                 with (
                     the(g.step_tree_view)
-                    .shows_the_root_steps_for_the_current(e.scenario)
+                    .shows_the_root_steps_for_the(e.scenario)
                     .in_the(g.step_list_view)
                 ):
                     pass
@@ -39,13 +39,16 @@ def start(user, project):
                 with the(g.step_tree_view).opens_a_new(g.step_list_view).to_the_right():
                     pass
 
-            with the(e.user).clicks_on_an_actor_link():
-                with add_goal(
-                    "view the selected", e.actor, "in the highlighted", e.step
-                ):
+                with the(g.step_view).shows_the_expanded_highlighted(e.step):
+                    pass
+
+            with add_goal("view the selected", g.actor, "in the highlighted", g.step):
+                with the(e.user).clicks_on_the_link_of_the(e.actor).in_the(g.step_view):
+                    actor_(e)
+
                     with (
-                        the("callback_for_the_highlight_facet")
-                        .of_the(g.step_list_ctr)
+                        the("highlight facet")
+                        .of_the(g.step_list_state)
                         .calls_the(g.set_highlighted_step_action)
                         .of_the(g.step_tree_state)
                     ):
@@ -54,16 +57,16 @@ def start(user, project):
                             .updates_the(g.reconstructed_actor)
                             .of_the(g.step_tree_state)
                             .by_applying_each(g.field_delta_set)
-                            .for_the_current(e.step)
+                            .for_the(e.step)
                             .and_all_its_parent_steps()
                         ):
-                            actor_(e)
+                            pass
 
                 with the(g.actor_view).displays_the_highlighted(e.actor):
                     pass
 
-            with the(e.user).clicks_on_actor_link_again():
-                with the(g.step_view).redirects_to_the(g.actor_route):
+            with the(e.user).clicks_again_on_the_link_of_the(e.actor):
+                with the(g.step_view).redirects_to_the(g.actor_route).for_the(e.actor):
                     pass
 
     return get_scenario(scenario_name)

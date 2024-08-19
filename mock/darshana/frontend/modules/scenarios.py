@@ -37,7 +37,7 @@ class Scenarios(Module):
             class Actions:
                 set_highlighted_step = Action(name="set_highlighted_step")
 
-        class StepListState:
+        class StepListState(State):
             class Containers:
                 class StepListCtr(Ctr):
                     data: Facet
@@ -100,11 +100,12 @@ g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr(highlight=any
 g.set_highlighted_step_action = (
     Scenarios.States.StepTreeState.Actions.set_highlighted_step
 )
-
+g.step = Scenarios.Types.Step(fact=tuple())
+g.scenario = Scenarios.Types.Scenario(name="", root_step=g.step)
 
 @actor_to_str.method((Scenarios.Types.Scenario,))
 def scenario_to_str(scenario):
-    return f"{scenario.name}:scenario"
+    return f"{scenario.name}+:scenario"
 
 
 @actor_to_str.method((Scenarios.Types.Step,))

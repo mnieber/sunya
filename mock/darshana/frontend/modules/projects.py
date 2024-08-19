@@ -89,6 +89,7 @@ g.create_project_button = Projects.Components.CreateProjectButton()
 g.projects_route = Projects.Routes.Projects()
 g.project_route = Projects.Routes.Project()
 g.create_project_mutation = Projects.Mutations.CreateProject()
+g.project = Projects.Types.Project(name="")
 
 
 @actor_to_str.method((Projects.Types.Project,))

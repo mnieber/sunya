@@ -31,7 +31,6 @@ def _get_node_actors(node, add_created, add_updated):
         delta = get_entity_delta(node, entity)
         field_deltas = {}
         for field_name, (old_value_memo, new_value_memo) in delta.items():
-
             if add_created and old_value_memo is NoValue:
                 field_deltas[field_name] = f"{new_value_memo} ({None})"
             elif (

@@ -2,16 +2,10 @@ scenario_name: ms1-a-user-creates-a-project
 nodes:
   - root: ''
     child_nodes:
-      - goal: create a new [my-darshana-project+:project] for the [alice@example.com+:user]
-        actors_created:
-          - name: my-darshana-project+:project
-            deltas:
-              id: 00dcca049c335a198d7d466b886ec3bb (None)
-              name: My Darshana Project (None)
-              scenarios: '[''my-first-:scenario''] (None)'
+      - goal: create a new [+:project] for the [+:user]
         child_nodes:
           - step: The [alice@example.com+:user] visits the [projects+:route]
-          - step: The [alice@example.com+:user] enters project name
+          - step: The [alice@example.com+:user] enters the project name
           - step: The [alice@example.com+:user] presses the [import-files-button:component]
             child_nodes:
               - step: The [:frontend] uploads spec files

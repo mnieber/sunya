@@ -2,26 +2,20 @@ scenario_name: ms2-a-user-views-a-scenario
 nodes:
   - root: ''
     child_nodes:
-      - goal: view a [my-first-:scenario] in the [my-darshana-project+:project]
-        actors_created:
-          - name: my-first-:scenario
-            deltas:
-              id: 1cfa7d69e2335f7aadf80649346ae662 (None)
-              name: My First Scenario (None)
-              root_step: root:step (None)
+      - goal: view a [+:scenario] in the current [+:project]
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
             child_nodes:
               - step: The [scenario-list-view:component] displays the scenarios
-          - step: The [alice@example.com+:user] clicks on a [my-first-:scenario]
+          - step: The [alice@example.com+:user] clicks on the [my-first+:scenario]
             actors_created:
-              - name: my-first-:scenario
+              - name: my-first+:scenario
                 deltas:
-                  id: 1cfa7d69e2335f7aadf80649346ae662 (None)
-                  name: My First Scenario (None)
+                  id: ff5aeda911da5d76ae711522d6d7a17e (None)
+                  name: My First (None)
                   root_step: root:step (None)
             child_nodes:
-              - step: The [step-tree-view:component] shows the root steps for the current [my-first-:scenario] in the [step-list-view:component]
+              - step: The [step-tree-view:component] shows the root steps for the [my-first+:scenario] in the [step-list-view:component]
           - step: The [alice@example.com+:user] clicks on a root level step
             child_nodes:
               - step: The [step-list-view:component] highlights the [base-step-1:step]
@@ -34,22 +28,23 @@ nodes:
                       id: 9bb869b27c1d529c97add3304a7808af (None)
                       parent_step: None (None)
               - step: The [step-tree-view:component] opens a new [step-list-view:component] to the right
-          - step: The [alice@example.com+:user] clicks on an actor link
+              - step: The [step-view:component] shows the expanded highlighted [base-step-1:step]
+          - goal: view the selected [+:actor] in the highlighted [:step]
             child_nodes:
-              - goal: view the selected [example-:actor] in the highlighted [base-step-1:step]
+              - step: The [alice@example.com+:user] uses the [step-view:component] to click on the link of the [example-actor+:actor]
                 actors_created:
-                  - name: example-:actor
+                  - name: example-actor+:actor
                     deltas:
                       changed_fields: '[''field2''] (None)'
                       fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
-                      id: 30fae99736d85098b249352d5f28e851 (None)
+                      id: 8427f8f94fca596dbb9b8c8085180942 (None)
                       key: example:actor (None)
                 child_nodes:
-                  - step: The callback_for_the_highlight_facet of the [step-list-:ctr] calls the [set_highlighted_step:action] of the [step-tree-:state]
+                  - step: The highlight facet of the [step-list-:state] calls the [set_highlighted_step:action] of the [step-tree-:state]
                     child_nodes:
-                      - step: The [set_highlighted_step:action] updates the [reconstructed-:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the current [base-step-1:step] and all its parent steps
-              - step: The [actor-view:component] displays the highlighted [example-:actor]
-          - step: The [alice@example.com+:user] clicks on actor link again
+                      - step: The [set_highlighted_step:action] updates the [reconstructed-actor+:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the [base-step-1:step] and all its parent steps
+              - step: The [actor-view:component] displays the highlighted [example-actor+:actor]
+          - step: The [alice@example.com+:user] clicks again on the link of the [example-actor+:actor]
             child_nodes:
-              - step: The [step-view:component] redirects to the [actor+:route]
+              - step: The [step-view:component] redirects to the [actor+:route] for the [example-actor+:actor]
 
