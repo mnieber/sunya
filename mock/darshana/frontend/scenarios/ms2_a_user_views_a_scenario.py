@@ -39,11 +39,15 @@ def start(user, project):
                 with the(g.step_tree_view).opens_a_new(g.step_list_view).to_the_right():
                     pass
 
-                with the(g.step_view).shows_the_expanded_highlighted(e.step):
-                    pass
-
-            with add_goal("view the selected", g.actor, "in the highlighted", g.step):
-                with the(e.user).clicks_on_the_link_of_the(e.actor).in_the(g.step_view):
+            with add_goal(
+                "view the selected",
+                g.actor,
+                "in the highlighted",
+                e.step,
+                "in the",
+                g.step_tree_view,
+            ):
+                with the(e.user).clicks_on_the_link_of_the(e.actor):
                     actor_(e)
 
                     with (
@@ -66,7 +70,9 @@ def start(user, project):
                     pass
 
             with the(e.user).clicks_again_on_the_link_of_the(e.actor):
-                with the(g.step_view).redirects_to_the(g.actor_route).for_the(e.actor):
+                with the(g.step_tree_view).redirects_to_the(g.actor_route).for_the(
+                    e.actor
+                ):
                     pass
 
     return get_scenario(scenario_name)

@@ -66,15 +66,13 @@ class Scenarios(Module):
             pass
 
         class StepListView(Component):
-            pass
-
-        class StepView(Component):
-            pass
+            props = dict(
+                is_collapsed=False,
+            )
 
         class ScenarioPage(Component):
             root = dict(
                 step_tree_view=dict(step_list_views=None),
-                step_view=None,
                 actor_view=None,
             )
 
@@ -90,7 +88,6 @@ g.scenario_route = Scenarios.Routes.Scenario()
 g.scenario_list_view = Scenarios.Views.ScenarioListView()
 g.step_tree_view = Scenarios.Views.StepTreeView()
 g.step_list_view = Scenarios.Views.StepListView()
-g.step_view = Scenarios.Views.StepView()
 g.step_list_state = Scenarios.States.StepListState()
 g.step_tree_state = Scenarios.States.StepTreeState()
 g.step_list_ctr = Scenarios.States.StepListState.Containers.StepListCtr(

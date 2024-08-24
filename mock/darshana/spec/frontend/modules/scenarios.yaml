@@ -58,13 +58,13 @@ state_providers:
 views:
   ScenarioListView(Component): {}
   StepTreeView(Component): {}
-  StepListView(Component): {}
-  StepView(Component): {}
+  StepListView(Component):
+    props:
+      is_collapsed: false
   ScenarioPage(Component):
     root:
       step_tree_view:
         step_list_views: null
-      step_view: null
       actor_view: null
 effects:
   - name: SelectScenarioEffect

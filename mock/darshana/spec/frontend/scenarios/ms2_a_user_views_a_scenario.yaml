@@ -28,10 +28,9 @@ nodes:
                       id: 9bb869b27c1d529c97add3304a7808af (None)
                       parent_step: None (None)
               - step: The [step-tree-view:component] opens a new [step-list-view:component] to the right
-              - step: The [step-view:component] shows the expanded highlighted [base-step-1:step]
-          - goal: view the selected [+:actor] in the highlighted [:step]
+          - goal: view the selected [+:actor] in the highlighted [base-step-1:step] in the [step-tree-view:component]
             child_nodes:
-              - step: The [alice@example.com+:user] uses the [step-view:component] to click on the link of the [example-actor+:actor]
+              - step: The [alice@example.com+:user] clicks on the link of the [example-actor+:actor]
                 actors_created:
                   - name: example-actor+:actor
                     deltas:
@@ -46,5 +45,5 @@ nodes:
               - step: The [actor-view:component] displays the highlighted [example-actor+:actor]
           - step: The [alice@example.com+:user] clicks again on the link of the [example-actor+:actor]
             child_nodes:
-              - step: The [step-view:component] redirects to the [actor+:route] for the [example-actor+:actor]
+              - step: The [step-tree-view:component] redirects to the [actor+:route] for the [example-actor+:actor]
 
