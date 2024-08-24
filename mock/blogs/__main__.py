@@ -21,6 +21,7 @@ config = dict(
         "backend/ms1_a_user_creates_a_blog",
         "backend/ms2_a_user_creates_a_blog_post",
         "frontend/ms1_a_user_creates_a_blog",
+        "frontend/ms2_a_user_creates_a_blog_post",
     ],
     module_by_name={
         "backend/blogs": BackendBlogs,

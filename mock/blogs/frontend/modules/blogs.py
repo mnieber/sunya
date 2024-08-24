@@ -1,4 +1,4 @@
-from default.frontend.entities import Mutation, Query, Facet, Route
+from default.frontend.namespace import Component, Facet, Mutation, Query, Route
 from default.stack.namespace import Module, Form
 import typing as T
 
@@ -16,9 +16,9 @@ class Blogs(Module):
             blog: "Blogs.Types.Blog"
             title: str
             content: T.Optional[str]
-            isPublished: bool
+            isPublished: bool = False
             level: "Blogs.Enums.BlogPostLevel"
-            tags: T.List[str]
+            tags: T.List[str] = []
 
     class Enums:
         class BlogPostLevel:
@@ -89,13 +89,13 @@ class Blogs(Module):
             pass
 
     class Views:
-        class BlogPostFormView:
+        class BlogPostFormView(Component):
             pass
 
-        class BlogListView:
+        class BlogListView(Component):
             pass
 
-        class BlogPostListView:
+        class BlogPostListView(Component):
             pass
 
         class BlogsPage:
@@ -129,9 +129,16 @@ class Blogs(Module):
 
 
 g.create_blog_mutation = Blogs.Mutations.CreateBlog()
+g.update_blog_post_mutation = Blogs.Mutations.UpdateBlogPost()
 g.create_blog_post_mutation = Blogs.Mutations.CreateBlogPost()
 g.delete_blog_posts_action = Blogs.Mutations.DeleteBlogPosts()
 g.blogs_route = Blogs.Routes.Blogs()
+g.blog_route = Blogs.Routes.Blog()
+g.blog_list_view = Blogs.Views.BlogListView()
+g.create_blog_button = Blogs.Components.CreateBlogButton()
+g.create_blog_post_button = Blogs.Components.CreateBlogPostButton()
+g.delete_blog_posts_button = Blogs.Components.DeleteBlogPostsButton()
+g.edit_blog_post_button = Blogs.Components.EditBlogPostButton()
 
 
 @actor_to_str.method((Blogs.Types.Blog,))

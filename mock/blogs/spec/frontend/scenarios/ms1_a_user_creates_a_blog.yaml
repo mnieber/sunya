@@ -1,5 +1,4 @@
 scenario_name: ms1-a-user-creates-a-blog
-scenario_fn: frontend/ms1_a_user_creates_a_blog
 nodes:
   - root: ''
     child_nodes:
@@ -12,6 +11,8 @@ nodes:
               name: My Personal Blog (None)
         child_nodes:
           - step: The [alice@example.com+:user] visits the [blogs+:route]
+          - step: The [alice@example.com+:user] sees the [blog-list-view:component]
+          - step: The [alice@example.com+:user] presses the [create-blog-button:dialog_button]
           - step: The [alice@example.com+:user] submits a form
             child_nodes:
               - step: The [:frontend] calls the [create-blog:mutation]

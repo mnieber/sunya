@@ -74,9 +74,9 @@ state_providers:
   - name: BlogsStateProvider
   - name: BlogPostsStateProvider
 views:
-  BlogPostFormView: {}
-  BlogListView: {}
-  BlogPostListView: {}
+  BlogPostFormView(Component): {}
+  BlogListView(Component): {}
+  BlogPostListView(Component): {}
   BlogsPage:
     root:
       __LeftSideBar:

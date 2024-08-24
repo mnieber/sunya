@@ -1,5 +1,4 @@
 scenario_name: a-user-creates-a-blog-post
-scenario_fn: backend/ms2_a_user_creates_a_blog_post
 nodes:
   - root: ''
     child_nodes:

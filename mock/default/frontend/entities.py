@@ -46,10 +46,6 @@ class Facet(Entity):
     name: str
 
 
-class Trim(Entity):
-    name: str
-
-
 g.frontend = Frontend()
 
 

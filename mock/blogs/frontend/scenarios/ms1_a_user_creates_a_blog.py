@@ -20,6 +20,12 @@ def start(user):
             with the(e.user).visits_the(g.blogs_route):
                 pass
 
+            with the(e.user).sees_the(g.blog_list_view):
+                pass
+
+            with the(e.user).presses_the(g.create_blog_button):
+                pass
+
             with the(e.user).submits_a_form():
                 with the(g.frontend).calls_the(g.create_blog_mutation):
                     blog_(e)
@@ -28,7 +34,7 @@ def start(user):
 
 
 def blog_(e):
-    register(
+    return register(
         F.Blogs.Types.Blog(
             name="My Personal Blog",
             description="Random things that interest me",

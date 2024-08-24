@@ -1,0 +1,38 @@
+scenario_name: ms2-a-user-creates-a-blog-post
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: create a [my-first-blog-post+:blog] in the [my-personal-blog+:blog]
+        actors_created:
+          - name: my-first-blog-post+:blog
+            deltas:
+              blog: my-personal-blog+:blog (None)
+              content: Hello (None)
+              id: cd0c65fb512c547a8817a2088bc6764b (None)
+              isPublished: False (None)
+              level: medium (None)
+              tags: '[] (None)'
+              title: My First Blog Post (None)
+        child_nodes:
+          - step: The [alice@example.com+:user] visits the [blogs+:route]
+          - step: The [alice@example.com+:user] clicks on a [my-personal-blog+:blog] to visit the [blog+:route]
+          - step: The [alice@example.com+:user] presses the [create-blog-post-button:dialog_button]
+          - step: The [alice@example.com+:user] submits a form
+            child_nodes:
+              - step: The [:frontend] calls the [create-blog-post:mutation]
+      - goal: edit a [my-first-blog-post+:blog] in the [my-personal-blog+:blog]
+        actors_updated:
+          - name: my-first-blog-post+:blog
+            deltas:
+              content: Hello, World! (Hello)
+        child_nodes:
+          - step: The [alice@example.com+:user] selects the [my-first-blog-post+:blog] they want to edit
+          - step: The [alice@example.com+:user] presses the [edit-blog-post-button:dialog_button]
+          - step: The [alice@example.com+:user] submits a form
+            child_nodes:
+              - step: The [:frontend] calls the [update-blog-post:mutation]
+      - goal: delete a [my-first-blog-post+:blog] in the [my-personal-blog+:blog]
+        child_nodes:
+          - step: The [alice@example.com+:user] selects the [my-first-blog-post+:blog] they want to delete
+          - step: The [alice@example.com+:user] presses the [delete-blog-posts-button:dialog_button]
+
