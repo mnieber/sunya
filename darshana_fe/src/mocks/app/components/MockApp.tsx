@@ -1,12 +1,12 @@
 import { MockDashboardFrame } from '/src/mocks/frames/components/MockDashboardFrame';
 import { MockMainView } from '/src/mocks/frames/components/MockMainView';
-import { MockUserSettingsSwitch } from '/src/mocks/userSettings/components/MockUserSettingsSwitch';
+import { MockStepTreeView } from '/src/mocks/scenarios/components/MockStepTreeView';
 
 export const MockApp = () => {
   return (
     <MockDashboardFrame>
       <MockMainView className="">
-        <MockUserSettingsSwitch />
+        <MockStepTreeView />
       </MockMainView>
     </MockDashboardFrame>
   );

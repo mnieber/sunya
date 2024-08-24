@@ -1,4 +1,3 @@
-from blogs.tests.factories import BlogFactory, BlogPostFactory
 from django.core.management.base import BaseCommand
 
 from django.core.management import call_command
@@ -23,12 +22,3 @@ class Command(BaseCommand):
         call_command("createsuperuser", "--noinput")
 
         user = User.objects.all().first()
-
-        blog = BlogFactory(owner=user, name="Music")
-        BlogPostFactory(blog=blog, title="Jazz", content="Jazz 1-2-3")
-        BlogPostFactory(blog=blog, title="Pop", content="Pop 1-2-3")
-        BlogPostFactory(blog=blog, title="Rock", content="Pop 1-2-3")
-
-        blog = BlogFactory(owner=user, name="Movies")
-        BlogPostFactory(blog=blog, title="Bambi", content="Disney")
-        BlogPostFactory(blog=blog, title="Rocky", content="Boxing")
