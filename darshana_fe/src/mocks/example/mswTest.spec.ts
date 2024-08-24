@@ -1,4 +1,3 @@
-import { handleMe } from 'src/mocks/users';
 import { testWithMsw } from 'src/mocks/utils/testWithMsw';
 import { get } from '/src/api/restClient';
 
@@ -20,7 +19,7 @@ const expect = (value: any) => {
 
 describe(
   'testMsw',
-  testWithMsw([handleMe], () => {
+  testWithMsw([], () => {
     it('displays data from backend', async () => {
       const response = await get('user/me/');
       expect(response.data).toEqual({

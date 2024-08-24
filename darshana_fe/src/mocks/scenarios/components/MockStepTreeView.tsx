@@ -55,7 +55,7 @@ const mockSteps = {
   ],
 };
 
-const Step = ({ step, depth = 0 }) => {
+const Step = ({ step, depth = 0 }: any) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
 
   const toggleExpand = () => {
@@ -87,7 +87,7 @@ const Step = ({ step, depth = 0 }) => {
         </div>
       </div>
       {isExpanded &&
-        step.childSteps.map((childStep) => (
+        step.childSteps.map((childStep: any) => (
           <Step key={childStep.id} step={childStep} depth={depth + 1} />
         ))}
     </div>

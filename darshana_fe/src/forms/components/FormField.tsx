@@ -3,7 +3,6 @@ import { IconS } from '/src/frames/components/Icon';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
-import './FormField.AuthCard.scss';
 import './FormField.MainView.scss';
 
 export type PropsT = React.PropsWithChildren<{

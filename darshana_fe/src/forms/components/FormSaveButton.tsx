@@ -8,7 +8,7 @@ import {
 import { createTrim } from '/src/utils/trim';
 
 export type PropsT = DialogButtonPropsT & {
-  theme: 'MainView' | 'AuthCard';
+  theme: 'MainView';
 };
 
 export const FormSaveButton = (props: PropsT) => {
@@ -20,7 +20,7 @@ export const FormSaveButton = (props: PropsT) => {
       trim={
         props.theme === 'MainView'
           ? MainViewDialogButtonTrim
-          : AuthCardDialogButtonTrim
+          : MainViewDialogButtonTrim
       }
       onClick={(e: any) => {
         e.preventDefault();
@@ -47,15 +47,6 @@ const MainViewDialogButtonTrim = createTrim(DefaultDialogButtonTrim, {
   disabled: {
     root: {
       color: DialogButtonS.color.grayBackground(),
-    },
-  },
-});
-
-const AuthCardDialogButtonTrim = createTrim(DefaultDialogButtonTrim, {
-  base: {
-    componentName: 'FormSaveButton-DialogButton',
-    root: {
-      color: DialogButtonS.color.skyBlueWithWhiteText(),
     },
   },
 });

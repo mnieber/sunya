@@ -1,11 +1,10 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import * as R from 'ramda';
 import { queryClient } from '/src/api/queryClient';
+import { flags } from '/src/app/flags';
 import { L } from '/src/frames/layout';
 import { MockApp } from '/src/mocks/app/components/MockApp';
 import { NavStateProvider } from '/src/routes/components/NavStateProvider';
-import { RootSwitch } from '/src/routes/components';
-import { history } from '/src/routes/history';
 import { cn } from '/src/utils/classnames';
 
 export const App = () => {
@@ -16,9 +15,7 @@ export const App = () => {
   ) : (
     <QueryClientProvider client={queryClient}>
       <NavStateProvider>
-        <AppBody>
-          <RootSwitch />
-        </AppBody>
+        <AppBody></AppBody>
       </NavStateProvider>
     </QueryClientProvider>
   );
@@ -32,7 +29,8 @@ const AppBody = (props: React.PropsWithChildren<{}>) => {
         R.values({
           root: L.col.banner(),
           // 320px = breakpoints.xs
-          size: `min-width-[320px] h-screen`,
+          size: `min-width-[320px] h-screen max-w-[1600px]`,
+          pos: `mx-auto`,
           scroll: 'overflow-x-hidden',
         }),
       ])}

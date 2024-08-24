@@ -12,7 +12,7 @@ export const mapboxEventsHandler = http.post(
   }
 );
 
-export const landler = http.get(`${hostUrl}*`, () => {
+export const darshana = http.get(`${hostUrl}*`, () => {
   return passthrough();
 });
 
@@ -27,7 +27,7 @@ export const src = http.get('/src/*', () => {
 export const passthroughHandlers = [
   mapboxApiHandler,
   mapboxEventsHandler,
-  landler,
+  darshana,
   fonts,
   src,
 ];
