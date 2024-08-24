@@ -9,13 +9,13 @@ COMMANDS:
     '~pip-compile':
       run: [in: docker, cmd: make, pip-compile]
     '~pt':
-      run: [in: docker, cmd: dodo, landler_be.pytest, ++allow-unix-socket]
+      run: [in: docker, cmd: dodo, blogs_be.pytest, ++allow-unix-socket]
       cwd: ${/SERVER/src_dir}
       kwargs:
         ++maxfail: 10
       env: [CELERY_TASK_ALWAYS_EAGER=True, OTEL_SDK_DISABLED=True]
     '~pts':
-      run: [in: docker, cmd: dodo, landler_be.pytest, ++allow-unix-socket]
+      run: [in: docker, cmd: dodo, blogs_be.pytest, ++allow-unix-socket]
       cwd: ${/SERVER/src_dir}
       kwargs:
         ++select-from-file: keep-tests.txt
@@ -40,4 +40,4 @@ ROOT:
 SERVER:
   install_dir: /app
   src_dir: ${/SERVER/install_dir}/src
-  host_src_dir: ${/ROOT/src_dir}/landler_be
+  host_src_dir: ${/ROOT/src_dir}/blogs_be

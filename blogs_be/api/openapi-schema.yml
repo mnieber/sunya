@@ -1,25 +1,25 @@
 openapi: 3.0.3
 info:
-  title: Landler API
+  title: Blogs API
   version: 1.0.0
-  description: Landler REST API
+  description: Blogs REST API
 paths:
   /api/blogs/blogs/{blog_id}/blog-posts/:
     post:
       operationId: blogs_blogs_blog_posts_create
       parameters:
-      - in: path
-        name: blog_id
-        schema:
-          type: string
-          format: uuid
-        required: true
+        - in: path
+          name: blog_id
+          schema:
+            type: string
+            format: uuid
+          required: true
       tags:
-      - blogs
+        - blogs
       security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
+        - cookieAuth: []
+        - basicAuth: []
+        - {}
       responses:
         '200':
           content:
@@ -53,11 +53,11 @@ components:
           type: string
           format: uuid
       required:
-      - blog
-      - created_at
-      - id
-      - modified_at
-      - title
+        - blog
+        - created_at
+        - id
+        - modified_at
+        - title
   securitySchemes:
     basicAuth:
       type: http

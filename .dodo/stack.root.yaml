@@ -24,10 +24,18 @@ DOCKER_COMPOSE:
 MENU:
   session_id: sunya
   commands:
-    serve:
+    serve_darshana:
+      - dodo darshana_be.serve
+      - dodo darshana_fe.serve
+      - dodo darshana_fe.storybook
+    serve_landler:
       - dodo landler_be.serve
       - dodo landler_fe.serve
       - dodo landler_fe.storybook
+    serve_blogs:
+      - dodo blogs_be.serve
+      - dodo blogs_fe.serve
+      - dodo blogs_fe.storybook
 
 ROOT:
   aliases: {}

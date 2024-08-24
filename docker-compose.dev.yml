@@ -13,6 +13,36 @@ services:
       - ./mock:/app/src
       - ./sunya:/app/src/sunya
       - mock_venv:/app/env
+  blogs_be:
+    build:
+      context: ./blogs_be
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    depends_on:
+      - postgres
+    env_file:
+      - ./blogs_be/.env/dev.injected.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings.dev
+    image: blogs_be_dev
+    ports:
+      - 8002:8002
+    volumes:
+      - ./blogs_be:/app/src
+      - blogs_be_venv:/app/env
+  blogs_fe:
+    build:
+      context: ./blogs_fe
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    env_file:
+      - ./blogs_fe/.env/dev.injected.env
+    image: blogs_fe_dev
+    ports:
+      - 3002:3002
+      - 6008:6008
+    volumes:
+      - ./blogs_fe:/app/src
   darshana_be:
     build:
       context: ./darshana_be
@@ -40,6 +70,7 @@ services:
     image: darshana_fe_dev
     ports:
       - 3000:3000
+      - 6006:6006
     volumes:
       - ./darshana_fe:/app/src
   landler_be:
@@ -69,7 +100,7 @@ services:
     image: sunya_landler_fe_dev
     ports:
       - 3001:3001
-      - 6006:6006
+      - 6007:6007
     volumes:
       - ./landler_fe:/app/src
   postgres:
@@ -81,6 +112,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 volumes:
+  blogs_be_venv: {}
   darshana_be_venv: {}
   landler_be_venv: {}
   mock_venv: {}

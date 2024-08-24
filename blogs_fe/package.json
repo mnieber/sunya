@@ -1,5 +1,5 @@
 {
-  "name": "landler-fe",
+  "name": "blogs-fe",
   "dependencies": {
     "@szhsin/react-menu": "^4.1.0",
     "@tanstack/react-query": "^5.50.1",
@@ -65,7 +65,7 @@
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "storybook": "storybook dev -p 6006 --no-open",
+    "storybook": "storybook dev -p 6008 --no-open",
     "build-storybook": "storybook build"
   },
   "type": "module",

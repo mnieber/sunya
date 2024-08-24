@@ -2,9 +2,6 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '/src/api/queryClient';
 import { AuthStateProvider } from '/src/auth/components/AuthStateProvider';
 
-// Import styles
-import './App.scss';
-
 export type PropsT = React.PropsWithChildren<{}>;
 
 export const StorybookProvider = (props: PropsT) => {

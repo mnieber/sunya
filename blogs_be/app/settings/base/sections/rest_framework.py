@@ -11,8 +11,8 @@ REST_FRAMEWORK = {
 
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "Landler API",
-    "DESCRIPTION": "Landler REST API",
+    "TITLE": "Blogs API",
+    "DESCRIPTION": "Blogs REST API",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "COMPONENT_SPLIT_REQUEST": True,

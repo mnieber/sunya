@@ -1,1 +1,1 @@
-# Landler sample application
+# Blogs sample application

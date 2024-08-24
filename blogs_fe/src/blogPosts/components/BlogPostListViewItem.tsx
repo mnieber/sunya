@@ -27,13 +27,16 @@ export const BlogPostListViewItem: React.FC<PropsT> = observer(
           props.className
         )}
         {...mergeProps(selectionUIHandlers(props.selectionUIProps), {
-          onClick: () =>
-            navTo(
-              blogPostsNav.blogPost({
-                blogSlug: props.blog.slug,
-                blogPostSlug: props.blogPost.slug,
-              })
-            ),
+          onClick: (e: React.MouseEvent<HTMLDivElement>) => {
+            if (!(e.ctrlKey || e.shiftKey)) {
+              navTo(
+                blogPostsNav.blogPost({
+                  blogSlug: props.blog.slug,
+                  blogPostSlug: props.blogPost.slug,
+                })
+              );
+            }
+          },
         })}
       >
         {props.blogPost.title}

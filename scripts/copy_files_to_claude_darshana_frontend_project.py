@@ -10,6 +10,7 @@ from mock.darshana.frontend.copy_files_to_claude.add_sample_code import add_samp
 from mock.darshana.frontend.copy_files_to_claude.add_instructions import (
     add_instructions,
 )
+from mock.darshana.frontend.copy_files_to_claude.add_code import add_code
 
 in_mock = "/home/maarten/projects/sunya/src/mock"
 in_blogs_fe = "/home/maarten/projects/sunya/src/blogs_fe"
