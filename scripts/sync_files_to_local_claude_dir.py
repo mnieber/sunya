@@ -83,8 +83,9 @@ def sync_files(file_map, dir_list, target_dir):
         for dir in dirs:
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):
-                print("Removing empty directory: ", dir_path)
-                os.rmdir(dir_path)
+                if "claude_chats" not in dir_path:
+                    print("Removing empty directory: ", dir_path)
+                    os.rmdir(dir_path)
 
     return files_to_copy
 
