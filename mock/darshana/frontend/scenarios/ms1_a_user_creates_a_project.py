@@ -3,36 +3,37 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
-    register,
+    add_actor,
+    add_role,
     the,
     G as g,
-    get_entities,
 )
 
 
 def start(user):
+    project = add_role("Project")
+
     scenario_name = "ms1-a-user-creates-a-project"
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(user, name="user")
+        add_actor(user, name="user", role="User")
 
-        with add_goal("create a new", g.project, "for the", g.user):
-            with the(e.user).visits_the(g.projects_route):
+        with add_goal("create a new", project, "for the", g.user):
+            with the(g.user).visits_the(g.projects_route):
                 pass
 
-            with the(e.user).enters_the_project_name():
+            with the(g.user).enters_the_project_name():
                 pass
 
-            with the(e.user).presses_the(g.import_files_button):
+            with the(g.user).presses_the(g.import_files_button):
                 with the(g.frontend).uploads_spec_files():
                     pass
 
-            with the(e.user).deletes_some_uploaded_files():
+            with the(g.user).deletes_some_uploaded_files():
                 pass
 
-            with the(e.user).presses_the(g.create_project_button):
+            with the(g.user).presses_the(g.create_project_button):
                 with the(g.frontend).calls_the(g.create_project_mutation):
-                    project_(e)
+                    project_()
 
             with the(g.frontend).redirects_to_the(g.project_route):
                 pass
@@ -40,8 +41,8 @@ def start(user):
     return get_scenario(scenario_name)
 
 
-def project_(e):
-    return register(
+def project_():
+    return add_actor(
         F.Projects.Types.Project(
             name="My Darshana Project",
             scenarios=[
@@ -62,7 +63,8 @@ def project_(e):
                 )
             ],
         ),
-        e.project,
+        name="project",
+        role="Project",
     )
 
 

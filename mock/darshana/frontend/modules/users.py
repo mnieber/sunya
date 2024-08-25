@@ -1,5 +1,5 @@
 from default.stack.namespace import Module
-from sunya import actor_to_str, EntityWithId, G as g
+from sunya import actor_to_str, EntityWithId
 
 
 class Users(Module):
@@ -11,6 +11,3 @@ class Users(Module):
 @actor_to_str.method((Users.Types.User,))
 def user_to_str(user):
     return f"{user.email}+:user"
-
-
-g.user = Users.Types.User(email="")

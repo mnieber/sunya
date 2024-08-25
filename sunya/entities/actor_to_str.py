@@ -19,7 +19,13 @@ def shorten_term_str(term_str):
     return ":".join(parts)
 
 
-def get_actor_str(actor):
+def get_actor_str(role_or_actor):
+    from sunya.scenarios.roles import Role
+
+    if isinstance(role_or_actor, Role):
+        return actor_to_str(role_or_actor)
+
+    actor = role_or_actor
     parts = []
     for part in actor_to_str(actor).split(" "):
         parts.append(camel_to_kebab(part))

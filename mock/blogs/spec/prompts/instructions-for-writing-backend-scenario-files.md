@@ -6,9 +6,11 @@ Taking the roadmap.md file as input, your task is to write a backend scenario sc
 
 ## Purpose of a backend scenario
 
-The purpose of a backend scenario is to document and communicate the use-cases that the backend must support to the backend development team. The task of writing backend scenarios fits into the overarching task of creating the complete specification of the full application. For this reason, there also exist frontend scenarios that are used by the frontend team.
+The purpose of a backend scenario is to document and communicate the use-cases that the backend must support to the backend development team. This fits into the overarching task of creating the complete specification of the full application.
 
-Both backend scenarios and frontend scenarios are derived from the same roadmap. Moreover, backend scenarios may refer to actors that come from frontend module specs, for example to explain the work-flow that leads to an api call made to the backend. Although actors based on frontend mock code-units (defined in frontend module specs) may appear in a backend scenario, the focus of the scenario is to describe what happens in the backend.
+### Relationship to the frontend scenarios
+
+Note that there also exist frontend scenarios that are used by the frontend team. Both backend scenarios and frontend scenarios are derived from the same roadmap. Backend scenarios may refer to actors that come from frontend module specs, for example to explain the work-flow that leads to an api call made to the backend. However, although references are sometimes made to what happens in the frontend, the focus of the backend scenario is to describe what happens in the backend.
 
 ## The run function
 
@@ -18,11 +20,11 @@ The entry-point for the scenario is the run function. If the scenario requires a
 
 The start function creates the scenario instance. This scenario instance is automatically added to a store, so that the caller of the scenario can later extract the information that was generated during the scenario.
 
-## Scenario functions and the add_step function
+## The add_step function
 
-The start function is also the first so-called scenario function. Each scenario function will add steps to the scenario, either directly or by calling other scenario functions. The steps in a scenario form a tree structure, where each step can contain child steps.
+The start function will create a scenario and then add steps to it using the add_step function. The steps in a scenario form a tree structure, where each step may contain child steps.
 
-To add a step, the scenario function uses the add_step function. A step is a tuple that contains one or more actors and small strings that qualify the relationships between the actors. To add a child step to a step, we use the `with` keyword to create scope, and then call add_step within that scope.
+A step is a tuple that contains one or more actors (or roles, see below) and small strings that qualify the relationships between the actors. To add a child step to a step, we use the `with` keyword to create a child-step scope, and then call add_step within that scope.
 
 ### The StepBuilder
 
@@ -34,22 +36,16 @@ It's often useful to specify to which goal a sub-tree of steps contributes. This
 
 ## Actors
 
-The steps and goals in a scenario can refer to actors. Each scenario function can create an actor by instantiating a code-unit that is defined in a module spec. When the actor has been created, the scenario function calls the register function to register it - under a given name - with the scenario.
+The steps and goals in a scenario can refer to actors. Each scenario function can create an actor by instantiating a code-unit that is defined in a module spec. When the actor has been created, the scenario function calls the add_actor function to register it - under a given name - with the scenario.
 
-A scenario function can also use the global actors that are instantiated in the module specs. The global actors are added to a special 'G' object that acts as a namespace. Typically, the global actors are not registered with a scenario.
+### The global namespace object
 
-### The preregister function
-
-In some cases, a step makes reference to an actor that has not yet been created. In that case it can use the preregister function to create a place-holder actor. When the real actor is created and registered, the scenario function will also pass in the placeholder actor to the register function, so that existing steps can be updated to replace the place-holder actor with the real actor. Note that scenarios do not have to call preregister explicitly because they use the get_entities() function to obtain a EntityLookup object which takes care of this automatically.
-
-## The register function
-
-The register function is used to register an actor - under a given name - with the scenario. If an entity with the given name already exists in the scenario, then it will raise an exception. To prevent this from happening (for example, when creating entities in a for-loop) you can unregister the existing entity first. Note that unregister is a no-op if called with a preregistered entity.
-
-## The get_entities() function
-
-The magical get_entities() function returns a EntityLookup object that looks up entities in the current scenario. For example, if e = get_entities(), then e.foo will look up the entity in the scenario that has been registered with name "foo". If scenario doesn't have an entity for the given name, then a new preregistered entity will be created for that name.
+Once an actor has been registered, it can be retrieved via the special 'G' object that acts as a global namespace. This global namespace will look up symbols first inside of the current scenario, and then it its global registry. The global registry contains global actors that are instantiated in the module specs.
 
 ## Mutation of actors
 
-Within a certain step, the scenario function can also mutate the actor. For example, if the scenario describes how the user renames a blog, then the scenario function may update the name field on the corresponding actor. Note that the actor is mutated, rather than creating a new updated actor. The add_step function is able to detect the changes in the actor when its associated scope is exited. In this way, by running the scenario, we can collect informations about how the actors are mutated in each step.
+Within a certain step, the scenario function can also mutate an actor. For example, if the scenario describes how the user renames a blog, then the scenario function may update the name field on the corresponding actor. Note that the actor is mutated, rather than creating a new updated actor. The add_step function is able to detect the changes in the actor when its associated scope is exited. In this way, by running the scenario, we can collect informations about how the actors are mutated in each step.
+
+# Roles
+
+Instead of referring to an actor, a step may also refer to a role. This allows the step to be more generic, as it can refer to a "possible actor" that has not yet been defined. The scenario can create roles using the add_role function. When the scenario calls add_actor then it can specify the role that this actor will perform. This approach allows us to build a rich data-structure that enables the navigation from a particular actor in a particular step to its role within that step, and from there to other steps that refer to the same role.

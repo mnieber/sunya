@@ -97,8 +97,6 @@ g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr(highlight=any
 g.set_highlighted_step_action = (
     Scenarios.States.StepTreeState.Actions.set_highlighted_step
 )
-g.step = Scenarios.Types.Step(fact=tuple())
-g.scenario = Scenarios.Types.Scenario(name="", root_step=g.step)
 
 @actor_to_str.method((Scenarios.Types.Scenario,))
 def scenario_to_str(scenario):

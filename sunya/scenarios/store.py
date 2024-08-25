@@ -4,15 +4,16 @@ from dataclassy import dataclass
 from sunya import get_actor_str
 from sunya.entities import Entity
 from sunya.scenarios.scenario import Scenario
-from sunya.scenarios.node import Node, Step, Goal
-from sunya.scenarios.preregistered_entity import PreregisteredEntity
+from sunya.scenarios.node import get_node_entity_and_role_pairs, Goal, Node, Step
 from sunya.scenarios.memo import create_memo
+from sunya.scenarios.roles import Role
 
 
 @dataclass(kw_only=True)
 class Store:
     scenarios: T.List[Scenario] = []
     stack: T.List = []
+    roles: T.List = []
 
     @property
     def scenario(self):
@@ -47,7 +48,7 @@ store = Store()
 
 
 def add_scenario(name: str):
-    scenario = Scenario(name=name, root_node=Node(fact=tuple(), level=0))
+    scenario = Scenario(name=name)
     store.scenarios.append(scenario)
 
     return NodeContext(scenario.root_node)
@@ -60,13 +61,21 @@ def get_scenario(name: str):
     return None
 
 
-def add_step(*fact_bits):
-    node = add_node(create_step(fact_bits))
-    return NodeContext(node)
+def create_goal(fact_bits):
+    return Goal(
+        scenario=store.scenario, fact=fact_bits, nodes=[], level=store.node.level + 1
+    )
 
 
 def create_step(fact_bits):
-    return Step(fact=fact_bits, nodes=[], level=store.node.level + 1)
+    return Step(
+        scenario=store.scenario, fact=fact_bits, nodes=[], level=store.node.level + 1
+    )
+
+
+def add_step(*fact_bits):
+    node = add_node(create_step(fact_bits))
+    return NodeContext(node)
 
 
 def add_goal(*fact_bits):
@@ -74,19 +83,15 @@ def add_goal(*fact_bits):
     return NodeContext(node)
 
 
-def create_goal(fact_bits):
-    return Goal(fact=fact_bits, nodes=[], level=store.node.level + 1)
-
-
 def add_node(node):
     store.node.nodes.append(node)
 
     for fact_bit in node.fact:
-        if isinstance(fact_bit, PreregisteredEntity):
-            entity = fact_bit
-            if node not in entity.linked_nodes:
-                entity.linked_nodes.append(node)
-        if isinstance(fact_bit, Entity):
+        if isinstance(fact_bit, Role):
+            role = fact_bit
+            if entity := store.scenario.get_entity_by_role(role.name):
+                node.pre_entity_key_by_role_name[role.name] = get_key(entity)
+        elif isinstance(fact_bit, Entity):
             entity = fact_bit
             node.pre_entity_memo_by_key[get_key(entity)] = create_memo(entity)
 
@@ -97,19 +102,11 @@ def get_key(entity):
     return (entity.__class__, get_actor_str(entity))
 
 
-def get_entity(entity_class, default="__not_set__", **kwargs):
-    for scenario in reversed(store.scenarios):
-        if entity := scenario.get_entity(entity_class, **kwargs):
-            return entity
-
-    if default != "__not_set__":
-        return default
-
-    raise ValueError(f"Entity {entity_class} not found with {kwargs}")
-
-
 def finalize_node(node):
-    for entity in node.entities:
+    for entity, role in get_node_entity_and_role_pairs(node):
         key = get_key(entity)
         node.post_entity_memo_by_key[key] = create_memo(entity)
+        if role:
+            node.post_entity_key_by_role_name[role.name] = get_key(entity)
+
     node.is_finalized = True

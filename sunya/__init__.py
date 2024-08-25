@@ -12,11 +12,10 @@ from .scenarios.store import (  # noqa
     add_scenario,
     add_step,
     add_goal,
-    get_entity,
     get_scenario,
 )
 from .scenarios.global_namespace import G  # noqa
-from .scenarios.get_entities import get_entities  # noqa
 from .scenarios.get_entity_delta import NoValue, get_entity_delta  # noqa
-from .scenarios.register import register, unregister  # noqa
+from .scenarios.add_actor import add_actor  # noqa
 from .utils import str_to_uuid, any_dict  # noqa
+from .scenarios.roles import add_role  # noqa

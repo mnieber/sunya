@@ -1,4 +1,5 @@
 from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
+from sunya.scenarios.node import get_node_entity_and_role_pairs
 
 
 def get_scenario_description_context(scenario):
@@ -12,11 +13,14 @@ def _get_node_context(node):
 
     result[node.name] = fact_to_string(node.fact)
 
-    if actors_created := _get_node_actors(node, add_created=True, add_updated=False):
-        result["actors_created"] = actors_created
+    if actors_introduced := _get_node_actors(node, add_created=True, add_updated=False):
+        result["actors_introduced"] = actors_introduced
 
     if actors_updated := _get_node_actors(node, add_created=False, add_updated=True):
         result["actors_updated"] = actors_updated
+
+    if roles_updated := _get_node_roles_updated(node):
+        result["roles_updated"] = roles_updated
 
     child_nodes = [_get_node_context(child_node) for child_node in node.nodes]
     if child_nodes:
@@ -27,7 +31,9 @@ def _get_node_context(node):
 
 def _get_node_actors(node, add_created, add_updated):
     result = []
-    for entity in node.entities:
+    entity_and_role_pairs = get_node_entity_and_role_pairs(node)
+
+    for entity, role in entity_and_role_pairs:
         delta = get_entity_delta(node, entity)
         field_deltas = {}
         for field_name, (old_value_memo, new_value_memo) in delta.items():
@@ -46,4 +52,13 @@ def _get_node_actors(node, add_created, add_updated):
                     deltas=field_deltas,
                 )
             )
+    return result
+
+
+def _get_node_roles_updated(node):
+    result = dict()
+    for role_name, post_key in node.post_entity_key_by_role_name.items():
+        pre_key = node.pre_entity_key_by_role_name.get(role_name)
+        if pre_key != post_key:
+            result[role_name] = post_key[1]
     return result

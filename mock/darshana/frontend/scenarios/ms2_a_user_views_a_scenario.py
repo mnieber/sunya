@@ -3,55 +3,63 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
-    register,
+    add_actor,
+    add_role,
     the,
     G as g,
-    get_entities,
 )
 
 
 def start(user, project):
+    scenario = add_role("Scenario")
+    step = add_role("Step")
+    parent_step = add_role("ParentStep")
+    actor = add_role("Actor")
+    highlight_facet = add_role("HighlightFacet")
+
     scenario_name = "ms2-a-user-views-a-scenario"
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(user, name="user")
-        register(project, name="project")
+        add_actor(user, name="user", role="User")
+        add_actor(project, name="project", role="Project")
 
-        with add_goal("view a", g.scenario, "in the current", g.project):
-            with the(e.user).visits_the(g.project_route):
-                with the(g.scenario_list_view).displays_the("scenarios"):
+        with add_goal("view a", scenario, "in the", g.project):
+            with the(g.user).visits_the(g.project_route):
+                with the(g.scenario_list_view).displays_each(scenario):
                     pass
 
-            with the(e.user).clicks_on_the(e.scenario):
-                register(e.project.scenarios[0], e.scenario)
+            with the(g.user).clicks_on_a(scenario):
+                scenario_()
 
                 with (
                     the(g.step_tree_view)
-                    .shows_the_root_steps_for_the(e.scenario)
+                    .shows_the_root_steps_for_the(g.scenario)
                     .in_the(g.step_list_view)
                 ):
                     pass
 
-            with the(e.user).clicks_on_a_root_level_step():
-                with the(g.step_list_view).highlights_the(e.step):
-                    register(e.scenario.root_step.child_steps[0], e.step)
+            with the(g.user).clicks_on_a_root_level(step):
+                with the(g.step_list_view).highlights_the(step):
+                    step_()
 
-                with the(g.step_tree_view).opens_a_new(g.step_list_view).to_the_right():
+            with the(g.user).expands_a_root_level(step):
+                with the(g.step_tree_view).opens_a_new(
+                    g.step_list_view
+                ).below_the_expanded(step):
                     pass
 
             with add_goal(
                 "view the selected",
-                g.actor,
+                actor,
                 "in the highlighted",
-                e.step,
+                step,
                 "in the",
                 g.step_tree_view,
             ):
-                with the(e.user).clicks_on_the_link_of_the(e.actor):
-                    actor_(e)
+                with the(g.user).clicks_on_the_link_of_an(actor):
+                    actor_()
 
                     with (
-                        the("highlight facet")
+                        the(highlight_facet)
                         .of_the(g.step_list_state)
                         .calls_the(g.set_highlighted_step_action)
                         .of_the(g.step_tree_state)
@@ -61,25 +69,33 @@ def start(user, project):
                             .updates_the(g.reconstructed_actor)
                             .of_the(g.step_tree_state)
                             .by_applying_each(g.field_delta_set)
-                            .for_the(e.step)
-                            .and_all_its_parent_steps()
+                            .for_the(step)
+                            .and_each(parent_step)
                         ):
                             pass
 
-                with the(g.actor_view).displays_the_highlighted(e.actor):
+                with the(g.actor_view).displays_the_highlighted(g.actor):
                     pass
 
-            with the(e.user).clicks_again_on_the_link_of_the(e.actor):
+            with the(g.user).ctrl_clicks_on_the_link_of_the(g.actor):
                 with the(g.step_tree_view).redirects_to_the(g.actor_route).for_the(
-                    e.actor
+                    g.actor
                 ):
                     pass
 
     return get_scenario(scenario_name)
 
 
-def actor_(e):
-    register(
+def scenario_():
+    add_actor(g.project.scenarios[0], name="scenario", role="Scenario")
+
+
+def step_():
+    add_actor(g.scenario.root_step.child_steps[0], name="step", role="Step")
+
+
+def actor_():
+    add_actor(
         F.Actors.Types.Actor(
             key="example:actor",
             fields={
@@ -88,7 +104,8 @@ def actor_(e):
             },
             changed_fields=["field2"],
         ),
-        e.actor,
+        name="actor",
+        role="Actor",
     )
 
 
