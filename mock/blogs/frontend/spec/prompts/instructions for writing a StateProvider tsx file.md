@@ -8,6 +8,8 @@ In general, there will be one state-provider for each state in a module spec fil
 
 The StateProvider starts by creating a state object. Certain parts of this state object will be stored in a cache where they will be enriched by the updateSources function with a so-called resource state. This resource state reflects whether the resource is loading or updating. The updateSources function bases the resource state on a list of functions, where each function either contributes to the "loading" state or to the "updating" state.
 
+If you have doubts about which provided fields should come from the cache object, then please ask me before generating the code.
+
 ## The context provider
 
 The provided resources are places in an object with a get function for each resource. This object is the passed into a context provider.
