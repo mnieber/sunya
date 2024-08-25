@@ -8,7 +8,6 @@ const mapData = (state: StepTreeState) => {
   mapDataToProps(ctr, {
     data: {
       rootStep: () => state.props.getRootStep(),
-      reconstructed_actor: () => null,
     },
   });
 };

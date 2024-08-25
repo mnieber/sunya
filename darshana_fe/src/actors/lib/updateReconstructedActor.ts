@@ -2,7 +2,7 @@ import { ActorT } from '/src/api/types/ActorT';
 import { StepT } from '/src/api/types/StepT';
 import { ObjT } from '/src/utils/types';
 
-export const updateReconstructedActor = (step: StepT) => {
+export const updateReconstructedActor = (step: StepT): ActorT => {
   let currentStep: StepT | null = step;
   let reconstructedActor: ObjT = {};
 

@@ -1,29 +1,24 @@
 import * as Skandha from 'skandha';
-import { Data } from 'skandha-facets';
 import { updateReconstructedActor } from '/src/actors/lib/updateReconstructedActor';
-import { ActorT } from '/src/api/types/ActorT';
 import { StepT } from '/src/api/types/StepT';
+import { StepTreeData } from '/src/steps/StepTreeState/StepTreeData';
+import { registerStepTreeCtr } from '/src/steps/StepTreeState/registerStepTreeCtr';
+import { bindActionsCtr } from '/src/utils/bindActionsCtr';
 
 export type PropsT = {
-  getRootStep: () => StepT | null;
-};
-
-type StepTreeDataT = {
-  rootStep: StepT | null;
-  reconstructed_actor: ActorT | null;
+  getRootStep: () => StepT;
 };
 
 export class StepTreeState {
   props: PropsT;
 
   stepTreeCtr = {
-    data: new Data<StepTreeDataT>(),
+    data: new StepTreeData(),
   };
 
   actions = {
     setHighlightedStep: (step: StepT) => {
-      this.stepTreeCtr.data.reconstructed_actor =
-        updateReconstructedActor(step);
+      this.stepTreeCtr.data.reconstructedActor = updateReconstructedActor(step);
     },
   };
 
@@ -33,6 +28,7 @@ export class StepTreeState {
 
   constructor(props: PropsT) {
     this.props = props;
+    bindActionsCtr(this.actions, this);
     registerStepTreeCtr(this);
   }
 }
