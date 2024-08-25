@@ -1,8 +1,8 @@
 import * as Skandha from 'skandha';
 import { Addition, Deletion, Edit, Highlight, Selection } from 'skandha-facets';
 import { BlogPostT } from '/src/api/types';
+import { BlogPostsData } from '/src/blogPosts/BlogPostsState/BlogPostsData';
 import { registerBlogPostsCtr } from '/src/blogPosts/BlogPostsState/registerBlogPostsCtr';
-import { BlogPostsData } from '/src/blogPosts/facets/BlogPostsData';
 import { reformatBlogPost } from '/src/blogPosts/lib/reformatBlogPost';
 import { bindActionsCtr } from '/src/utils/bindActionsCtr';
 import { ObjT } from '/src/utils/types';
@@ -26,7 +26,7 @@ export class BlogPostsState {
     selection: new Selection<BlogPostT>(),
   };
 
-  actions = {
+  actionsCtr = {
     markBlogPostAsPublished: (blogPostId: string) => {
       return this.props.markBlogPostAsPublished(blogPostId);
     },
@@ -41,7 +41,7 @@ export class BlogPostsState {
 
   constructor(props: PropsT) {
     this.props = props;
-    bindActionsCtr(this.actions, this);
+    bindActionsCtr(this.actionsCtr, this);
     registerBlogPostsCtr(this);
   }
 }

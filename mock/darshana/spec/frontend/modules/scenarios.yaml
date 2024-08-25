@@ -6,7 +6,7 @@ types:
         type: UUID
       - name: name
         type: str
-      - name: root_step
+      - name: rootStep
         type: Step
   - name: Step
     fields:
@@ -14,11 +14,11 @@ types:
         type: UUID
       - name: fact
         type: tuple[str]
-      - name: parent_step
+      - name: parentStep
         type: Step
-      - name: child_steps
+      - name: childSteps
         type: list[Step]
-      - name: field_delta_set_by_actor_key
+      - name: fieldDeltaSetByActorKey
         type: dict[str, dict[str, Any]]
 mutations: []
 queries:

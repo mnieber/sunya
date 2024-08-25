@@ -63,6 +63,7 @@ if Dodo.is_main(__name__, safe=True):
     Dodo.run(
         [
             "claudesync",
+            "project",
             "sync",
         ]
     )

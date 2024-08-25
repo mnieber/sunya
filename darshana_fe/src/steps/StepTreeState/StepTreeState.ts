@@ -6,7 +6,7 @@ import { registerStepTreeCtr } from '/src/steps/StepTreeState/registerStepTreeCt
 import { bindActionsCtr } from '/src/utils/bindActionsCtr';
 
 export type PropsT = {
-  getRootStep: () => StepT;
+  getRootStep: () => StepT | null;
 };
 
 export class StepTreeState {
@@ -16,7 +16,7 @@ export class StepTreeState {
     data: new StepTreeData(),
   };
 
-  actions = {
+  actionsCtr = {
     setHighlightedStep: (step: StepT) => {
       this.stepTreeCtr.data.reconstructedActor = updateReconstructedActor(step);
     },
@@ -28,7 +28,7 @@ export class StepTreeState {
 
   constructor(props: PropsT) {
     this.props = props;
-    bindActionsCtr(this.actions, this);
+    bindActionsCtr(this.actionsCtr, this);
     registerStepTreeCtr(this);
   }
 }

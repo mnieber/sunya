@@ -13,11 +13,11 @@ export const handleGetScenarios = http.get(`${hostUrl}scenarios/list/`, () => {
   return HttpResponse.json([
     createScenario({
       name: 'My First Scenario',
-      root_step: mockRootStep,
+      rootStep: mockRootStep,
     }),
     createScenario({
       name: 'Another Scenario',
-      root_step: mockRootStep,
+      rootStep: mockRootStep,
     }),
   ]);
 });

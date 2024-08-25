@@ -6,7 +6,7 @@ import { ObjT } from '/src/utils/types';
 
 export type ScenarioT = EntityT & {
   name: string;
-  root_step: StepT;
+  rootStep: StepT;
 };
 
 export type ScenarioByIdT = { [id: string]: ScenarioT };
@@ -15,6 +15,6 @@ export const createScenario = (values: ObjT): ScenarioT => {
   return initRS({
     id: createUUID(),
     name: values.name ?? 'New scenario',
-    root_step: values.root_step ?? null,
+    rootStep: values.rootStep ?? null,
   } as ScenarioT);
 };

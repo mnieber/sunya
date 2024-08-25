@@ -8,7 +8,7 @@ types:
         type: str
       - name: fields
         type: dict[str, Any]
-      - name: changed_fields
+      - name: changedFields
         type: list[str]
 mutations: []
 queries: []
