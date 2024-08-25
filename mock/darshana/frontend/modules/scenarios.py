@@ -1,4 +1,4 @@
-from default.frontend.entities import Facet, Route, Component, Action, Ctr, State
+from default.frontend.namespace import Facet, Route, Component, Action, Ctr, State, Query
 from default.stack.namespace import Module
 import typing as T
 from sunya import (
@@ -21,6 +21,10 @@ class Scenarios(Module):
             parent_step: T.Optional["Scenarios.Types.Step"] = None
             child_steps: T.List["Scenarios.Types.Step"] = []
             field_delta_set_by_actor_key: T.Dict[str, T.Dict[str, T.Any]] = {}
+
+    class Queries:
+        class GetScenarios(Query):
+            pass
 
     class States:
         class ScenariosState(State):
@@ -97,6 +101,7 @@ g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr(highlight=any
 g.set_highlighted_step_action = (
     Scenarios.States.StepTreeState.Actions.set_highlighted_step
 )
+g.get_scenarios_query = Scenarios.Queries.GetScenarios()
 
 @actor_to_str.method((Scenarios.Types.Scenario,))
 def scenario_to_str(scenario):

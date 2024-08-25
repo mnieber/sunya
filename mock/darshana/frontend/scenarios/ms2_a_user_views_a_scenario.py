@@ -12,6 +12,7 @@ from sunya import (
 
 def start(user, project):
     scenario = add_role("Scenario")
+    scenarios = add_role("Scenarios")
     step = add_role("Step")
     parent_step = add_role("ParentStep")
     actor = add_role("Actor")
@@ -24,11 +25,19 @@ def start(user, project):
 
         with add_goal("view a", scenario, "in the", g.project):
             with the(g.user).visits_the(g.project_route):
-                with the(g.scenario_list_view).displays_each(scenario):
+                with (
+                    the(g.scenario_list_view)
+                    .calls_the(g.get_scenarios_query)
+                    .to_load_the(scenarios)
+                ):
+                    pass
+
+                with the(g.scenario_list_view).displays_the(scenarios):
                     pass
 
             with the(g.user).clicks_on_a(scenario):
-                scenario_()
+                with the(g.user).is_redirected_to_the(g.scenario_route):
+                    scenario_()
 
                 with (
                     the(g.step_tree_view)

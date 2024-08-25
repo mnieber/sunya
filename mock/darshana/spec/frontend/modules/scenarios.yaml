@@ -21,7 +21,8 @@ types:
       - name: field_delta_set_by_actor_key
         type: dict[str, dict[str, Any]]
 mutations: []
-queries: []
+queries:
+  - name: GetScenarios
 states:
   - name: ScenariosState
     containers:

@@ -14,7 +14,8 @@ nodes:
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
             child_nodes:
-              - step: The [scenario-list-view:component] displays each [Scenario]
+              - step: The [scenario-list-view:component] calls the [get-scenarios:query] to load the [Scenarios]
+              - step: The [scenario-list-view:component] displays the [Scenarios]
           - step: The [alice@example.com+:user] clicks on a [Scenario]
             actors_introduced:
               - name: my-first+:scenario
@@ -25,6 +26,7 @@ nodes:
             roles_updated:
               Scenario: my-first+:scenario
             child_nodes:
+              - step: The [alice@example.com+:user] is redirected to the [scenario+:route]
               - step: The [step-tree-view:component] shows the root steps for the [my-first+:scenario] in the [step-list-view:component]
           - step: The [alice@example.com+:user] clicks on a root level [Step]
             actors_introduced:

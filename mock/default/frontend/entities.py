@@ -54,6 +54,11 @@ def frontend_to_str(frontend):
     return f":frontend"
 
 
+@actor_to_str.method((Query,))
+def query_to_str(query):
+    return f"{type_name_to_kebab(query)}:query"
+
+
 @actor_to_str.method((Mutation,))
 def mutation_to_str(mutation):
     return f"{type_name_to_kebab(mutation)}:mutation"
