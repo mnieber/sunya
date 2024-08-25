@@ -1,5 +1,5 @@
 import re
-from sunya.utils import extract_field_types, camel_to_snake, l0
+from sunya.utils import extract_field_types, camel_to_snake, l0, snake_to_camel
 
 
 def get_module_description_context(module):
@@ -25,7 +25,7 @@ def _get_types(module):
                 dict(
                     name=type_name,
                     fields=[
-                        dict(name=field_name, type=field_type)
+                        dict(name=snake_to_camel(field_name), type=field_type)
                         for field_name, field_type in extract_field_types(type).items()
                     ],
                 )

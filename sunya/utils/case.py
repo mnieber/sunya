@@ -9,6 +9,11 @@ def camel_to_snake(s):
     return _camel2.sub(r"\1_\2", subbed).lower()
 
 
+def snake_to_camel(s):
+    words = s.split("_")
+    return words[0] + "".join(word.title() for word in words[1:])
+
+
 def camel_to_kebab(s):
     subbed = _camel1.sub(r"\1-\2", s)
     return _camel2.sub(r"\1-\2", subbed).lower()
