@@ -99,9 +99,9 @@ nodes:
                 roles_updated:
                   Actor: example-actor+:actor
                 child_nodes:
-                  - step: The [HighlightFacet] of the [step-list-:state] calls the [set_highlighted_step:action] of the [step-tree-:state]
+                  - step: The [HighlightFacet] of the [step-list-:state] calls the [set-highlighted-step:action] of the [step-tree-:state]
                     child_nodes:
-                      - step: The [set_highlighted_step:action] updates the [reconstructed-actor+:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the [Step] and each [ParentStep]
+                      - step: The [set-highlighted-step:action] updates the [reconstructed-actor+:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the [Step] and each [ParentStep]
                         actors_introduced:
                           - name: base-step-1:step
                             deltas:

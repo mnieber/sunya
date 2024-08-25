@@ -38,7 +38,7 @@ states:
             value:
               reconstructed_actor: null
     actions:
-      - name: set_highlighted_step
+      - name: setHighlightedStep
   - name: StepListState
     containers:
       - name: StepListCtr

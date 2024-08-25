@@ -1,6 +1,6 @@
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { get } from '/src/api/restClient';
-import { createQueryKey } from '/src/auth/utils/createQueryKey';
+import { createQueryKey } from '/src/api/utils/createQueryKey';
 import { waitOnDev } from '/src/utils/wait';
 
 export type GetBlogTagsArgsT = {

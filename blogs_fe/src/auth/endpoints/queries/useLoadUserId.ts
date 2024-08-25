@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '/src/api/queryClient';
 import { get, getRefreshToken, setAuthTokens } from '/src/api/restClient';
+import { createQueryKey } from '/src/api/utils/createQueryKey';
 import { AuthState, anonymous } from '/src/auth/AuthState';
 import { refreshToken } from '/src/auth/endpoints/mutations/refreshToken';
-import { createQueryKey } from '/src/auth/utils/createQueryKey';
 import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
 import { ObjT } from '/src/utils/types';
 

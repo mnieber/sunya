@@ -1,0 +1,1 @@
+export { useGetScenarios } from './useGetScenarios';

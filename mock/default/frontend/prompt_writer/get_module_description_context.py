@@ -97,7 +97,7 @@ def _get_actions(state):
     actions = getattr(state, "Actions", None)
     if actions:
         for action_name, action in _get_members(actions):
-            result.append(dict(name=action_name))
+            result.append(dict(name=action.name))
     return result
 
 

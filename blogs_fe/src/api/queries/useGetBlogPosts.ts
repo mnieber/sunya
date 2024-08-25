@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '/src/api/queryClient';
 import { get } from '/src/api/restClient';
-import { createQueryKey } from '/src/auth/utils/createQueryKey';
+import { createQueryKey } from '/src/api/utils/createQueryKey';
 import { waitOnDev } from '/src/utils/wait';
 
 export type GetBlogPostsArgsT = {

@@ -39,7 +39,7 @@ class Scenarios(Module):
                     data: Facet = any_dict(reconstructed_actor=None)
 
             class Actions:
-                set_highlighted_step = Action(name="set_highlighted_step")
+                set_highlighted_step = Action(name="setHighlightedStep")
 
         class StepListState(State):
             class Containers:

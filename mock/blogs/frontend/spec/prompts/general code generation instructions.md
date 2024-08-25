@@ -37,3 +37,7 @@ For each step, the scenario will show how the actors are changed by the step. It
 ## Roadmap description
 
 Finally, code generation is also informed by a roadmap. The roadmap describes milestones that are similar to scenarios, but more high-level. You can think of the scenarios as technical break-downs of these milestones. If the scenarios contradict the roadmap, please let me know.
+
+## When to ask for help
+
+If you have doubts about how to how to generate a certain file (for example, due to conflicting or ambiguous instructions), feel free to ask me before writing the code. However, if the instructions are not conflicting or ambiguous, then please assume that your assumptions are correct and do not need confirmation from me.

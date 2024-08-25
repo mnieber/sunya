@@ -1,0 +1,23 @@
+import { http, HttpResponse } from 'msw';
+import { hostUrl } from '/src/api/restClient';
+import { createScenario } from '/src/api/types/ScenarioT';
+import { createStep } from '/src/api/types/StepT';
+
+export const handleGetScenarios = http.get(`${hostUrl}scenarios/list/`, () => {
+  const mockRootStep = createStep({
+    fact: ['Root step'],
+    child_steps: [],
+    field_delta_set_by_actor_key: {},
+  });
+
+  return HttpResponse.json([
+    createScenario({
+      name: 'My First Scenario',
+      root_step: mockRootStep,
+    }),
+    createScenario({
+      name: 'Another Scenario',
+      root_step: mockRootStep,
+    }),
+  ]);
+});
