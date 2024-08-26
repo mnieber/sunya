@@ -14,8 +14,8 @@ nodes:
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
             child_nodes:
-              - step: The [scenario-list-view:component] calls the [get-scenarios:query] to load the [Scenarios]
-              - step: The [scenario-list-view:component] displays the [Scenarios]
+              - step: The [project-page:component] calls the [get-project:query] to load the [my-darshana-project+:project]
+              - step: The [project-page:component] displays the [Scenarios] in the [my-darshana-project+:project]
           - step: The [alice@example.com+:user] clicks on a [Scenario]
             actors_introduced:
               - name: my-first+:scenario

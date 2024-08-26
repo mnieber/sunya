@@ -39,16 +39,16 @@ routes:
 state_providers:
   - name: ProjectsStateProvider
 views:
-  ProjectsPage:
+  ProjectsPage(Component):
     Root:
       root:
         project_list: null
         create_project_form: null
-  ProjectPage:
+  ProjectPage(Component):
     root:
-      scenario_list: null
-  ProjectListView: {}
-  CreateProjectFormView: {}
+      scenario_list_view: null
+  ProjectListView(Component): {}
+  CreateProjectFormView(Component): {}
 effects:
   - name: SelectProjectEffect
 components:

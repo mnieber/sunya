@@ -26,13 +26,13 @@ def start(user, project):
         with add_goal("view a", scenario, "in the", g.project):
             with the(g.user).visits_the(g.project_route):
                 with (
-                    the(g.scenario_list_view)
-                    .calls_the(g.get_scenarios_query)
-                    .to_load_the(scenarios)
+                    the(g.project_page)
+                    .calls_the(g.get_project_query)
+                    .to_load_the(project)
                 ):
                     pass
 
-                with the(g.scenario_list_view).displays_the(scenarios):
+                with the(g.project_page).displays_the(scenarios).in_the(g.project):
                     pass
 
             with the(g.user).clicks_on_a(scenario):

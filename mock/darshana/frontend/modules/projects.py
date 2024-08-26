@@ -52,7 +52,7 @@ class Projects(Module):
             pass
 
     class Views:
-        class ProjectsPage:
+        class ProjectsPage(Component):
             class Root:
                 root = dict(
                     #
@@ -60,16 +60,16 @@ class Projects(Module):
                     create_project_form=None,
                 )
 
-        class ProjectPage:
+        class ProjectPage(Component):
             root = dict(
                 #
-                scenario_list=None
+                scenario_list_view=None
             )
 
-        class ProjectListView:
+        class ProjectListView(Component):
             pass
 
-        class CreateProjectFormView:
+        class CreateProjectFormView(Component):
             pass
 
     class Components:
@@ -89,6 +89,8 @@ g.create_project_button = Projects.Components.CreateProjectButton()
 g.projects_route = Projects.Routes.Projects()
 g.project_route = Projects.Routes.Project()
 g.create_project_mutation = Projects.Mutations.CreateProject()
+g.project_page = Projects.Views.ProjectPage()
+g.get_project_query = Projects.Queries.GetProject()
 
 
 @actor_to_str.method((Projects.Types.Project,))

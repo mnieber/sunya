@@ -9,6 +9,12 @@ from sunya import (
     any_dict,
 )
 
+# TODO:
+# - Each fact-bit should be recognizable as a string, an actor-key or a role-key.
+# - The scenario should have a lookup table for actors and roles.
+# - The project should also have a lookup table for actors and roles.
+# - - If two scenarios have the same actor-key, then at the scenario level the actors are different, but at the project level they are the same.
+# - Find out if stories should use a mock-provider, or if they should use a real provider with mocked queries using msw.
 
 class Scenarios(Module):
     class Types:
