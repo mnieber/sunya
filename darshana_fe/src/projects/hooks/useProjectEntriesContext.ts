@@ -33,9 +33,9 @@ export const projectEntriesCtx = R.mergeAll([
       useProjectEntriesContext,
       'projectEntry',
     ] as any as ProjectEntryT,
-    projectsHighlight: [
+    projectEntriesHighlight: [
       useProjectEntriesContext,
-      'projectsHighlight',
+      'projectEntriesHighlight',
     ] as any as Highlight,
   },
 ]);

@@ -5,7 +5,7 @@ import { flags } from '/src/app/flags';
 import { L } from '/src/frames/layout';
 import { MockApp } from '/src/mocks/app/components/MockApp';
 import { ProjectEntriesStateProvider } from '/src/projects/components/ProjectEntriesStateProvider';
-import { ProjectStateProvider } from '/src/projects/components/ProjectStateProvider';
+import { ProjectsSwitch } from '/src/projects/components/ProjectsSwitch';
 import { NavStateProvider } from '/src/routes/components/NavStateProvider';
 import { StepTreeStateProvider } from '/src/steps/components/StepTreeStateProvider';
 import { cn } from '/src/utils/classnames';
@@ -19,11 +19,11 @@ export const App = () => {
     <QueryClientProvider client={queryClient}>
       <NavStateProvider>
         <ProjectEntriesStateProvider>
-          <ProjectStateProvider>
-            <StepTreeStateProvider>
-              <AppBody></AppBody>
-            </StepTreeStateProvider>
-          </ProjectStateProvider>
+          <StepTreeStateProvider>
+            <AppBody>
+              <ProjectsSwitch />
+            </AppBody>
+          </StepTreeStateProvider>
         </ProjectEntriesStateProvider>
       </NavStateProvider>
     </QueryClientProvider>
