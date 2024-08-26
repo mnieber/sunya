@@ -7,6 +7,9 @@ from .scenarios import Scenarios
 
 class Projects(Module):
     class Types:
+        class ProjectEntry(EntityWithId):
+            name: str
+
         class Project(EntityWithId):
             name: str
             scenarios: T.List["Scenarios.Types.Scenario"] = []
@@ -26,7 +29,7 @@ class Projects(Module):
                 filename: str
 
     class Queries:
-        class GetProjects(Query):
+        class GetProjectEntries(Query):
             pass
 
         class GetProject(Query):
@@ -34,14 +37,17 @@ class Projects(Module):
                 projectId: str
 
     class States:
-        class ProjectsState:
+        class ProjectEntriesState:
             class Containers:
-                class ProjectsCtr:
+                class ProjectEntriesCtr:
                     data: Facet
                     highlight: Facet
 
         class ProjectState:
             class Containers:
+                class ProjectCtr:
+                    data: Facet
+
                 class ScenariosCtr:
                     data: Facet
                     highlight: Facet
@@ -54,7 +60,7 @@ class Projects(Module):
             pass
 
     class StateProviders:
-        class ProjectsStateProvider:
+        class ProjectEntriesStateProvider:
             pass
 
     class Views:
@@ -97,6 +103,7 @@ g.project_route = Projects.Routes.Project()
 g.create_project_mutation = Projects.Mutations.CreateProject()
 g.project_page = Projects.Views.ProjectPage()
 g.get_project_query = Projects.Queries.GetProject()
+g.get_project_entries_query = Projects.Queries.GetProjectEntries()
 
 
 @actor_to_str.method((Projects.Types.Project,))

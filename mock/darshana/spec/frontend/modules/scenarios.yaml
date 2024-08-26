@@ -21,15 +21,8 @@ types:
       - name: fieldDeltaSetByActorKey
         type: dict[str, dict[str, Any]]
 mutations: []
-queries:
-  - name: GetScenarios
+queries: []
 states:
-  - name: ScenariosState
-    containers:
-      - name: ScenariosCtr
-        facets:
-          - name: data
-          - name: highlight
   - name: StepTreeState
     containers:
       - name: StepTreeCtr
@@ -42,7 +35,6 @@ states:
 routes:
   - name: Scenario
 state_providers:
-  - name: ScenariosStateProvider
   - name: StepTreeStateProvider
 views:
   ScenarioListView(Component): {}

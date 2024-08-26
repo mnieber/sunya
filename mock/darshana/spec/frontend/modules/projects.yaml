@@ -1,5 +1,11 @@
 name: projects
 types:
+  - name: ProjectEntry
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
   - name: Project
     fields:
       - name: id
@@ -24,12 +30,21 @@ mutations:
       - name: filename
         type: str
 queries:
-  - name: GetProjects
+  - name: GetProjectEntries
   - name: GetProject
 states:
-  - name: ProjectsState
+  - name: ProjectEntriesState
     containers:
-      - name: ProjectsCtr
+      - name: ProjectEntriesCtr
+        facets:
+          - name: data
+          - name: highlight
+  - name: ProjectState
+    containers:
+      - name: ProjectCtr
+        facets:
+          - name: data
+      - name: ScenariosCtr
         facets:
           - name: data
           - name: highlight
@@ -37,7 +52,7 @@ routes:
   - name: Projects
   - name: Project
 state_providers:
-  - name: ProjectsStateProvider
+  - name: ProjectEntriesStateProvider
 views:
   ProjectsPage(Component):
     Root:
