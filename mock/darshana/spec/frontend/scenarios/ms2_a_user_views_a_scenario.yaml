@@ -32,7 +32,7 @@ nodes:
             actors_introduced:
               - name: base-step-1:step
                 deltas:
-                  child_steps: "['child-step-1:step'] (None)"
+                  child_steps: '[''child-step-1:step''] (None)'
                   fact: ('Base Step 1',) (None)
                   fieldDeltaSetByActorKey: '{} (None)'
                   id: 9bb869b27c1d529c97add3304a7808af (None)
@@ -44,7 +44,7 @@ nodes:
                 actors_introduced:
                   - name: base-step-1:step
                     deltas:
-                      child_steps: "['child-step-1:step'] (None)"
+                      child_steps: '[''child-step-1:step''] (None)'
                       fact: ('Base Step 1',) (None)
                       fieldDeltaSetByActorKey: '{} (None)'
                       id: 9bb869b27c1d529c97add3304a7808af (None)
@@ -55,7 +55,7 @@ nodes:
             actors_introduced:
               - name: base-step-1:step
                 deltas:
-                  child_steps: "['child-step-1:step'] (None)"
+                  child_steps: '[''child-step-1:step''] (None)'
                   fact: ('Base Step 1',) (None)
                   fieldDeltaSetByActorKey: '{} (None)'
                   id: 9bb869b27c1d529c97add3304a7808af (None)
@@ -65,7 +65,7 @@ nodes:
                 actors_introduced:
                   - name: base-step-1:step
                     deltas:
-                      child_steps: "['child-step-1:step'] (None)"
+                      child_steps: '[''child-step-1:step''] (None)'
                       fact: ('Base Step 1',) (None)
                       fieldDeltaSetByActorKey: '{} (None)'
                       id: 9bb869b27c1d529c97add3304a7808af (None)
@@ -74,8 +74,8 @@ nodes:
             actors_introduced:
               - name: example-actor+:actor
                 deltas:
-                  changed_fields: "['field2'] (None)"
-                  fields: "{'field1': 'value1', 'field2': 'value2'} (None)"
+                  changed_fields: '[''field2''] (None)'
+                  fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
                   id: 8427f8f94fca596dbb9b8c8085180942 (None)
                   key: example:actor (None)
             roles_updated:
@@ -85,8 +85,8 @@ nodes:
                 actors_introduced:
                   - name: example-actor+:actor
                     deltas:
-                      changed_fields: "['field2'] (None)"
-                      fields: "{'field1': 'value1', 'field2': 'value2'} (None)"
+                      changed_fields: '[''field2''] (None)'
+                      fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
                       id: 8427f8f94fca596dbb9b8c8085180942 (None)
                       key: example:actor (None)
                 roles_updated:
@@ -98,7 +98,7 @@ nodes:
                         actors_introduced:
                           - name: base-step-1:step
                             deltas:
-                              child_steps: "['child-step-1:step'] (None)"
+                              child_steps: '[''child-step-1:step''] (None)'
                               fact: ('Base Step 1',) (None)
                               fieldDeltaSetByActorKey: '{} (None)'
                               id: 9bb869b27c1d529c97add3304a7808af (None)
@@ -107,3 +107,4 @@ nodes:
           - step: The [alice@example.com+:user] ctrl clicks on the link of the [example-actor+:actor]
             child_nodes:
               - step: The [step-tree-view:component] redirects to the [actor+:route] for the [example-actor+:actor]
+

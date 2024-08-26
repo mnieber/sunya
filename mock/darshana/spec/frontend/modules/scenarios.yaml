@@ -49,6 +49,8 @@ views:
   StepTreeView(Component): {}
   StepListView(Component):
     props:
+      step: StepT
+    local_state:
       is_collapsed: false
   ScenarioPage(Component):
     root:

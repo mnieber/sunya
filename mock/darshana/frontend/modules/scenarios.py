@@ -61,6 +61,9 @@ class Scenarios(Module):
 
         class StepListView(Component):
             props = dict(
+                step="StepT",
+            )
+            local_state= dict(
                 is_collapsed=False,
             )
 

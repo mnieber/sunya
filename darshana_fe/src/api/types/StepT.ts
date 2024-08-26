@@ -4,11 +4,11 @@ import { createUUID } from '/src/utils/ids';
 import { ObjT } from '/src/utils/types';
 
 export type StepT = EntityT & {
-  fact: string[];
+  fact: string;
   parentStep: StepT | null;
   childSteps: StepT[];
   fieldDeltaSetByActorKey: {
-    [actor_key: string]: { [field: string]: any };
+    [actorKey: string]: { [field: string]: any };
   };
 };
 
