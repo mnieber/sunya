@@ -59,8 +59,6 @@ def start(user, project):
             with add_goal(
                 "view the selected",
                 actor,
-                "in the highlighted",
-                step,
                 "in the",
                 g.step_tree_view,
             ):
@@ -69,16 +67,16 @@ def start(user, project):
 
                     with (
                         the(highlight_facet)
-                        .of_the(g.step_list_state)
-                        .calls_the(g.set_highlighted_step_action)
+                        .of_the(g.step_tree_state)
+                        .calls_the(g.set_highlighted_actor_action)
                         .of_the(g.step_tree_state)
                     ):
                         with (
-                            the(g.set_highlighted_step_action)
+                            the(g.set_highlighted_actor_action)
                             .updates_the(g.reconstructed_actor)
                             .of_the(g.step_tree_state)
                             .by_applying_each(g.field_delta_set)
-                            .for_the(step)
+                            .for_the_related(step)
                             .and_each(parent_step)
                         ):
                             pass

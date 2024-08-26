@@ -39,17 +39,7 @@ class Scenarios(Module):
                     data: Facet = any_dict(reconstructed_actor=None)
 
             class Actions:
-                set_highlighted_step = Action(name="setHighlightedStep")
-
-        class StepListState(State):
-            class Containers:
-                class StepListCtr(Ctr):
-                    data: Facet
-                    highlight: Facet
-
-                class ActorsCtr(Ctr):
-                    data: Facet = any_dict(actor_by_key={})
-                    highlight: Facet
+                set_highlighted_actor = Action(name="setHighlightedActor")
 
     class Routes:
         class Scenario(Route):
@@ -59,7 +49,7 @@ class Scenarios(Module):
         class ScenariosStateProvider:
             pass
 
-        class StepListStateProvider:
+        class StepTreeStateProvider:
             pass
 
     class Views:
@@ -92,14 +82,9 @@ g.scenario_route = Scenarios.Routes.Scenario()
 g.scenario_list_view = Scenarios.Views.ScenarioListView()
 g.step_tree_view = Scenarios.Views.StepTreeView()
 g.step_list_view = Scenarios.Views.StepListView()
-g.step_list_state = Scenarios.States.StepListState()
 g.step_tree_state = Scenarios.States.StepTreeState()
-g.step_list_ctr = Scenarios.States.StepListState.Containers.StepListCtr(
-    data=any_dict(), highlight=any_dict()
-)
-g.actors_ctr = Scenarios.States.StepListState.Containers.ActorsCtr(highlight=any_dict())
-g.set_highlighted_step_action = (
-    Scenarios.States.StepTreeState.Actions.set_highlighted_step
+g.set_highlighted_actor_action = (
+    Scenarios.States.StepTreeState.Actions.set_highlighted_actor
 )
 g.get_scenarios_query = Scenarios.Queries.GetScenarios()
 

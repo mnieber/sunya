@@ -38,24 +38,12 @@ states:
             value:
               reconstructed_actor: null
     actions:
-      - name: setHighlightedStep
-  - name: StepListState
-    containers:
-      - name: StepListCtr
-        facets:
-          - name: data
-          - name: highlight
-      - name: ActorsCtr
-        facets:
-          - name: data
-            value:
-              actor_by_key: {}
-          - name: highlight
+      - name: setHighlightedActor
 routes:
   - name: Scenario
 state_providers:
   - name: ScenariosStateProvider
-  - name: StepListStateProvider
+  - name: StepTreeStateProvider
 views:
   ScenarioListView(Component): {}
   StepTreeView(Component): {}

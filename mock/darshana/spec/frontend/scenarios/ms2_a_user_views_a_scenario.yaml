@@ -70,7 +70,7 @@ nodes:
                       field_delta_set_by_actor_key: '{} (None)'
                       id: 9bb869b27c1d529c97add3304a7808af (None)
                       parent_step: None (None)
-          - goal: view the selected [Actor] in the highlighted [Step] in the [step-tree-view:component]
+          - goal: view the selected [Actor] in the [step-tree-view:component]
             actors_introduced:
               - name: example-actor+:actor
                 deltas:
@@ -78,13 +78,6 @@ nodes:
                   fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
                   id: 8427f8f94fca596dbb9b8c8085180942 (None)
                   key: example:actor (None)
-              - name: base-step-1:step
-                deltas:
-                  child_steps: '[''child-step-1:step''] (None)'
-                  fact: ('Base Step 1',) (None)
-                  field_delta_set_by_actor_key: '{} (None)'
-                  id: 9bb869b27c1d529c97add3304a7808af (None)
-                  parent_step: None (None)
             roles_updated:
               Actor: example-actor+:actor
             child_nodes:
@@ -99,9 +92,9 @@ nodes:
                 roles_updated:
                   Actor: example-actor+:actor
                 child_nodes:
-                  - step: The [HighlightFacet] of the [step-list-:state] calls the [set-highlighted-step:action] of the [step-tree-:state]
+                  - step: The [HighlightFacet] of the [step-tree-:state] calls the [set-highlighted-actor:action] of the [step-tree-:state]
                     child_nodes:
-                      - step: The [set-highlighted-step:action] updates the [reconstructed-actor+:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the [Step] and each [ParentStep]
+                      - step: The [set-highlighted-actor:action] updates the [reconstructed-actor+:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the related [Step] and each [ParentStep]
                         actors_introduced:
                           - name: base-step-1:step
                             deltas:
