@@ -5,14 +5,14 @@ import { useBuilder } from '/src/utils/hooks/useBuilder';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { withContextProps } from 'react-props-from-context';
-import { scenariosCtx } from '/src/scenarios/hooks/useScenariosContext';
+import { projectCtx } from '/src/projects/hooks/useProjectContext';
 import { StepTreeContext } from '/src/steps/hooks/useStepTreeContext';
 import { useStepTreeState } from '/src/steps/hooks/useStepTreeState';
 
 export type PropsT = React.PropsWithChildren<{}>;
 
 const ContextProps = {
-  scenario: scenariosCtx.scenario,
+  scenario: projectCtx.scenario,
 };
 
 export const StepTreeStateProvider = observer(

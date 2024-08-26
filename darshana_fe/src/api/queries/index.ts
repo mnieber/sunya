@@ -1,1 +1,1 @@
-export { useGetScenarios } from './useGetScenarios';
+export { useGetProject } from './useGetProject';

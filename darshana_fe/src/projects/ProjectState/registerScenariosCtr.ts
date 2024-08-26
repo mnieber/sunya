@@ -1,16 +1,16 @@
 import { mapDataToProps } from 'skandha';
 import { registerCtr } from 'skandha-mobx';
-import { ScenariosState } from './ScenariosState';
+import { ProjectState } from './ProjectState';
 import { ScenarioT } from '/src/api/types/ScenarioT';
 
-const mapData = (state: ScenariosState) => {
+const mapData = (state: ProjectState) => {
   const ctr = state.scenariosCtr;
   const getScenarioById = (x: string | undefined) =>
     x ? ctr.data.scenarioById[x] : undefined;
 
   mapDataToProps(ctr, {
     data: {
-      scenarios: () => state.props.getScenarios(),
+      scenarios: () => state.projectCtr.data.project?.scenarios ?? [],
     },
     highlight: {
       highlightableIds: () =>
@@ -20,14 +20,14 @@ const mapData = (state: ScenariosState) => {
   });
 };
 
-const setCallbacks = (state: ScenariosState) => {
+const setCallbacks = (state: ProjectState) => {
   // Add any callbacks here if needed
 };
 
-export const registerScenariosCtr = (state: ScenariosState) => {
+export const registerScenariosCtr = (state: ProjectState) => {
   registerCtr({
     ctr: state.scenariosCtr,
-    options: { name: 'ScenariosState.Scenarios' },
+    options: { name: 'ProjectState.Scenarios' },
     initCtr: () => {
       mapData(state);
       setCallbacks(state);

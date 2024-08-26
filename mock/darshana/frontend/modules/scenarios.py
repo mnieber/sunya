@@ -28,17 +28,7 @@ class Scenarios(Module):
             child_steps: T.List["Scenarios.Types.Step"] = []
             fieldDeltaSetByActorKey: T.Dict[str, T.Dict[str, T.Any]] = {}
 
-    class Queries:
-        class GetScenarios(Query):
-            pass
-
     class States:
-        class ScenariosState(State):
-            class Containers:
-                class ScenariosCtr(Ctr):
-                    data: Facet
-                    highlight: Facet
-
         class StepTreeState(State):
             class Containers:
                 class StepTreeCtr(Ctr):
@@ -52,9 +42,6 @@ class Scenarios(Module):
             pass
 
     class StateProviders:
-        class ScenariosStateProvider:
-            pass
-
         class StepTreeStateProvider:
             pass
 
@@ -95,7 +82,6 @@ g.step_tree_state = Scenarios.States.StepTreeState()
 g.set_highlighted_actor_action = (
     Scenarios.States.StepTreeState.Actions.set_highlighted_actor
 )
-g.get_scenarios_query = Scenarios.Queries.GetScenarios()
 
 @actor_to_str.method((Scenarios.Types.Scenario,))
 def scenario_to_str(scenario):

@@ -40,6 +40,12 @@ class Projects(Module):
                     data: Facet
                     highlight: Facet
 
+        class ProjectState:
+            class Containers:
+                class ScenariosCtr:
+                    data: Facet
+                    highlight: Facet
+
     class Routes:
         class Projects(Route):
             pass
