@@ -20,7 +20,7 @@ class Scenarios(Module):
             fact: T.Tuple[str]
             parent_step: T.Optional["Scenarios.Types.Step"] = None
             child_steps: T.List["Scenarios.Types.Step"] = []
-            field_delta_set_by_actor_key: T.Dict[str, T.Dict[str, T.Any]] = {}
+            fieldDeltaSetByActorKey: T.Dict[str, T.Dict[str, T.Any]] = {}
 
     class Queries:
         class GetScenarios(Query):

@@ -5,9 +5,9 @@ import { ObjT } from '/src/utils/types';
 
 export type StepT = EntityT & {
   fact: string[];
-  parent_step: StepT | null;
-  child_steps: StepT[];
-  field_delta_set_by_actor_key: {
+  parentStep: StepT | null;
+  childSteps: StepT[];
+  fieldDeltaSetByActorKey: {
     [actor_key: string]: { [field: string]: any };
   };
 };
@@ -18,8 +18,20 @@ export const createStep = (values: ObjT): StepT => {
   return initRS({
     id: createUUID(),
     fact: values.fact ?? [],
-    parent_step: values.parent_step ?? null,
-    child_steps: values.child_steps ?? [],
-    field_delta_set_by_actor_key: values.field_delta_set_by_actor_key ?? {},
+    parentStep: values.parentStep ?? null,
+    childSteps: values.childSteps ?? [],
+    fieldDeltaSetByActorKey: values.fieldDeltaSetByActorKey ?? {},
   } as StepT);
+};
+
+export const getStepSequence = (leafStep: StepT): StepT[] => {
+  const sequence: StepT[] = [];
+  let currentStep: StepT | null = leafStep;
+
+  while (currentStep) {
+    sequence.unshift(currentStep);
+    currentStep = currentStep.parentStep;
+  }
+
+  return sequence;
 };
