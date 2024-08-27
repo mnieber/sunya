@@ -10,10 +10,11 @@ The StateProvider starts by creating a state object. Certain parts of this state
 
 If you have doubts about which provided fields should come from the cache object, then please ask me before generating the code.
 
-## The context provider
-
-The provided resources are places in an object with a get function for each resource. This object is the passed into a context provider.
-
 ## The combination of React Context and MobX
 
-State is always stored in MobX observable objects. However, usually, these objects are provided to components via a React Context. In other words: React Contexts are used to pass MobX observable objects to components.
+State is always stored in MobX observable objects. React Contexts are used to pass these MobX observable objects to consuming components.
+
+### The context provider
+
+The provided resources are places in an object with a get function for each resource.
+The createGetProps function converts this object into a set of get-properties. The use of createGetProps is important as it allows us to pass an object with MobX-observable data to the context provider, without directly accessing this data in the StateProvider (as doing so would trigger re-renders).
