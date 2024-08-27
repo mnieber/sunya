@@ -15,6 +15,7 @@ config = dict(
         "frontend/actors",
         "frontend/projects",
         "frontend/scenarios",
+        "frontend/steps",
         "frontend/users",
     ],
     all_scenario_names=[
@@ -25,6 +26,7 @@ config = dict(
         "frontend/actors": F.Actors,
         "frontend/projects": F.Projects,
         "frontend/scenarios": F.Scenarios,
+        "frontend/steps": F.Steps,
         "frontend/users": F.Users,
     },
 )

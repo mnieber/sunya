@@ -1,64 +1,36 @@
-from default.frontend.namespace import Facet, Route, Component, Action, Ctr, State, Query
+from default.frontend.namespace import (
+    Route,
+    Component,
+)
 from default.stack.namespace import Module
-import typing as T
 from sunya import (
     actor_to_str,
     EntityWithId,
     G as g,
-    str_to_uuid,
-    any_dict,
 )
+from darshana.frontend.modules.steps import Steps
 
 # TODO:
-# - Each fact-bit should be recognizable as a string, an actor-key or a role-key.
+# - The Step.fact field should be a list of FactBit
+# - The FactBit has a type ("string", "actor", "role") and a value.
 # - The scenario should have a lookup table for actors and roles.
 # - The project should also have a lookup table for actors and roles.
 # - - If two scenarios have the same actor-key, then at the scenario level the actors are different, but at the project level they are the same.
-# - Find out if stories should use a mock-provider, or if they should use a real provider with mocked queries using msw.
+
 
 class Scenarios(Module):
     class Types:
         class Scenario(EntityWithId):
             name: str
-            root_step: "Scenarios.Types.Step"
-
-        class Step(EntityWithId):
-            fact: T.Tuple[str]
-            parent_step: T.Optional["Scenarios.Types.Step"] = None
-            child_steps: T.List["Scenarios.Types.Step"] = []
-            fieldDeltaSetByActorKey: T.Dict[str, T.Dict[str, T.Any]] = {}
-
-    class States:
-        class StepTreeState(State):
-            class Containers:
-                class StepTreeCtr(Ctr):
-                    data: Facet = any_dict(reconstructed_actor=None)
-
-            class Actions:
-                set_highlighted_actor = Action(name="setHighlightedActor")
+            root_step: "Steps.Types.Step"
 
     class Routes:
         class Scenario(Route):
             pass
 
-    class StateProviders:
-        class StepTreeStateProvider:
-            pass
-
     class Views:
         class ScenarioListView(Component):
             pass
-
-        class StepTreeView(Component):
-            pass
-
-        class StepListView(Component):
-            props = dict(
-                step="StepT",
-            )
-            local_state= dict(
-                is_collapsed=False,
-            )
 
         class ScenarioPage(Component):
             root = dict(
@@ -70,25 +42,11 @@ class Scenarios(Module):
         class SelectScenarioEffect:
             pass
 
-        class SelectStepEffect:
-            pass
-
 
 g.scenario_route = Scenarios.Routes.Scenario()
 g.scenario_list_view = Scenarios.Views.ScenarioListView()
-g.step_tree_view = Scenarios.Views.StepTreeView()
-g.step_list_view = Scenarios.Views.StepListView()
-g.step_tree_state = Scenarios.States.StepTreeState()
-g.set_highlighted_actor_action = (
-    Scenarios.States.StepTreeState.Actions.set_highlighted_actor
-)
+
 
 @actor_to_str.method((Scenarios.Types.Scenario,))
 def scenario_to_str(scenario):
     return f"{scenario.name}+:scenario"
-
-
-@actor_to_str.method((Scenarios.Types.Step,))
-def step_to_str(step):
-    id = str_to_uuid("-".join(step.fact))
-    return f"{"-".join(step.fact)}:step"

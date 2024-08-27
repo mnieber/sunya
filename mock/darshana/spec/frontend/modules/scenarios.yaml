@@ -8,42 +8,14 @@ types:
         type: str
       - name: rootStep
         type: Step
-  - name: Step
-    fields:
-      - name: id
-        type: UUID
-      - name: fact
-        type: tuple[str]
-      - name: parentStep
-        type: Step
-      - name: childSteps
-        type: list[Step]
-      - name: fieldDeltaSetByActorKey
-        type: dict[str, dict[str, Any]]
 mutations: []
 queries: []
-states:
-  - name: StepTreeState
-    containers:
-      - name: StepTreeCtr
-        facets:
-          - name: data
-            value:
-              reconstructed_actor: null
-    actions:
-      - name: setHighlightedActor
+states: []
 routes:
   - name: Scenario
-state_providers:
-  - name: StepTreeStateProvider
+state_providers: []
 views:
   ScenarioListView(Component): {}
-  StepTreeView(Component): {}
-  StepListView(Component):
-    props:
-      step: StepT
-    local_state:
-      is_collapsed: false
   ScenarioPage(Component):
     root:
       step_tree_view:
@@ -51,6 +23,5 @@ views:
       actor_view: null
 effects:
   - name: SelectScenarioEffect
-  - name: SelectStepEffect
 components: []
 
