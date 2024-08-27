@@ -5,14 +5,14 @@ export const getReconstructedActor = (
   step: StepT,
   actorKey: string
 ): ActorT => {
-  let reconstructedActor = {} as ActorT;
+  let fields = {};
 
   for (const currentStep of getStepSequence(step)) {
     const fieldDeltaSet = currentStep.fieldDeltaSetByActorKey[actorKey];
     if (fieldDeltaSet) {
-      Object.assign(reconstructedActor, fieldDeltaSet);
+      Object.assign(fields, fieldDeltaSet);
     }
   }
 
-  return reconstructedActor as ActorT;
+  return { key: actorKey, fields, changed_fields: [] };
 };

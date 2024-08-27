@@ -37,7 +37,6 @@ const InnerComponent = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     useEffect(() => {
       if (props.projectLeads.length > 0) {
-        debugger;
         props.projectLeadsHighlight.set({ itemId: props.projectLeads[0].id });
       }
     }, [props.projectLeads, props.projectLeadsHighlight]);

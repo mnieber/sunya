@@ -1,5 +1,3 @@
-// File: src/scenarios/components/SelectScenarioEffect.tsx
-
 import { observer } from 'mobx-react-lite';
 import * as R from 'ramda';
 import React from 'react';

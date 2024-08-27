@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { FactBitT } from '/src/api/types/StepT';
 
 const mockSteps = {
   id: 'root',
@@ -90,10 +89,11 @@ const Step = ({ step, depth = 0, onActorClick }: any) => {
     setIsExpanded(!isExpanded);
   };
 
-  const renderFactWithLinks = (fact: FactBitT[]) => {
-    return fact.map((factBit: FactBitT, index: any) => {
-      if (factBit.type === 'actor') {
-        const actorKey = factBit.value;
+  const renderFactWithLinks = (fact: any) => {
+    const parts = fact.split(/(\[[^\]]+\])/);
+    return parts.map((part: any, index: any) => {
+      if (part.startsWith('[') && part.endsWith(']')) {
+        const actorKey = part.slice(1, -1);
         return (
           <span
             key={index}
@@ -107,7 +107,7 @@ const Step = ({ step, depth = 0, onActorClick }: any) => {
           </span>
         );
       }
-      return factBit.value;
+      return part;
     });
   };
 

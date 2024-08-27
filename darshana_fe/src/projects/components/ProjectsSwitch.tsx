@@ -1,5 +1,3 @@
-// File: src/projects/components/ProjectsSwitch.tsx
-
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
 import { Route, Switch } from 'wouter';

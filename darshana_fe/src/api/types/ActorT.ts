@@ -1,9 +1,8 @@
 import { initRS } from 'mobx-resource-states';
-import { EntityT } from '/src/api/types/EntityT';
 import { createUUID } from '/src/utils/ids';
 import { ObjT } from '/src/utils/types';
 
-export type ActorT = EntityT & {
+export type ActorT = {
   key: string;
   fields: { [key: string]: any };
   changed_fields: string[];

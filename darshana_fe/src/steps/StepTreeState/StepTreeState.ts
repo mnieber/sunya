@@ -1,3 +1,4 @@
+import { action } from 'mobx';
 import * as Skandha from 'skandha';
 import { getReconstructedActor } from '/src/actors/lib/getReconstructedActor';
 import { StepT } from '/src/api/types/StepT';
@@ -17,12 +18,12 @@ export class StepTreeState {
   };
 
   actionsCtr = {
-    setHighlightedActor: (step: StepT, actorKey: string) => {
+    setHighlightedActor: action((step: StepT, actorKey: string) => {
       this.stepTreeCtr.data.reconstructedActor = getReconstructedActor(
         step,
         actorKey
       );
-    },
+    }),
   };
 
   destroy() {

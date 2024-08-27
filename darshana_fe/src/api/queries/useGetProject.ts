@@ -1,5 +1,3 @@
-// File: src/api/queries/useGetProject.ts
-
 import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '/src/api/queryClient';
 import { get } from '/src/api/restClient';

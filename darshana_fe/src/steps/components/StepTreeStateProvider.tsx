@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { isLoading, updateSources } from 'mobx-resource-states';
+import { createGetProps } from '/src/utils/createGetProps';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 
 import { observer } from 'mobx-react-lite';
@@ -39,17 +40,16 @@ export const StepTreeStateProvider = observer(
       })
     );
 
-    const value = React.useMemo(
-      () => ({
-        stepTreeState,
-        rootStep: cache.rootStep,
-        reconstructedActor: cache.reconstructedActor,
-      }),
-      [stepTreeState]
-    );
+    const getStepTreeContext = () => {
+      return createGetProps({
+        stepTreeState: () => stepTreeState,
+        rootStep: () => cache.rootStep,
+        reconstructedActor: () => cache.reconstructedActor,
+      });
+    };
 
     return (
-      <StepTreeContext.Provider value={value}>
+      <StepTreeContext.Provider value={getStepTreeContext()}>
         {props.children}
       </StepTreeContext.Provider>
     );

@@ -29,8 +29,10 @@ export const handleGetProject = http.get(
                 parentStep: null,
                 childSteps: [],
                 fieldDeltaSetByActorKey: {
-                  email: 'alice@example.com',
-                  isAuthenticated: false,
+                  'alice@example.com+:user': {
+                    email: 'alice@example.com',
+                    isAuthenticated: false,
+                  },
                 },
               },
             ],

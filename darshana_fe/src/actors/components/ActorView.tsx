@@ -28,9 +28,6 @@ export const ActorView = observer(
         <h3 className="mb-2 text-xl font-bold text-white">
           Actor: {props.reconstructedActor.key}
         </h3>
-        <p className="text-gray-300">
-          <strong>ID:</strong> {props.reconstructedActor.id}
-        </p>
         <h4 className="mb-2 mt-4 text-lg font-semibold text-white">Fields:</h4>
         <ul className="space-y-1">
           {Object.entries(props.reconstructedActor.fields).map(
