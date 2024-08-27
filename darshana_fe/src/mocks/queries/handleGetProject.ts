@@ -14,6 +14,28 @@ export const handleGetProject = http.get(
       scenarios: [
         createScenario({
           name: 'Mock Scenario 1',
+          rootStep: {
+            id: 'rootStepId',
+            fact: [],
+            parentStep: null,
+            childSteps: [
+              {
+                id: 'baseStep0',
+                fact: [
+                  { type: 'string', value: 'The' },
+                  { type: 'actor', value: 'alice@example.com+:user' },
+                  { type: 'string', value: 'signs in' },
+                ],
+                parentStep: null,
+                childSteps: [],
+                fieldDeltaSetByActorKey: {
+                  email: 'alice@example.com',
+                  isAuthenticated: false,
+                },
+              },
+            ],
+            fieldDeltaSetByActorKey: {},
+          },
         }),
         createScenario({
           name: 'Mock Scenario 2',

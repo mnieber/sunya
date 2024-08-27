@@ -11,8 +11,12 @@ from sunya import (
 
 class Steps(Module):
     class Types:
+        class FactBit(Entity):
+            type: str = "string | role | actor"
+            value: str
+
         class Step(EntityWithId):
-            fact: T.Tuple[T.Union[str, T.Dict]]
+            fact: T.Tuple["Steps.Types.FactBit"]
             parent_step: T.Optional["Steps.Types.Step"] = None
             child_steps: T.List["Steps.Types.Step"] = []
             fieldDeltaSetByActorKey: T.Dict[str, T.Dict[str, T.Any]] = {}

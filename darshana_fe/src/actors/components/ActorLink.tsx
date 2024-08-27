@@ -19,7 +19,7 @@ export const ActorLink = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const handleClick = (e: React.MouseEvent) => {
       e.stopPropagation(); // Prevent the click from affecting parent elements (like expanding/collapsing steps)
-      // stepTreeState.actionsCtr.setHighlightedActor(actorKey, props.step);
+      // stepTreeState.actionsCtr.setHighlightedActor(props.step, actorKey);
     };
 
     return (

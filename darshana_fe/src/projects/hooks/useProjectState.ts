@@ -7,14 +7,17 @@ import { useBuilder } from '/src/utils/hooks/useBuilder';
 import { useGraftResourceStatesFromMemo } from '/src/utils/hooks/useGraftResourceStatesFromMemo';
 
 export type PropsT = {
-  projectId: string;
+  projectId?: string;
 };
 
 export const useProjectState = (props: PropsT) => {
   const graftResourceStatesFromMemo = useGraftResourceStatesFromMemo({});
 
   const getProject = useObservableQuery(
-    useGetProject({ projectId: props.projectId }),
+    useGetProject(
+      { projectId: props.projectId! },
+      { enabled: !!props.projectId }
+    ),
     {
       fetchAsLoad: true,
       debugLabel: 'getProject',
@@ -24,9 +27,10 @@ export const useProjectState = (props: PropsT) => {
   const projectState = useBuilder(() => {
     const state = new ProjectState({
       getProject: () => {
+        const project = getProject.data?.project;
         return R.head(
           graftResourceStatesFromMemo({
-            resources: [getProject.data?.project] ?? [],
+            resources: project ? [project] : [],
           })
         );
       },

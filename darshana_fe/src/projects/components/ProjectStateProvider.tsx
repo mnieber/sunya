@@ -19,7 +19,7 @@ const ContextProps = {
 export const ProjectStateProvider = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const { projectState, getProject } = useProjectState({
-      projectId: props.projectLead.id,
+      projectId: props.projectLead?.id,
     });
 
     const cache = useBuilder(() =>

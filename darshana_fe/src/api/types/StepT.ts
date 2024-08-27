@@ -3,8 +3,13 @@ import { EntityT } from '/src/api/types/EntityT';
 import { createUUID } from '/src/utils/ids';
 import { ObjT } from '/src/utils/types';
 
+export type FactBitT = {
+  type: 'string' | 'role' | 'actor';
+  value: any;
+};
+
 export type StepT = EntityT & {
-  fact: string;
+  fact: FactBitT[];
   parentStep: StepT | null;
   childSteps: StepT[];
   fieldDeltaSetByActorKey: {

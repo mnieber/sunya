@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { ActorLink } from '/src/actors/components/ActorLink';
-import { StepT } from '/src/api/types/StepT';
+import { FactBitT, StepT } from '/src/api/types/StepT';
 import { cn } from '/src/utils/classnames';
 
 export type PropsT = {
@@ -19,13 +19,12 @@ export const StepListView = observer((props: PropsT) => {
   };
 
   const renderFactWithLinks = (step: StepT) => {
-    const parts = step.fact.split(/(\[[^\]]+\])/);
-    return parts.map((part, index) => {
-      if (part.startsWith('[') && part.endsWith(']')) {
-        const actorKey = part.slice(1, -1);
+    return step.fact.map((factBit: FactBitT, index: any) => {
+      if (factBit.type === 'actor') {
+        const actorKey = factBit.value;
         return <ActorLink key={index} actorKey={actorKey} step={step} />;
       }
-      return part;
+      return factBit.value;
     });
   };
 

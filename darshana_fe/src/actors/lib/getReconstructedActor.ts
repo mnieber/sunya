@@ -1,11 +1,14 @@
 import { ActorT } from '/src/api/types/ActorT';
 import { getStepSequence, StepT } from '/src/api/types/StepT';
 
-export const getReconstructedActor = (step: StepT, actor: ActorT): ActorT => {
+export const getReconstructedActor = (
+  step: StepT,
+  actorKey: string
+): ActorT => {
   let reconstructedActor = {} as ActorT;
 
   for (const currentStep of getStepSequence(step)) {
-    const fieldDeltaSet = currentStep.fieldDeltaSetByActorKey[actor.key];
+    const fieldDeltaSet = currentStep.fieldDeltaSetByActorKey[actorKey];
     if (fieldDeltaSet) {
       Object.assign(reconstructedActor, fieldDeltaSet);
     }
