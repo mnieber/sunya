@@ -1,29 +1,29 @@
 import { http, HttpResponse } from 'msw';
 import { hostUrl } from '/src/api/restClient';
-import { createProjectEntry } from '/src/api/types/ProjectEntryT';
+import { createProjectLead } from '/src/api/types/ProjectLeadT';
 import { createScenario } from '/src/api/types/ScenarioT';
 
-export const handleGetProjectEntries = http.get(
-  `${hostUrl}projects/entries/`,
+export const handleGetProjectLeads = http.get(
+  `${hostUrl}projects/leads/`,
   () => {
-    const mockProjectEntries = [
-      createProjectEntry({
-        name: 'Mock ProjectEntry 1',
+    const mockProjectLeads = [
+      createProjectLead({
+        name: 'Mock ProjectLead 1',
         scenarios: [
           createScenario({ name: 'Scenario 1.1' }),
           createScenario({ name: 'Scenario 1.2' }),
         ],
       }),
-      createProjectEntry({
-        name: 'Mock ProjectEntry 2',
+      createProjectLead({
+        name: 'Mock ProjectLead 2',
         scenarios: [createScenario({ name: 'Scenario 2.1' })],
       }),
-      createProjectEntry({
-        name: 'Mock ProjectEntry 3',
+      createProjectLead({
+        name: 'Mock ProjectLead 3',
         scenarios: [],
       }),
     ];
 
-    return HttpResponse.json(mockProjectEntries);
+    return HttpResponse.json(mockProjectLeads);
   }
 );

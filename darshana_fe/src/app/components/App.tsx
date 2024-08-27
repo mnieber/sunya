@@ -4,10 +4,9 @@ import { queryClient } from '/src/api/queryClient';
 import { flags } from '/src/app/flags';
 import { L } from '/src/frames/layout';
 import { MockApp } from '/src/mocks/app/components/MockApp';
-import { ProjectEntriesStateProvider } from '/src/projects/components/ProjectEntriesStateProvider';
+import { ProjectLeadsStateProvider } from '/src/projects/components/ProjectLeadsStateProvider';
 import { ProjectsSwitch } from '/src/projects/components/ProjectsSwitch';
 import { NavStateProvider } from '/src/routes/components/NavStateProvider';
-import { StepTreeStateProvider } from '/src/steps/components/StepTreeStateProvider';
 import { cn } from '/src/utils/classnames';
 
 export const App = () => {
@@ -18,13 +17,11 @@ export const App = () => {
   ) : (
     <QueryClientProvider client={queryClient}>
       <NavStateProvider>
-        <ProjectEntriesStateProvider>
-          <StepTreeStateProvider>
-            <AppBody>
-              <ProjectsSwitch />
-            </AppBody>
-          </StepTreeStateProvider>
-        </ProjectEntriesStateProvider>
+        <ProjectLeadsStateProvider>
+          <AppBody>
+            <ProjectsSwitch />
+          </AppBody>
+        </ProjectLeadsStateProvider>
       </NavStateProvider>
     </QueryClientProvider>
   );

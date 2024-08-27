@@ -3,15 +3,15 @@ import { EntityT } from '/src/api/types/EntityT';
 import { createUUID } from '/src/utils/ids';
 import { ObjT } from '/src/utils/types';
 
-export type ProjectEntryT = EntityT & {
+export type ProjectLeadT = EntityT & {
   name: string;
 };
 
-export type ProjectEntryByIdT = { [id: string]: ProjectEntryT };
+export type ProjectLeadByIdT = { [id: string]: ProjectLeadT };
 
-export const createProjectEntry = (values: ObjT): ProjectEntryT => {
+export const createProjectLead = (values: ObjT): ProjectLeadT => {
   return initRS({
     id: createUUID(),
     name: values.name ?? 'New project entry',
-  } as ProjectEntryT);
+  } as ProjectLeadT);
 };

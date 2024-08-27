@@ -5,7 +5,7 @@ import React from 'react';
 import { withContextProps } from 'react-props-from-context';
 import { isQueryLoading } from '/src/api/lib/ObservableQuery';
 import { ProjectContext } from '/src/projects/hooks/useProjectContext';
-import { projectEntriesCtx } from '/src/projects/hooks/useProjectEntriesContext';
+import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
 import { useProjectState } from '/src/projects/hooks/useProjectState';
 import { createGetProps } from '/src/utils/createGetProps';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
@@ -13,13 +13,13 @@ import { useBuilder } from '/src/utils/hooks/useBuilder';
 export type PropsT = React.PropsWithChildren<{}>;
 
 const ContextProps = {
-  projectEntry: projectEntriesCtx.projectEntry,
+  projectLead: projectLeadsCtx.projectLead,
 };
 
 export const ProjectStateProvider = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const { projectState, getProject } = useProjectState({
-      projectId: props.projectEntry.id,
+      projectId: props.projectLead.id,
     });
 
     const cache = useBuilder(() =>
