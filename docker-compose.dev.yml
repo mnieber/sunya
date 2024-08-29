@@ -111,6 +111,19 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+  preline:
+    build:
+      context: ./preline
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    env_file:
+      - ./darshana_fe/.env/dev.injected.env
+    image: preline_dev
+    ports:
+      - 3003:3003
+      - 6009:6009
+    volumes:
+      - ./preline:/app/src
 volumes:
   blogs_be_venv: {}
   darshana_be_venv: {}
