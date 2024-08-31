@@ -1,11 +1,17 @@
 name: steps
 types:
+  - name: FactBit
+    fields:
+      - name: type
+        type: str
+      - name: value
+        type: str
   - name: Step
     fields:
       - name: id
         type: UUID
       - name: fact
-        type: tuple[Dict]]
+        type: tuple[FactBit]
       - name: parentStep
         type: Step
       - name: childSteps

@@ -7,7 +7,7 @@ from .scenarios import Scenarios
 
 class Projects(Module):
     class Types:
-        class ProjectEntry(EntityWithId):
+        class ProjectLead(EntityWithId):
             name: str
 
         class Project(EntityWithId):
@@ -19,17 +19,13 @@ class Projects(Module):
             class Args:
                 createProjectForm: Form
 
-        class ImportSpecFiles(Mutation):
+        class UploadSpecFiles(Mutation):
             class Args:
                 project: "Projects.Types.Project"
                 files: T.List[T.Any]
 
-        class DeleteUploadedFile(Mutation):
-            class Args:
-                filename: str
-
     class Queries:
-        class GetProjectEntries(Query):
+        class GetProjectLeads(Query):
             pass
 
         class GetProject(Query):
@@ -37,9 +33,9 @@ class Projects(Module):
                 projectId: str
 
     class States:
-        class ProjectEntriesState:
+        class ProjectLeadsState:
             class Containers:
-                class ProjectEntriesCtr:
+                class ProjectLeadsCtr:
                     data: Facet
                     highlight: Facet
 
@@ -60,17 +56,18 @@ class Projects(Module):
             pass
 
     class StateProviders:
-        class ProjectEntriesStateProvider:
+        class ProjectLeadsStateProvider:
+            pass
+
+        class ProjectStateProvider:
             pass
 
     class Views:
         class ProjectsPage(Component):
-            class Root:
-                root = dict(
-                    #
-                    project_list=None,
-                    create_project_form=None,
-                )
+            root = dict(
+                #
+                project_list=None,
+            )
 
         class ProjectPage(Component):
             root = dict(
@@ -84,8 +81,11 @@ class Projects(Module):
         class CreateProjectFormView(Component):
             pass
 
+        class UploadSpecFilesFormView(Component):
+            pass
+
     class Components:
-        class ImportFilesButton(Component):
+        class UploadSpecFilesButton(Component):
             pass
 
         class CreateProjectButton(Component):
@@ -96,14 +96,17 @@ class Projects(Module):
             pass
 
 
-g.import_files_button = Projects.Components.ImportFilesButton()
 g.create_project_button = Projects.Components.CreateProjectButton()
-g.projects_route = Projects.Routes.Projects()
-g.project_route = Projects.Routes.Project()
+g.create_project_form_view = Projects.Views.CreateProjectFormView()
 g.create_project_mutation = Projects.Mutations.CreateProject()
-g.project_page = Projects.Views.ProjectPage()
+g.get_project_leads_query = Projects.Queries.GetProjectLeads()
 g.get_project_query = Projects.Queries.GetProject()
-g.get_project_entries_query = Projects.Queries.GetProjectEntries()
+g.project_page = Projects.Views.ProjectPage()
+g.project_route = Projects.Routes.Project()
+g.projects_route = Projects.Routes.Projects()
+g.upload_spec_files_form_view = Projects.Views.UploadSpecFilesFormView()
+g.upload_spec_files_button = Projects.Components.UploadSpecFilesButton()
+g.upload_spec_files_mutation = Projects.Mutations.UploadSpecFiles()
 
 
 @actor_to_str.method((Projects.Types.Project,))

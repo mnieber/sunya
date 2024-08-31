@@ -12,6 +12,7 @@ from sunya import (
 
 def start(user):
     project = add_role("Project")
+    spec_files = add_role("SpecFiles")
 
     scenario_name = "ms1-a-user-creates-a-project"
     with add_scenario(scenario_name):
@@ -21,22 +22,32 @@ def start(user):
             with the(g.user).visits_the(g.projects_route):
                 pass
 
+            with the(g.user).presses_the(g.create_project_button):
+                pass
+
             with the(g.user).enters_the_project_name():
                 pass
 
-            with the(g.user).presses_the(g.import_files_button):
-                with the(g.frontend).uploads_spec_files():
-                    pass
-
-            with the(g.user).deletes_some_uploaded_files():
-                pass
-
-            with the(g.user).presses_the(g.create_project_button):
+            with the(g.user).submits_the(g.create_project_form_view):
                 with the(g.frontend).calls_the(g.create_project_mutation):
                     project_()
 
             with the(g.frontend).redirects_to_the(g.project_route):
                 pass
+
+        with add_goal("upload", spec_files, "to the", project):
+            with the(g.user).visits_the(g.project_route):
+                pass
+
+            with the(g.user).presses_the(g.upload_spec_files_button):
+                pass
+
+            with the(g.user).selects_the(spec_files):
+                pass
+
+            with the(g.user).submits_the(g.upload_spec_files_form_view):
+                with the(g.frontend).calls_the(g.upload_spec_files_mutation):
+                    pass
 
     return get_scenario(scenario_name)
 

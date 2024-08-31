@@ -1,9 +1,10 @@
-from default.frontend.namespace import Facet, Route, Component, Action, Ctr, State, Query
+from default.frontend.namespace import Facet, Component, Action, Ctr, State
 from default.stack.namespace import Module
 import typing as T
 from sunya import (
     actor_to_str,
     EntityWithId,
+    Entity,
     G as g,
     str_to_uuid,
     any_dict,

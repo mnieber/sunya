@@ -1,6 +1,6 @@
 name: projects
 types:
-  - name: ProjectEntry
+  - name: ProjectLead
     fields:
       - name: id
         type: UUID
@@ -19,23 +19,19 @@ mutations:
     args:
       - name: createProjectForm
         type: Form
-  - name: ImportSpecFiles
+  - name: UploadSpecFiles
     args:
       - name: project
         type: Project
       - name: files
         type: list[Any]
-  - name: DeleteUploadedFile
-    args:
-      - name: filename
-        type: str
 queries:
-  - name: GetProjectEntries
+  - name: GetProjectLeads
   - name: GetProject
 states:
-  - name: ProjectEntriesState
+  - name: ProjectLeadsState
     containers:
-      - name: ProjectEntriesCtr
+      - name: ProjectLeadsCtr
         facets:
           - name: data
           - name: highlight
@@ -52,21 +48,21 @@ routes:
   - name: Projects
   - name: Project
 state_providers:
-  - name: ProjectEntriesStateProvider
+  - name: ProjectLeadsStateProvider
+  - name: ProjectStateProvider
 views:
   ProjectsPage(Component):
-    Root:
-      root:
-        project_list: null
-        create_project_form: null
+    root:
+      project_list: null
   ProjectPage(Component):
     root:
       scenario_list_view: null
   ProjectListView(Component): {}
   CreateProjectFormView(Component): {}
+  UploadSpecFilesFormView(Component): {}
 effects:
   - name: SelectProjectEffect
 components:
-  ImportFilesButton(Component): {}
+  UploadSpecFilesButton(Component): {}
   CreateProjectButton(Component): {}
 
