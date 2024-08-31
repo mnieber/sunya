@@ -30,7 +30,16 @@ export const ProjectStateProvider = observer(
               resource: projectState.scenariosCtr.highlight.item,
               resourceName: 'scenario',
             },
-            ['loading', () => isQueryLoading(getProject), 'scenario']
+            ['loading', () => isQueryLoading(getProject), 'getProject']
+          );
+        },
+        get scenarios() {
+          return updateSources(
+            {
+              resource: projectState.scenariosCtr.data.scenarios,
+              resourceName: 'scenarios',
+            },
+            ['loading', () => isQueryLoading(getProject), 'getProject']
           );
         },
         get project() {
@@ -46,6 +55,7 @@ export const ProjectStateProvider = observer(
       return createGetProps({
         projectState: () => projectState,
         scenario: () => cache.scenario,
+        scenarios: () => cache.scenarios,
         scenariosHighlight: () => projectState.scenariosCtr.highlight,
         project: () => cache.project,
       });

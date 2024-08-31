@@ -1,0 +1,38 @@
+import { Meta, StoryFn } from '@storybook/react';
+import { passthroughHandlers } from '/src/mocks/browser/defaultPassthrough';
+import { handleGetProject } from '/src/mocks/queries/handleGetProject';
+import { handleGetProjectLeads } from '/src/mocks/queries/handleGetProjectLeads';
+import { MockStepTreeStateProvider } from '/src/mocks/steps/components/MockStepTreeStateProvider';
+import { ScenarioListView } from '/src/scenarios/components/ScenarioListView';
+
+export default {
+  title: 'Components/ScenarioListView',
+  component: ScenarioListView,
+  parameters: {
+    msw: {
+      handlers: [
+        handleGetProjectLeads,
+        handleGetProject,
+        ...passthroughHandlers,
+      ],
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ padding: '3rem' }}>
+        <Story />
+      </div>
+    ),
+  ],
+} as Meta;
+
+const Template: StoryFn = () => <ScenarioListView />;
+
+export const Default = Template.bind({});
+Default.decorators = [
+  (Story) => (
+    <MockStepTreeStateProvider>
+      <Story />
+    </MockStepTreeStateProvider>
+  ),
+];
