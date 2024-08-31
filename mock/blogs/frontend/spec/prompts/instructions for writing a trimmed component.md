@@ -4,7 +4,11 @@ When writing a trimmed component, please follow the example in frames/components
 
 ## The trim.ts file
 
-This file declares the trim-format (in the example source code this is DialogButtonTrimT) that can be used to style the associated component. The file also declares a style object (in the example source code this is DialogButtonTrimS) that can be used to fill the slots of the trim-object.
+This file declares the trim-format (in the example source code this is DialogButtonTrimT) that can be used to style the associated component.
+
+### The style-object
+
+The trim.ts file also declares a style object (in the example source code this is DialogButtonTrimS) that can be used to fill the slots of the trim-object.
 
 ## The trims.ts file
 

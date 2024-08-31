@@ -14,5 +14,5 @@ export const getReconstructedActor = (
     }
   }
 
-  return { key: actorKey, fields, changed_fields: [] };
+  return { key: actorKey, fields, changedFields: [] };
 };

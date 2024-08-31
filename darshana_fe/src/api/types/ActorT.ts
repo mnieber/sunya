@@ -5,7 +5,7 @@ import { ObjT } from '/src/utils/types';
 export type ActorT = {
   key: string;
   fields: { [key: string]: any };
-  changed_fields: string[];
+  changedFields: string[];
 };
 
 export type ActorByIdT = { [id: string]: ActorT };
@@ -15,6 +15,6 @@ export const createActor = (values: ObjT): ActorT => {
     id: createUUID(),
     key: values.key ?? '',
     fields: values.fields ?? {},
-    changed_fields: values.changed_fields ?? [],
+    changedFields: values.changedFields ?? [],
   } as ActorT);
 };

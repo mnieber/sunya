@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Card } from '/src/frames/components/Card';
 
 const mockSteps = {
   id: 'root',
@@ -141,7 +142,7 @@ const ActorView = ({ actor }: any) => {
   if (!actor) return null;
 
   return (
-    <div className="mt-6 rounded-lg border border-gray-700 bg-gray-800 p-4">
+    <Card>
       <h3 className="mb-2 text-xl font-bold">Actor: {actor.key}</h3>
       <p>
         <strong>ID:</strong> {actor.id}
@@ -152,12 +153,12 @@ const ActorView = ({ actor }: any) => {
           <li key={key}>
             <strong>{key}:</strong> {value}
             {actor.changedFields.includes(key) && (
-              <span className="text-green-400 ml-2">(Changed)</span>
+              <span className="ml-2 text-green-400">(Changed)</span>
             )}
           </li>
         ))}
       </ul>
-    </div>
+    </Card>
   );
 };
 

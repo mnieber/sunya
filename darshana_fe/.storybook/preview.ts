@@ -1,3 +1,7 @@
+// Import styles. This needs to be done before importing any components.
+import '/src/frames/styles/index.css';
+import '/src/frames/styles/index.scss';
+
 import type { Preview } from '@storybook/react';
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 
