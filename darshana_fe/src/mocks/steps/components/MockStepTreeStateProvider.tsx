@@ -14,6 +14,7 @@ const ContextProps = {
   projectLeads: projectLeadsCtx.projectLeads,
   projectLeadsHighlight: projectLeadsCtx.projectLeadsHighlight,
   project: projectCtx.project,
+  scenariosHighlight: projectCtx.scenariosHighlight,
   stepTreeState: stepTreeCtx.stepTreeState,
 };
 
@@ -44,6 +45,8 @@ const InnerComponent = observer(
     useEffect(() => {
       const scenario = props.project?.scenarios[0];
       if (scenario) {
+        props.scenariosHighlight.set({ itemId: scenario.id });
+
         const step = scenario.rootStep.childSteps[0];
         props.stepTreeState.actionsCtr.setHighlightedActor(
           step,

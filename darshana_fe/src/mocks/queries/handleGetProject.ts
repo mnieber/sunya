@@ -27,11 +27,95 @@ export const handleGetProject = http.get(
                   { type: 'string', value: 'signs in' },
                 ],
                 parentStep: null,
-                childSteps: [],
+                childSteps: [
+                  {
+                    id: 'nestedStep1',
+                    fact: [
+                      {
+                        type: 'string',
+                        value: 'Alice navigates to the dashboard',
+                      },
+                    ],
+                    parentStep: 'baseStep0',
+                    childSteps: [],
+                    fieldDeltaSetByActorKey: {
+                      'alice@example.com+:user': {
+                        currentPage: 'dashboard',
+                      },
+                    },
+                  },
+                  {
+                    id: 'nestedStep2',
+                    fact: [
+                      {
+                        type: 'string',
+                        value: 'Alice opens the project creation modal',
+                      },
+                    ],
+                    parentStep: 'baseStep0',
+                    childSteps: [
+                      {
+                        id: 'deeplyNestedStep1',
+                        fact: [
+                          {
+                            type: 'string',
+                            value: 'Alice enters project details',
+                          },
+                        ],
+                        parentStep: 'nestedStep2',
+                        childSteps: [],
+                        fieldDeltaSetByActorKey: {
+                          'alice@example.com+:user': {
+                            projectName: 'New Project',
+                            projectDescription: 'A sample project',
+                          },
+                        },
+                      },
+                      {
+                        id: 'deeplyNestedStep2',
+                        fact: [
+                          {
+                            type: 'string',
+                            value: 'Alice submits the project creation form',
+                          },
+                        ],
+                        parentStep: 'nestedStep2',
+                        childSteps: [],
+                        fieldDeltaSetByActorKey: {
+                          'alice@example.com+:user': {
+                            projects: ['New Project'],
+                          },
+                        },
+                      },
+                    ],
+                    fieldDeltaSetByActorKey: {
+                      'alice@example.com+:user': {
+                        isProjectModalOpen: true,
+                      },
+                    },
+                  },
+                ],
                 fieldDeltaSetByActorKey: {
                   'alice@example.com+:user': {
                     email: 'alice@example.com',
-                    isAuthenticated: false,
+                    isAuthenticated: true,
+                  },
+                },
+              },
+              {
+                id: 'baseStep1',
+                fact: [
+                  { type: 'string', value: 'The' },
+                  { type: 'actor', value: 'bob@example.com+:user' },
+                  { type: 'string', value: 'joins the project' },
+                ],
+                parentStep: null,
+                childSteps: [],
+                fieldDeltaSetByActorKey: {
+                  'bob@example.com+:user': {
+                    email: 'bob@example.com',
+                    isAuthenticated: true,
+                    projects: ['New Project'],
                   },
                 },
               },

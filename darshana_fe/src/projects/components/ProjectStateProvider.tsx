@@ -46,6 +46,7 @@ export const ProjectStateProvider = observer(
       return createGetProps({
         projectState: () => projectState,
         scenario: () => cache.scenario,
+        scenariosHighlight: () => projectState.scenariosCtr.highlight,
         project: () => cache.project,
       });
     };

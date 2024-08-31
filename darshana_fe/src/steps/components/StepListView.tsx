@@ -1,54 +1,49 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
-import { ActorLink } from '/src/actors/components/ActorLink';
-import { FactBitT, StepT } from '/src/api/types/StepT';
+import { StepT } from '/src/api/types/StepT';
+import { Fact } from '/src/steps/components/FactCard';
 import { cn } from '/src/utils/classnames';
 
-export type PropsT = {
+type PropsT = {
   step: StepT;
-  className?: any;
-  depth?: number;
+  depth: number;
+  setHighlightedActor: (step: StepT, actorKey: string) => void;
 };
 
 export const StepListView = observer((props: PropsT) => {
-  const { step, className, depth = 0 } = props;
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  const renderFactWithLinks = (step: StepT) => {
-    return step.fact.map((factBit: FactBitT, index: any) => {
-      if (factBit.type === 'actor') {
-        const actorKey = factBit.value;
-        return <ActorLink key={index} actorKey={actorKey} step={step} />;
-      }
-      return factBit.value;
-    });
-  };
+  const hasFact = props.step.fact.length > 0;
 
   return (
-    <div className={cn('StepListView', className)}>
-      <div
-        className={cn(
-          'flex cursor-pointer items-start rounded p-2 hover:bg-gray-700',
-          { 'bg-gray-700': isExpanded }
-        )}
-        onClick={toggleExpand}
-        style={{ marginLeft: `${depth * 20}px` }}
-      >
-        <span className="mr-2 w-4 text-gray-400">
-          {step.childSteps.length > 0 ? (isExpanded ? '▼' : '►') : '•'}
-        </span>
-        <div className="flex-1 text-gray-200">{renderFactWithLinks(step)}</div>
-      </div>
-      {isExpanded &&
-        step.childSteps.map((childStep, index) => (
+    <div className={cn({ 'ml-7': props.depth > 1, 'ml-0': props.depth <= 1 })}>
+      {hasFact && (
+        <div
+          onClick={toggleExpand}
+          className="mb-2 flex cursor-pointer items-start"
+        >
+          <span className="mr-2 w-5 text-gray-400">
+            {props.step.childSteps.length > 0 ? (isExpanded ? '▼' : '►') : '•'}
+          </span>
+          <div className="flex-1 break-words">
+            <Fact
+              step={props.step}
+              setHighlightedActor={props.setHighlightedActor}
+            />
+          </div>
+        </div>
+      )}
+      {(!hasFact || isExpanded) &&
+        props.step.childSteps.map((childStep) => (
           <StepListView
-            key={childStep.id || index}
+            key={childStep.id}
             step={childStep}
-            depth={depth + 1}
+            depth={(props.depth ?? 0) + 1}
+            setHighlightedActor={props.setHighlightedActor}
           />
         ))}
     </div>
