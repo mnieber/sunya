@@ -3,11 +3,11 @@ import { passthroughHandlers } from '/src/mocks/browser/defaultPassthrough';
 import { handleGetProject } from '/src/mocks/queries/handleGetProject';
 import { handleGetProjectLeads } from '/src/mocks/queries/handleGetProjectLeads';
 import { MockStepTreeStateProvider } from '/src/mocks/steps/components/MockStepTreeStateProvider';
-import { StepTreeView } from '/src/steps/components/StepTreeView';
+import { ScenarioPage } from '/src/scenarios/components/ScenarioPage';
 
 export default {
-  title: 'Components/StepTreeView',
-  component: StepTreeView,
+  title: 'Components/ScenarioPage',
+  component: ScenarioPage,
   parameters: {
     msw: {
       handlers: [
@@ -26,7 +26,7 @@ export default {
   ],
 } as Meta;
 
-const Template: StoryFn = () => <StepTreeView />;
+const Template: StoryFn = () => <ScenarioPage />;
 
 export const Default = Template.bind({});
 Default.decorators = [
