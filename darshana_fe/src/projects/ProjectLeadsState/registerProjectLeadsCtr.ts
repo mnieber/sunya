@@ -1,5 +1,7 @@
+import { Cbs } from 'aspiration';
 import * as R from 'ramda';
 import { mapDataToProps } from 'skandha';
+import { Deletion, Edit } from 'skandha-facets';
 import { registerCtr } from 'skandha-mobx';
 import { ProjectLeadsState } from '/src/projects/ProjectLeadsState/ProjectLeadsState';
 
@@ -23,6 +25,23 @@ const mapData = (state: ProjectLeadsState) => {
 
 const setCallbacks = (state: ProjectLeadsState) => {
   const ctr = state.projectLeadsCtr;
+
+  ctr.deletion.callbackMap = {
+    delete: {
+      deleteItems(this: Cbs<Deletion['delete']>) {
+        return state.props.deleteProjects(this.args.itemIds);
+      },
+    },
+  };
+
+  ctr.edit.callbackMap = {
+    save: {
+      saveItem(this: Cbs<Edit['save']>) {
+        return state.props.saveProject(this.args.values);
+      },
+    },
+    cancel: {},
+  };
 
   ctr.highlight.callbackMap = {
     set: {},

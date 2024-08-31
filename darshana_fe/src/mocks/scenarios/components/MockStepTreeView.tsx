@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CardS } from '/src/frames/components/Card';
+import { cn } from '/src/utils/classnames';
 
 const mockSteps = {
   id: 'root',
@@ -87,7 +88,7 @@ const ActorView = ({ actor }: any) => {
   if (!actor) return null;
 
   return (
-    <div className={cn(CardS.colours.default, CardS.padding.medium)}>
+    <div className={cn(CardS.colours.default(), CardS.padding.medium())}>
       <h3 className="mb-2 text-xl font-bold">Actor: {actor.key}</h3>
       <p>
         <strong>ID:</strong> {actor.id}

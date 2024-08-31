@@ -6,6 +6,7 @@ import { ObjT } from '/src/utils/types';
 
 export type ProjectT = EntityT & {
   name: string;
+  description: string;
   scenarios: ScenarioT[];
 };
 

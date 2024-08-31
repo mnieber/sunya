@@ -22,8 +22,8 @@ export const ActorView = observer(
       <div
         className={cn(
           'ActorView',
-          CardS.padding.medium,
-          CardS.colours.default,
+          CardS.padding.medium(),
+          CardS.colours.default(),
           props.className
         )}
       >

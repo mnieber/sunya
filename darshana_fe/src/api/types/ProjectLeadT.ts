@@ -5,6 +5,7 @@ import { ObjT } from '/src/utils/types';
 
 export type ProjectLeadT = EntityT & {
   name: string;
+  description: string;
 };
 
 export type ProjectLeadByIdT = { [id: string]: ProjectLeadT };

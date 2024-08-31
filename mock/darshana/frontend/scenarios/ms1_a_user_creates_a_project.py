@@ -45,8 +45,22 @@ def start(user):
             with the(g.user).selects_the(spec_files):
                 pass
 
+            with the(g.user).deletes_some_of_the(spec_files):
+                pass
+
             with the(g.user).submits_the(g.upload_spec_files_form_view):
                 with the(g.frontend).calls_the(g.upload_spec_files_mutation):
+                    pass
+
+        with add_goal("delete a", project, "for the", g.user):
+            with the(g.user).visits_the(g.projects_route):
+                pass
+
+            with the(g.user).presses_the(g.delete_project_button):
+                with the(g.frontend).asks_confirmation_from_the(g.user):
+                    pass
+
+                with the(g.frontend).calls_the(g.delete_project_mutation):
                     pass
 
     return get_scenario(scenario_name)

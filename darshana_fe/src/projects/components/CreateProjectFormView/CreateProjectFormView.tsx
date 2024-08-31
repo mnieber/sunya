@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { FormStateProvider } from 'react-form-state-context';
 import { withContextProps } from 'react-props-from-context';
+import { ProjectT } from '/src/api/types/ProjectT';
 import {
   Field,
   FormCancelButton,
@@ -8,10 +9,11 @@ import {
   FormSaveButton,
   GlobalError,
   NameField,
+  TextField,
 } from '/src/forms/components';
-import { FileUploadFormField } from '/src/forms/components/FileUploadFormField';
 import { MainFormS } from '/src/forms/components/MainForm';
 import { CardS } from '/src/frames/components/Card';
+import { form } from '/src/projects/components/CreateProjectFormView/form';
 import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
 import { cn } from '/src/utils/classnames';
 
@@ -20,39 +22,37 @@ import './CreateProjectFormView.scss';
 
 export type PropsT = {
   className?: any;
+  project?: ProjectT;
+  onProjectCreated?: (projectId: string) => void;
 };
 
-const ContextProps = {
+export const ContextProps = {
   projectLeadsState: projectLeadsCtx.projectLeadsState,
 };
 
 export const CreateProjectFormView = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
-    // Form handlers (to be implemented)
-    const handleSubmit = () => {
-      return Promise.resolve();
-    };
-
-    const handleCancel = () => {
-      // Implement cancel logic
-    };
+    const initialValues = form.getInitialValues(props);
+    const initialErrors = form.getInitialErrors(props);
 
     return (
       <div
         className={cn('CreateProjectFormView', [
-          CardS.padding.medium,
-          CardS.colours.default,
+          CardS.padding.medium(),
+          CardS.colours.default(),
           props.className,
         ])}
       >
         <FormStateProvider
-          initialValues={{
-            'projectForm.name': '',
-            'projectForm.specFiles': [],
-          }}
-          initialErrors={{}}
-          handleSubmit={handleSubmit}
-          handleCancel={handleCancel}
+          initialValues={initialValues}
+          initialErrors={initialErrors}
+          handleValidate={form.getHandleValidate(props)}
+          handleSubmit={form.getHandleSubmit(
+            props,
+            initialValues,
+            initialErrors
+          )}
+          handleCancel={form.getHandleCancel(props)}
         >
           <GlobalError className={MainFormS.GlobalError()} />
 
@@ -62,14 +62,11 @@ export const CreateProjectFormView = observer(
           </Field>
 
           <Field
-            fieldName="projectForm.specFiles"
+            fieldName="projectForm.description"
             className={MainFormS.Field()}
           >
-            <FormFieldLabel label="UPLOAD SPEC FILES" />
-            <FileUploadFormField
-              accept={{ 'application/x-yaml': ['.yaml', '.yml'] }}
-              multiple={true}
-            />
+            <FormFieldLabel label="DESCRIPTION" />
+            <TextField tabIndex={2} controlled={true} />
           </Field>
 
           <div className={cn(MainFormS.Buttons())}>

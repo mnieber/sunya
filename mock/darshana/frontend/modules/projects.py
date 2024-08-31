@@ -1,7 +1,16 @@
-from default.frontend.entities import Mutation, Query, Facet, Route, Component
+from default.frontend.namespace import (
+    Facet,
+    Component,
+    Ctr,
+    Mutation,
+    Query,
+    Facet,
+    Route,
+    Component,
+)
 from default.stack.namespace import Module, Form
 import typing as T
-from sunya import actor_to_str, EntityWithId, G as g
+from sunya import actor_to_str, EntityWithId, G as g, any_dict
 from .scenarios import Scenarios
 
 
@@ -9,15 +18,25 @@ class Projects(Module):
     class Types:
         class ProjectLead(EntityWithId):
             name: str
+            description: str
 
         class Project(EntityWithId):
             name: str
+            description: str
             scenarios: T.List["Scenarios.Types.Scenario"] = []
 
     class Mutations:
         class CreateProject(Mutation):
             class Args:
                 createProjectForm: Form
+
+        class SaveProject(Mutation):
+            class Args:
+                saveProjectForm: Form
+
+        class DeleteProjects(Mutation):
+            class Args:
+                project_ids: T.List[str]
 
         class UploadSpecFiles(Mutation):
             class Args:
@@ -57,7 +76,12 @@ class Projects(Module):
 
     class StateProviders:
         class ProjectLeadsStateProvider:
-            pass
+            class Containers:
+                class ProjectLeadsCtr(Ctr):
+                    data: Facet = any_dict()
+                    highlight: Facet = any_dict()
+                    deletion: Facet = any_dict()
+                    edit: Facet = any_dict()
 
         class ProjectStateProvider:
             pass
@@ -91,12 +115,16 @@ class Projects(Module):
         class CreateProjectButton(Component):
             pass
 
+        class DeleteProjectButton(Component):
+            pass
+
     class Effects:
         class SelectProjectEffect(Component):
             pass
 
 
 g.create_project_button = Projects.Components.CreateProjectButton()
+g.delete_project_button = Projects.Components.DeleteProjectButton()
 g.create_project_form_view = Projects.Views.CreateProjectFormView()
 g.create_project_mutation = Projects.Mutations.CreateProject()
 g.get_project_leads_query = Projects.Queries.GetProjectLeads()
@@ -104,6 +132,7 @@ g.get_project_query = Projects.Queries.GetProject()
 g.project_page = Projects.Views.ProjectPage()
 g.project_route = Projects.Routes.Project()
 g.projects_route = Projects.Routes.Projects()
+g.save_project_mutation = Projects.Mutations.SaveProject()
 g.upload_spec_files_form_view = Projects.Views.UploadSpecFilesFormView()
 g.upload_spec_files_button = Projects.Components.UploadSpecFilesButton()
 g.upload_spec_files_mutation = Projects.Mutations.UploadSpecFiles()
