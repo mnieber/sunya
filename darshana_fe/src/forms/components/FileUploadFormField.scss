@@ -1,0 +1,10 @@
+.FileUploadFormField {
+  &__DropZone {
+    transition: all 0.2s ease-in-out;
+  }
+
+  &__FileList {
+    list-style-type: none;
+    padding: 0;
+  }
+}

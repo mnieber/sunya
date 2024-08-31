@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
-import { Card } from '/src/frames/components/Card';
+import { CardS } from '/src/frames/components/Card';
 import { stepTreeCtx } from '/src/steps/hooks/useStepTreeContext';
 import { cn } from '/src/utils/classnames';
 
@@ -19,7 +19,14 @@ export const ActorView = observer(
     }
 
     return (
-      <Card className={cn('ActorView', props.className)}>
+      <div
+        className={cn(
+          'ActorView',
+          CardS.padding.medium,
+          CardS.colours.default,
+          props.className
+        )}
+      >
         <h3 className="mb-2 text-xl font-bold text-blue-300">
           {props.reconstructedActor.key}
         </h3>
@@ -42,7 +49,7 @@ export const ActorView = observer(
             )
           )}
         </ul>
-      </Card>
+      </div>
     );
   }, ContextProps)
 );

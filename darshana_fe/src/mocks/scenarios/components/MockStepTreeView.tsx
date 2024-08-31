@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Card } from '/src/frames/components/Card';
+import { CardS } from '/src/frames/components/Card';
 
 const mockSteps = {
   id: 'root',
@@ -83,6 +83,30 @@ const mockActors = {
   },
 };
 
+const ActorView = ({ actor }: any) => {
+  if (!actor) return null;
+
+  return (
+    <div className={cn(CardS.colours.default, CardS.padding.medium)}>
+      <h3 className="mb-2 text-xl font-bold">Actor: {actor.key}</h3>
+      <p>
+        <strong>ID:</strong> {actor.id}
+      </p>
+      <h4 className="mb-2 mt-4 text-lg font-semibold">Fields:</h4>
+      <ul className="space-y-1">
+        {Object.entries(actor.fields).map(([key, value]) => (
+          <li key={key}>
+            <strong>{key}:</strong> {value}
+            {actor.changedFields.includes(key) && (
+              <span className="ml-2 text-green-400">(Changed)</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 const Step = ({ step, depth = 0, onActorClick }: any) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -135,30 +159,6 @@ const Step = ({ step, depth = 0, onActorClick }: any) => {
           />
         ))}
     </div>
-  );
-};
-
-const ActorView = ({ actor }: any) => {
-  if (!actor) return null;
-
-  return (
-    <Card>
-      <h3 className="mb-2 text-xl font-bold">Actor: {actor.key}</h3>
-      <p>
-        <strong>ID:</strong> {actor.id}
-      </p>
-      <h4 className="mb-2 mt-4 text-lg font-semibold">Fields:</h4>
-      <ul className="space-y-1">
-        {Object.entries(actor.fields).map(([key, value]) => (
-          <li key={key}>
-            <strong>{key}:</strong> {value}
-            {actor.changedFields.includes(key) && (
-              <span className="ml-2 text-green-400">(Changed)</span>
-            )}
-          </li>
-        ))}
-      </ul>
-    </Card>
   );
 };
 
