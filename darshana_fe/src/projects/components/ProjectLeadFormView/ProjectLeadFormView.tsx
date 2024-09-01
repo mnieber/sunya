@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { FormStateProvider } from 'react-form-state-context';
 import { withContextProps } from 'react-props-from-context';
-import { ProjectT } from '/src/api/types/ProjectT';
+import { ProjectLeadT } from '/src/api/types/ProjectLeadT';
 import {
   Field,
   FormCancelButton,
@@ -22,7 +22,7 @@ import './ProjectLeadFormView.scss';
 
 export type PropsT = {
   className?: any;
-  project?: ProjectT;
+  projectLead?: ProjectLeadT;
   onProjectCreated?: (projectId: string) => void;
 };
 

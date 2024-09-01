@@ -14,8 +14,8 @@ import { navTo } from '/src/routes/navHandler';
 
 const getInitialValues = (props: PropsT & typeof ContextProps) => {
   return {
-    'projectLeadForm.name': props.project?.name || '',
-    'projectLeadForm.description': props.project?.description || '',
+    'projectLeadForm.name': props.projectLead?.name || '',
+    'projectLeadForm.description': props.projectLead?.description || '',
   };
 };
 
