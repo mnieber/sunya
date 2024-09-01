@@ -1,7 +1,7 @@
 from default.frontend.namespace import (
     Facet,
+    Action,
     Component,
-    Ctr,
     Mutation,
     Query,
     Facet,
@@ -57,6 +57,8 @@ class Projects(Module):
                 class ProjectLeadsCtr:
                     data: Facet
                     highlight: Facet
+                    deletion: Facet = any_dict()
+                    edit: Facet = any_dict()
 
         class ProjectState:
             class Containers:
@@ -67,6 +69,9 @@ class Projects(Module):
                     data: Facet
                     highlight: Facet
 
+                class ActionsCtr:
+                    upload_spec_files = Action(name="uploadSpecFiles")
+
     class Routes:
         class Projects(Route):
             pass
@@ -76,12 +81,7 @@ class Projects(Module):
 
     class StateProviders:
         class ProjectLeadsStateProvider:
-            class Containers:
-                class ProjectLeadsCtr(Ctr):
-                    data: Facet = any_dict()
-                    highlight: Facet = any_dict()
-                    deletion: Facet = any_dict()
-                    edit: Facet = any_dict()
+            pass
 
         class ProjectStateProvider:
             pass

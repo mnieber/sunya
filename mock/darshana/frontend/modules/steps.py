@@ -28,8 +28,8 @@ class Steps(Module):
                 class StepTreeCtr(Ctr):
                     data: Facet = any_dict(reconstructed_actor=None)
 
-            class Actions:
-                set_highlighted_actor = Action(name="setHighlightedActor")
+                class ActionsCtr:
+                    set_highlighted_actor = Action(name="setHighlightedActor")
 
     class StateProviders:
         class StepTreeStateProvider:
@@ -56,7 +56,7 @@ g.step_tree_view = Steps.Views.StepTreeView()
 g.step_list_view = Steps.Views.StepListView()
 g.step_tree_state = Steps.States.StepTreeState()
 g.set_highlighted_actor_action = (
-    Steps.States.StepTreeState.Actions.set_highlighted_actor
+    Steps.States.StepTreeState.Containers.ActionsCtr.set_highlighted_actor
 )
 
 

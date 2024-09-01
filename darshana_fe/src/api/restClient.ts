@@ -19,10 +19,15 @@ export function get(query: string) {
     });
 }
 
-export function post(query: string, variables: any) {
+export function post(query: string, variables: any, headers?: any) {
+  const allHeaders = {
+    ...getHeaders(),
+    ...(headers ?? {}),
+  };
+
   return axios
     .post(`${hostUrl}${trimLeadingSlash(query)}`, snakecaseKeys(variables), {
-      headers: getHeaders(),
+      headers: allHeaders,
     })
     .then((response) => {
       response.data = camelcaseKeys(response.data);

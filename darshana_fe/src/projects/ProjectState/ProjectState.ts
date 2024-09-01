@@ -6,9 +6,11 @@ import { ProjectData } from '/src/projects/ProjectState/ProjectData';
 import { ScenariosData } from '/src/projects/ProjectState/ScenariosData.ts';
 import { registerProjectCtr } from '/src/projects/ProjectState/registerProjectCtr';
 import { registerScenariosCtr } from '/src/projects/ProjectState/registerScenariosCtr';
+import { bindActionsCtr } from '/src/utils/bindActionsCtr';
 
 export type PropsT = {
   getProject: () => ProjectT | undefined;
+  uploadSpecFiles: (files: File[]) => Promise<void>;
 };
 
 export class ProjectState {
@@ -23,12 +25,19 @@ export class ProjectState {
     highlight: new Highlight<ScenarioT>(),
   };
 
+  actionsCtr = {
+    uploadSpecFiles: (files: File[]) => {
+      return this.props.uploadSpecFiles(files);
+    },
+  };
+
   destroy() {
     Skandha.cleanUpCtr(this);
   }
 
   constructor(props: PropsT) {
     this.props = props;
+    bindActionsCtr(this.actionsCtr, this);
     registerProjectCtr(this);
     registerScenariosCtr(this);
   }

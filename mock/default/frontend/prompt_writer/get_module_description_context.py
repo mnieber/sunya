@@ -88,7 +88,13 @@ def _get_containers(state):
     result = []
     containers = getattr(state, "Containers", None) or []
     for container_name, container in _get_members(containers):
-        result.append(dict(name=container_name, facets=_get_facets(container)))
+        if container_name == "ActionsCtr":
+            actions = []
+            for action_name, action in _get_members(container):
+                actions.append(dict(name=action.name))
+            result.append(dict(name=container_name, actions=actions))
+        else:
+            result.append(dict(name=container_name, facets=_get_facets(container)))
     return result
 
 

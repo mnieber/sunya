@@ -28,8 +28,9 @@ states:
           - name: data
             value:
               reconstructed_actor: null
-    actions:
-      - name: setHighlightedActor
+      - name: ActionsCtr
+        actions:
+          - name: setHighlightedActor
 routes: []
 state_providers:
   - name: StepTreeStateProvider

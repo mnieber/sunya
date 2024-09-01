@@ -47,6 +47,8 @@ states:
         facets:
           - name: data
           - name: highlight
+          - name: deletion
+          - name: edit
   - name: ProjectState
     containers:
       - name: ProjectCtr
@@ -56,6 +58,9 @@ states:
         facets:
           - name: data
           - name: highlight
+      - name: ActionsCtr
+        actions:
+          - name: uploadSpecFiles
 routes:
   - name: Projects
   - name: Project
