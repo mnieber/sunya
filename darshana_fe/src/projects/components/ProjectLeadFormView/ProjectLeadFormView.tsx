@@ -13,12 +13,12 @@ import {
 } from '/src/forms/components';
 import { MainFormS } from '/src/forms/components/MainForm';
 import { CardS } from '/src/frames/components/Card';
-import { form } from '/src/projects/components/CreateProjectFormView/form';
+import { form } from '/src/projects/components/ProjectLeadFormView/form';
 import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
-import './CreateProjectFormView.scss';
+import './ProjectLeadFormView.scss';
 
 export type PropsT = {
   className?: any;
@@ -30,14 +30,14 @@ export const ContextProps = {
   projectLeadsEdit: projectLeadsCtx.projectLeadsEdit,
 };
 
-export const CreateProjectFormView = observer(
+export const ProjectLeadFormView = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const initialValues = form.getInitialValues(props);
     const initialErrors = form.getInitialErrors(props);
 
     return (
       <div
-        className={cn('CreateProjectFormView', [
+        className={cn('ProjectLeadFormView', [
           CardS.padding.medium(),
           CardS.colours.default(),
           props.className,

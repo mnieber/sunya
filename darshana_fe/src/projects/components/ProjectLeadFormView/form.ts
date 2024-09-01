@@ -8,7 +8,7 @@ import {
 import {
   ContextProps,
   PropsT,
-} from '/src/projects/components/CreateProjectFormView/CreateProjectFormView';
+} from '/src/projects/components/ProjectLeadFormView/ProjectLeadFormView';
 import { projectsNav } from '/src/projects/routes';
 import { navTo } from '/src/routes/navHandler';
 
