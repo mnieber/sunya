@@ -1,3 +1,6 @@
+import { Cbs } from 'aspiration';
+import { Edit } from 'skandha-facets';
+
 import { mapDataToProps } from 'skandha';
 import { registerCtr } from 'skandha-mobx';
 import { ProjectState } from '/src/projects/ProjectState';
@@ -12,7 +15,18 @@ const mapData = (state: ProjectState) => {
   });
 };
 
-const setCallbacks = (state: ProjectState) => {};
+const setCallbacks = (state: ProjectState) => {
+  const ctr = state.projectCtr;
+
+  ctr.edit.callbackMap = {
+    save: {
+      saveItem(this: Cbs<Edit['save']>) {
+        return state.props.saveProject(this.args.values);
+      },
+    },
+    cancel: {},
+  };
+};
 
 export const registerProjectCtr = (state: ProjectState) => {
   registerCtr({

@@ -9,7 +9,7 @@ import { ObjT } from '/src/utils/types';
 export type PropsT = {
   getProjectLeads: () => ProjectLeadT[];
   deleteProjects: (ids: string[]) => Promise<any>;
-  saveProject: (values: ObjT) => Promise<any>;
+  createProject: (values: ObjT) => Promise<any>;
 };
 
 export class ProjectLeadsState {
@@ -22,11 +22,7 @@ export class ProjectLeadsState {
     edit: new Edit(),
   };
 
-  actionsCtr = {
-    createProject: (values: ObjT) => {
-      return this.props.saveProject(values);
-    },
-  };
+  actionsCtr = {};
 
   destroy() {
     Skandha.cleanUpCtr(this);

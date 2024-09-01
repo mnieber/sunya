@@ -14,8 +14,8 @@ import { navTo } from '/src/routes/navHandler';
 
 const getInitialValues = (props: PropsT & typeof ContextProps) => {
   return {
-    'projectForm.name': props.project?.name || '',
-    'projectForm.description': props.project?.description || '',
+    'projectLeadForm.name': props.project?.name || '',
+    'projectLeadForm.description': props.project?.description || '',
   };
 };
 
@@ -27,10 +27,10 @@ const getHandleValidate =
   (props: PropsT & typeof ContextProps) =>
   ({ values, setError }: HandleValidateArgsT) => {
     if (
-      R.isNil(values['projectForm.name']) ||
-      values['projectForm.name'] === ''
+      R.isNil(values['projectLeadForm.name']) ||
+      values['projectLeadForm.name'] === ''
     ) {
-      setError('projectForm.name', 'Project name is required');
+      setError('projectLeadForm.name', 'Project name is required');
     }
   };
 

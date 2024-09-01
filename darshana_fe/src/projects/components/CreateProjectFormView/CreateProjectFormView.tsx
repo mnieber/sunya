@@ -56,13 +56,13 @@ export const CreateProjectFormView = observer(
         >
           <GlobalError className={MainFormS.GlobalError()} />
 
-          <Field fieldName="projectForm.name" className={MainFormS.Field()}>
+          <Field fieldName="projectLeadForm.name" className={MainFormS.Field()}>
             <FormFieldLabel label="PROJECT NAME" />
             <NameField tabIndex={1} controlled={true} autoSelect={true} />
           </Field>
 
           <Field
-            fieldName="projectForm.description"
+            fieldName="projectLeadForm.description"
             className={MainFormS.Field()}
           >
             <FormFieldLabel label="DESCRIPTION" />

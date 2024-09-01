@@ -37,7 +37,7 @@ const setCallbacks = (state: ProjectLeadsState) => {
   ctr.edit.callbackMap = {
     save: {
       saveItem(this: Cbs<Edit['save']>) {
-        return state.props.saveProject(this.args.values);
+        return state.props.createProject(this.args.values);
       },
     },
     cancel: {},

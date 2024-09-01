@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import React from 'react';
-import { Highlight } from 'skandha-facets';
+import { Edit, Highlight } from 'skandha-facets';
 import { ProjectT } from '/src/api/types/ProjectT';
 import { ScenarioT } from '/src/api/types/ScenarioT';
 import { ProjectState } from '/src/projects/ProjectState';
@@ -21,6 +21,7 @@ export const projectCtx = R.mergeAll([
   {
     projectState: [useProjectContext, 'projectState'] as any as ProjectState,
     project: [useProjectContext, 'project'] as any as ProjectT,
+    projectEdit: [useProjectContext, 'projectEdit'] as any as Edit,
     scenarios: [useProjectContext, 'scenarios'] as any as ScenarioT[],
     scenario: [useProjectContext, 'scenario'] as any as ScenarioT,
     scenariosHighlight: [

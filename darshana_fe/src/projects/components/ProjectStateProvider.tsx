@@ -55,6 +55,7 @@ export const ProjectStateProvider = observer(
     const getProjectContext = () => {
       return createGetProps({
         projectState: () => projectState,
+        projectEdit: () => projectState.projectCtr.edit,
         scenario: () => cache.scenario,
         scenarios: () => cache.scenarios,
         scenariosHighlight: () => projectState.scenariosCtr.highlight,

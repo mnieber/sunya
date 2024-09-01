@@ -6,7 +6,6 @@ import {
   DeleteProjectsArgsT,
   useDeleteProjects,
 } from '/src/api/mutations/useDeleteProjects';
-import { useSaveProject } from '/src/api/mutations/useSaveProject';
 import { useGetProjectLeads } from '/src/api/queries/useGetProjectLeads';
 import { ProjectLeadsState } from '/src/projects/ProjectLeadsState/ProjectLeadsState';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
@@ -22,7 +21,6 @@ export const useProjectLeadsState = (props: PropsT) => {
   // Mutations
   const deleteProjects = useDeleteProjects();
   const createProject = useCreateProject();
-  const saveProject = useSaveProject();
 
   const getProjectLeads = useObservableQuery(useGetProjectLeads({}), {
     fetchAsLoad: true,
@@ -51,13 +49,10 @@ export const useProjectLeadsState = (props: PropsT) => {
         }).result;
       },
       //
-      saveProject: (values: ObjT) => {
-        const mutation = values.projectForm.isTransient
-          ? createProject
-          : saveProject;
+      createProject: (values: ObjT) => {
         return trackPromise({
-          name: 'saveProject',
-          promise: mutation.mutateAsync(values),
+          name: 'createProject',
+          promise: createProject.mutateAsync({ form: values.projectLeadForm }),
         }).result;
       },
     });
