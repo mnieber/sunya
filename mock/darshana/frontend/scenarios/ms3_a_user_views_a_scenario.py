@@ -117,11 +117,11 @@ def actor_():
 
 
 def run():
-    from .ms1_a_user_creates_a_project import run as run_ms1
+    from .ms2_a_user_uploads_files_to_a_project import run as run_ms2
 
-    ms1_scenario = run_ms1()
-    user = ms1_scenario.get_entity_by_name("user")
-    project = ms1_scenario.get_entity_by_name("project")
+    ms2_scenario = run_ms2()
+    user = ms2_scenario.get_entity_by_name("user")
+    project = ms2_scenario.get_entity_by_name("project")
 
     return start(user, project)
 

@@ -1,0 +1,14 @@
+scenario_name: ms2-a-user-uploads-files-to-a-project
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: upload [SpecFiles] to the [my-darshana-project+:project]
+        child_nodes:
+          - step: The [alice@example.com+:user] visits the [project+:route]
+          - step: The [alice@example.com+:user] presses the [upload-spec-files-button:component]
+          - step: The [alice@example.com+:user] selects the [SpecFiles]
+          - step: The [alice@example.com+:user] deletes some of the [SpecFiles]
+          - step: The [alice@example.com+:user] submits the [upload-spec-files-form-view:component]
+            child_nodes:
+              - step: The [:frontend] calls the [upload-spec-files:mutation]
+

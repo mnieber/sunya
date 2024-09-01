@@ -16,26 +16,10 @@ nodes:
           - step: The [alice@example.com+:user] visits the [projects+:route]
           - step: The [alice@example.com+:user] presses the [create-project-button:component]
           - step: The [alice@example.com+:user] enters the project name
-          - step: The [alice@example.com+:user] submits the [create-project-form-view:component]
+          - step: The [alice@example.com+:user] submits the [project-lead-form-view:component]
             child_nodes:
               - step: The [:frontend] calls the [create-project:mutation]
           - step: The [:frontend] redirects to the [project+:route]
-      - goal: upload [SpecFiles] to the [Project]
-        actors_introduced:
-          - name: my-darshana-project+:project
-            deltas:
-              description: ' (None)'
-              id: 00dcca049c335a198d7d466b886ec3bb (None)
-              name: My Darshana Project (None)
-              scenarios: '[''my-first+:scenario''] (None)'
-        child_nodes:
-          - step: The [alice@example.com+:user] visits the [project+:route]
-          - step: The [alice@example.com+:user] presses the [upload-spec-files-button:component]
-          - step: The [alice@example.com+:user] selects the [SpecFiles]
-          - step: The [alice@example.com+:user] deletes some of the [SpecFiles]
-          - step: The [alice@example.com+:user] submits the [upload-spec-files-form-view:component]
-            child_nodes:
-              - step: The [:frontend] calls the [upload-spec-files:mutation]
       - goal: delete a [Project] for the [alice@example.com+:user]
         actors_introduced:
           - name: my-darshana-project+:project

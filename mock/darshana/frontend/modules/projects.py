@@ -102,7 +102,7 @@ class Projects(Module):
         class ProjectListView(Component):
             pass
 
-        class CreateProjectFormView(Component):
+        class ProjectLeadFormView(Component):
             pass
 
         class UploadSpecFilesFormView(Component):
@@ -125,7 +125,7 @@ class Projects(Module):
 
 g.create_project_button = Projects.Components.CreateProjectButton()
 g.delete_project_button = Projects.Components.DeleteProjectButton()
-g.create_project_form_view = Projects.Views.CreateProjectFormView()
+g.project_lead_form_view = Projects.Views.ProjectLeadFormView()
 g.create_project_mutation = Projects.Mutations.CreateProject()
 g.delete_project_mutation = Projects.Mutations.DeleteProjects()
 g.get_project_leads_query = Projects.Queries.GetProjectLeads()

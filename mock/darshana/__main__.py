@@ -20,7 +20,8 @@ config = dict(
     ],
     all_scenario_names=[
         "frontend/ms1_a_user_creates_a_project",
-        "frontend/ms2_a_user_views_a_scenario",
+        "frontend/ms2_a_user_uploads_files_to_a_project",
+        "frontend/ms3_a_user_views_a_scenario",
     ],
     module_by_name={
         "frontend/actors": F.Actors,

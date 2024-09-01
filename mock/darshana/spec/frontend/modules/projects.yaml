@@ -75,7 +75,7 @@ views:
     root:
       scenario_list_view: null
   ProjectListView(Component): {}
-  CreateProjectFormView(Component): {}
+  ProjectLeadFormView(Component): {}
   UploadSpecFilesFormView(Component): {}
 effects:
   - name: SelectProjectEffect
