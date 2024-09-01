@@ -27,7 +27,7 @@ export type PropsT = {
 };
 
 export const ContextProps = {
-  projectLeadsState: projectLeadsCtx.projectLeadsState,
+  projectLeadsEdit: projectLeadsCtx.projectLeadsEdit,
 };
 
 export const CreateProjectFormView = observer(

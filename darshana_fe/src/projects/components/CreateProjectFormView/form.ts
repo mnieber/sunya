@@ -61,7 +61,7 @@ const getHandleSubmit =
 const getHandleCancel =
   (props: PropsT & typeof ContextProps) =>
   ({ formState }: HandleCancelArgsT) => {
-    navTo(projectsNav.projects({}));
+    props.projectLeadsEdit.cancel();
   };
 
 export const form = {

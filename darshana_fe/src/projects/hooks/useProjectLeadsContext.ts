@@ -1,6 +1,6 @@
 import * as R from 'ramda';
 import React from 'react';
-import { Highlight } from 'skandha-facets';
+import { Deletion, Edit, Highlight } from 'skandha-facets';
 import { ProjectLeadT } from '/src/api/types/ProjectLeadT';
 import { ProjectT } from '/src/api/types/ProjectT';
 import { ProjectLeadsState } from '/src/projects/ProjectLeadsState/ProjectLeadsState';
@@ -29,5 +29,13 @@ export const projectLeadsCtx = R.mergeAll([
       useProjectLeadsContext,
       'projectLeadsHighlight',
     ] as any as Highlight,
+    projectLeadsEdit: [
+      useProjectLeadsContext,
+      'projectLeadsEdit',
+    ] as any as Edit,
+    projectLeadsDeletion: [
+      useProjectLeadsContext,
+      'projectLeadsDeletion',
+    ] as any as Deletion,
   },
 ]);

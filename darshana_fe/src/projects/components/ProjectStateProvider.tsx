@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { updateSources } from 'mobx-resource-states';
+import { isLoading, updateSources } from 'mobx-resource-states';
 import React from 'react';
 import { withContextProps } from 'react-props-from-context';
 import { isQueryLoading } from '/src/api/lib/ObservableQuery';
@@ -45,7 +45,8 @@ export const ProjectStateProvider = observer(
         get project() {
           return updateSources(
             { resource: projectState.projectCtr.data.project },
-            ['loading', () => isQueryLoading(getProject), 'getProject']
+            ['loading', () => isQueryLoading(getProject), 'getProject'],
+            ['loading', () => isLoading(props.projectLead), 'projectLead']
           );
         },
       })

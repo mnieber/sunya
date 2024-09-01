@@ -41,6 +41,8 @@ export const ProjectLeadsStateProvider = observer((props: PropsT) => {
       projectLeads: () => cache.projectLeads,
       projectLead: () => cache.projectLead,
       projectLeadsHighlight: () => projectLeadsState.projectLeadsCtr.highlight,
+      projectLeadsEdit: () => projectLeadsState.projectLeadsCtr.edit,
+      projectLeadsDeletion: () => projectLeadsState.projectLeadsCtr.deletion,
     });
   };
 

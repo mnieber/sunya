@@ -10,28 +10,33 @@ import { cn } from '/src/utils/classnames';
 // Import styles
 import './ProjectListView.scss';
 
+import { DeleteProjectButton } from '/src/projects/components/DeleteProjectButton';
+
 export type PropsT = {
   className?: any;
 };
 
 const ContextProps = {
   projectLeads: projectLeadsCtx.projectLeads,
+  projectLeadsDeletion: projectLeadsCtx.projectLeadsDeletion,
 };
 
 export const ProjectListView = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const projectLeadItems = props.projectLeads.map(
       (projectLead: ProjectLeadT) => (
-        <RouterLink
+        <div
           key={projectLead.id}
-          to={projectsNav.project({ projectId: projectLead.id }).url}
-          className={cn(
-            'ProjectListView__Item',
-            'mb-2 text-blue-400 hover:underline'
-          )}
+          className={cn('ProjectListView__Item', 'mb-2 flex items-center')}
         >
-          {projectLead.name}
-        </RouterLink>
+          <RouterLink
+            to={projectsNav.project({ projectId: projectLead.id }).url}
+            className={cn('mr-2 text-blue-400 hover:underline')}
+          >
+            {projectLead.name}
+          </RouterLink>
+          <DeleteProjectButton className="ml-4" projectLead={projectLead} />
+        </div>
       )
     );
 

@@ -9,7 +9,6 @@ import { ObjT } from '/src/utils/types';
 export type PropsT = {
   getProjectLeads: () => ProjectLeadT[];
   deleteProjects: (ids: string[]) => Promise<any>;
-  createProject: (values: ObjT) => Promise<any>;
   saveProject: (values: ObjT) => Promise<any>;
 };
 
@@ -25,7 +24,7 @@ export class ProjectLeadsState {
 
   actionsCtr = {
     createProject: (values: ObjT) => {
-      return this.props.createProject(values);
+      return this.props.saveProject(values);
     },
   };
 
