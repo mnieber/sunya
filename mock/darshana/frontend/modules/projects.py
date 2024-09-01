@@ -18,11 +18,11 @@ class Projects(Module):
     class Types:
         class ProjectLead(EntityWithId):
             name: str
-            description: str
+            description: str = ""
 
         class Project(EntityWithId):
             name: str
-            description: str
+            description: str = ""
             scenarios: T.List["Scenarios.Types.Scenario"] = []
 
     class Mutations:
@@ -127,6 +127,7 @@ g.create_project_button = Projects.Components.CreateProjectButton()
 g.delete_project_button = Projects.Components.DeleteProjectButton()
 g.create_project_form_view = Projects.Views.CreateProjectFormView()
 g.create_project_mutation = Projects.Mutations.CreateProject()
+g.delete_project_mutation = Projects.Mutations.DeleteProjects()
 g.get_project_leads_query = Projects.Queries.GetProjectLeads()
 g.get_project_query = Projects.Queries.GetProject()
 g.project_page = Projects.Views.ProjectPage()

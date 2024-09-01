@@ -6,11 +6,15 @@ types:
         type: UUID
       - name: name
         type: str
+      - name: description
+        type: str
   - name: Project
     fields:
       - name: id
         type: UUID
       - name: name
+        type: str
+      - name: description
         type: str
       - name: scenarios
         type: list[Scenario]
@@ -19,6 +23,14 @@ mutations:
     args:
       - name: createProjectForm
         type: Form
+  - name: SaveProject
+    args:
+      - name: saveProjectForm
+        type: Form
+  - name: DeleteProjects
+    args:
+      - name: project_ids
+        type: list[str]
   - name: UploadSpecFiles
     args:
       - name: project
@@ -65,4 +77,5 @@ effects:
 components:
   UploadSpecFilesButton(Component): {}
   CreateProjectButton(Component): {}
+  DeleteProjectButton(Component): {}
 
