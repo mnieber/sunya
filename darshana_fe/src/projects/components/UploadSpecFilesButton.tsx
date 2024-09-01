@@ -1,31 +1,32 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
 import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
-import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
+import { projectCtx } from '/src/projects/hooks/useProjectContext';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
-import './CreateProjectButton.scss';
+import './UploadSpecFilesButton.scss';
 
 export type PropsT = {
   className?: any;
+  label?: string;
 };
 
 const ContextProps = {
-  projectLeadsEdit: projectLeadsCtx.projectLeadsEdit,
+  projectEdit: projectCtx.projectEdit,
 };
 
-export const CreateProjectButton = observer(
+export const UploadSpecFilesButton = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const handleClick = () => {
-      props.projectLeadsEdit.enable();
+      props.projectEdit.enable();
     };
 
     return (
       <ActionButton
-        className={cn('CreateProjectButton', props.className)}
+        className={cn('UploadSpecFilesButton', props.className)}
         onClick={handleClick}
-        label="Create New Project"
+        label={props.label ?? 'Upload spec files'}
       />
     );
   }, ContextProps)

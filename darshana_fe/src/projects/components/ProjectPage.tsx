@@ -4,6 +4,8 @@ import { withContextProps } from 'react-props-from-context';
 import { L } from '/src/frames/layout';
 import { EditProjectButton } from '/src/projects/components/EditProjectButton';
 import { ProjectLeadFormView } from '/src/projects/components/ProjectLeadFormView';
+import { UploadSpecFilesButton } from '/src/projects/components/UploadSpecFilesButton';
+import { UploadSpecFilesFormView } from '/src/projects/components/UploadSpecFilesFormView/UploadSpecFilesFormView';
 import { projectCtx } from '/src/projects/hooks/useProjectContext';
 import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
 import { ScenarioListView } from '/src/scenarios/components/ScenarioListView';
@@ -19,6 +21,7 @@ export type PropsT = {
 const ContextProps = {
   project: projectCtx.project,
   scenarios: projectCtx.scenarios,
+  projectLeadsEdit: projectLeadsCtx.projectLeadsEdit,
   projectEdit: projectCtx.projectEdit,
   projectLead: projectLeadsCtx.projectLead,
 };
@@ -34,12 +37,16 @@ export const ProjectPage = observer(
       <div className={cn('ProjectPage', L.col.canvas(), props.className)}>
         <h1 className="mb-4 text-2xl font-bold">{props.project.name}</h1>
         <p className="mb-4">{props.project.description}</p>
+        <div className={cn(L.row.skewer(), 'mb-4')}>
+          <EditProjectButton className="" />
+          <UploadSpecFilesButton className="" />
+        </div>
 
         <div className={cn(L.col.skewer(), 'p-4')}>
-          <EditProjectButton className="mb-4" />
-          {props.projectEdit.isEditing && (
+          {props.projectLeadsEdit.isEditing && (
             <ProjectLeadFormView projectLead={props.projectLead} />
           )}
+          {props.projectEdit.isEditing && <UploadSpecFilesFormView />}
           <ScenarioListView className="mb-4" />
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
 import { L } from '/src/frames/layout';
-import { CreateProjectButton } from '/src/projects/components/CreateProjectButton';
+import { EditProjectButton } from '/src/projects/components/EditProjectButton';
 import { ProjectLeadFormView } from '/src/projects/components/ProjectLeadFormView';
 import { ProjectListView } from '/src/projects/components/ProjectListView';
 import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
@@ -30,7 +30,7 @@ export const ProjectsPage = observer(
         )}
       >
         <div className={cn(L.col.skewer(), 'p-4')}>
-          <CreateProjectButton className="mb-4" />
+          <EditProjectButton className="mb-4" label={'Create project'} />
           {props.projectLeadsEdit.isEditing && (
             <ProjectLeadFormView className="mb-4" />
           )}

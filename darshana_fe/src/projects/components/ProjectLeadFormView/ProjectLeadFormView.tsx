@@ -79,7 +79,7 @@ export const ProjectLeadFormView = observer(
             <FormSaveButton
               theme="MainView"
               tabIndex={4}
-              label="Create Project"
+              label={props.projectLead ? 'Save project' : 'Create project'}
               className={cn(MainFormS.Button.root())}
             />
           </div>
