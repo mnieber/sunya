@@ -9,6 +9,7 @@ blogs = "blogs"
 
 darshana = "darshana"
 in_darshana_fe = "/home/maarten/projects/sunya/src/mock/darshana/frontend"
+in_darshana_be = "/home/maarten/projects/sunya/src/mock/darshana/backend"
 
 
 dir_list = [
@@ -32,6 +33,8 @@ file_map = {
     f"{in_blogs_be}/scenarios/*.py": f"{blogs}/backend/scenarios",
     f"{in_darshana_fe}/modules/*.py": f"{darshana}/frontend/modules",
     f"{in_darshana_fe}/scenarios/*.py": f"{darshana}/frontend/scenarios",
+    f"{in_darshana_be}/modules/*.py": f"{darshana}/backend/modules",
+    f"{in_darshana_be}/scenarios/*.py": f"{darshana}/backend/scenarios",
     f"{in_darshana_spec}/roadmap.md": f"spec",
     f"{in_blogs_prompts}/instructions*.md": "instructions",
 }
