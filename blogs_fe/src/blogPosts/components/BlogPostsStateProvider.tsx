@@ -46,6 +46,7 @@ export const BlogPostsStateProvider = observer(
     const getBlogPostsContext = () => {
       return createGetProps({
         blogPostsState: () => blogPostsState,
+        blogPostsStateActions: () => blogPostsState.actionsCtr,
         blogPosts: () => cache.blogPosts,
         blogPost: () => cache.blogPost,
         blogPostsAddition: () => blogPostsState.blogPostsCtr.addition,

@@ -19,6 +19,14 @@ export const useBlogPostsContext = () => {
 
 export const blogPostsCtx = R.mergeAll([
   {
+    blogPostsState: [
+      useBlogPostsContext,
+      'blogPostsState',
+    ] as any as BlogPostsState,
+    blogPostsActions: [
+      useBlogPostsContext,
+      'blogPostsActions',
+    ] as any as BlogPostsState['actionsCtr'],
     blogPost: [
       //
       useBlogPostsContext,
@@ -46,10 +54,6 @@ export const blogPostsCtx = R.mergeAll([
       useBlogPostsContext,
       'blogPostsSelection',
     ] as any as Selection,
-    blogPostsState: [
-      useBlogPostsContext,
-      'blogPostsState',
-    ] as any as BlogPostsState,
     loadBlogTagsOptions: [
       useBlogPostsContext,
       'loadBlogTagsOptions',

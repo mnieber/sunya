@@ -13,7 +13,7 @@ export type PropsT = {
 export const ContextProps = {
   authState: authStateCtx.authState,
   blogPost: blogPostsCtx.blogPost,
-  blogPostsState: blogPostsCtx.blogPostsState,
+  blogPostsActions: blogPostsCtx.blogPostsActions,
 };
 
 export const MarkBlogPostAsPublishedButton = observer(
@@ -26,7 +26,7 @@ export const MarkBlogPostAsPublishedButton = observer(
 
     const handleClick = () => {
       if (props.blogPost) {
-        props.blogPostsState.actions.markBlogPostAsPublished(props.blogPost.id);
+        props.blogPostsActions.markBlogPostAsPublished(props.blogPost.id);
       }
     };
 
