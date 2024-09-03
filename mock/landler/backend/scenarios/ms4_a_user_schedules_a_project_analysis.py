@@ -31,10 +31,10 @@ def start(project, variation="default"):
                     with the(g.create_project_analysis_job_action).creates_the(
                         e.project_analysis_job
                     ):
-                        project_analysis_job_(e)
+                        project_analysis_job_()
 
         with add_step("the", g.project_analysis_queue, "finds", e.jobs_to_run):
-            jobs_to_run_(e)
+            jobs_to_run_()
 
         for idx, project_analysis_job in enumerate(e.jobs_to_run.items):
             with the(g.project_analysis_queue).runs_the(
@@ -50,7 +50,7 @@ def start(project, variation="default"):
                             e.project_analysis
                         ):
                             e.project_analysis_job.project_analyses.append(
-                                project_analysis_(e)
+                                project_analysis_()
                             )
 
                         with (
@@ -58,7 +58,7 @@ def start(project, variation="default"):
                             .gets_the(e.project_analysis.project)
                             .at_the_now_ts_of_the(e.project_analysis)
                         ):
-                            project_at_now_(e)
+                            project_at_now_()
 
                         with the(
                             g.create_project_analysis_action
@@ -107,7 +107,7 @@ def start(project, variation="default"):
                                     .for_the(e.plot_at_now)
                                 ):
                                     plot_at_now_(e, plot_analysis)
-                                    calcium_plot_analysis_job_(e)
+                                    calcium_plot_analysis_job_()
 
             for idx, plot_analysis in enumerate(e.project_analysis.plot_analyses):
                 # TODO: the_backend_processes_a_calcium_job_result(idx, plot_analysis)
@@ -116,7 +116,7 @@ def start(project, variation="default"):
     return get_scenario(scenario_name)
 
 
-def calcium_plot_analysis_job_(e):
+def calcium_plot_analysis_job_():
     unregister("calcium_plot_analysis_job")
     calcium_plot_analysis_job = register(
         S.CalciumPlotAnalysisJob(
@@ -150,7 +150,7 @@ def plot_analysis_(e, plot):
     )
 
 
-def project_at_now_(e):
+def project_at_now_():
     unregister("project_at_now")
     return register(
         at_ts(e.project_analysis.project, e.project_analysis.now),
@@ -158,7 +158,7 @@ def project_at_now_(e):
     )
 
 
-def project_analysis_(e):
+def project_analysis_():
     unregister("project_analysis")
     return register(
         B.ProjectAnalyses.Models.ProjectAnalysis(
@@ -171,14 +171,14 @@ def project_analysis_(e):
     )
 
 
-def jobs_to_run_(e):
+def jobs_to_run_():
     return register(
         List(name="jobs_to_run", items=[e.project_analysis_job]),
         e.jobs_to_run,
     )
 
 
-def project_analysis_job_(e):
+def project_analysis_job_():
     return register(
         B.ProjectAnalysisJobs.Models.ProjectAnalysisJob(
             project=e.project,

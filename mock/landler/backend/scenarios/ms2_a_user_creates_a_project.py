@@ -24,7 +24,7 @@ def start():
             ):
                 with the(g.create_project_api_view).calls_the(g.create_project_action):
                     with the(g.create_project_action).creates_the(e.project):
-                        project_(e)
+                        project_()
 
             with add_goal(
                 "add the", g.user_session.active_organization, "to the", e.project
@@ -32,16 +32,16 @@ def start():
                 with the(g.create_project_action).calls_the(
                     g.add_organization_to_project_action
                 ):
-                    e.project.memberships.append(project_membership_(e))
+                    e.project.memberships.append(project_membership_())
 
     return get_scenario(scenario_name)
 
 
-def project_(e):
+def project_():
     register(B.Projects.Models.Project(name="my-project"), e.project)
 
 
-def project_membership_(e):
+def project_membership_():
     register(
         B.Projects.Models.ProjectMembership(
             project=e.project,

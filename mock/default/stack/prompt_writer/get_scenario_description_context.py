@@ -1,4 +1,4 @@
-from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
+from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta, Role
 from sunya.scenarios.node import get_node_entity_and_role_pairs
 
 
@@ -34,6 +34,9 @@ def _get_node_actors(node, add_created, add_updated):
     entity_and_role_pairs = get_node_entity_and_role_pairs(node)
 
     for entity, role in entity_and_role_pairs:
+        if isinstance(entity, Role):
+            continue
+
         delta = get_entity_delta(node, entity)
         field_deltas = {}
         for field_name, (old_value_memo, new_value_memo) in delta.items():

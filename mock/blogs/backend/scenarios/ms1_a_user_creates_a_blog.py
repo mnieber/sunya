@@ -1,42 +1,45 @@
 import blogs.backend.namespace as B
+import blogs.frontend.namespace as F  # noqa
 
 from sunya import (
     the,
     add_goal,
     add_scenario,
-    get_entities,
     get_scenario,
-    register,
+    add_actor,
+    add_role,
     G as g,
 )
 
 
 def start(user):
+    blog = add_role("Blog")
+
     scenario_name = "a-user-creates-a-blog"
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(user, name="user")
+        add_actor(user, name="user")
 
-        with add_goal("create a", e.blog, "for the", e.user):
-            with the(e.user).visits_the(g.blogs_route):
+        with add_goal("create a", blog, "for the", g.user):
+            with the(g.user).visits_the(g.blogs_route):
                 pass
 
-            with the(e.user).submits_a_form():
+            with the(g.user).submits_the(g.blog_form_view):
                 with the(g.frontend).calls_the(g.create_blog_api_view):
                     with the(g.create_blog_api_view).calls_the(g.create_blog_action):
-                        with the(g.create_blog_action).creates_the(e.blog):
-                            blog_(e)
+                        with the(g.create_blog_action).creates_the(blog):
+                            blog_()
 
     return get_scenario(scenario_name)
 
 
-def blog_(e):
-    register(
+def blog_():
+    return add_actor(
         B.Blogs.Models.Blog(
             name="My Personal Blog",
             description="Random things that interest me",
         ),
-        e.blog,
+        name="blog",
+        role="Blog",
     )
 
 

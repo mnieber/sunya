@@ -3,64 +3,67 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
-    register,
+    add_actor,
     the,
     G as g,
-    get_entities,
+    add_role,
 )
 
 
 def start(user, blog):
+    blog_post = add_role("BlogPost")
+    blog = add_role("Blog")
+
     scenario_name = "ms2-a-user-creates-a-blog-post"
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(user, name="user")
-        register(blog, name="blog")
+        add_actor(user, name="user")
+        add_actor(blog, name="blog", role="Blog")
 
-        with add_goal("create a", e.blog_post, "in the", e.blog):
-            with the(e.user).visits_the(g.blogs_route):
+        with add_goal("create a", blog_post, "in the", g.blog):
+            with the(g.user).visits_the(g.blogs_route):
                 pass
 
-            with the(e.user).clicks_on_a(e.blog).to_visit_the(g.blog_route):
+            with the(g.user).clicks_on_a(blog).to_visit_the(g.blog_route):
                 pass
 
-            with the(e.user).presses_the(g.create_blog_post_button):
+            with the(g.user).presses_the(g.create_blog_post_button):
                 pass
 
-            with the(e.user).submits_a_form():
+            with the(g.user).submits_the(g.blog_post_form_view):
                 with the(g.frontend).calls_the(g.create_blog_post_mutation):
-                    blog_post_(e)
+                    blog_post_()
 
-        with add_goal("edit a", e.blog_post, "in the", e.blog):
-            with the(e.user).selects_the(e.blog_post).they_want_to_edit():
+        with add_goal("edit a", blog_post, "in the", blog):
+            with the(g.user).selects_the(blog_post).they_want_to_edit():
                 pass
 
-            with the(e.user).presses_the(g.edit_blog_post_button):
+            with the(g.user).presses_the(g.edit_blog_post_button):
                 pass
 
-            with the(e.user).submits_a_form():
+            with the(g.user).submits_the(g.blog_post_form_view):
                 with the(g.frontend).calls_the(g.update_blog_post_mutation):
-                    e.blog_post.content = "Hello, World!"
+                    g.blog_post.content = "Hello, World!"
 
-        with add_goal("delete a", e.blog_post, "in the", e.blog):
-            with the(e.user).selects_the(e.blog_post).they_want_to_delete():
+        with add_goal("delete a", blog_post, "in the", blog):
+            with the(g.user).selects_the(blog_post).they_want_to_delete():
                 pass
 
-            with the(e.user).presses_the(g.delete_blog_posts_button):
+            with the(g.user).presses_the(g.delete_blog_posts_button):
                 pass
 
     return get_scenario(scenario_name)
 
 
-def blog_post_(e):
-    return register(
+def blog_post_():
+    return add_actor(
         F.Blogs.Types.BlogPost(
             title="My First Blog Post",
             content="Hello",
-            blog=e.blog,
+            blog=g.blog,
             level=F.Blogs.Enums.BlogPostLevel.medium,
         ),
-        e.blog_post,
+        name="blog_post",
+        role="BlogPost",
     )
 
 

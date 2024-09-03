@@ -29,7 +29,7 @@ def start():
                 with the(g.frontend).calls_the(g.sign_up_user_api_view):
                     with the(g.sign_up_user_api_view).calls_the(g.create_user_action):
                         with the(g.create_user_action).creates_the(e.user):
-                            user_(e)
+                            user_()
 
                     with the(e.sign_up_user_api_view).activates_the_account_of_the(
                         e.user
@@ -52,12 +52,12 @@ def start():
                         with the(g.create_organization_action).creates_the(
                             e.organization
                         ):
-                            organization_(e)
+                            organization_()
 
                         with the(g.create_organization_action).calls_the(
                             g.add_user_to_organization_action
                         ):
-                            e.organization.memberships = [admin_membership_(e)]
+                            e.organization.memberships = [admin_membership_()]
 
         with (
             the(e.user)
@@ -80,7 +80,7 @@ def start():
     return get_scenario(scenario_name)
 
 
-def admin_membership_(e):
+def admin_membership_():
     return B.Organizations.Models.OrganizationMembership(
         organization=e.organization,
         user=g.user_session.user,
@@ -88,14 +88,14 @@ def admin_membership_(e):
     )
 
 
-def organization_(e):
+def organization_():
     return register(
         B.Organizations.Models.Organization(name="my-org"),
         e.organization,
     )
 
 
-def user_(e):
+def user_():
     return register(
         B.Users.Models.User(
             email="my-org-owner@example.com",

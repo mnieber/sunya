@@ -2,26 +2,30 @@ scenario_name: a-user-creates-a-blog
 nodes:
   - root: ''
     child_nodes:
-      - goal: create a [my-personal-blog+:blog] for the [alice@example.com+:user]
-        actors_created:
+      - goal: create a [Blog] for the [alice@example.com+:user]
+        actors_introduced:
           - name: my-personal-blog+:blog
             deltas:
               description: Random things that interest me (None)
               id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
               name: My Personal Blog (None)
+        roles_updated:
+          Blog: my-personal-blog+:blog
         child_nodes:
           - step: The [alice@example.com+:user] visits the [blogs+:route]
-          - step: The [alice@example.com+:user] submits a form
+          - step: The [alice@example.com+:user] submits the [blog-form-view:component]
             child_nodes:
               - step: The [:frontend] calls the [create-blog:api-view]
                 child_nodes:
                   - step: The [create-blog:api-view] calls the [create-blog:action]
                     child_nodes:
-                      - step: The [create-blog:action] creates the [my-personal-blog+:blog]
-                        actors_created:
+                      - step: The [create-blog:action] creates the [Blog]
+                        actors_introduced:
                           - name: my-personal-blog+:blog
                             deltas:
                               description: Random things that interest me (None)
                               id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
                               name: My Personal Blog (None)
+                        roles_updated:
+                          Blog: my-personal-blog+:blog
 

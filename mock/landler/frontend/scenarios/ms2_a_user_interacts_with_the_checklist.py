@@ -27,7 +27,7 @@ def start(user):
                 with the(g.frontend).calls_the(g.get_checklist_query):
                     _create_checklist()
 
-        with the_user_views_checklist(e):
+        with the_user_views_checklist():
             pass
 
         item_to_complete = e.checklist[0]
@@ -72,7 +72,7 @@ def _create_checklist():
     )
 
 
-def the_user_views_checklist(e):
+def the_user_views_checklist():
     return add_step(
         "The",
         e.user,

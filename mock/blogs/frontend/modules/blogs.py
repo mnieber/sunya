@@ -89,6 +89,9 @@ class Blogs(Module):
             pass
 
     class Views:
+        class BlogFormView(Component):
+            pass
+
         class BlogPostFormView(Component):
             pass
 
@@ -128,17 +131,19 @@ class Blogs(Module):
             pass
 
 
+g.blog_list_view = Blogs.Views.BlogListView()
+g.blog_form_view = Blogs.Views.BlogFormView()
+g.blog_post_form_view = Blogs.Views.BlogPostFormView()
+g.blog_route = Blogs.Routes.Blog()
+g.blogs_route = Blogs.Routes.Blogs()
+g.create_blog_button = Blogs.Components.CreateBlogButton()
 g.create_blog_mutation = Blogs.Mutations.CreateBlog()
-g.update_blog_post_mutation = Blogs.Mutations.UpdateBlogPost()
+g.create_blog_post_button = Blogs.Components.CreateBlogPostButton()
 g.create_blog_post_mutation = Blogs.Mutations.CreateBlogPost()
 g.delete_blog_posts_action = Blogs.Mutations.DeleteBlogPosts()
-g.blogs_route = Blogs.Routes.Blogs()
-g.blog_route = Blogs.Routes.Blog()
-g.blog_list_view = Blogs.Views.BlogListView()
-g.create_blog_button = Blogs.Components.CreateBlogButton()
-g.create_blog_post_button = Blogs.Components.CreateBlogPostButton()
 g.delete_blog_posts_button = Blogs.Components.DeleteBlogPostsButton()
 g.edit_blog_post_button = Blogs.Components.EditBlogPostButton()
+g.update_blog_post_mutation = Blogs.Mutations.UpdateBlogPost()
 
 
 @actor_to_str.method((Blogs.Types.Blog,))

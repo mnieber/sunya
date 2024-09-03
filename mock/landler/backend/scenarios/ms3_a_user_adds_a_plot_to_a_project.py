@@ -22,24 +22,24 @@ def start(project, variation="default"):
                 with the(g.frontend).calls_the(g.create_plot_api_view):
                     with the(g.create_plot_api_view).calls_the(g.create_plot_action):
                         with the(g.create_plot_action).creates_the(e.plot):
-                            plot_(e).plot_questionnaire = plot_questionnaire_(e)
+                            plot_().plot_questionnaire = plot_questionnaire_()
 
                         with add_goal("add the", e.plot, "to the", e.project):
                             with the(g.create_plot_action).calls_the(
                                 g.add_plot_to_project_action
                             ):
-                                default_plot_list_(e).plots.append(e.plot)
+                                default_plot_list_().plots.append(e.plot)
 
     return get_scenario(scenario_name)
 
 
-def default_plot_list_(e):
+def default_plot_list_():
     return register(
         get_project_plot_list_by_name(e.project, "default"), name="default_plot_list"
     )
 
 
-def plot_questionnaire_(e):
+def plot_questionnaire_():
     return register(
         B.PlotQuestionnaires.Models.PlotQuestionnaire(
             land_type=B.PlotQuestionnaires.Enums.LandType.CROPLAND,
@@ -49,7 +49,7 @@ def plot_questionnaire_(e):
     )
 
 
-def plot_(e):
+def plot_():
     return register(
         B.Plots.Models.Plot(
             name="my-plot",

@@ -3,42 +3,44 @@ from sunya import (
     G as g,
     add_goal,
     add_scenario,
-    get_entities,
+    add_actor,
     get_scenario,
-    register,
     the,
+    add_role,
 )
 
 
 def start(user, blog):
+    blog_post = add_role("BlogPost")
+
     scenario_name = "a-user-creates-a-blog-post"
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(user, name="user")
-        register(blog, name="blog")
+        add_actor(user, name="user")
+        add_actor(blog, name="blog")
 
-        with the(e.user).visits_the(g.blogs_route):
+        with the(g.user).visits_the(g.blogs_route):
             pass
 
-        with add_goal("create a", e.blog_post, "in the", e.blog):
-            with the(e.user).submits_a_form():
+        with add_goal("create a", blog_post, "in the", g.blog):
+            with the(g.user).submits_the(g.blog_post_form_view):
                 with the(g.frontend).calls_the(g.create_blog_post_api_view):
                     with the(g.create_blog_post_api_view).calls_the(
                         g.create_blog_post_action
                     ):
-                        blog_post_(blog, e)
+                        blog_post_(blog)
 
     return get_scenario(scenario_name)
 
 
-def blog_post_(blog, e):
-    register(
+def blog_post_(blog):
+    return add_actor(
         B.Blogs.Models.BlogPost(
             blog=blog,
             title="My Blog Post",
             content="Hello people",
         ),
-        e.blog_post,
+        name="blog_post",
+        role="BlogPost",
     )
 
 
