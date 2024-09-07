@@ -1,0 +1,31 @@
+scenario_name: ms1-a-user-creates-a-project
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: create a new [Project] for the [User]
+        actors_introduced:
+          - name: my-darshana-project+:project
+            deltas:
+              description: A project to test Darshana (None)
+              id: 00dcca049c335a198d7d466b886ec3bb (None)
+              name: My Darshana Project (None)
+              scenarios: '[] (None)'
+        roles_updated:
+          Project: my-darshana-project+:project
+        child_nodes:
+          - step: The [create-project:api-view] calls the [create-project:action]
+      - goal: upload [SpecFiles] to the [my-darshana-project+:project]
+        actors_updated:
+          - name: my-darshana-project+:project
+            deltas:
+              scenarios: ([Scenario(name='My First Scenario', project=Project(name='My Darshana Project', description='A project to test Darshana', scenarios=(...)), root_step=Step(fact=(FactBit(type='string', value='Root'),), parent_step=None, child_steps=[Step(fact=(FactBit(type='string', value='the'), FactBit(type='actor', value='alice@example.com:user'), FactBit(type='string', value='creates a'), FactBit(type='role', value='Project')), parent_step=None, child_steps=[Step(fact=(FactBit(type='string', value='the'), FactBit(type='actor', value='alice@example.com:user'), FactBit(type='string', value='uploads the'), FactBit(type='role', value='SpecFiles')), parent_step=None, child_steps=[], field_delta_set_by_actor_key={})], field_delta_set_by_actor_key={}), Step(fact=(FactBit(type='string', value='the'), FactBit(type='actor', value='alice@example.com:user'), FactBit(type='string', value='clicks on a'), FactBit(type='role', value='Scenario')), parent_step=None, child_steps=[], field_delta_set_by_actor_key={})],
+                field_delta_set_by_actor_key={}))],) ([])
+        child_nodes:
+          - step: The [upload-spec-files:api-view] calls the [upload-spec-files:action]
+            child_nodes:
+              - step: The [upload-spec-files:action] iterates the tree structure in each [Scenario] in the [SpecFiles]
+                child_nodes:
+                  - step: The [upload-spec-files:action] calls the [create-actor:action] for each [Actor]
+                  - step: The [upload-spec-files:action] calls the [create-step:action] with these [Actor] instances
+                  - step: The [upload-spec-files:action] calls the [create-scenario:action] with these [Step] instances
+

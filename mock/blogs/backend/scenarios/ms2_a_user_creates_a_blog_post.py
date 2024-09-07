@@ -18,16 +18,9 @@ def start(user, blog):
         add_actor(user, name="user")
         add_actor(blog, name="blog")
 
-        with the(g.user).visits_the(g.blogs_route):
-            pass
-
         with add_goal("create a", blog_post, "in the", g.blog):
-            with the(g.user).submits_the(g.blog_post_form_view):
-                with the(g.frontend).calls_the(g.create_blog_post_api_view):
-                    with the(g.create_blog_post_api_view).calls_the(
-                        g.create_blog_post_action
-                    ):
-                        blog_post_(blog)
+            with the(g.create_blog_post_api_view).calls_the(g.create_blog_post_action):
+                blog_post_(blog)
 
     return get_scenario(scenario_name)
 

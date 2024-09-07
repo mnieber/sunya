@@ -1,0 +1,16 @@
+name: actors
+models:
+  - name: Actor
+    fields:
+      - name: id
+        type: UUID
+      - name: key
+        type: str
+enums: []
+actions:
+  - name: create_actor
+    args:
+      - name: create_actor_form
+        type: Form
+api_views: []
+

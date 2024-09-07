@@ -1,0 +1,121 @@
+import darshana.backend.namespace as B
+from sunya import (
+    add_goal,
+    add_scenario,
+    get_scenario,
+    add_actor,
+    add_role,
+    the,
+    G as g,
+)
+
+
+def start():
+    user = add_role("User")
+    project = add_role("Project")
+    spec_files = add_role("SpecFiles")
+    scenario = add_role("Scenario")
+    step = add_role("Step")
+    actor = add_role("Actor")
+
+    scenario_name = "ms1-a-user-creates-a-project"
+    with add_scenario(scenario_name):
+        with add_goal("create a new", project, "for the", user):
+            with the(g.create_project_api_view).calls_the(g.create_project_action):
+                project_()
+
+        with add_goal("upload", spec_files, "to the", g.project):
+            with the(g.upload_spec_files_api_view).calls_the(
+                g.upload_spec_files_action
+            ):
+                with the(
+                    g.upload_spec_files_action
+                ).iterates_the_tree_structure_in_each(scenario).in_the(spec_files):
+                    with the(g.upload_spec_files_action).calls_the(
+                        g.create_actor_action
+                    ).for_each(actor):
+                        pass
+
+                    with the(g.upload_spec_files_action).calls_the(
+                        g.create_step_action
+                    ).with_these(actor).instances():
+                        pass
+
+                    with the(g.upload_spec_files_action).calls_the(
+                        g.create_scenario_action
+                    ).with_these(step).instances():
+                        pass
+
+                    _update_project()
+
+    return get_scenario(scenario_name)
+
+
+def project_():
+    return add_actor(
+        B.Projects.Models.Project(
+            name="My Darshana Project",
+            description="A project to test Darshana",
+        ),
+        name="project",
+        role="Project",
+    )
+
+
+def _update_project():
+    g.project.scenarios = (
+        [
+            B.Scenarios.Models.Scenario(
+                name="My First Scenario",
+                project=g.project,
+                root_step=B.Steps.Models.Step(
+                    fact=(B.Steps.Models.FactBit(type="string", value="Root"),),
+                    child_steps=[
+                        B.Steps.Models.Step(
+                            fact=_create_fact(
+                                "the", "alice@example.com:user", "creates a", "Project"
+                            ),
+                            child_steps=[
+                                B.Steps.Models.Step(
+                                    fact=_create_fact(
+                                        "the",
+                                        "alice@example.com:user",
+                                        "uploads the",
+                                        "SpecFiles",
+                                    ),
+                                )
+                            ],
+                        ),
+                        B.Steps.Models.Step(
+                            fact=_create_fact(
+                                "the",
+                                "alice@example.com:user",
+                                "clicks on a",
+                                "Scenario",
+                            ),
+                        ),
+                    ],
+                ),
+            )
+        ],
+    )
+
+
+def _create_fact(*fact_bit_strings):
+    fact_bits = []
+    for fact_bit_string in fact_bit_strings:
+        type = (
+            "role"
+            if fact_bit_string[0] == fact_bit_string[0].upper()
+            else "actor" if ":" in fact_bit_string else "string"
+        )
+        fact_bits.append(B.Steps.Models.FactBit(type=type, value=fact_bit_string))
+    return tuple(fact_bits)
+
+
+def run():
+    return start()
+
+
+if __name__ == "__main__":
+    run()

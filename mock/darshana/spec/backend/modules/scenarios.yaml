@@ -1,0 +1,22 @@
+name: scenarios
+models:
+  - name: Scenario
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
+      - name: project
+        type: Project
+      - name: root_step
+        type: Step
+enums: []
+actions:
+  - name: create_scenario
+    args:
+      - name: create_scenario_form
+        type: Form
+      - name: project
+        type: Project
+api_views: []
+

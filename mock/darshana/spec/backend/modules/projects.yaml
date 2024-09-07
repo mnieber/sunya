@@ -1,0 +1,48 @@
+name: projects
+models:
+  - name: Project
+    fields:
+      - name: id
+        type: UUID
+      - name: name
+        type: str
+      - name: description
+        type: Optional[str]
+      - name: scenarios
+        type: list[Scenario]
+enums: []
+actions:
+  - name: create_project
+    args:
+      - name: create_project_form
+        type: Form
+  - name: save_project
+    args:
+      - name: save_project_form
+        type: Form
+      - name: project
+        type: Project
+  - name: delete_projects
+    args:
+      - name: project_ids
+        type: list[str]
+  - name: upload_spec_files
+    args:
+      - name: project
+        type: Project
+      - name: files
+        type: list[Any]
+api_views:
+  - name: CreateProject
+    filters: []
+  - name: SaveProject
+    filters: []
+  - name: DeleteProjects
+    filters: []
+  - name: UploadSpecFiles
+    filters: []
+  - name: GetProject
+    filters: []
+  - name: GetProjectLeads
+    filters: []
+

@@ -1,4 +1,5 @@
-from default.stack.namespace import Module, Form, Enum
+from default.stack.namespace import Module, Form
+from darshana.backend.modules.scenarios import Scenarios
 from default.backend.namespace import Action, ApiView
 import typing as T
 
@@ -47,7 +48,7 @@ class Projects(Module):
         class GetProject(ApiView):
             pass
 
-        class GetProjects(ApiView):
+        class GetProjectLeads(ApiView):
             pass
 
     class DomainEvents:
@@ -73,7 +74,7 @@ g.save_project_api_view = Projects.ApiViews.SaveProject()
 g.delete_projects_api_view = Projects.ApiViews.DeleteProjects()
 g.upload_spec_files_api_view = Projects.ApiViews.UploadSpecFiles()
 g.get_project_api_view = Projects.ApiViews.GetProject()
-g.get_projects_api_view = Projects.ApiViews.GetProjects()
+g.get_project_leads_api_view = Projects.ApiViews.GetProjectLeads()
 
 
 @actor_to_str.method((Projects.Models.Project,))
