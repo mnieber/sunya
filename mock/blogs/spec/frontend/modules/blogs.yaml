@@ -9,7 +9,7 @@ types:
       - name: description
         type: Optional[str]
       - name: audience
-        type: str
+        type: str = expert | novice | any
   - name: BlogPost
     fields:
       - name: id
@@ -23,7 +23,7 @@ types:
       - name: isPublished
         type: bool
       - name: level
-        type: str
+        type: str = easy | medium | hard
       - name: tags
         type: list[str]
 mutations:

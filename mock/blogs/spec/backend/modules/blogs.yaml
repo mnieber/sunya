@@ -9,7 +9,7 @@ models:
       - name: description
         type: Optional[str]
       - name: audience
-        type: str
+        type: 'str = Audiences: expert | novice | any'
   - name: BlogPost
     fields:
       - name: id
@@ -20,7 +20,6 @@ models:
         type: str
       - name: content
         type: Optional[str]
-enums: []
 actions:
   - name: create_blog
     args:
