@@ -27,10 +27,15 @@ class Projects(Module):
             class Args:
                 project_ids: T.List[str]
 
-        class UploadSpecFiles(Action):
+        class ImportScenarioSpec(Action):
             class Args:
+                import_scenario_spec_form: Form
                 project: "Projects.Models.Project"
-                files: T.List[T.Any]
+
+        class ImportModuleSpec(Action):
+            class Args:
+                import_module_spec_form: Form
+                project: "Projects.Models.Project"
 
     class ApiViews:
         class CreateProject(ApiView):
@@ -68,7 +73,8 @@ class Projects(Module):
 g.create_project_action = Projects.Actions.CreateProject()
 g.save_project_action = Projects.Actions.SaveProject()
 g.delete_projects_action = Projects.Actions.DeleteProjects()
-g.upload_spec_files_action = Projects.Actions.UploadSpecFiles()
+g.import_scenario_spec_action = Projects.Actions.ImportScenarioSpec()
+g.import_module_spec_action = Projects.Actions.ImportModuleSpec()
 g.create_project_api_view = Projects.ApiViews.CreateProject()
 g.save_project_api_view = Projects.ApiViews.SaveProject()
 g.delete_projects_api_view = Projects.ApiViews.DeleteProjects()

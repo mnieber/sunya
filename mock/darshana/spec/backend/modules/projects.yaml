@@ -25,12 +25,18 @@ actions:
     args:
       - name: project_ids
         type: list[str]
-  - name: upload_spec_files
+  - name: import_scenario_spec
     args:
+      - name: import_scenario_spec_form
+        type: Form
       - name: project
         type: Project
-      - name: files
-        type: list[Any]
+  - name: import_module_spec
+    args:
+      - name: import_module_spec_form
+        type: Form
+      - name: project
+        type: Project
 api_views:
   - name: CreateProject
     filters: []

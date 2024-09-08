@@ -1,8 +1,14 @@
 from django.contrib import admin
+from actors.models import Actor, Role
 
-from actors import models
 
-
-@admin.register(models.Actor)
+@admin.register(Actor)
 class ActorAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("key",)
+    search_fields = ("key",)
+
+
+@admin.register(Role)
+class RoleAdmin(admin.ModelAdmin):
+    list_display = ("name",)
+    search_fields = ("name",)

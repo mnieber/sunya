@@ -17,6 +17,8 @@ def start():
     scenario = add_role("Scenario")
     step = add_role("Step")
     actor = add_role("Actor")
+    module_spec_files = add_role("ModuleSpecFiles")
+    scenario_spec_files = add_role("ScenarioSpecFiles")
 
     scenario_name = "ms1-a-user-creates-a-project"
     with add_scenario(scenario_name):
@@ -25,23 +27,40 @@ def start():
                 project_()
 
         with add_goal("upload", spec_files, "to the", g.project):
-            with the(g.upload_spec_files_api_view).calls_the(
-                g.upload_spec_files_action
+            with (
+                the(g.upload_spec_files_api_view)
+                .identifies_the(scenario_spec_files)
+                .and_the(module_spec_files)
+                .in_the(spec_files)
+            ):
+                pass
+
+            with (
+                the(g.upload_spec_files_api_view)
+                .deletes_each(scenario)
+                .from_the(g.project)
+            ):
+                pass
+
+            with (
+                the(g.upload_spec_files_api_view)
+                .calls_the(g.import_scenario_spec_action)
+                .for_each_file_in_the(scenario_spec_files)
             ):
                 with the(
-                    g.upload_spec_files_action
-                ).iterates_the_tree_structure_in_each(scenario).in_the(spec_files):
-                    with the(g.upload_spec_files_action).calls_the(
+                    g.import_scenario_spec_action
+                ).iterates_the_tree_structure_of_the(scenario):
+                    with the(g.import_scenario_spec_action).calls_the(
                         g.create_actor_action
                     ).for_each(actor):
                         pass
 
-                    with the(g.upload_spec_files_action).calls_the(
+                    with the(g.import_scenario_spec_action).calls_the(
                         g.create_step_action
                     ).with_these(actor).instances():
                         pass
 
-                    with the(g.upload_spec_files_action).calls_the(
+                    with the(g.import_scenario_spec_action).calls_the(
                         g.create_scenario_action
                     ).with_these(step).instances():
                         pass
