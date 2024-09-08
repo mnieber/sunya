@@ -26,7 +26,7 @@ file_map = {}
 
 add_spec(file_map, dir_list, in_mock=in_mock)
 add_instructions(file_map, dir_list, in_mock=in_mock)
-add_sample_code(file_map, dir_list, sample_code_in=f"{in_blogs_be}/src")
+add_sample_code(file_map, dir_list, sample_code_in=f"{in_blogs_be}")
 add_code(file_map, dir_list, code_in=f"{in_darshana_be}/src")
 
 
