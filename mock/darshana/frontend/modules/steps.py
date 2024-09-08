@@ -13,7 +13,7 @@ from sunya import (
 class Steps(Module):
     class Types:
         class FactBit(Entity):
-            type: str = "string | role | actor"
+            type_name: "Steps.Enums.FactBitTypeNames"
             value: str
 
         class Step(EntityWithId):
@@ -21,6 +21,12 @@ class Steps(Module):
             parent_step: T.Optional["Steps.Types.Step"] = None
             child_steps: T.List["Steps.Types.Step"] = []
             fieldDeltaSetByActorKey: T.Dict[str, T.Dict[str, T.Any]] = {}
+
+    class Enums:
+        class FactBitTypeNames:
+            string = "string"
+            role = "role"
+            actor = "actor"
 
     class States:
         class StepTreeState(State):

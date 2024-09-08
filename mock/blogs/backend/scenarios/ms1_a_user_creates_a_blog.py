@@ -32,6 +32,7 @@ def blog_():
         B.Blogs.Models.Blog(
             name="My Personal Blog",
             description="Random things that interest me",
+            audience="any",
         ),
         name="blog",
         role="Blog",

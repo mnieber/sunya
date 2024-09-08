@@ -6,6 +6,7 @@ from sunya.entrypoint import (
     parse_args,
 )
 import darshana.frontend.namespace as F
+import darshana.backend.namespace as B
 
 config = dict(
     prompt_writer_path_tpl="default.{layer}.prompt_writer",
@@ -17,6 +18,10 @@ config = dict(
         "frontend/scenarios",
         "frontend/steps",
         "frontend/users",
+        "backend/actors",
+        "backend/projects",
+        "backend/scenarios",
+        "backend/steps",
     ],
     all_scenario_names=[
         "frontend/ms1_a_user_creates_a_project",
@@ -30,6 +35,10 @@ config = dict(
         "frontend/scenarios": F.Scenarios,
         "frontend/steps": F.Steps,
         "frontend/users": F.Users,
+        "backend/actors": B.Actors,
+        "backend/projects": B.Projects,
+        "backend/scenarios": B.Scenarios,
+        "backend/steps": B.Steps,
     },
 )
 

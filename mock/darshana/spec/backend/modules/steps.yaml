@@ -4,8 +4,8 @@ models:
     fields:
       - name: id
         type: UUID
-      - name: type
-        type: str
+      - name: type_name
+        type: 'str = FactBitTypeNames: string | role | actor'
       - name: value
         type: str
   - name: Step
@@ -20,7 +20,6 @@ models:
         type: list[Step]
       - name: field_delta_set_by_actor_key
         type: dict[str, dict[str, Any]]
-enums: []
 actions:
   - name: create_step
     args:

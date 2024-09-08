@@ -4,7 +4,7 @@ import { createUUID } from '/src/utils/ids';
 import { ObjT } from '/src/utils/types';
 
 export type FactBitT = {
-  type: 'string' | 'role' | 'actor';
+  typeName: 'string' | 'role' | 'actor';
   value: any;
 };
 

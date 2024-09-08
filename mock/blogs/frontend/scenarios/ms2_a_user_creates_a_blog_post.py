@@ -60,7 +60,7 @@ def blog_post_():
             title="My First Blog Post",
             content="Hello",
             blog=g.blog,
-            level=F.Blogs.Enums.BlogPostLevel.medium,
+            level="novice",
         ),
         name="blog_post",
         role="BlogPost",

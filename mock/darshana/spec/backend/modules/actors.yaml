@@ -6,7 +6,6 @@ models:
         type: UUID
       - name: key
         type: str
-enums: []
 actions:
   - name: create_actor
     args:

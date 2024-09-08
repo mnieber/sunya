@@ -2,8 +2,8 @@ name: steps
 types:
   - name: FactBit
     fields:
-      - name: type
-        type: str
+      - name: typeName
+        type: FactBitTypeNames
       - name: value
         type: str
   - name: Step

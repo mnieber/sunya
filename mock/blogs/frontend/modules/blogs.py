@@ -11,20 +11,15 @@ class Blogs(Module):
         class Blog(EntityWithId):
             name: str
             description: T.Optional[str]
+            audience: str = "expert | novice | any"
 
         class BlogPost(EntityWithId):
             blog: "Blogs.Types.Blog"
             title: str
             content: T.Optional[str]
             isPublished: bool = False
-            level: "Blogs.Enums.BlogPostLevel"
+            level: str = "easy | medium | hard"
             tags: T.List[str] = []
-
-    class Enums:
-        class BlogPostLevel:
-            easy = "easy"
-            medium = "medium"
-            hard = "hard"
 
     class Mutations:
         class CreateBlog(Mutation):

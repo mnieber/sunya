@@ -1,4 +1,4 @@
-from default.stack.namespace import Module, Form, Enum
+from default.stack.namespace import Module, Form
 from default.backend.namespace import Action, ApiView
 import typing as T
 
@@ -10,6 +10,7 @@ class Blogs(Module):
         class Blog(EntityWithId):
             name: str
             description: T.Optional[str]
+            audience: str = "Audiences: expert | novice | any"
 
         class BlogPost(EntityWithId):
             blog: "Blogs.Models.Blog"
@@ -40,12 +41,6 @@ class Blogs(Module):
 
         class UpdateBlog(ApiView):
             pass
-
-    class Enums:
-        class BlogAudiences(Enum):
-            EXPERT = "expert"
-            NOVICE = "novice"
-            ANY = "any"
 
     class DomainEvents:
         class BlogCreated:

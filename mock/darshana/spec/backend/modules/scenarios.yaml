@@ -10,7 +10,6 @@ models:
         type: Project
       - name: root_step
         type: Step
-enums: []
 actions:
   - name: create_scenario
     args:

@@ -40,6 +40,9 @@ def extract_field_types(cls):
         if field_name.startswith("_"):
             continue
 
-        field_types[field_name] = get_type_name(type_annotation)
+        field_type = get_type_name(type_annotation)
+        if attr := getattr(cls, field_name, None):
+            field_type += f" = {attr}"
+        field_types[field_name] = field_type
 
     return field_types

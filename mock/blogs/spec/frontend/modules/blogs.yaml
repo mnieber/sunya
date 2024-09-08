@@ -8,6 +8,8 @@ types:
         type: str
       - name: description
         type: Optional[str]
+      - name: audience
+        type: str
   - name: BlogPost
     fields:
       - name: id
@@ -21,7 +23,7 @@ types:
       - name: isPublished
         type: bool
       - name: level
-        type: BlogPostLevel
+        type: str
       - name: tags
         type: list[str]
 mutations:

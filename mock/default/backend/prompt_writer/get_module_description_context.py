@@ -5,7 +5,6 @@ def get_module_description_context(module):
     return dict(
         name=l0(camel_to_snake(module.__name__)),
         models=_get_models(module),
-        enums=_get_enums(module),
         actions=_get_actions(module),
         api_views=_get_api_views(module),
     )
@@ -42,18 +41,6 @@ def _get_actions(module):
                         ],
                     )
                 )
-    return result
-
-
-def _get_enums(module):
-    result = []
-    if enums := getattr(module, "Enums", None):
-        for enum_name, enum in _get_members(enums):
-            members = []
-            for item_name, item in _get_members(enum):
-                members.append(dict(name=item_name, value=item))
-
-            result.append(dict(name=enum_name, members=members))
     return result
 
 

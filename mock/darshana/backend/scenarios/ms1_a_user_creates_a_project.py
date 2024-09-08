@@ -69,7 +69,7 @@ def _update_project():
                 name="My First Scenario",
                 project=g.project,
                 root_step=B.Steps.Models.Step(
-                    fact=(B.Steps.Models.FactBit(type="string", value="Root"),),
+                    fact=_create_fact("root"),
                     child_steps=[
                         B.Steps.Models.Step(
                             fact=_create_fact(
@@ -104,12 +104,14 @@ def _update_project():
 def _create_fact(*fact_bit_strings):
     fact_bits = []
     for fact_bit_string in fact_bit_strings:
-        type = (
+        type_name = (
             "role"
             if fact_bit_string[0] == fact_bit_string[0].upper()
             else "actor" if ":" in fact_bit_string else "string"
         )
-        fact_bits.append(B.Steps.Models.FactBit(type=type, value=fact_bit_string))
+        fact_bits.append(
+            B.Steps.Models.FactBit(type_name=type_name, value=fact_bit_string)
+        )
     return tuple(fact_bits)
 
 

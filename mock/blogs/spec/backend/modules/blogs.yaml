@@ -8,6 +8,8 @@ models:
         type: str
       - name: description
         type: Optional[str]
+      - name: audience
+        type: str
   - name: BlogPost
     fields:
       - name: id
@@ -18,15 +20,7 @@ models:
         type: str
       - name: content
         type: Optional[str]
-enums:
-  - name: BlogAudiences
-    members:
-      - name: EXPERT
-        value: expert
-      - name: NOVICE
-        value: novice
-      - name: ANY
-        value: any
+enums: []
 actions:
   - name: create_blog
     args:

@@ -8,7 +8,7 @@ from sunya import EntityWithId, actor_to_str, G as g
 class Steps(Module):
     class Models:
         class FactBit(EntityWithId):
-            type: str = "string | role | actor"
+            type_name: str = "FactBitTypeNames: string | role | actor"
             value: str
 
         class Step(EntityWithId):

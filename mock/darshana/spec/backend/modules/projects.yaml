@@ -10,7 +10,6 @@ models:
         type: Optional[str]
       - name: scenarios
         type: list[Scenario]
-enums: []
 actions:
   - name: create_project
     args:

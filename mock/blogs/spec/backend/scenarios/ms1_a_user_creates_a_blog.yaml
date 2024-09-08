@@ -6,6 +6,7 @@ nodes:
         actors_introduced:
           - name: my-personal-blog+:blog
             deltas:
+              audience: any (None)
               description: Random things that interest me (None)
               id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
               name: My Personal Blog (None)
@@ -18,6 +19,7 @@ nodes:
                 actors_introduced:
                   - name: my-personal-blog+:blog
                     deltas:
+                      audience: any (None)
                       description: Random things that interest me (None)
                       id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
                       name: My Personal Blog (None)

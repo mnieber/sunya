@@ -6,11 +6,11 @@ nodes:
         actors_introduced:
           - name: my-first-blog-post+:blog
             deltas:
-              blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me'), Blog(name='My Personal Blog', description='Random things that interest me'), ...]) (None)
+              blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me', audience='any'), Blog(name='My Personal Blog', description='Random things that interest me', audience='expert | novice | any'), ...]) (None)
               content: Hello (None)
               id: cd0c65fb512c547a8817a2088bc6764b (None)
               isPublished: False (None)
-              level: medium (None)
+              level: novice (None)
               tags: '[] (None)'
               title: My First Blog Post (None)
         roles_updated:
@@ -26,11 +26,11 @@ nodes:
         actors_introduced:
           - name: my-first-blog-post+:blog
             deltas:
-              blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me'), Blog(name='My Personal Blog', description='Random things that interest me'), ...]) (None)
+              blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me', audience='any'), Blog(name='My Personal Blog', description='Random things that interest me', audience='expert | novice | any'), ...]) (None)
               content: Hello, World! (None)
               id: cd0c65fb512c547a8817a2088bc6764b (None)
               isPublished: False (None)
-              level: medium (None)
+              level: novice (None)
               tags: '[] (None)'
               title: My First Blog Post (None)
         child_nodes:
@@ -38,11 +38,11 @@ nodes:
             actors_introduced:
               - name: my-first-blog-post+:blog
                 deltas:
-                  blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me'), Blog(name='My Personal Blog', description='Random things that interest me'), ...]) (None)
+                  blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me', audience='any'), Blog(name='My Personal Blog', description='Random things that interest me', audience='expert | novice | any'), ...]) (None)
                   content: Hello (None)
                   id: cd0c65fb512c547a8817a2088bc6764b (None)
                   isPublished: False (None)
-                  level: medium (None)
+                  level: novice (None)
                   tags: '[] (None)'
                   title: My First Blog Post (None)
           - step: The [alice@example.com+:user] presses the [edit-blog-post-button:dialog_button]
@@ -53,11 +53,11 @@ nodes:
         actors_introduced:
           - name: my-first-blog-post+:blog
             deltas:
-              blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me'), Blog(name='My Personal Blog', description='Random things that interest me'), ...]) (None)
+              blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me', audience='any'), Blog(name='My Personal Blog', description='Random things that interest me', audience='expert | novice | any'), ...]) (None)
               content: Hello, World! (None)
               id: cd0c65fb512c547a8817a2088bc6764b (None)
               isPublished: False (None)
-              level: medium (None)
+              level: novice (None)
               tags: '[] (None)'
               title: My First Blog Post (None)
         child_nodes:
@@ -65,11 +65,11 @@ nodes:
             actors_introduced:
               - name: my-first-blog-post+:blog
                 deltas:
-                  blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me'), Blog(name='My Personal Blog', description='Random things that interest me'), ...]) (None)
+                  blog: Role(name='Blog', entities=[Blog(name='My Personal Blog', description='Random things that interest me', audience='any'), Blog(name='My Personal Blog', description='Random things that interest me', audience='expert | novice | any'), ...]) (None)
                   content: Hello, World! (None)
                   id: cd0c65fb512c547a8817a2088bc6764b (None)
                   isPublished: False (None)
-                  level: medium (None)
+                  level: novice (None)
                   tags: '[] (None)'
                   title: My First Blog Post (None)
           - step: The [alice@example.com+:user] presses the [delete-blog-posts-button:dialog_button]

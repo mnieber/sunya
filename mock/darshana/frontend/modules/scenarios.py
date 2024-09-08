@@ -10,13 +10,6 @@ from sunya import (
 )
 from darshana.frontend.modules.steps import Steps
 
-# TODO:
-# - The Step.fact field should be a list of FactBit
-# - The FactBit has a type ("string", "actor", "role") and a value.
-# - The scenario should have a lookup table for actors and roles.
-# - The project should also have a lookup table for actors and roles.
-# - - If two scenarios have the same actor-key, then at the scenario level the actors are different, but at the project level they are the same.
-
 
 class Scenarios(Module):
     class Types:
