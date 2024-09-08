@@ -10,8 +10,7 @@ class FactBit:
 
 
 class Step(BaseModel):
-    # Note that fact will contain a list of FactBit objects
-    fact = models.JSONField()
+    fact_json = models.JSONField()
     parent_step = models.ForeignKey(
         "self",
         on_delete=models.CASCADE,
@@ -26,3 +25,7 @@ class Step(BaseModel):
 
     def __str__(self):
         return f"Step {self.id}"
+
+    @property
+    def fact(self):
+        return [FactBit(**fb) for fb in self.fact_json]

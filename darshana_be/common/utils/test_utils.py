@@ -1,4 +1,5 @@
 import re
+import factory
 
 
 def rhs_is_not_none(lhs, rhs):
@@ -32,3 +33,7 @@ def has_error_code(response, error_code):
         if error["code"] == error_code:
             return True
     return False
+
+
+def fake(x):
+    return factory.Faker(x).evaluate(None, None, {"locale": None})

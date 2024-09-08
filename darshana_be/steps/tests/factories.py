@@ -1,19 +1,39 @@
+from dataclassy import asdict
 import factory
-from steps.models import Step
+from steps.models import Step, FactBit
 from factory.django import DjangoModelFactory
-import json
 from scenarios.tests.factories import ScenarioFactory
 from steps.enums import FactBitTypeNames
+from common.utils.test_utils import fake
+
+
+def generate_factbit_value(factbit):
+    if factbit.type_name == FactBitTypeNames.STRING.value:
+        return fake("sentence")
+    elif factbit.type_name == FactBitTypeNames.ROLE.value:
+        return fake("word").title()
+    elif factbit.type_name == FactBitTypeNames.ACTOR.value:
+        return f"{fake('word')}:{fake('word')}"
+    else:
+        raise ValueError(f"Invalid FactBit type: {factbit.type_name}")
+
+
+class FactBitFactory(factory.Factory):
+    class Meta:
+        model = FactBit
+
+    type_name = factory.Iterator([t.value for t in FactBitTypeNames])
+    value = factory.LazyAttribute(generate_factbit_value)
 
 
 class StepFactory(DjangoModelFactory):
-    scenario = factory.SubFactory(ScenarioFactory)
-    fact = factory.LazyFunction(
-        lambda: json.dumps(
-            [{"type_name": FactBitTypeNames.STRING.value, "value": "Test step"}]
-        )
-    )
-    field_delta_set_by_actor_key = factory.Dict({})
-
     class Meta:
         model = Step
+
+    scenario = factory.SubFactory(ScenarioFactory)
+    fact_json = factory.LazyFunction(lambda: [asdict(FactBitFactory())])
+    field_delta_set_by_actor_key = factory.Dict({})
+
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs):
+        return super()._create(model_class, *args, **kwargs)

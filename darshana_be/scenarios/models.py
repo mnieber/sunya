@@ -10,7 +10,13 @@ class Scenario(BaseModel):
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="scenarios"
     )
-    root_step = models.OneToOneField(Step, on_delete=models.CASCADE, related_name="+")
+    root_step = models.OneToOneField(
+        Step,
+        on_delete=models.SET_NULL,
+        related_name="root_scenario",
+        null=True,
+        blank=True,
+    )
 
     def __str__(self):
         return self.name

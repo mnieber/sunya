@@ -12,7 +12,7 @@ module.exports = {
   processImportPath: (importPath, absImportPath, activeFilepath, projectRoot) =>
     absImportPath.startsWith(projectRoot)
       ? absImportPath
-          .slice(baseDir.length)
+          .slice(baseDir.length + 1)
           .replace(/\.[^/.]+$/, '')
           .replaceAll('/', '.')
       : null,

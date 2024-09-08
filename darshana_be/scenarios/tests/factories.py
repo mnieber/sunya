@@ -13,16 +13,9 @@ class ScenarioFactory(DjangoModelFactory):
 
     @factory.post_generation
     def root_step(self, create, extracted, **kwargs):
-        from steps.tests.factories import StepFactory
-
         if not create:
             return
 
         if extracted:
             self.root_step = extracted
-            extracted.scenario = self
-            extracted.save()
-        else:
-            self.root_step = StepFactory(scenario=self)
-
-        self.save()
+            self.save()
