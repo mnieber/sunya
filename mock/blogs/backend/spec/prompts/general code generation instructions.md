@@ -14,6 +14,10 @@ The specific instructions will always contain references to sample code. It's im
 
 The sample code is always based on the spec/backend/modules/blogs.md spec file. By studying the sample code and blogs/spec.md, you will be able to see how the information in a module spec is used for generating a specific source file.
 
+## Use of dataclassy
+
+Although the standard Python library has a dataclasses package, I prefer the one from the dataclassy pypi package. Therefore, whenever I mention dataclasses, I mean the ones from dataclassy.
+
 ## Updating existing source files
 
 When you need to update an existing source file, please replace the existing code-blocks with one-line comments in your output. This makes it easier for me to copy-and-paste the new code-blocks.

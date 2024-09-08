@@ -7,7 +7,7 @@ type PropsT = {
 
 export const Fact = (props: PropsT) => {
   return props.step.fact.map((factBit, index) => {
-    if (factBit.type === 'actor' || factBit.type === 'role') {
+    if (factBit.typeName === 'actor' || factBit.typeName === 'role') {
       return (
         <span
           key={index}

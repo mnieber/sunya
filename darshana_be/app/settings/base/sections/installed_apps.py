@@ -29,6 +29,8 @@ LOCAL_APPS = [
     "api.apps.ApiConfig",
     "app.apps.AppConfig",
     "steps.apps.StepsConfig",
+    "projects.apps.ProjectsConfig",
+    "scenarios.apps.ScenariosConfig",
     "users.apps.UsersConfig",
 ]
 
