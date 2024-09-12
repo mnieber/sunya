@@ -1,5 +1,6 @@
-from typing import Any, Dict, List
+import typing as T
 from dataclassy import dataclass
+
 
 from django.db import transaction
 from projects.models import Project
@@ -10,51 +11,82 @@ from steps.actions.create_step import create_step, CreateStepForm
 from actors.models import Actor, Role
 from actors.actions.create_actor import create_actor, CreateActorForm
 from steps.enums import FactBitTypeNames
+from actors.actions.create_role import create_role, CreateRoleForm
 
 
 @dataclass
 class ImportScenarioSpecForm:
-    scenario_data: Dict[str, Any]
+    scenario_data: T.Dict[str, T.Any]
 
 
 def import_scenario_spec(
     import_scenario_spec_form: ImportScenarioSpecForm, project: Project
 ):
+    _validate_args(import_scenario_spec_form)
+
     data = import_scenario_spec_form.scenario_data
 
     with transaction.atomic():
         scenario = create_scenario(
             CreateScenarioForm(name=data["scenario_name"]), project
         )
-        _process_nodes(data["nodes"], scenario)
+        steps = _process_nodes(data["nodes"], scenario)
+
+        scenario.root_step = steps[0]
+        scenario.save()
 
     return scenario
 
 
-def _process_nodes(nodes: List[dict], scenario: Scenario, parent_step: Step = None):
+def _validate_args(import_scenario_spec_form: ImportScenarioSpecForm):
+    root_nodes = import_scenario_spec_form.scenario_data.get("nodes", [])
+    if len(root_nodes) != 1:
+        raise ValueError("There should be exactly one root node")
+
+
+def _process_nodes(
+    nodes: T.List[dict], scenario: Scenario, parent_step: T.Optional[Step] = None
+):
+    steps = []
     for node in nodes:
         if "goal" in node:
             step = _create_step(node["goal"], scenario, parent_step)
+            steps.append(step)
+
             _process_actors_introduced(node.get("actors_introduced", []), step)
             _process_roles_updated(node.get("roles_updated", {}), step)
         elif "step" in node:
             step = _create_step(node["step"], scenario, parent_step)
+            steps.append(step)
         else:
             continue
 
         if "child_nodes" in node:
             _process_nodes(node["child_nodes"], scenario, step)
 
+    return steps
 
-def _create_step(fact_str: str, scenario: Scenario, parent_step: Step = None) -> Step:
+
+def _create_step(
+    fact_str: str, scenario: Scenario, parent_step: T.Optional[Step] = None
+) -> Step:
     fact_bits = _parse_fact_string(fact_str)
     create_step_form = CreateStepForm(
         fact=fact_bits, parent_step=parent_step, field_delta_set_by_actor_key={}
     )
-    return create_step(create_step_form, scenario)
+
+    step = create_step(create_step_form, scenario)
+
+    for fact_bit in step.fact:
+        if fact_bit.type_name == FactBitTypeNames.ACTOR.value:
+            _get_or_create_actor(fact_bit.value)
+        if fact_bit.type_name == FactBitTypeNames.ROLE.value:
+            _get_or_create_role(fact_bit.value)
+
+    return step
 
 
-def _parse_fact_string(fact_str: str) -> List[FactBit]:
+def _parse_fact_string(fact_str: str) -> T.List[FactBit]:
     fact_bits = []
     parts = fact_str.split()
     for part in parts:
@@ -75,11 +107,9 @@ def _parse_fact_string(fact_str: str) -> List[FactBit]:
     return fact_bits
 
 
-def _process_actors_introduced(actors_introduced: List[dict], step: Step):
+def _process_actors_introduced(actors_introduced: T.List[dict], step: Step):
     for actor in actors_introduced:
         actor_key = actor["name"]
-        _create_or_get_actor(actor_key)
-
         deltas = actor.get("deltas", {})
         step.field_delta_set_by_actor_key[actor_key] = deltas
 
@@ -88,20 +118,18 @@ def _process_actors_introduced(actors_introduced: List[dict], step: Step):
 
 def _process_roles_updated(roles_updated: dict, step: Step):
     for role_name, actor_key in roles_updated.items():
-        _create_or_get_role(role_name)
-        _create_or_get_actor(actor_key)
-
-        # You might want to store this information in the step or another model
-        # For now, we'll just print it
-        print(f"Role {role_name} updated to {actor_key}")
+        _get_or_create_actor(actor_key)
 
 
-def _create_or_get_actor(actor_key: str) -> Actor:
-    actor, created = Actor.objects.get_or_create(key=actor_key)
-    if created:
-        create_actor(CreateActorForm(key=actor_key))
+def _get_or_create_actor(actor_key: str) -> Actor:
+    actor = Actor.objects.filter(key=actor_key).first()
+    if not actor:
+        actor = create_actor(CreateActorForm(key=actor_key))
     return actor
 
 
-def _create_or_get_role(role_name: str) -> Role:
-    return Role.objects.get_or_create(name=role_name)[0]
+def _get_or_create_role(role_name: str) -> Role:
+    role = Role.objects.filter(name=role_name).first()
+    if not role:
+        role = create_role(CreateRoleForm(name=role_name))
+    return role
