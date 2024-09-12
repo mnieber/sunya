@@ -27,6 +27,11 @@ class Projects(Module):
             class Args:
                 project_ids: T.List[str]
 
+        class ImportSpecFiles(Action):
+            class Args:
+                import_spec_files_form: Form
+                project: "Projects.Models.Project"
+
         class ImportScenarioSpec(Action):
             class Args:
                 import_scenario_spec_form: Form
@@ -73,6 +78,7 @@ class Projects(Module):
 g.create_project_action = Projects.Actions.CreateProject()
 g.save_project_action = Projects.Actions.SaveProject()
 g.delete_projects_action = Projects.Actions.DeleteProjects()
+g.import_spec_files_action = Projects.Actions.ImportSpecFiles()
 g.import_scenario_spec_action = Projects.Actions.ImportScenarioSpec()
 g.import_module_spec_action = Projects.Actions.ImportModuleSpec()
 g.create_project_api_view = Projects.ApiViews.CreateProject()

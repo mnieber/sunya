@@ -42,28 +42,34 @@ def start():
             ):
                 pass
 
-            with (
-                the(g.upload_spec_files_api_view)
-                .calls_the(g.import_scenario_spec_action)
-                .for_each_file_in_the(scenario_spec_files)
+            with the(g.upload_spec_files_api_view).calls_the(
+                g.import_spec_files_action
             ):
-                with the(
-                    g.import_scenario_spec_action
-                ).iterates_the_tree_structure_of_the(scenario):
-                    with the(g.import_scenario_spec_action).calls_the(
-                        g.create_actor_action
-                    ).for_each(actor):
-                        pass
+                with the(g.import_spec_files_action).deletes_all_data_in_the(g.project):
+                    pass
 
-                    with the(g.import_scenario_spec_action).calls_the(
-                        g.create_step_action
-                    ).with_these(actor).instances():
-                        pass
+                with (
+                    the(g.import_spec_files_action)
+                    .calls_the(g.import_scenario_spec_action)
+                    .for_each_file_in_the(scenario_spec_files)
+                ):
+                    with the(
+                        g.import_scenario_spec_action
+                    ).iterates_the_tree_structure_of_the(scenario):
+                        with the(g.import_scenario_spec_action).calls_the(
+                            g.create_actor_action
+                        ).for_each(actor):
+                            pass
 
-                    with the(g.import_scenario_spec_action).calls_the(
-                        g.create_scenario_action
-                    ).with_these(step).instances():
-                        pass
+                        with the(g.import_scenario_spec_action).calls_the(
+                            g.create_step_action
+                        ).with_these(actor).instances():
+                            pass
+
+                        with the(g.import_scenario_spec_action).calls_the(
+                            g.create_scenario_action
+                        ).with_these(step).instances():
+                            pass
 
                     _update_project()
 

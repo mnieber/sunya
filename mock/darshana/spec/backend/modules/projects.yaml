@@ -25,6 +25,12 @@ actions:
     args:
       - name: project_ids
         type: list[str]
+  - name: import_spec_files
+    args:
+      - name: import_spec_files_form
+        type: Form
+      - name: project
+        type: Project
   - name: import_scenario_spec
     args:
       - name: import_scenario_spec_form
