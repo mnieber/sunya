@@ -11,7 +11,7 @@ class ActorFactory(DjangoModelFactory):
 
 
 class RoleFactory(DjangoModelFactory):
-    key = factory.Sequence(lambda n: f"role{n}")
+    name = factory.Sequence(lambda n: f"role{n}")
 
     class Meta:
         model = Role

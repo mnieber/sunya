@@ -41,7 +41,7 @@ def import_scenario_spec(
 def _validate_args(import_scenario_spec_form: ImportScenarioSpecForm):
     root_nodes = import_scenario_spec_form.scenario_data.get("nodes", [])
     if len(root_nodes) != 1:
-        raise ValueError("There should be exactly one root node")
+        raise NotExactlyOneRootNodeError()
 
 
 def _process_nodes(
@@ -133,3 +133,7 @@ def _get_or_create_role(role_name: str) -> Role:
     if not role:
         role = create_role(CreateRoleForm(name=role_name))
     return role
+
+
+class NotExactlyOneRootNodeError(Exception):
+    pass

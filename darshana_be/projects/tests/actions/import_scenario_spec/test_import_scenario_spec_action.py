@@ -2,6 +2,7 @@ import pytest
 from projects.actions.import_scenario_spec import (
     import_scenario_spec,
     ImportScenarioSpecForm,
+    NotExactlyOneRootNodeError,
 )
 from projects.tests.factories import ProjectFactory
 from scenarios.models import Scenario
@@ -99,5 +100,7 @@ class TestImportScenarioSpecAction:
         form = ImportScenarioSpecForm(scenario_data=invalid_data)
 
         # When/Then
-        with pytest.raises(ValueError):  # Assume it raises ValueError for invalid data
+        with pytest.raises(
+            NotExactlyOneRootNodeError
+        ):  # Assume it raises ValueError for invalid data
             import_scenario_spec(form, project)
