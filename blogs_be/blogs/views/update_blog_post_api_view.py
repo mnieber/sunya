@@ -43,7 +43,7 @@ class UpdateBlogPostApiView(APIView):
                 blog_post=blog_post,
             )
         except BlogPostWithTitleAlreadyExistsError:
-            raise ValidationError("BLOG_WITH_THIS_TITLE_ALREADY_EXISTS")
+            raise ValidationError(code="BLOG_WITH_THIS_TITLE_ALREADY_EXISTS")
 
         return Response(
             BlogPostSerializer(updated_blog_post).data, status=status.HTTP_200_OK
