@@ -1,1 +1,1 @@
-export { UploadSpecFilesFormView } from './UploadSpecFilesFormView';
+export { ImportSpecFilesFormView } from './ImportSpecFilesFormView';

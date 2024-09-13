@@ -5,7 +5,7 @@ import { projectCtx } from '/src/projects/hooks/useProjectContext';
 import { cn } from '/src/utils/classnames';
 
 // Import styles
-import './UploadSpecFilesButton.scss';
+import './ImportSpecFilesButton.scss';
 
 export type PropsT = {
   className?: any;
@@ -16,7 +16,7 @@ const ContextProps = {
   projectEdit: projectCtx.projectEdit,
 };
 
-export const UploadSpecFilesButton = observer(
+export const ImportSpecFilesButton = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const handleClick = () => {
       props.projectEdit.enable();
@@ -24,7 +24,7 @@ export const UploadSpecFilesButton = observer(
 
     return (
       <ActionButton
-        className={cn('UploadSpecFilesButton', props.className)}
+        className={cn('ImportSpecFilesButton', props.className)}
         onClick={handleClick}
         label={props.label ?? 'Upload spec files'}
       />

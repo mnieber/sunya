@@ -2,8 +2,8 @@ import { trackPromise } from 'mobx-resource-states';
 import * as R from 'ramda';
 import React from 'react';
 import { useObservableQuery } from '/src/api/hooks';
+import { useImportSpecFiles } from '/src/api/mutations/useImportSpecFiles';
 import { useUpdateProject } from '/src/api/mutations/useUpdateProject';
-import { useUploadSpecFiles } from '/src/api/mutations/useUploadSpecFiles';
 import { useGetProject } from '/src/api/queries/useGetProject';
 import { ProjectState } from '/src/projects/ProjectState';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
@@ -18,7 +18,7 @@ export const useProjectState = (props: PropsT) => {
   const graftResourceStatesFromMemo = useGraftResourceStatesFromMemo({});
 
   // Mutations
-  const uploadSpecFiles = useUploadSpecFiles();
+  const importSpecFiles = useImportSpecFiles();
   const updateProject = useUpdateProject();
 
   const getProject = useObservableQuery(
@@ -53,10 +53,10 @@ export const useProjectState = (props: PropsT) => {
         }).result;
       },
       //
-      uploadSpecFiles: (files: File[]) => {
+      importSpecFiles: (files: File[]) => {
         return trackPromise({
-          name: 'uploadSpecFiles',
-          promise: uploadSpecFiles.mutateAsync({
+          name: 'importSpecFiles',
+          promise: importSpecFiles.mutateAsync({
             project: projectState.projectCtr.data.project!,
             files,
           }),
@@ -72,6 +72,6 @@ export const useProjectState = (props: PropsT) => {
   return {
     projectState,
     getProject,
-    uploadSpecFiles,
+    importSpecFiles,
   };
 };

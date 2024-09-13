@@ -11,7 +11,7 @@ import { ObjT } from '/src/utils/types';
 
 export type PropsT = {
   getProject: () => ProjectT | undefined;
-  uploadSpecFiles: (files: File[]) => Promise<void>;
+  importSpecFiles: (files: File[]) => Promise<void>;
   updateProject: (values: ObjT) => Promise<void>;
 };
 
@@ -29,8 +29,8 @@ export class ProjectState {
   };
 
   actionsCtr = {
-    uploadSpecFiles: (files: File[]) => {
-      return this.props.uploadSpecFiles(files);
+    importSpecFiles: (files: File[]) => {
+      return this.props.importSpecFiles(files);
     },
   };
 

@@ -52,7 +52,7 @@ class Projects(Module):
         class DeleteProjects(ApiView):
             pass
 
-        class UploadSpecFiles(ApiView):
+        class ImportSpecFiles(ApiView):
             pass
 
         class GetProject(ApiView):
@@ -84,7 +84,7 @@ g.import_module_spec_action = Projects.Actions.ImportModuleSpec()
 g.create_project_api_view = Projects.ApiViews.CreateProject()
 g.update_project_api_view = Projects.ApiViews.UpdateProject()
 g.delete_projects_api_view = Projects.ApiViews.DeleteProjects()
-g.upload_spec_files_api_view = Projects.ApiViews.UploadSpecFiles()
+g.upload_spec_files_api_view = Projects.ApiViews.ImportSpecFiles()
 g.get_project_api_view = Projects.ApiViews.GetProject()
 g.get_project_leads_api_view = Projects.ApiViews.GetProjectLeads()
 

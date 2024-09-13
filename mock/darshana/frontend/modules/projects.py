@@ -38,7 +38,7 @@ class Projects(Module):
             class Args:
                 project_ids: T.List[str]
 
-        class UploadSpecFiles(Mutation):
+        class ImportSpecFiles(Mutation):
             class Args:
                 project: "Projects.Types.Project"
                 files: T.List[T.Any]
@@ -70,7 +70,7 @@ class Projects(Module):
                     highlight: Facet
 
                 class ActionsCtr:
-                    upload_spec_files = Action(name="uploadSpecFiles")
+                    upload_spec_files = Action(name="importSpecFiles")
 
     class Routes:
         class Projects(Route):
@@ -105,11 +105,11 @@ class Projects(Module):
         class ProjectLeadFormView(Component):
             pass
 
-        class UploadSpecFilesFormView(Component):
+        class ImportSpecFilesFormView(Component):
             pass
 
     class Components:
-        class UploadSpecFilesButton(Component):
+        class ImportSpecFilesButton(Component):
             pass
 
         class CreateProjectButton(Component):
@@ -134,9 +134,9 @@ g.project_page = Projects.Views.ProjectPage()
 g.project_route = Projects.Routes.Project()
 g.projects_route = Projects.Routes.Projects()
 g.update_project_mutation = Projects.Mutations.UpdateProject()
-g.upload_spec_files_form_view = Projects.Views.UploadSpecFilesFormView()
-g.upload_spec_files_button = Projects.Components.UploadSpecFilesButton()
-g.upload_spec_files_mutation = Projects.Mutations.UploadSpecFiles()
+g.upload_spec_files_form_view = Projects.Views.ImportSpecFilesFormView()
+g.upload_spec_files_button = Projects.Components.ImportSpecFilesButton()
+g.upload_spec_files_mutation = Projects.Mutations.ImportSpecFiles()
 
 
 @actor_to_str.method((Projects.Types.Project,))

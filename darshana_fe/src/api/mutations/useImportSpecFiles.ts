@@ -5,13 +5,13 @@ import { ProjectT } from '/src/api/types/ProjectT';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
-export type UploadSpecFilesArgsT = {
+export type ImportSpecFilesArgsT = {
   project: ProjectT;
   files: File[];
 };
 
-export const uploadSpecFiles = (args: UploadSpecFilesArgsT) => {
-  const url = `/projects/${args.project.id}/upload-spec-files/`;
+export const importSpecFiles = (args: ImportSpecFilesArgsT) => {
+  const url = `/projects/${args.project.id}/import-spec-files/`;
   const formData = new FormData();
   args.files.forEach((file, index) => {
     formData.append(`file${index}`, file);
@@ -31,10 +31,10 @@ export const uploadSpecFiles = (args: UploadSpecFilesArgsT) => {
     });
 };
 
-export const useUploadSpecFiles = () => {
+export const useImportSpecFiles = () => {
   return useObservableMutation({
-    mutationFn: uploadSpecFiles,
-    onSuccess: (response: ObjT, args: UploadSpecFilesArgsT) => {
+    mutationFn: importSpecFiles,
+    onSuccess: (response: ObjT, args: ImportSpecFilesArgsT) => {
       invalidateGetProject({ projectId: args.project.id });
     },
   });

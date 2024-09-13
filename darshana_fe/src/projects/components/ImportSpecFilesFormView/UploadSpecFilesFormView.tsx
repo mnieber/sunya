@@ -24,14 +24,14 @@ export const ContextProps = {
   project: projectCtx.project,
 };
 
-export const UploadSpecFilesFormView = observer(
+export const ImportSpecFilesFormView = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const initialValues = form.getInitialValues(props);
     const initialErrors = form.getInitialErrors(props);
 
     return (
       <div
-        className={cn('UploadSpecFilesFormView', [
+        className={cn('ImportSpecFilesFormView', [
           CardS.colours.default,
           MainFormS.root.padding.default(),
           props.className,

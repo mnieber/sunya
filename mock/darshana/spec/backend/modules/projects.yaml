@@ -15,9 +15,9 @@ actions:
     args:
       - name: create_project_form
         type: Form
-  - name: save_project
+  - name: update_project
     args:
-      - name: save_project_form
+      - name: update_project_form
         type: Form
       - name: project
         type: Project
@@ -46,11 +46,11 @@ actions:
 api_views:
   - name: CreateProject
     filters: []
-  - name: SaveProject
+  - name: UpdateProject
     filters: []
   - name: DeleteProjects
     filters: []
-  - name: UploadSpecFiles
+  - name: ImportSpecFiles
     filters: []
   - name: GetProject
     filters: []

@@ -7,7 +7,7 @@ import {
 import {
   ContextProps,
   PropsT,
-} from '/src/projects/components/UploadSpecFilesFormView/UploadSpecFilesFormView';
+} from '/src/projects/components/ImportSpecFilesFormView/ImportSpecFilesFormView';
 
 const getInitialValues = (props: PropsT & typeof ContextProps) => {
   return {
@@ -35,7 +35,7 @@ const getHandleSubmit =
   ) =>
   ({ formState, values }: HandleSubmitArgsT) => {
     return props.projectState.actionsCtr
-      .uploadSpecFiles(values.uploadForm.files)
+      .importSpecFiles(values.uploadForm.files)
       .then(() => {
         formState.reset(initialValues, initialErrors);
       })

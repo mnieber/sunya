@@ -23,15 +23,15 @@ mutations:
     args:
       - name: createProjectForm
         type: Form
-  - name: SaveProject
+  - name: UpdateProject
     args:
-      - name: saveProjectForm
+      - name: updateProjectForm
         type: Form
   - name: DeleteProjects
     args:
       - name: project_ids
         type: list[str]
-  - name: UploadSpecFiles
+  - name: ImportSpecFiles
     args:
       - name: project
         type: Project
@@ -60,7 +60,7 @@ states:
           - name: highlight
       - name: ActionsCtr
         actions:
-          - name: uploadSpecFiles
+          - name: importSpecFiles
 routes:
   - name: Projects
   - name: Project
@@ -76,11 +76,11 @@ views:
       scenario_list_view: null
   ProjectListView(Component): {}
   ProjectLeadFormView(Component): {}
-  UploadSpecFilesFormView(Component): {}
+  ImportSpecFilesFormView(Component): {}
 effects:
   - name: SelectProjectEffect
 components:
-  UploadSpecFilesButton(Component): {}
+  ImportSpecFilesButton(Component): {}
   CreateProjectButton(Component): {}
   DeleteProjectButton(Component): {}
 
