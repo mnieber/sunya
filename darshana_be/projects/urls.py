@@ -3,6 +3,8 @@ from projects.views.delete_projects_api_view import DeleteProjectsApiView
 from projects.views.create_project_api_view import CreateProjectApiView
 from projects.views.update_project_api_view import UpdateProjectApiView
 from projects.views.import_spec_files_api_view import ImportSpecFilesApiView
+from projects.views.get_project_api_view import GetProjectApiView
+from projects.views.get_project_leads_api_view import GetProjectLeadsApiView
 
 urlpatterns = [
     path(
@@ -24,5 +26,15 @@ urlpatterns = [
         "<str:project_key>/update/",
         UpdateProjectApiView.as_view(),
         name="update-project",
+    ),
+    path(
+        "<str:project_key>/",
+        GetProjectApiView.as_view(),
+        name="get-project",
+    ),
+    path(
+        "leads/list/",
+        GetProjectLeadsApiView.as_view(),
+        name="get-project-leads",
     ),
 ]

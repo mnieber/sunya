@@ -14,7 +14,7 @@ export type UpdateProjectArgsT = {
 };
 
 export const updateProject = (args: UpdateProjectArgsT) => {
-  const url = `/projects/${args.project.id}/save/`;
+  const url = `/projects/${args.project.id}/update/`;
   return post(url, {
     updateProjectForm: args.form,
   })
