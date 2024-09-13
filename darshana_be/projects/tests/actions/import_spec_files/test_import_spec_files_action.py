@@ -17,9 +17,9 @@ class TestImportSpecFilesAction:
         content = """
         scenario_name: Test Scenario
         nodes:
-          - root: ''
+          - goal: "create a [Project] for the [alice@example.com+:user]"
             child_nodes:
-              - goal: create a [Project] for the [alice@example.com+:user]
+              - step: "The [alice@example.com+:user] visits the [projects+:route]"
         """
         return SimpleUploadedFile("scenario.yaml", content.encode("utf-8"))
 

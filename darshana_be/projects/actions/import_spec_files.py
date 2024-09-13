@@ -13,7 +13,7 @@ from projects.actions.import_scenario_spec import (
 
 @dataclass
 class ImportSpecFilesForm:
-    files: T.List[T.Any]  # This should be a list of file-like objects
+    files: T.List[T.Any]
 
 
 def import_spec_files(import_spec_files_form: ImportSpecFilesForm, project: Project):
@@ -29,7 +29,7 @@ def import_spec_files(import_spec_files_form: ImportSpecFilesForm, project: Proj
             elif "name" in data and "models" in data:
                 _process_module_spec(data, project)
             else:
-                raise ValueError(f"Unknown spec file type: {file.name}")
+                raise UnknownSpecFileTypeError(file.name)
 
 
 def _delete_project_data(project: Project):
@@ -43,4 +43,8 @@ def _process_scenario_spec(data: dict, project: Project):
 
 def _process_module_spec(data: dict, project: Project):
     # TODO: Implement actual module spec processing
+    pass
+
+
+class UnknownSpecFileTypeError(ValueError):
     pass

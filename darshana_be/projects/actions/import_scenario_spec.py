@@ -22,6 +22,7 @@ class ImportScenarioSpecForm:
 def import_scenario_spec(
     import_scenario_spec_form: ImportScenarioSpecForm, project: Project
 ):
+    #
     _validate_args(import_scenario_spec_form)
 
     data = import_scenario_spec_form.scenario_data
@@ -59,7 +60,7 @@ def _process_nodes(
             step = _create_step(node["step"], scenario, parent_step)
             steps.append(step)
         else:
-            continue
+            raise InvalidNodeError(node)
 
         if "child_nodes" in node:
             _process_nodes(node["child_nodes"], scenario, step)
@@ -136,4 +137,8 @@ def _get_or_create_role(role_name: str) -> Role:
 
 
 class NotExactlyOneRootNodeError(Exception):
+    pass
+
+
+class InvalidNodeError(ValueError):
     pass

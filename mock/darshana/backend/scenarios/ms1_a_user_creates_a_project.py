@@ -71,7 +71,7 @@ def start():
                         ).with_these(step).instances():
                             pass
 
-                    _update_project()
+                        _update_project()
 
     return get_scenario(scenario_name)
 
