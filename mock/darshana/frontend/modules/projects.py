@@ -30,9 +30,9 @@ class Projects(Module):
             class Args:
                 createProjectForm: Form
 
-        class SaveProject(Mutation):
+        class UpdateProject(Mutation):
             class Args:
-                saveProjectForm: Form
+                updateProjectForm: Form
 
         class DeleteProjects(Mutation):
             class Args:
@@ -133,7 +133,7 @@ g.get_project_query = Projects.Queries.GetProject()
 g.project_page = Projects.Views.ProjectPage()
 g.project_route = Projects.Routes.Project()
 g.projects_route = Projects.Routes.Projects()
-g.save_project_mutation = Projects.Mutations.SaveProject()
+g.update_project_mutation = Projects.Mutations.UpdateProject()
 g.upload_spec_files_form_view = Projects.Views.UploadSpecFilesFormView()
 g.upload_spec_files_button = Projects.Components.UploadSpecFilesButton()
 g.upload_spec_files_mutation = Projects.Mutations.UploadSpecFiles()

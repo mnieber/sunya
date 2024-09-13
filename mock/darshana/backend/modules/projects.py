@@ -18,9 +18,9 @@ class Projects(Module):
             class Args:
                 create_project_form: Form
 
-        class SaveProject(Action):
+        class UpdateProject(Action):
             class Args:
-                save_project_form: Form
+                update_project_form: Form
                 project: "Projects.Models.Project"
 
         class DeleteProjects(Action):
@@ -46,7 +46,7 @@ class Projects(Module):
         class CreateProject(ApiView):
             pass
 
-        class SaveProject(ApiView):
+        class UpdateProject(ApiView):
             pass
 
         class DeleteProjects(ApiView):
@@ -76,13 +76,13 @@ class Projects(Module):
 
 
 g.create_project_action = Projects.Actions.CreateProject()
-g.save_project_action = Projects.Actions.SaveProject()
+g.update_project_action = Projects.Actions.UpdateProject()
 g.delete_projects_action = Projects.Actions.DeleteProjects()
 g.import_spec_files_action = Projects.Actions.ImportSpecFiles()
 g.import_scenario_spec_action = Projects.Actions.ImportScenarioSpec()
 g.import_module_spec_action = Projects.Actions.ImportModuleSpec()
 g.create_project_api_view = Projects.ApiViews.CreateProject()
-g.save_project_api_view = Projects.ApiViews.SaveProject()
+g.update_project_api_view = Projects.ApiViews.UpdateProject()
 g.delete_projects_api_view = Projects.ApiViews.DeleteProjects()
 g.upload_spec_files_api_view = Projects.ApiViews.UploadSpecFiles()
 g.get_project_api_view = Projects.ApiViews.GetProject()

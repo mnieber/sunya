@@ -12,7 +12,7 @@ import { ObjT } from '/src/utils/types';
 export type PropsT = {
   getProject: () => ProjectT | undefined;
   uploadSpecFiles: (files: File[]) => Promise<void>;
-  saveProject: (values: ObjT) => Promise<void>;
+  updateProject: (values: ObjT) => Promise<void>;
 };
 
 export class ProjectState {

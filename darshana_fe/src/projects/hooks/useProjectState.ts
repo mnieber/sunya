@@ -2,7 +2,7 @@ import { trackPromise } from 'mobx-resource-states';
 import * as R from 'ramda';
 import React from 'react';
 import { useObservableQuery } from '/src/api/hooks';
-import { useSaveProject } from '/src/api/mutations/useSaveProject';
+import { useUpdateProject } from '/src/api/mutations/useUpdateProject';
 import { useUploadSpecFiles } from '/src/api/mutations/useUploadSpecFiles';
 import { useGetProject } from '/src/api/queries/useGetProject';
 import { ProjectState } from '/src/projects/ProjectState';
@@ -19,7 +19,7 @@ export const useProjectState = (props: PropsT) => {
 
   // Mutations
   const uploadSpecFiles = useUploadSpecFiles();
-  const saveProject = useSaveProject();
+  const updateProject = useUpdateProject();
 
   const getProject = useObservableQuery(
     useGetProject(
@@ -43,10 +43,10 @@ export const useProjectState = (props: PropsT) => {
         );
       },
       //
-      saveProject: (values: ObjT) => {
+      updateProject: (values: ObjT) => {
         return trackPromise({
-          name: 'saveProject',
-          promise: saveProject.mutateAsync({
+          name: 'updateProject',
+          promise: updateProject.mutateAsync({
             project: projectState.projectCtr.data.project!,
             form: values.projectLeadForm,
           }),

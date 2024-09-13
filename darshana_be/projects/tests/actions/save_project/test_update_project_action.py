@@ -1,38 +1,38 @@
 import pytest
-from projects.actions.save_project import (
-    SaveProjectForm,
-    save_project,
+from projects.actions.update_project import (
+    UpdateProjectForm,
+    update_project,
     ProjectWithNameAlreadyExistsError,
 )
 from projects.tests.factories import ProjectFactory
 
 
-class TestSaveProjectAction:
+class TestUpdateProjectAction:
     @pytest.mark.django_db
-    def test_save_project_action_success(self):
+    def test_update_project_action_success(self):
         # Given
         project = ProjectFactory(name="Old Name", description="Old description")
-        save_project_form = SaveProjectForm(
+        update_project_form = UpdateProjectForm(
             name="New Name", description="New description"
         )
 
         # When
-        updated_project = save_project(save_project_form, project)
+        updated_project = update_project(update_project_form, project)
 
         # Then
         assert updated_project.name == "New Name"
         assert updated_project.description == "New description"
 
     @pytest.mark.django_db
-    def test_save_project_action_with_existing_name(self):
+    def test_update_project_action_with_existing_name(self):
         # Given
         ProjectFactory(name="Existing Project")
         project = ProjectFactory(name="Project to Update")
 
-        save_project_form = SaveProjectForm(
+        update_project_form = UpdateProjectForm(
             name="Existing Project", description="Updated description"
         )
 
         # When / Then
         with pytest.raises(ProjectWithNameAlreadyExistsError):
-            save_project(save_project_form, project)
+            update_project(update_project_form, project)

@@ -1,6 +1,7 @@
 from django.urls import path
 from projects.views.delete_projects_api_view import DeleteProjectsApiView
 from projects.views.create_project_api_view import CreateProjectApiView
+from projects.views.update_project_api_view import UpdateProjectApiView
 
 urlpatterns = [
     path(
@@ -12,5 +13,10 @@ urlpatterns = [
         "delete/",
         DeleteProjectsApiView.as_view(),
         name="delete-projects",
+    ),
+    path(
+        "<str:project_key>/update/",
+        UpdateProjectApiView.as_view(),
+        name="update-project",
     ),
 ]

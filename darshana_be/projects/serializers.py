@@ -1,5 +1,5 @@
 from projects.actions.create_project import CreateProjectForm
-from projects.actions.save_project import SaveProjectForm
+from projects.actions.update_project import UpdateProjectForm
 from projects.actions.import_scenario_spec import ImportScenarioSpecForm
 from projects.actions.import_spec_files import ImportSpecFilesForm
 from projects.models import Project
@@ -13,9 +13,9 @@ class CreateProjectFormSerializer(FormSerializer):
         form_class = CreateProjectForm
 
 
-class SaveProjectFormSerializer(FormSerializer):
+class UpdateProjectFormSerializer(FormSerializer):
     class Meta:
-        form_class = SaveProjectForm
+        form_class = UpdateProjectForm
 
 
 class ProjectSerializer(ReadSerializerMixin, BaseModelSerializer):
