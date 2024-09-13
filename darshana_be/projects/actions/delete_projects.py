@@ -1,7 +1,13 @@
 from projects.models import Project
+from dataclassy import dataclass
 
 
-def delete_projects(project_ids: list[str]):
-    projects = Project.objects.filter(id__in=project_ids)
+@dataclass
+class DeleteProjectsForm:
+    project_ids: list[str]
+
+
+def delete_projects(form: DeleteProjectsForm):
+    projects = Project.objects.filter(id__in=form.project_ids)
     deleted_count, _ = projects.delete()
     return deleted_count

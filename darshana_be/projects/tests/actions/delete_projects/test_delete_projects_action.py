@@ -1,5 +1,5 @@
 import pytest
-from projects.actions.delete_projects import delete_projects
+from projects.actions.delete_projects import delete_projects, DeleteProjectsForm
 from projects.tests.factories import ProjectFactory
 from projects.models import Project
 
@@ -15,7 +15,7 @@ class TestDeleteProjectsAction:
         project_ids = [str(project1.id), str(project2.id)]
 
         # When
-        deleted_count = delete_projects(project_ids)
+        deleted_count = delete_projects(DeleteProjectsForm(project_ids=project_ids))
 
         # Then
         assert deleted_count == 2
@@ -30,7 +30,7 @@ class TestDeleteProjectsAction:
         project_ids = [str(project.id), nonexistent_id]
 
         # When
-        deleted_count = delete_projects(project_ids)
+        deleted_count = delete_projects(DeleteProjectsForm(project_ids=project_ids))
 
         # Then
         assert deleted_count == 1

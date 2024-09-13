@@ -3,7 +3,6 @@ import typing as T
 from projects.models import Project
 from dataclassy import dataclass
 
-from common.utils.arg_utils import optional_args
 
 
 @dataclass
@@ -24,7 +23,11 @@ def save_project(save_project_form: SaveProjectForm, project: Project):
 
 
 def _validate_args(save_project_form: SaveProjectForm, project: Project):
-    if Project.objects.filter(name=save_project_form.name).exclude(id=project.id).exists():
+    if (
+        Project.objects.filter(name=save_project_form.name)
+        .exclude(id=project.id)
+        .exists()
+    ):
         raise ProjectWithNameAlreadyExistsError()
 
 
