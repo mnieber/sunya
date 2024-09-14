@@ -8,7 +8,6 @@ import {
   handleSelectItem,
   topOfTheList,
 } from 'skandha-facets';
-import * as FacetPolicies from 'skandha-facets/policies';
 import { registerCtr } from 'skandha-mobx';
 import { BlogPostT } from '/src/api/types';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
@@ -57,9 +56,7 @@ const setCallbacks = (state: BlogPostsState) => {
       },
     },
     confirm: {
-      confirmAdd() {
-        FacetPolicies.newItemsAreInsertedWhenConfirmed(ctr.addition);
-      },
+      confirmAdd() {},
     },
   };
 

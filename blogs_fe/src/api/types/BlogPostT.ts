@@ -19,13 +19,13 @@ export type BlogPostByIdT = { [id: string]: BlogPostT };
 
 export const createBlogPost = (values: ObjT): BlogPostT => {
   return initRS({
-    id: createUUID(),
-    title: 'New blog-post',
-    slug: '-',
+    id: values.id ?? createUUID(),
+    title: values.title ?? 'New blog-post',
+    slug: values.slug ?? '-',
     content: values.content,
-    isPublished: false,
-    level: 'medium',
-    tags: [],
+    isPublished: values.isPublished ?? false,
+    level: values.level ?? 'medium',
+    tags: values.tags ?? [],
     isTransient: true,
   } as BlogPostT);
 };

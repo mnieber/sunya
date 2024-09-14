@@ -7,17 +7,20 @@ export type GetBlogTagsArgsT = {
   inputValue: string;
 };
 
-export const getBlogTags = (args: GetBlogTagsArgsT) => {
-  return get(`/blogs/tags/?inputValue=${args.inputValue}`).then((response) => {
-    return waitOnDev(1000, response.data);
-  });
-};
-
 export type QueryKeyT = GetBlogTagsArgsT;
-
 export function getBlogTagsQueryKey(args: QueryKeyT) {
   return createQueryKey<QueryKeyT>('getBlogTags', args);
 }
+
+export const getBlogTagsUrl = '/blogs/tags/';
+
+export const getBlogTags = (args: GetBlogTagsArgsT) => {
+  return get(`${getBlogTagsUrl}?inputValue=${args.inputValue}`).then(
+    (response) => {
+      return waitOnDev(1000, response.data);
+    }
+  );
+};
 
 export const useGetBlogTags = () => {
   return useObservableMutation({

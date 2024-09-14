@@ -6,17 +6,18 @@ import { waitOnDev } from '/src/utils/wait';
 
 export type GetBlogsArgsT = {};
 
-export const getBlogs = (args: GetBlogsArgsT) => {
-  return get(`/blogs/list/`).then((response) => {
-    return waitOnDev(1000, { blogs: response.data });
-  });
-};
-
 export type QueryKeyT = GetBlogsArgsT;
-
 export function getBlogsQueryKey(args: QueryKeyT) {
   return createQueryKey<QueryKeyT>('getBlogs', args);
 }
+
+export const getBlogsUrl = `/blogs/list/`;
+
+export const getBlogs = (args: GetBlogsArgsT) => {
+  return get(getBlogsUrl).then((response) => {
+    return waitOnDev(1000, { blogs: response.data });
+  });
+};
 
 export const useGetBlogs = () => {
   return useQuery({

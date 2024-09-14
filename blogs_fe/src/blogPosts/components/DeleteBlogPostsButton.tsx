@@ -16,6 +16,7 @@ export type PropsT = {
 export const ContextProps = {
   authState: authStateCtx.authState,
   blogPosts: blogPostsCtx.blogPosts,
+  blogPostsAddition: blogPostsCtx.blogPostsAddition,
   blogPostsDeletion: blogPostsCtx.blogPostsDeletion,
   blogPostsSelection: blogPostsCtx.blogPostsSelection,
 };
@@ -23,7 +24,8 @@ export const ContextProps = {
 export const DeleteBlogPostsButton = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const disabled =
-      props.blogPostsSelection.itemIds.length === 0 ||
+      props.blogPostsSelection.items.length === 0 ||
+      props.blogPostsAddition.item ||
       isUpdating(props.blogPosts) ||
       !props.authState.isAuthenticated;
 

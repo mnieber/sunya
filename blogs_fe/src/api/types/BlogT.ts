@@ -17,7 +17,7 @@ export const createBlog = (values: ObjT): BlogT => {
     id: createUUID(),
     name: values.name ?? 'New blog',
     description: values.description ?? '',
-    slug: '-',
+    slug: values.slug ?? '-',
     isTransient: true,
   } as BlogT);
 };
