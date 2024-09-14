@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
 import { Route, Switch } from 'wouter';
 import { ProjectStateProvider } from '/src/projects/components/ProjectStateProvider';
+import { ProjectsPage } from '/src/projects/components/ProjectsPage';
 import { SelectProjectLeadEffect } from '/src/projects/components/SelectProjectLeadEffect';
 import { projectsRoutes } from '/src/projects/routes';
 import { ext } from '/src/routes/navHandler';
@@ -21,7 +22,7 @@ export const ProjectsSwitch = observer(
       <Switch>
         <Route path={ext(projectsRoutes.projects())}>
           <Route path={projectsRoutes.projects()}>
-            <div>Projects</div>
+            <ProjectsPage />
           </Route>
           <Route path={ext(projectsRoutes.project())}>
             <SelectProjectLeadEffect />

@@ -31,7 +31,7 @@ export const useProjectLeadsState = (props: PropsT) => {
     const state = new ProjectLeadsState({
       getProjectLeads: () => {
         return graftResourceStatesFromMemo({
-          resources: getProjectLeads.data?.projectLeads ?? [],
+          resources: getProjectLeads.data?.projectLeads.results ?? [],
         });
       },
       //
@@ -52,7 +52,9 @@ export const useProjectLeadsState = (props: PropsT) => {
       createProject: (values: ObjT) => {
         return trackPromise({
           name: 'createProject',
-          promise: createProject.mutateAsync({ form: values.projectLeadForm }),
+          promise: createProject.mutateAsync({
+            createProjectForm: values.projectLeadForm,
+          }),
         }).result;
       },
     });

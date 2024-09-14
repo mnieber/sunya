@@ -5,9 +5,6 @@ import { TextField } from '/src/forms/components/TextField';
 import { FieldPropsT } from '/src/forms/hooks';
 import { slugify } from '/src/utils';
 
-// Import styles
-import './TextField.scss';
-
 type PropsT = Partial<FieldPropsT> & {
   slugFieldName?: string;
   updateSlugField?: boolean;

@@ -7,7 +7,7 @@ import { waitOnDev } from '/src/utils/wait';
 
 export type UpdateProjectArgsT = {
   project: ProjectT;
-  form: {
+  updateProjectForm: {
     name: string;
     description: string;
   };
@@ -16,7 +16,7 @@ export type UpdateProjectArgsT = {
 export const updateProject = (args: UpdateProjectArgsT) => {
   const url = `/projects/${args.project.id}/update/`;
   return post(url, {
-    updateProjectForm: args.form,
+    updateProjectForm: args.updateProjectForm,
   })
     .then((response) => {
       return waitOnDev(1000, response);

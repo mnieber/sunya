@@ -4,6 +4,7 @@ import {
   HandleCancelArgsT,
   HandleSubmitArgsT,
   HandleValidateArgsT,
+  unflatten,
 } from 'react-form-state-context';
 import {
   ContextProps,
@@ -41,7 +42,12 @@ const getHandleSubmit =
     initialErrors: FormState['errors']
   ) =>
   ({ formState, values }: HandleSubmitArgsT) => {
-    return Promise.resolve()
+    return props.projectLeadsEdit
+      .save({
+        values: unflatten({
+          ...values,
+        }),
+      })
       .then((response: any) => {
         formState.reset(initialValues, initialErrors);
         if (props.onProjectCreated) {

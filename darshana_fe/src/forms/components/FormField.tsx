@@ -21,7 +21,7 @@ export const FormField = observer((props: PropsT) => {
 });
 
 export const FormFieldS = {
-  Input: () => 'py-2 px-3 grow',
+  Input: () => 'py-2 px-3 grow border rounded-xl',
   Button: {
     root: () => 'FormField__Button',
     gap: () => 'mr-0.5',

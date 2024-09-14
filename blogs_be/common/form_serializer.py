@@ -30,6 +30,9 @@ class FormSerializer(serializers.Serializer):
             field_kwargs = {}
             if not is_list and optional:
                 field_kwargs["required"] = False
+                if not field_type == bool:
+                    field_kwargs["allow_blank"] = True
+                    field_kwargs["allow_null"] = True
 
             if field_type == UUID:
                 field = serializers.UUIDField(**field_kwargs)

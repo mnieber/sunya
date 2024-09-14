@@ -48,7 +48,7 @@ export const useProjectState = (props: PropsT) => {
           name: 'updateProject',
           promise: updateProject.mutateAsync({
             project: projectState.projectCtr.data.project!,
-            form: values.projectLeadForm,
+            updateProjectForm: values.projectLeadForm,
           }),
         }).result;
       },

@@ -21,14 +21,7 @@ const ContextProps = {
 export const ProjectsPage = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     return (
-      <div
-        className={cn(
-          'ProjectsPage',
-          'min-h-screen',
-          L.col.canvas(),
-          props.className
-        )}
-      >
+      <div className={cn('ProjectsPage', L.col.canvas(), props.className)}>
         <div className={cn(L.col.skewer(), 'p-4')}>
           <EditProjectButton className="mb-4" label={'Create project'} />
           {props.projectLeadsEdit.isEditing && (

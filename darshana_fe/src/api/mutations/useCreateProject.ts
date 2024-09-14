@@ -5,7 +5,7 @@ import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
 export type CreateProjectArgsT = {
-  form: {
+  createProjectForm: {
     name: string;
     description: string;
   };
@@ -14,7 +14,7 @@ export type CreateProjectArgsT = {
 export const createProject = (args: CreateProjectArgsT) => {
   const url = `/projects/create/`;
   return post(url, {
-    createProjectForm: args.form,
+    createProjectForm: args.createProjectForm,
   })
     .then((response) => {
       return waitOnDev(1000, response);

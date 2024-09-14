@@ -27,6 +27,9 @@ class FormSerializer(serializers.Serializer):
             field_kwargs = {}
             if not (is_list or is_dict) and optional:
                 field_kwargs["required"] = False
+                if not field_type == bool:
+                    field_kwargs["allow_blank"] = True
+                    field_kwargs["allow_null"] = True
 
             if is_list:
                 item_type = get_args(field_type)[0]
