@@ -2,6 +2,9 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import * as R from 'ramda';
 import { queryClient } from '/src/api/queryClient';
 import { flags } from '/src/app/flags';
+import { AuthSwitch } from '/src/auth/components';
+import { AuthStateProvider } from '/src/auth/components/AuthStateProvider';
+import { DashboardFrame } from '/src/frames/components/DashboardFrame';
 import { L } from '/src/frames/layout';
 import { MockApp } from '/src/mocks/app/components/MockApp';
 import { ProjectLeadsStateProvider } from '/src/projects/components/ProjectLeadsStateProvider';
@@ -16,13 +19,18 @@ export const App = () => {
     </AppBody>
   ) : (
     <QueryClientProvider client={queryClient}>
-      <NavStateProvider>
-        <ProjectLeadsStateProvider>
-          <AppBody>
-            <ProjectsSwitch />
-          </AppBody>
-        </ProjectLeadsStateProvider>
-      </NavStateProvider>
+      <AuthStateProvider>
+        <NavStateProvider>
+          <ProjectLeadsStateProvider>
+            <AppBody>
+              <DashboardFrame>
+                <AuthSwitch />
+                <ProjectsSwitch />
+              </DashboardFrame>
+            </AppBody>
+          </ProjectLeadsStateProvider>
+        </NavStateProvider>
+      </AuthStateProvider>
     </QueryClientProvider>
   );
 };

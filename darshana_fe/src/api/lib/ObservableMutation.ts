@@ -8,7 +8,7 @@ export type ArgsT<MutationArgsT = any> = {
   mutationFn: (args: MutationArgsT) => Promise<any> | void;
   onMutate?: (args: MutationArgsT) => Promise<any> | void;
   onSuccess?: (response: ObjT, args: MutationArgsT) => Promise<any> | void;
-  onError?: (args: MutationArgsT) => void;
+  onError?: (error: Error, args: MutationArgsT) => void;
 };
 
 export class ObservableMutation<MutationArgsT = any> {
@@ -16,7 +16,7 @@ export class ObservableMutation<MutationArgsT = any> {
   mutationFn: (args: MutationArgsT) => Promise<any> | void;
   onMutate?: (args: MutationArgsT) => Promise<any> | void;
   onSuccess?: (response: ObjT, args: MutationArgsT) => Promise<any> | void;
-  onError?: (args: MutationArgsT) => void;
+  onError?: (error: Error, args: MutationArgsT) => void;
 
   setStatus = (status: MutationStatusT) => {
     this.status = status;
@@ -36,7 +36,7 @@ export class ObservableMutation<MutationArgsT = any> {
       })
       .catch((error: any) => {
         return Promise.resolve(
-          this.onError ? this.onError(error) : undefined
+          this.onError ? this.onError(error, args) : undefined
         ).then(() => {
           this.setStatus('error');
           return error;

@@ -8,7 +8,7 @@ import {
 import { createTrim } from '/src/utils/trim';
 
 export type PropsT = DialogButtonPropsT & {
-  theme: 'MainView';
+  theme: 'MainView' | 'AuthCard';
 };
 
 export const FormSaveButton = (props: PropsT) => {

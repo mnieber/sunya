@@ -8,7 +8,7 @@ import { waitOnDev } from '/src/utils/wait';
 export type GetProjectLeadsArgsT = {};
 
 export const getProjectLeads = (args: GetProjectLeadsArgsT) => {
-  return get('/projects/leads/').then((response) => {
+  return get('/projects/leads/list/').then((response) => {
     return waitOnDev(100, { projectLeads: response.data as ProjectT[] });
   });
 };
