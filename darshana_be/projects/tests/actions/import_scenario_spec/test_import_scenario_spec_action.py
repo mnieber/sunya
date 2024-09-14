@@ -60,6 +60,7 @@ class TestImportScenarioSpecAction:
         # Check root step
         root_step = scenario.root_step
         assert isinstance(root_step, Step)
+        assert not root_step.parent_step
         assert root_step.fact[0].value == "create"
         assert root_step.fact[1].value == "a"
         assert root_step.fact[2].type_name == "role"

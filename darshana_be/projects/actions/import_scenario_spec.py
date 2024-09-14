@@ -52,16 +52,16 @@ def _process_nodes(
     for node in nodes:
         if "goal" in node:
             step = _create_step(node["goal"], scenario, parent_step)
-            steps.append(step)
-
-            _process_actors_introduced(node.get("actors_introduced", []), step)
-            _process_roles_updated(node.get("roles_updated", {}), step)
         elif "step" in node:
             step = _create_step(node["step"], scenario, parent_step)
-            steps.append(step)
         else:
-            raise InvalidNodeError(node)
+            if parent_step:
+                raise InvalidNodeError(node)
+            step = _create_step("root", scenario, parent_step)
 
+        steps.append(step)
+        _process_actors_introduced(node.get("actors_introduced", []), step)
+        _process_roles_updated(node.get("roles_updated", {}), step)
         if "child_nodes" in node:
             _process_nodes(node["child_nodes"], scenario, step)
 

@@ -24,7 +24,7 @@ class Step(BaseModel):
     )
 
     def __str__(self):
-        return f"Step {self.id}"
+        return f"Step {" ".join([fb.value for fb in self.fact])}"
 
     @property
     def fact(self):

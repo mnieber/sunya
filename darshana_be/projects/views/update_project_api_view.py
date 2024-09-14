@@ -7,7 +7,7 @@ from projects.actions.update_project import (
     update_project,
     ProjectWithNameAlreadyExistsError,
 )
-from projects.serializers import UpdateProjectFormSerializer, ProjectSerializer
+from projects.serializers import UpdateProjectFormSerializer, ProjectLeadSerializer
 from projects.shortcuts import get_project_or_400
 from common.permissions import user_is_authenticated
 from common.form_serializer import FormSerializer
@@ -20,7 +20,7 @@ class UpdateProjectRequestSerializer(FormSerializer):
 class UpdateProjectApiView(APIView):
     @extend_schema(
         request=UpdateProjectRequestSerializer,
-        responses={200: ProjectSerializer},
+        responses={200: ProjectLeadSerializer},
         data=dict(
             project=get_project_or_400,
         ),
@@ -35,5 +35,5 @@ class UpdateProjectApiView(APIView):
             raise ValidationError(code="PROJECT_WITH_NAME_ALREADY_EXISTS")
 
         return Response(
-            ProjectSerializer(updated_project).data, status=status.HTTP_200_OK
+            ProjectLeadSerializer(updated_project).data, status=status.HTTP_200_OK
         )

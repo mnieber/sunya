@@ -25,8 +25,11 @@ export function post(query: string, variables: any, headers?: any) {
     ...(headers ?? {}),
   };
 
+  const body =
+    variables instanceof FormData ? variables : snakecaseKeys(variables);
+
   return axios
-    .post(`${hostUrl}${trimLeadingSlash(query)}`, snakecaseKeys(variables), {
+    .post(`${hostUrl}${trimLeadingSlash(query)}`, body, {
       headers: allHeaders,
     })
     .then((response) => {

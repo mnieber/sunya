@@ -12,16 +12,13 @@ export type ImportSpecFilesArgsT = {
 
 export const importSpecFiles = (args: ImportSpecFilesArgsT) => {
   const url = `/projects/${args.project.id}/import-spec-files/`;
+
   const formData = new FormData();
   args.files.forEach((file, index) => {
-    formData.append(`file${index}`, file);
+    formData.append(`files[${index}]`, file);
   });
 
-  return post(url, formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  })
+  return post(url, formData)
     .then((response) => {
       return waitOnDev(1000, response);
     })

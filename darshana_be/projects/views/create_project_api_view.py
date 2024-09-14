@@ -7,7 +7,7 @@ from projects.actions.create_project import (
     create_project,
     ProjectWithNameAlreadyExistsError,
 )
-from projects.serializers import CreateProjectFormSerializer, ProjectSerializer
+from projects.serializers import CreateProjectFormSerializer, ProjectLeadSerializer
 from common.permissions import user_is_authenticated
 from common.form_serializer import FormSerializer
 
@@ -19,7 +19,7 @@ class CreateProjectRequestSerializer(FormSerializer):
 class CreateProjectApiView(APIView):
     @extend_schema(
         request=CreateProjectRequestSerializer,
-        responses={201: ProjectSerializer},
+        responses={201: ProjectLeadSerializer},
         data=dict(),
         permissions=[
             (status.HTTP_401_UNAUTHORIZED, user_is_authenticated),
@@ -31,4 +31,6 @@ class CreateProjectApiView(APIView):
         except ProjectWithNameAlreadyExistsError:
             raise ValidationError(code="PROJECT_WITH_NAME_ALREADY_EXISTS")
 
-        return Response(ProjectSerializer(project).data, status=status.HTTP_201_CREATED)
+        return Response(
+            ProjectLeadSerializer(project).data, status=status.HTTP_201_CREATED
+        )

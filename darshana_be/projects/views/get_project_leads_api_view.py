@@ -1,7 +1,9 @@
+from common.permissions import user_is_authenticated
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from projects.models import Project
-from projects.serializers import ProjectSerializer
+from projects.serializers import ProjectLeadSerializer
 from api.utils.extend_schema import extend_schema
 
 
@@ -32,13 +34,13 @@ class GetProjectLeadsApiView(APIView):
             },
         ],
         responses={
-            200: ProjectSerializer(many=True),
+            200: ProjectLeadSerializer(many=True),
         },
-        permissions=[],
+        permissions=[(status.HTTP_401_UNAUTHORIZED, user_is_authenticated)],
     )
     def get(self, request):
         projects = Project.objects.all().order_by("name")
         paginator = self.pagination_class()
         paginated_projects = paginator.paginate_queryset(projects, request)
-        serializer = ProjectSerializer(paginated_projects, many=True)
+        serializer = ProjectLeadSerializer(paginated_projects, many=True)
         return paginator.get_paginated_response(serializer.data)

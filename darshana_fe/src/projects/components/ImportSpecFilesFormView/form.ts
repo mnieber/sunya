@@ -3,11 +3,13 @@ import {
   HandleCancelArgsT,
   HandleSubmitArgsT,
   HandleValidateArgsT,
+  unflatten,
 } from 'react-form-state-context';
 import {
   ContextProps,
   PropsT,
 } from '/src/projects/components/ImportSpecFilesFormView/ImportSpecFilesFormView';
+import { ObjT } from '/src/utils/types';
 
 const getInitialValues = (props: PropsT & typeof ContextProps) => {
   return {
@@ -34,8 +36,9 @@ const getHandleSubmit =
     initialErrors: FormState['errors']
   ) =>
   ({ formState, values }: HandleSubmitArgsT) => {
+    const valuesObj: ObjT = unflatten(values);
     return props.projectState.actionsCtr
-      .importSpecFiles(values.uploadForm.files)
+      .importSpecFiles(valuesObj.uploadForm.files)
       .then(() => {
         formState.reset(initialValues, initialErrors);
       })

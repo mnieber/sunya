@@ -18,7 +18,7 @@ class UpdateProjectFormSerializer(FormSerializer):
         form_class = UpdateProjectForm
 
 
-class ProjectSerializer(ReadSerializerMixin, BaseModelSerializer):
+class ProjectLeadSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = Project
         fields = ["id", "name", "description"]

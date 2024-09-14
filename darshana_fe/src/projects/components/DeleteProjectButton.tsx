@@ -35,7 +35,8 @@ export const DeleteProjectButton = observer(
           name="trash"
           className={cn(
             'cursor-pointer text-red-500 hover:text-red-700',
-            IconS.size.s15()
+            IconS.size.s15(),
+            IconS.color.gray()
           )}
           onClick={() => setIsConfirmOpen(true)}
         />
