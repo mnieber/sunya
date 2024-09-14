@@ -1,9 +1,11 @@
 import { http, HttpResponse } from 'msw';
+import { getProjectLeadsUrl } from '/src/api/queries/useGetProjectLeads';
 import { hostUrl } from '/src/api/restClient';
 import { createProjectLead } from '/src/api/types/ProjectLeadT';
+import { joinUrls } from '/src/utils/urls';
 
 export const handleGetProjectLeads = http.get(
-  `${hostUrl}projects/leads/`,
+  joinUrls(hostUrl, getProjectLeadsUrl),
   () => {
     const mockProjectLeads = [
       createProjectLead({

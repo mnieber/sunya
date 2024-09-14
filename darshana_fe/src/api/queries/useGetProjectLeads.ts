@@ -6,22 +6,22 @@ import { createQueryKey } from '/src/api/utils/createQueryKey';
 import { waitOnDev } from '/src/utils/wait';
 
 export type GetProjectLeadsArgsT = {};
-
-export const getProjectLeads = (args: GetProjectLeadsArgsT) => {
-  return get('/projects/leads/list/').then((response) => {
-    return waitOnDev(100, { projectLeads: response.data as ProjectT[] });
-  });
-};
-
 export type OptionsT = {
   enabled?: boolean;
 };
 
-export type QueryKeyT = GetProjectLeadsArgsT;
-
-export function getProjectLeadsQueryKey(args: QueryKeyT) {
-  return createQueryKey<QueryKeyT>('getProjectLeads', args);
+export type GetProjectLeadsQueryKeyT = GetProjectLeadsArgsT;
+export function getProjectLeadsQueryKey(args: GetProjectLeadsQueryKeyT) {
+  return createQueryKey<GetProjectLeadsQueryKeyT>('getProjectLeads', args);
 }
+
+export const getProjectLeadsUrl = '/projects/leads/list/';
+
+export const getProjectLeads = (args: GetProjectLeadsArgsT) => {
+  return get(getProjectLeadsUrl).then((response) => {
+    return waitOnDev(100, { projectLeads: response.data as ProjectT[] });
+  });
+};
 
 export const useGetProjectLeads = (
   args: GetProjectLeadsArgsT = {},
@@ -34,7 +34,9 @@ export const useGetProjectLeads = (
   });
 };
 
-export const invalidateGetProjectLeads = (args: QueryKeyT = {}) => {
+export const invalidateGetProjectLeads = (
+  args: GetProjectLeadsQueryKeyT = {}
+) => {
   return queryClient.invalidateQueries({
     queryKey: getProjectLeadsQueryKey(args),
   });

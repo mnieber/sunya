@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { withContextProps } from 'react-props-from-context';
 import { queryClient } from '/src/api/queryClient';
+import { AuthStateProvider } from '/src/auth/components/AuthStateProvider';
 import { ProjectLeadsStateProvider } from '/src/projects/components/ProjectLeadsStateProvider';
 import { ProjectStateProvider } from '/src/projects/components/ProjectStateProvider';
 import { projectCtx } from '/src/projects/hooks/useProjectContext';
@@ -23,13 +24,15 @@ type PropsT = React.PropsWithChildren<{}>;
 export const MockStepTreeStateProvider = observer((props: PropsT) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <ProjectLeadsStateProvider>
-        <ProjectStateProvider>
-          <StepTreeStateProvider>
-            <InnerComponent {...props} />
-          </StepTreeStateProvider>
-        </ProjectStateProvider>
-      </ProjectLeadsStateProvider>
+      <AuthStateProvider>
+        <ProjectLeadsStateProvider>
+          <ProjectStateProvider>
+            <StepTreeStateProvider>
+              <InnerComponent {...props} />
+            </StepTreeStateProvider>
+          </ProjectStateProvider>
+        </ProjectLeadsStateProvider>
+      </AuthStateProvider>
     </QueryClientProvider>
   );
 });
