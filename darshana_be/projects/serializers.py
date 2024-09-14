@@ -6,6 +6,7 @@ from projects.models import Project
 from common.form_serializer import FormSerializer
 from common.serializers import BaseModelSerializer, ReadSerializerMixin
 from projects.actions.delete_projects import DeleteProjectsForm
+from scenarios.serializers import ScenarioSerializer
 
 
 class CreateProjectFormSerializer(FormSerializer):
@@ -16,6 +17,14 @@ class CreateProjectFormSerializer(FormSerializer):
 class UpdateProjectFormSerializer(FormSerializer):
     class Meta:
         form_class = UpdateProjectForm
+
+
+class ProjectSerializer(ReadSerializerMixin, BaseModelSerializer):
+    scenarios = ScenarioSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Project
+        fields = ["id", "name", "description", "scenarios"]
 
 
 class ProjectLeadSerializer(ReadSerializerMixin, BaseModelSerializer):

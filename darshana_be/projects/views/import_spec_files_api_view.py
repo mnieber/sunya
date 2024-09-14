@@ -39,7 +39,6 @@ class ImportSpecFilesApiView(APIView):
         ],
     )
     def post(self, request, request_data, project):
-        __import__("pudb").set_trace()  # zz
         try:
             import_spec_files(
                 import_spec_files_form=ImportSpecFilesForm(files=request_data.files),

@@ -1,8 +1,11 @@
 import pytest
+import deepdiff
 from django.urls import reverse
 from rest_framework.test import APIClient
 from projects.tests.factories import ProjectFactory
 from users.tests.factories import UserFactory
+from scenarios.tests.factories import ScenarioFactory
+from common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
 
 
 class TestGetProjectApiView:
@@ -19,16 +22,43 @@ class TestGetProjectApiView:
         return ProjectFactory()
 
     @pytest.mark.django_db
-    def test_get_project_success(self, api_client, user, project):
+    def test_get_project_api_view_success(self, api_client, user):
+        # Given
         api_client.force_authenticate(user=user)
+        project = ProjectFactory(name="Test Project", description="Test Description")
+        scenario = ScenarioFactory(name="Test Scenario", project=project)
         url = reverse("get-project", kwargs={"project_key": project.id})
 
+        # When
         response = api_client.get(url)
 
+        # Then
         assert response.status_code == 200
-        assert response.data["id"] == str(project.id)
-        assert response.data["name"] == project.name
-        assert response.data["description"] == project.description
+
+        result = response.json()
+        expected = {
+            "id": str(project.id),
+            "name": "Test Project",
+            "description": "Test Description",
+            "scenarios": [
+                {
+                    "id": str(scenario.id),
+                    "name": "Test Scenario",
+                    "project": str(project.id),
+                    "root_step": None,
+                }
+            ],
+        }
+
+        diff = deepdiff.DeepDiff(
+            expected,
+            result,
+            custom_operators=[
+                DeepDiffOperator(rhs_is_not_none, "id"),
+                DeepDiffOperator(rhs_is_not_none, "scenarios.id"),
+            ],
+        )
+        assert not diff, f"JSON response differs: {diff.pretty()}"
 
     @pytest.mark.django_db
     def test_get_project_not_found(self, api_client, user):
