@@ -9,7 +9,7 @@ import { waitOnDev } from '/src/utils/wait';
 export type UpdateBlogPostArgsT = {
   blog: BlogT;
   blogPost: BlogPostT;
-  form: {
+  updateBlogPostForm: {
     title?: string;
     content?: string;
   };
@@ -18,7 +18,7 @@ export type UpdateBlogPostArgsT = {
 export const updateBlogPost = (args: UpdateBlogPostArgsT) => {
   const url = `/blogs/${args.blog.id}/blog-posts/${args.blogPost.id}/update/`;
   return post(url, {
-    updateBlogPostForm: args.form,
+    updateBlogPostForm: args.updateBlogPostForm,
     blogId: args.blog.id,
     blogPostId: args.blogPost.id,
   })

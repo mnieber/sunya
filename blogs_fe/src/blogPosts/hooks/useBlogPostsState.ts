@@ -70,7 +70,7 @@ export const useBlogPostsState = (props: PropsT) => {
           promise: mutation.mutateAsync({
             blog: props.getBlog(),
             blogPost: blogPostsHighlightRef.current?.item,
-            form: values.blogPostForm,
+            createBlogPostForm: values.blogPostForm,
           } as CreateBlogPostArgsT),
         }).result;
       },
