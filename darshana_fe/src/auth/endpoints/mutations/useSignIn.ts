@@ -1,7 +1,7 @@
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
+import { queryClient } from '/src/api/queryClient';
 import { post, setAuthTokens } from '/src/api/restClient';
 import { AuthState, anonymous } from '/src/auth/AuthState';
-import { invalidateLoadUserId } from '/src/auth/endpoints/queries';
 import { States } from '/src/auth/endpoints/states';
 import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
 import { ObjT } from '/src/utils/types';
@@ -57,7 +57,7 @@ export const useSignIn = (authState?: AuthState) => {
     onSuccess: (data: ObjT) => {
       if (authState) authState.onUpdated(queryName, data);
       authState?.setUserId(data.userId);
-      invalidateLoadUserId({});
+      queryClient.invalidateQueries();
     },
     onError: (error: Error) => {
       if (authState) authState.onErrored(queryName, error.message);

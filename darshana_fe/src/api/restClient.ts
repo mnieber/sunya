@@ -14,7 +14,7 @@ export function get(query: string) {
       headers: getHeaders(),
     })
     .then((response) => {
-      response.data = camelcaseKeys(response.data);
+      response.data = camelcaseKeys(response.data, { deep: true });
       return response;
     });
 }
@@ -26,14 +26,16 @@ export function post(query: string, variables: any, headers?: any) {
   };
 
   const body =
-    variables instanceof FormData ? variables : snakecaseKeys(variables);
+    variables instanceof FormData
+      ? variables
+      : snakecaseKeys(variables, { deep: true });
 
   return axios
     .post(`${hostUrl}${trimLeadingSlash(query)}`, body, {
       headers: allHeaders,
     })
     .then((response) => {
-      response.data = camelcaseKeys(response.data);
+      response.data = camelcaseKeys(response.data, { deep: true });
       return response;
     });
 }

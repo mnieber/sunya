@@ -15,6 +15,7 @@ export const AuthStateProvider = (props: PropsT) => {
   const getAuthStateContext = () => {
     return createGetProps({
       authState: () => authState,
+      isAuthenticated: () => authState.isAuthenticated,
     });
   };
 

@@ -17,5 +17,6 @@ export const useAuthStateContext = () => {
 export const authStateCtx = R.mergeAll([
   {
     authState: [useAuthStateContext, 'authState'] as any as AuthState,
+    isAuthenticated: [useAuthStateContext, 'isAuthenticated'] as any as boolean,
   },
 ]);

@@ -14,18 +14,22 @@ export function get(query: string) {
       headers: getHeaders(),
     })
     .then((response) => {
-      response.data = camelcaseKeys(response.data);
+      response.data = camelcaseKeys(response.data, { deep: true });
       return response;
     });
 }
 
 export function post(query: string, variables: any) {
   return axios
-    .post(`${hostUrl}${trimLeadingSlash(query)}`, snakecaseKeys(variables), {
-      headers: getHeaders(),
-    })
+    .post(
+      `${hostUrl}${trimLeadingSlash(query)}`,
+      snakecaseKeys(variables, { deep: true }),
+      {
+        headers: getHeaders(),
+      }
+    )
     .then((response) => {
-      response.data = camelcaseKeys(response.data);
+      response.data = camelcaseKeys(response.data, { deep: true });
       return response;
     });
 }

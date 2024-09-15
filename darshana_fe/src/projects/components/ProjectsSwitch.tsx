@@ -26,10 +26,12 @@ export const ProjectsSwitch = observer(
           <Route path={projectsRoutes.projects()}>
             <ProjectsPage />
           </Route>
-          <Route path={projectsRoutes.project()}>
+          <Route path={ext(projectsRoutes.project())}>
             <SelectProjectLeadEffect />
             <ProjectStateProvider>
-              <ProjectPage />
+              <Route path={projectsRoutes.project()}>
+                <ProjectPage />
+              </Route>
               <Route path={scenariosRoutes.scenario()}>
                 <SelectScenarioEffect />
                 <StepTreeStateProvider>

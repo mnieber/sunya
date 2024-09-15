@@ -20,6 +20,7 @@ export type PropsT = {
 
 const ContextProps = {
   authState: authStateCtx.authState,
+  isAuthenticated: authStateCtx.isAuthenticated,
 };
 
 export const AccountMenu = observer(
@@ -64,24 +65,28 @@ export const AccountMenu = observer(
           role="menu"
           aria-labelledby="hs-dropdown-unstyled"
         >
-          <div
-            className={cn(L.row.skewer())}
-            onClick={() => navTo(authNav.signIn({}))}
-          >
-            <Icon className={cn(MenuItemS.Icon())} name="signIn" />
-            Sign In
-          </div>
-          <div
-            className={cn(L.row.skewer())}
-            onClick={() => {
-              signOut({}).then(() => {
-                navTo(authNav.signIn({}));
-              });
-            }}
-          >
-            <Icon className={cn(MenuItemS.Icon())} name="signOut" />
-            Sign Out
-          </div>
+          {!props.isAuthenticated && (
+            <div
+              className={cn(L.row.skewer())}
+              onClick={() => navTo(authNav.signIn({}))}
+            >
+              <Icon className={cn(MenuItemS.Icon())} name="signIn" />
+              Sign In
+            </div>
+          )}
+          {props.isAuthenticated && (
+            <div
+              className={cn(L.row.skewer())}
+              onClick={() => {
+                signOut({}).then(() => {
+                  navTo(authNav.signIn({}));
+                });
+              }}
+            >
+              <Icon className={cn(MenuItemS.Icon())} name="signOut" />
+              Sign Out
+            </div>
+          )}
         </div>
       </div>
     );

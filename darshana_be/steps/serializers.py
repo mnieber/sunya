@@ -1,14 +1,13 @@
 from rest_framework import serializers
 from steps.models import Step
 from common.serializers import BaseModelSerializer, ReadSerializerMixin
-from common.form_serializer import FormSerializer
 from dataclassy import asdict
-from steps.actions.create_step import CreateStepForm
 
 
 class FactBitSerializer(serializers.Serializer):
     type_name = serializers.ChoiceField(choices=["string", "role", "actor"])
     value = serializers.CharField()
+    child_steps = serializers.SerializerMethodField()
 
     def to_representation(self, instance):
         return asdict(instance)
@@ -16,12 +15,20 @@ class FactBitSerializer(serializers.Serializer):
 
 class StepSerializer(ReadSerializerMixin, BaseModelSerializer):
     fact = FactBitSerializer(many=True)
+    child_steps = serializers.SerializerMethodField()
 
     class Meta:
         model = Step
-        fields = ["id", "fact", "parent_step", "field_delta_set_by_actor_key"]
+        fields = [
+            "id",
+            "fact",
+            "parent_step",
+            "field_delta_set_by_actor_key",
+            "child_steps",
+        ]
 
+    def get_child_steps(self, obj):
+        if not obj.child_steps.all():
+            return []
 
-class CreateStepFormSerializer(FormSerializer):
-    class Meta:
-        form_class = CreateStepForm
+        return StepSerializer(obj.child_steps.all(), many=True).data

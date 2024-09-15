@@ -22,7 +22,7 @@ export const Fact = (props: PropsT) => {
       );
     }
     return (
-      <span className="ml-1" key={index}>
+      <span className="ml-1 text-gray-text" key={index}>
         {factBit.value}
       </span>
     );
