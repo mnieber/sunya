@@ -2,6 +2,7 @@
 import '/src/frames/styles/index.css';
 import '/src/frames/styles/index.scss';
 
+import setupLocatorUI from '@locator/runtime';
 import { toJS } from 'mobx';
 import { applyFormatters } from 'mobx-log';
 import { setOptions as setResourceStatesOptions } from 'mobx-resource-states';
@@ -12,6 +13,10 @@ import { setOptions as setSkandhaOptions } from 'skandha';
 import { App } from '/src/app/components';
 import { flags } from '/src/app/flags';
 import { log } from '/src/utils/logging';
+
+if (process.env.NODE_ENV === 'development') {
+  setupLocatorUI();
+}
 
 declare global {
   interface Window {

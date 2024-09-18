@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import * as R from 'ramda';
 import { withContextProps } from 'react-props-from-context';
 import { ScenarioT } from '/src/api/types/ScenarioT';
 import { L } from '/src/frames/layout';
@@ -36,7 +37,11 @@ export const ScenarioListView = observer(
         }
         className={cn(
           'ScenarioListView__Item',
-          'mb-2 text-blue-400 hover:underline'
+          R.values({
+            color: ['bg-blue-400 text-white'],
+            layout: ['rounded-xl p-4'],
+            appearance: ['hover:bg-blue-500 hover:underline'],
+          })
         )}
       >
         {scenario.name}

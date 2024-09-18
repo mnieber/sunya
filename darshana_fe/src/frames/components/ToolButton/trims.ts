@@ -13,15 +13,15 @@ export const ModestToolButtonTrim: ToolButtonTrimT = createTrim(
       root: {},
       Icon: {
         margin: ToolButtonS.Icon.margin.none(),
-        color: ToolButtonS.Icon.color.grayFill(),
+        color: ToolButtonS.Icon.color.whiteFill(),
       },
     },
     disabled: {
       root: {
-        color: ToolButtonS.color.grayDisabled(),
+        color: ToolButtonS.color.whiteDisabled(),
       },
       Icon: {
-        color: ToolButtonS.Icon.color.grayFillDisabled(),
+        color: ToolButtonS.Icon.color.whiteFillDisabled(),
       },
     },
   }

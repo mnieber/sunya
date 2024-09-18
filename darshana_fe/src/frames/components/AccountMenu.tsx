@@ -34,7 +34,7 @@ export const AccountMenu = observer(
           R.values({
             preline: 'hs-dropdown ',
             layout: 'relative inline-flex',
-            color: 'text-white',
+            // color: 'text-white',
           }),
           [props.className]
         )}
@@ -58,6 +58,7 @@ export const AccountMenu = observer(
             R.values({
               preline: 'hs-dropdown-menu duration hidden',
               layout: 'z-10 mt-2 w-56 min-w-60',
+              other: 'cursor-pointer bg-teal-400',
               appearance:
                 'opacity-0 transition-[opacity,margin] hs-dropdown-open:opacity-100',
             })

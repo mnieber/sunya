@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
-import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
+import { ToolButton } from '/src/frames/components/ToolButton';
 import { projectCtx } from '/src/projects/hooks/useProjectContext';
 import { cn } from '/src/utils/classnames';
 
@@ -23,7 +23,8 @@ export const ImportSpecFilesButton = observer(
     };
 
     return (
-      <ActionButton
+      <ToolButton
+        iconName="repeat"
         className={cn('ImportSpecFilesButton', props.className)}
         onClick={handleClick}
         label={props.label ?? 'Upload spec files'}

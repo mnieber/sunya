@@ -17,7 +17,7 @@ export const handleGetProject = http.get(
           rootStep: {
             id: 'rootStepId',
             fact: [],
-            parentStep: null,
+            parentStepId: null,
             childSteps: [
               {
                 id: 'baseStep0',
@@ -26,7 +26,7 @@ export const handleGetProject = http.get(
                   { type: 'actor', value: 'alice@example.com+:user' },
                   { type: 'string', value: 'signs in' },
                 ],
-                parentStep: null,
+                parentStepId: null,
                 childSteps: [
                   {
                     id: 'nestedStep1',
@@ -36,7 +36,7 @@ export const handleGetProject = http.get(
                         value: 'Alice navigates to the dashboard',
                       },
                     ],
-                    parentStep: 'baseStep0',
+                    parentStepId: 'baseStep0',
                     childSteps: [],
                     fieldDeltaSetByActorKey: {
                       'alice@example.com+:user': {
@@ -52,7 +52,7 @@ export const handleGetProject = http.get(
                         value: 'Alice opens the project creation modal',
                       },
                     ],
-                    parentStep: 'baseStep0',
+                    parentStepId: 'baseStep0',
                     childSteps: [
                       {
                         id: 'deeplyNestedStep1',
@@ -62,7 +62,7 @@ export const handleGetProject = http.get(
                             value: 'Alice enters project details',
                           },
                         ],
-                        parentStep: 'nestedStep2',
+                        parentStepId: 'nestedStep2',
                         childSteps: [],
                         fieldDeltaSetByActorKey: {
                           'alice@example.com+:user': {
@@ -79,7 +79,7 @@ export const handleGetProject = http.get(
                             value: 'Alice submits the project creation form',
                           },
                         ],
-                        parentStep: 'nestedStep2',
+                        parentStepId: 'nestedStep2',
                         childSteps: [],
                         fieldDeltaSetByActorKey: {
                           'alice@example.com+:user': {
@@ -109,7 +109,7 @@ export const handleGetProject = http.get(
                   { type: 'actor', value: 'bob@example.com+:user' },
                   { type: 'string', value: 'joins the project' },
                 ],
-                parentStep: null,
+                parentStepId: null,
                 childSteps: [],
                 fieldDeltaSetByActorKey: {
                   'bob@example.com+:user': {

@@ -4,8 +4,8 @@ import { ModeOverlayT } from '/src/utils/trim';
 
 export const ToolButtonS = {
   color: {
-    gray: () => cn('text-gray-text'),
-    grayDisabled: () => cn('text-gray-300'),
+    white: () => cn('text-white'),
+    whiteDisabled: () => cn('text-white'),
   },
   Icon: {
     size: {
@@ -17,10 +17,8 @@ export const ToolButtonS = {
       none: () => cn(),
     },
     color: {
-      grayFill: () => cn('fill-gray-text'),
-      grayFillDisabled: () => cn('fill-gray-300'),
-      grayBackground: () => cn('bg-gray-text'),
-      grayBackgroundDisabled: () => cn('fill-gray-300 !bg-[#999999]'),
+      whiteFill: () => cn('fill-white'),
+      whiteFillDisabled: () => cn('fill-white'),
     },
   },
 };
@@ -45,17 +43,17 @@ export const DefaultToolButtonTrim = {
   base: {
     componentName: 'ToolButton',
     root: {
-      color: ToolButtonS.color.gray(),
+      color: ToolButtonS.color.white(),
     },
     Icon: {
       size: ToolButtonS.Icon.size.medium(),
       margin: ToolButtonS.Icon.margin.medium(),
-      color: ToolButtonS.Icon.color.grayBackground(),
+      color: ToolButtonS.Icon.color.whiteFill(),
     },
   },
   // These are layered on top if the ToolButton is disabled.
   disabled: {
-    root: { color: ToolButtonS.color.grayDisabled() },
-    Icon: { color: ToolButtonS.Icon.color.grayBackgroundDisabled() },
+    root: { color: ToolButtonS.color.whiteDisabled() },
+    Icon: { color: ToolButtonS.Icon.color.whiteFillDisabled() },
   },
 };

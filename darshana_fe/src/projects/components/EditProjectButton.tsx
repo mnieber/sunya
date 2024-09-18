@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
-import { ActionButton } from '/src/frames/components/ActionButton/ActionButton';
+import { ToolButton } from '/src/frames/components/ToolButton';
 import { projectLeadsCtx } from '/src/projects/hooks/useProjectLeadsContext';
 import { cn } from '/src/utils/classnames';
 
@@ -23,10 +23,11 @@ export const EditProjectButton = observer(
     };
 
     return (
-      <ActionButton
+      <ToolButton
+        iconName="pencil"
         className={cn('EditProjectButton', props.className)}
         onClick={handleClick}
-        label={props.label ?? 'Edit Project'}
+        label={props.label ?? 'Edit project'}
       />
     );
   }, ContextProps)

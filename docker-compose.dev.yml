@@ -59,6 +59,7 @@ services:
       - 8000:8000
     volumes:
       - ./darshana_be:/app/src
+      - ./mock:/app/mock
       - darshana_be_venv:/app/env
   darshana_fe:
     build:

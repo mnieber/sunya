@@ -22,7 +22,7 @@ class StepSerializer(ReadSerializerMixin, BaseModelSerializer):
         fields = [
             "id",
             "fact",
-            "parent_step",
+            "parent_step_id",
             "field_delta_set_by_actor_key",
             "child_steps",
         ]

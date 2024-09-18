@@ -21,7 +21,8 @@ export class StepTreeState {
     setHighlightedActor: action((step: StepT, actorKey: string) => {
       this.stepTreeCtr.data.reconstructedActor = getReconstructedActor(
         step,
-        actorKey
+        actorKey,
+        this.stepTreeCtr.data.stepById
       );
     }),
   };

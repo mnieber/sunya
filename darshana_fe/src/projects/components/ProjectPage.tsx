@@ -1,6 +1,8 @@
 import { observer } from 'mobx-react-lite';
 import { isLoading } from 'mobx-resource-states';
 import { withContextProps } from 'react-props-from-context';
+import { Portal } from '/src/frames/components/Portal';
+import { dashboardCtx } from '/src/frames/hooks/useDashboardStateContext';
 import { L } from '/src/frames/layout';
 import { EditProjectButton } from '/src/projects/components/EditProjectButton';
 import { ImportSpecFilesButton } from '/src/projects/components/ImportSpecFilesButton';
@@ -24,25 +26,31 @@ const ContextProps = {
   projectLeadsEdit: projectLeadsCtx.projectLeadsEdit,
   projectEdit: projectCtx.projectEdit,
   projectLead: projectLeadsCtx.projectLead,
+  buttonsPortalElm: dashboardCtx.buttonsPortalElm,
 };
 
 export const ProjectPage = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
-    // TODO: should not need !props.project
-    if (isLoading(props.project) || !props.project) {
+    // Hack should not need to check for props.project
+    if (isLoading(props.project) || !props.project || !props.buttonsPortalElm) {
       return <div>Loading project...</div>;
     }
 
     return (
       <div className={cn('ProjectPage', L.col.canvas(), props.className)}>
-        <h1 className="mb-4 text-2xl font-bold">{props.project.name}</h1>
-        <p className="mb-4">{props.project.description}</p>
-        <div className={cn(L.row.skewer(), 'mb-4')}>
+        {
+          // 🔳 ButtonsCard 🔳
+        }
+        <Portal elm={props.buttonsPortalElm}>
           <EditProjectButton className="" />
           <ImportSpecFilesButton className="" />
-        </div>
-
+        </Portal>
+        {
+          // 🔳 Body 🔳
+        }
         <div className={cn(L.col.skewer(), 'p-4')}>
+          <h1 className="mb-4 text-2xl font-bold">{props.project.name}</h1>
+          <p className="mb-4">{props.project.description}</p>
           {props.projectLeadsEdit.isEditing && (
             <ProjectLeadFormView projectLead={props.projectLead} />
           )}
