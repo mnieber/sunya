@@ -12,15 +12,6 @@ models:
         type: datetime
       - name: status
         type: PlotAnalysisStatus
-enums:
-  - name: PlotAnalysisStatus
-    members:
-      - name: RUNNING
-        value: running
-      - name: COMPLETED
-        value: completed
-      - name: FAILED
-        value: failed
 actions:
   - name: create_plot_analysis
     args:

@@ -49,7 +49,7 @@ def start(user):
 
 
 def project_():
-    return add_actor(
+    add_actor(
         F.Projects.Types.Project(
             name="My Darshana Project",
             scenarios=[

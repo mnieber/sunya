@@ -12,14 +12,15 @@ from sunya import (
 )
 
 
-def start(user):
+def start(a_user):
+    user = add_role("User")
     blog = add_role("Blog")
 
     scenario_name = "a-user-creates-a-blog"
     with add_scenario(scenario_name):
-        add_actor(user, name="user")
+        add_actor(a_user, name="user", role="User")
 
-        with add_goal("create a", blog, "for the", g.user):
+        with add_goal("create a", blog, "for the", user):
             with the(g.create_blog_api_view).calls_the(g.create_blog_action):
                 with the(g.create_blog_action).creates_the(blog):
                     blog_()
@@ -28,7 +29,7 @@ def start(user):
 
 
 def blog_():
-    return add_actor(
+    add_actor(
         B.Blogs.Models.Blog(
             name="My Personal Blog",
             description="Random things that interest me",

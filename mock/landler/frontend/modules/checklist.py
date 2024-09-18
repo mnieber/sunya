@@ -3,7 +3,7 @@ import typing as T
 if T.TYPE_CHECKING:
     pass
 
-from default.frontend.entities import Mutation, Facet, Trim, Query
+from default.frontend.entities import Mutation, Facet, Query
 from default.stack.namespace import Module
 from sunya import EntityWithId, actor_to_str, G as g
 
@@ -47,7 +47,7 @@ class Checklist(Module):
 
     class Components:
         class ChecklistCard:
-            trim: Trim
+            props = dict(trim="")
 
 
 g.get_checklist_query = Checklist.Queries.GetChecklist()

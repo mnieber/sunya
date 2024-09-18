@@ -12,7 +12,6 @@ models:
         type: bool
       - name: is_active
         type: bool
-enums: []
 actions:
   - name: create_user
     args:

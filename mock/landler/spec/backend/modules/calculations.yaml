@@ -22,11 +22,6 @@ models:
         type: list[str]
       - name: geomodel_version
         type: str
-enums:
-  - name: CalculationNames
-    members:
-      - name: CoolfarmToolCO2
-        value: coolfarm_tool_co2
 actions: []
 api_views: []
 

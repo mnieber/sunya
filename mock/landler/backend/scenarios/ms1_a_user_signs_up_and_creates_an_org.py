@@ -5,103 +5,93 @@ from default.frontend.namespace import Route
 from sunya import (
     add_goal,
     add_scenario,
+    add_role,
+    add_actor,
     get_scenario,
-    register,
     the,
     G as g,
-    get_entities,
 )
 
 
-g.sign_up_route = Route()
-g.sign_in_route = Route()
-g.user_account_route = Route()
 g.organization_route = Route()
 
 
 def start():
+    user = add_role("User")
+    organization = add_role("Organization")
+
     scenario_name = "a-user-signs-up-and-creates-an-org"
     with add_scenario(scenario_name):
-        e = get_entities()
+        with add_goal("sign up as a", user):
+            with the(g.sign_up_user_api_view).calls_the(g.create_user_action):
+                with the(g.create_user_action).creates_the(user):
+                    user_()
 
-        with add_goal("sign up as a", e.user):
-            with the(e.user).visits_the(g.sign_up_route):
-                with the(g.frontend).calls_the(g.sign_up_user_api_view):
-                    with the(g.sign_up_user_api_view).calls_the(g.create_user_action):
-                        with the(g.create_user_action).creates_the(e.user):
-                            user_()
+            with the(g.sign_up_user_api_view).activates_the_account_of_the(user):
+                g.user.is_active = True
 
-                    with the(e.sign_up_user_api_view).activates_the_account_of_the(
-                        e.user
-                    ):
-                        e.user.is_active = True
+        with add_goal("sign in as a", user):
+            with the(g.sign_in_user_api_view).calls_the(g.sign_in_user_action):
+                g.user_session.user = g.user
+                g.user.is_authenticated = True
 
-        with add_goal("sign in as a", e.user):
-            with the(e.user).visits_the(g.sign_in_route):
-                with the(g.frontend).calls_the(g.sign_in_user_api_view):
-                    with the(g.sign_in_user_api_view).calls_the(g.sign_in_user_action):
-                        g.user_session.user = e.user
-                        e.user.is_authenticated = True
+        with add_goal("create an", organization, "with admin", g.user_session.user):
+            with the(g.create_organization_api_view).calls_the(
+                g.create_organization_action
+            ):
+                with the(g.create_organization_action).creates_the(organization):
+                    organization_()
 
-        with add_goal("create an", e.organization, "with admin", g.user_session.user):
-            with the(e.user).visits_the(g.user_account_route):
-                with the(g.frontend).calls_the(g.create_organization_api_view):
-                    with the(g.create_organization_api_view).calls_the(
-                        g.create_organization_action
-                    ):
-                        with the(g.create_organization_action).creates_the(
-                            e.organization
-                        ):
-                            organization_()
-
-                        with the(g.create_organization_action).calls_the(
-                            g.add_user_to_organization_action
-                        ):
-                            e.organization.memberships = [admin_membership_()]
+                with the(g.create_organization_action).calls_the(
+                    g.add_user_to_organization_action
+                ):
+                    g.organization.memberships = [create_admin_membership()]
 
         with (
-            the(e.user)
+            the(user)
             .uses_the(g.organization_picker)
+            .in_the(g.frontend)
             .to_switch_to_the(g.organization_route)
-            .of_the(e.organization)
+            .of_the(organization)
         ):
-            with the(e.user).is_redirected_to_the(g.organization_route):
+            with the(user).is_redirected_to_the(g.organization_route):
                 pass
 
-            with add_goal("set", e.organization, "as the active organization"):
-                with the(g.frontend).calls_the(g.set_active_organization_api_view):
-                    with (
-                        the(g.set_active_organization_api_view)
-                        .updates_the(g.user_session)
-                        .to_set_the_active(e.organization)
-                    ):
-                        g.user_session.active_organization = e.organization
+            with add_goal("set", organization, "as the active organization"):
+                with (
+                    the(g.set_active_organization_api_view)
+                    .updates_the(g.user_session)
+                    .to_set_the_active(organization)
+                ):
+                    g.user_session.active_organization = organization
 
     return get_scenario(scenario_name)
 
 
-def admin_membership_():
+def create_admin_membership():
     return B.Organizations.Models.OrganizationMembership(
-        organization=e.organization,
+        organization=g.organization,
         user=g.user_session.user,
         role=B.Organizations.Enums.UserInOrganizationRoles.ADMIN,
     )
 
 
 def organization_():
-    return register(
+    add_actor(
         B.Organizations.Models.Organization(name="my-org"),
-        e.organization,
+        name="organization",
+        role="Organization",
     )
 
 
 def user_():
-    return register(
+    add_actor(
         B.Users.Models.User(
             email="my-org-owner@example.com",
             password="my-password",
         ),
-        e.user,
+        name="user",
+        role="User",
     )
 
 

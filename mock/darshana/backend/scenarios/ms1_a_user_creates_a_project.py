@@ -1,13 +1,6 @@
 import darshana.backend.namespace as B
-from sunya import (
-    add_goal,
-    add_scenario,
-    get_scenario,
-    add_actor,
-    add_role,
-    the,
-    G as g,
-)
+from sunya import G as g
+from sunya import add_actor, add_goal, add_role, add_scenario, get_scenario, the
 
 
 def start():
@@ -26,7 +19,7 @@ def start():
             with the(g.create_project_api_view).calls_the(g.create_project_action):
                 project_()
 
-        with add_goal("upload", spec_files, "to the", g.project):
+        with add_goal("upload", spec_files, "to the", project):
             with (
                 the(g.upload_spec_files_api_view)
                 .identifies_the(scenario_spec_files)
@@ -38,14 +31,14 @@ def start():
             with (
                 the(g.upload_spec_files_api_view)
                 .deletes_each(scenario)
-                .from_the(g.project)
+                .from_the(project)
             ):
                 pass
 
             with the(g.upload_spec_files_api_view).calls_the(
                 g.import_spec_files_action
             ):
-                with the(g.import_spec_files_action).deletes_all_data_in_the(g.project):
+                with the(g.import_spec_files_action).deletes_all_data_in_the(project):
                     pass
 
                 with (
@@ -77,7 +70,7 @@ def start():
 
 
 def project_():
-    return add_actor(
+    add_actor(
         B.Projects.Models.Project(
             name="My Darshana Project",
             description="A project to test Darshana",

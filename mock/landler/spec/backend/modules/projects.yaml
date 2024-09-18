@@ -14,17 +14,6 @@ models:
         type: Organization
       - name: role
         type: OrganizationInProjectRoles
-enums:
-  - name: OrganizationInProjectRoles
-    members:
-      - name: ADMIN
-        value: admin
-      - name: EDITOR
-        value: editor
-      - name: LAND_STEWARD
-        value: land_steward
-      - name: BUYER
-        value: buyer
 actions:
   - name: create_project
     args:

@@ -10,52 +10,53 @@ from sunya import (
 )
 
 
-def start(user, blog):
+def start(a_user, a_blog):
     blog_post = add_role("BlogPost")
     blog = add_role("Blog")
+    user = add_role("User")
 
     scenario_name = "ms2-a-user-creates-a-blog-post"
     with add_scenario(scenario_name):
-        add_actor(user, name="user")
-        add_actor(blog, name="blog", role="Blog")
+        add_actor(a_user, name="user", role="User")
+        add_actor(a_blog, name="blog", role="Blog")
 
-        with add_goal("create a", blog_post, "in the", g.blog):
-            with the(g.user).visits_the(g.blogs_route):
+        with add_goal("create a", blog_post, "in the", blog):
+            with the(user).visits_the(g.blogs_route):
                 pass
 
-            with the(g.user).clicks_on_a(blog).to_visit_the(g.blog_route):
+            with the(user).clicks_on_a(blog).to_visit_the(g.blog_route):
                 pass
 
-            with the(g.user).presses_the(g.create_blog_post_button):
+            with the(user).presses_the(g.create_blog_post_button):
                 pass
 
-            with the(g.user).submits_the(g.blog_post_form_view):
+            with the(user).submits_the(g.blog_post_form_view):
                 with the(g.frontend).calls_the(g.create_blog_post_mutation):
                     blog_post_()
 
         with add_goal("edit a", blog_post, "in the", blog):
-            with the(g.user).selects_the(blog_post).they_want_to_edit():
+            with the(user).selects_the(blog_post).they_want_to_edit():
                 pass
 
-            with the(g.user).presses_the(g.edit_blog_post_button):
+            with the(user).presses_the(g.edit_blog_post_button):
                 pass
 
-            with the(g.user).submits_the(g.blog_post_form_view):
+            with the(user).submits_the(g.blog_post_form_view):
                 with the(g.frontend).calls_the(g.update_blog_post_mutation):
                     g.blog_post.content = "Hello, World!"
 
         with add_goal("delete a", blog_post, "in the", blog):
-            with the(g.user).selects_the(blog_post).they_want_to_delete():
+            with the(user).selects_the(blog_post).they_want_to_delete():
                 pass
 
-            with the(g.user).presses_the(g.delete_blog_posts_button):
+            with the(user).presses_the(g.delete_blog_posts_button):
                 pass
 
     return get_scenario(scenario_name)
 
 
 def blog_post_():
-    return add_actor(
+    add_actor(
         F.Blogs.Types.BlogPost(
             title="My First Blog Post",
             content="Hello",

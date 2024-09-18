@@ -26,13 +26,6 @@ models:
         type: bool
       - name: is_demo_org
         type: bool
-enums:
-  - name: UserInOrganizationRoles
-    members:
-      - name: ADMIN
-        value: admin
-      - name: EDITOR
-        value: editor
 actions:
   - name: create_organization
     args:

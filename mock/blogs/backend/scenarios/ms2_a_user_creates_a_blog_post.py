@@ -10,15 +10,16 @@ from sunya import (
 )
 
 
-def start(user, blog):
+def start(a_user, a_blog):
     blog_post = add_role("BlogPost")
+    blog = add_role("Blog")
 
     scenario_name = "a-user-creates-a-blog-post"
     with add_scenario(scenario_name):
-        add_actor(user, name="user")
-        add_actor(blog, name="blog")
+        add_actor(a_user, name="user", role="User")
+        add_actor(a_blog, name="blog", role="Blog")
 
-        with add_goal("create a", blog_post, "in the", g.blog):
+        with add_goal("create a", blog_post, "in the", blog):
             with the(g.create_blog_post_api_view).calls_the(g.create_blog_post_action):
                 blog_post_(blog)
 
@@ -26,7 +27,7 @@ def start(user, blog):
 
 
 def blog_post_(blog):
-    return add_actor(
+    add_actor(
         B.Blogs.Models.BlogPost(
             blog=blog,
             title="My Blog Post",

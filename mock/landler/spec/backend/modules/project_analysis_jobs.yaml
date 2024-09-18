@@ -9,12 +9,11 @@ models:
       - name: repeats_every
         type: timedelta]
       - name: is_active
-        type: bool
+        type: bool = True
   - name: ProjectAnalysisQueue
     fields:
       - name: project_analysis_jobs
         type: list[ProjectAnalysisJob]
-enums: []
 actions:
   - name: create_project_analysis_job
     args:

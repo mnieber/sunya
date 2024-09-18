@@ -8,7 +8,6 @@ models:
         type: str
       - name: area
         type: float
-enums: []
 actions: []
 api_views: []
 

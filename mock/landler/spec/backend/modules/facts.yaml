@@ -10,15 +10,6 @@ models:
         type: datetime
       - name: ref_source_id
         type: str
-enums:
-  - name: FactNames
-    members:
-      - name: CARBON_BG
-        value: carbon_bg
-      - name: WHC
-        value: whc
-      - name: TEMPERATURE
-        value: temperature
 actions: []
 api_views: []
 

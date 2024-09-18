@@ -2,55 +2,58 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
-    register,
+    add_role,
     the,
     G as g,
-    get_entities,
+    add_actor,
 )
 from landler.backend.modules.plot_lists import get_project_plot_list_by_name
 import landler.backend.namespace as B
 
 
-def start(project, variation="default"):
+def start(a_project, variation="default"):
+    project = add_role("Project")
+    plot = add_role("Plot")
+
     scenario_name = "a-user-adds-a-plot-to-a-project"
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(project, name="project")
+        add_actor(a_project, name="project", role="Project")
 
         if variation == "default":
-            with add_goal("create a", e.plot, "in the", e.project):
-                with the(g.frontend).calls_the(g.create_plot_api_view):
-                    with the(g.create_plot_api_view).calls_the(g.create_plot_action):
-                        with the(g.create_plot_action).creates_the(e.plot):
-                            plot_().plot_questionnaire = plot_questionnaire_()
+            with add_goal("create a", plot, "in the", project):
+                with the(g.create_plot_action).creates_the(plot):
+                    plot_()
+                    plot_questionnaire_()
+                    g.plot.plot_questionnaire = g.plot_questionnaire
 
-                        with add_goal("add the", e.plot, "to the", e.project):
-                            with the(g.create_plot_action).calls_the(
-                                g.add_plot_to_project_action
-                            ):
-                                default_plot_list_().plots.append(e.plot)
+                with add_goal("add the", plot, "to the", project):
+                    with the(g.create_plot_action).calls_the(
+                        g.add_plot_to_project_action
+                    ):
+                        default_plot_list_()
+                        g.default_plot_list.plots.append(g.plot)
 
     return get_scenario(scenario_name)
 
 
 def default_plot_list_():
-    return register(
-        get_project_plot_list_by_name(e.project, "default"), name="default_plot_list"
+    add_actor(
+        get_project_plot_list_by_name(g.project, "default"), name="default_plot_list"
     )
 
 
 def plot_questionnaire_():
-    return register(
+    add_actor(
         B.PlotQuestionnaires.Models.PlotQuestionnaire(
             land_type=B.PlotQuestionnaires.Enums.LandType.CROPLAND,
-            plot=e.plot,
+            plot=g.plot,
         ),
         name="plot_questionnaire",
     )
 
 
 def plot_():
-    return register(
+    add_actor(
         B.Plots.Models.Plot(
             name="my-plot",
             owner=g.user_session.active_organization,
@@ -61,7 +64,8 @@ def plot_():
                 area=10.0,
             ),
         ),
-        e.plot,
+        name="plot",
+        role="Plot",
     )
 
 
@@ -71,7 +75,7 @@ def run():
     ms2_scenario = landler.backend.scenarios.ms2_a_user_creates_a_project.run()
     project = ms2_scenario.get_entity_by_name("project")
 
-    return start(project=project)
+    return start(a_project=project)
 
 
 if __name__ == "__main__":

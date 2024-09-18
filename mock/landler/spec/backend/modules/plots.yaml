@@ -16,7 +16,6 @@ models:
         type: bool
       - name: errors
         type: list[str]
-enums: []
 actions:
   - name: create_plot
     args:

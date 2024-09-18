@@ -6,13 +6,6 @@ models:
         type: Plot
       - name: land_type
         type: LandType
-enums:
-  - name: LandType
-    members:
-      - name: CROPLAND
-        value: cropland
-      - name: GRASSLAND
-        value: grassland
 actions:
   - name: create_plot_questionnaire
     args:
