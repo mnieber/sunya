@@ -1,37 +1,28 @@
-scenario_name: ms1-a-user-creates-a-project
+scenario_name: backend/ms1-a-user-creates-a-project
 nodes:
   - root: ''
     child_nodes:
-      - goal: create a new [Project] for the [alice@example.com+:user]
-        actors_introduced:
-          - name: my-darshana-project+:project
-            deltas:
-              description: ' (None)'
-              id: 00dcca049c335a198d7d466b886ec3bb (None)
-              name: My Darshana Project (None)
-              scenarios: '[''my-first+:scenario''] (None)'
+      - goal: create a new [Project] for the [User]
         roles_updated:
           Project: my-darshana-project+:project
         child_nodes:
-          - step: The [alice@example.com+:user] visits the [projects+:route]
-          - step: The [alice@example.com+:user] presses the [create-project-button:component]
-          - step: The [alice@example.com+:user] enters the project name
-          - step: The [alice@example.com+:user] submits the [project-lead-form-view:component]
+          - step: The [create-project:api-view] calls the [create-project:action]
             child_nodes:
-              - step: The [:frontend] calls the [create-project:mutation]
-          - step: The [:frontend] redirects to the [project+:route]
-      - goal: delete a [Project] for the [alice@example.com+:user]
-        actors_introduced:
-          - name: my-darshana-project+:project
-            deltas:
-              description: ' (None)'
-              id: 00dcca049c335a198d7d466b886ec3bb (None)
-              name: My Darshana Project (None)
-              scenarios: '[''my-first+:scenario''] (None)'
+              - step: The [create-project:action] creates the [Project]
+                roles_updated:
+                  Project: my-darshana-project+:project
+      - goal: upload [SpecFiles] to the [Project]
         child_nodes:
-          - step: The [alice@example.com+:user] visits the [projects+:route]
-          - step: The [alice@example.com+:user] presses the [delete-project-button:component]
+          - step: The [import-spec-files:api-view] identifies the [ScenarioSpecFiles] and the [ModuleSpecFiles] in the [SpecFiles]
+          - step: The [import-spec-files:api-view] deletes each [Scenario] from the [Project]
+          - step: The [import-spec-files:api-view] calls the [import-spec-files:action]
             child_nodes:
-              - step: The [:frontend] asks confirmation from the [alice@example.com+:user]
-              - step: The [:frontend] calls the [delete-projects:mutation]
+              - step: The [import-spec-files:action] deletes all data in the [Project]
+              - step: The [import-spec-files:action] calls the [import-scenario-spec:action] for each file in the [ScenarioSpecFiles]
+                child_nodes:
+                  - step: The [import-scenario-spec:action] iterates the tree structure of the [Scenario]
+                    child_nodes:
+                      - step: The [import-scenario-spec:action] calls the [create-actor:action] for each [Actor]
+                      - step: The [import-scenario-spec:action] calls the [create-step:action] with these [Actor] instances
+                      - step: The [import-scenario-spec:action] calls the [create-scenario:action] with these [Step] instances
 

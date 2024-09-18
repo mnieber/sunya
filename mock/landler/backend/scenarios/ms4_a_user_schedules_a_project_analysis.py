@@ -21,12 +21,15 @@ scenario_name = "backend/ms4-a-user-schedules-a-project-analysis"
 
 
 def start(a_project, variation="default"):
-    project = add_role("Project")
-    project_analysis_job = add_role("ProjectAnalysisJob")
+    calcium_plot_analysis_job = add_role("CalciumPlotAnalysisJob")
     jobs_to_run = add_role("JobsToRun")
-    project_analysis = add_role("ProjectAnalysis")
-    project_at_now = add_role("ProjectAtNow")
+    plot_analysis = add_role("PlotAnalysis")
     plot_at_now = add_role("PlotAtNow")
+    plot = add_role("Plot")
+    project = add_role("Project")
+    project_analysis = add_role("ProjectAnalysis")
+    project_analysis_job = add_role("ProjectAnalysisJob")
+    project_at_now = add_role("ProjectAtNow")
 
     with add_scenario(scenario_name):
         project.actor = add_actor(a_project, name="project")
@@ -38,17 +41,17 @@ def start(a_project, variation="default"):
                 with the(g.create_project_analysis_job_action).creates_the(
                     project_analysis_job
                 ):
-                    project_analysis_job_()
+                    project_analysis_job.actor = project_analysis_job_(project.actor)
 
         with add_step("the", g.project_analysis_queue, "finds", jobs_to_run):
-            jobs_to_run.actor = jobs_to_run_()
+            jobs_to_run.actor = jobs_to_run_(project_analysis_job.actor)
 
-        for idx, a_project_analysis_job in enumerate(g.jobs_to_run.items):
+        for idx, a_project_analysis_job in enumerate(jobs_to_run.actor.items):
+            project_analysis_job.actor = a_project_analysis_job
+
             with the(g.project_analysis_queue).runs_the(
                 f"{ith(idx)}", project_analysis_job
             ):
-                project_analysis_job.actor = a_project_analysis_job
-
                 with add_goal(
                     "create a", project_analysis, "from a", project_analysis_job
                 ):
@@ -58,9 +61,11 @@ def start(a_project, variation="default"):
                         with the(g.create_project_analysis_action).creates_a(
                             project_analysis
                         ):
-                            a_project_analysis = project_analysis_(idx)
-                            a_project_analysis_job.project_analyses.append(
-                                a_project_analysis
+                            project_analysis.actor = project_analysis_(
+                                project_analysis_job.actor, idx
+                            )
+                            project_analysis_job.actor.project_analyses.append(
+                                project_analysis.actor
                             )
 
                         with (
@@ -68,15 +73,19 @@ def start(a_project, variation="default"):
                             .gets_the(project)
                             .at_the_now_ts_of_the(project_analysis)
                         ):
-                            a_project_at_now = project_at_now_()
+                            project_at_now.actor = project_at_now_(
+                                project_analysis.actor, idx
+                            )
 
                         with the(
                             g.create_project_analysis_action
                         ).loops_over_all_plots_in_the(project_at_now):
                             plot_list = B.get_project_plot_list_by_name(
-                                a_project_at_now, "default"
+                                project_at_now.actor, "default"
                             )
-                            for plot in plot_list.plots:
+                            for idx, a_plot in enumerate(plot_list.plots):
+                                plot.actor = a_plot
+
                                 with add_goal(
                                     "add a",
                                     plot_analysis,
@@ -88,8 +97,11 @@ def start(a_project, variation="default"):
                                     with the(
                                         g.create_project_analysis_action
                                     ).creates_the(plot_analysis):
-                                        g.project_analysis.plot_analyses.append(
-                                            plot_analysis_()
+                                        plot_analysis.actor = plot_analysis_(
+                                            plot.actor, project_analysis.actor, idx
+                                        )
+                                        project_analysis.actor.plot_analyses.append(
+                                            plot_analysis.actor
                                         )
 
                 with add_goal(
@@ -105,7 +117,11 @@ def start(a_project, variation="default"):
                     with the(g.project_analysis_queue).calls_the(
                         g.run_project_analysis_action
                     ):
-                        for plot_analysis in g.project_analysis.plot_analyses:
+                        for idx, a_plot_analysis in enumerate(
+                            project_analysis.actor.plot_analyses
+                        ):
+                            plot_analysis.actor = a_plot_analysis
+
                             with (
                                 the(g.run_project_analysis_action)
                                 .calls_the(g.run_plot_analysis_action)
@@ -113,86 +129,86 @@ def start(a_project, variation="default"):
                             ):
                                 with (
                                     the(g.run_plot_analysis_action)
-                                    .creates_the(g.calcium_plot_analysis_job)
+                                    .creates_the(calcium_plot_analysis_job)
                                     .for_the(plot_at_now)
                                 ):
-                                    plot_at_now_(e, plot_analysis)
-                                    calcium_plot_analysis_job_()
+                                    plot_at_now.actor = plot_at_now_(
+                                        plot_analysis.actor, idx
+                                    )
+                                    calcium_plot_analysis_job.actor = (
+                                        calcium_plot_analysis_job_(
+                                            plot_analysis.actor, plot_at_now.actor, idx
+                                        )
+                                    )
 
-            for idx, plot_analysis in enumerate(e.project_analysis.plot_analyses):
-                # TODO: the_backend_processes_a_calcium_job_result(idx, plot_analysis)
+            for idx, plot_analysis in enumerate(project_analysis.actor.plot_analyses):
+                # TODO: the_backend_processes_a_calcium_job_result(plot_analysis, idx)
                 pass
 
     return get_scenario(scenario_name)
 
 
-def calcium_plot_analysis_job_():
-    unadd_actor("calcium_plot_analysis_job")
-    calcium_plot_analysis_job = add_actor(
-        S.CalciumPlotAnalysisJob(
-            id=e.plot_analysis.id,
-            polygon=e.plot_at_now.polygon,
-        ),
-        e.calcium_plot_analysis_job,
-    )
-
-    return calcium_plot_analysis_job
-
-
-def plot_at_now_(e, plot_analysis):
-    unadd_actor("plot_at_now")
+def calcium_plot_analysis_job_(a_plot_analysis, a_plot_at_now, idx):
     return add_actor(
-        at_ts(plot_analysis.plot, plot_analysis.now),
-        e.plot_at_now,
+        S.CalciumPlotAnalysisJob(
+            id=a_plot_analysis.id,
+            polygon=a_plot_at_now.polygon,
+        ),
+        name=f"calcium_plot_analysis_job_{idx}",
     )
 
 
-def plot_analysis_(e, plot):
-    unadd_actor("plot_analysis")
+def plot_at_now_(a_plot_analysis, idx):
+    return add_actor(
+        at_ts(a_plot_analysis.plot, a_plot_analysis.now),
+        name=f"plot_at_now_{idx}",
+    )
+
+
+def plot_analysis_(a_plot, a_project_analysis, idx):
     return add_actor(
         B.PlotAnalyses.Models.PlotAnalysis(
-            plot=plot,
-            project_analysis=e.project_analysis,
-            now=e.project_analysis.now,
+            plot=a_plot,
+            project_analysis=a_project_analysis,
+            now=a_project_analysis.now,
             status=B.PlotAnalyses.Enums.PlotAnalysisStatus.RUNNING,
         ),
-        e.plot_analysis,
+        name=f"plot_analysis_{idx}",
     )
 
 
-def project_at_now_():
-    unadd_actor("project_at_now")
+def project_at_now_(a_project_analysis, idx):
     return add_actor(
-        at_ts(e.project_analysis.project, e.project_analysis.now),
-        e.project_at_now,
+        at_ts(a_project_analysis.project, a_project_analysis.now),
+        f"project_at_now_{idx}",
     )
 
 
-def project_analysis_(idx):
+def project_analysis_(a_project_analysis_job, idx):
     return add_actor(
         B.ProjectAnalyses.Models.ProjectAnalysis(
-            job=e.project_analysis_job,
-            project=e.project_analysis_job.project,
-            now=e.project_analysis_job.scheduled_at,
+            job=a_project_analysis_job,
+            project=a_project_analysis_job.project,
+            now=a_project_analysis_job.scheduled_at,
             status=B.ProjectAnalyses.Enums.ProjectAnalysisStatus.RUNNING,
         ),
         name=f"project_analysis_{idx}",
     )
 
 
-def jobs_to_run_():
+def jobs_to_run_(a_project_analysis_job):
     return add_actor(
-        List(name="jobs_to_run", items=[g.project_analysis_job]), name="jobs_to_run"
+        List(name="jobs_to_run", items=[a_project_analysis_job]), name="jobs_to_run"
     )
 
 
-def project_analysis_job_():
+def project_analysis_job_(a_project):
     return add_actor(
         B.ProjectAnalysisJobs.Models.ProjectAnalysisJob(
-            project=e.project,
+            project=a_project,
             scheduled_at=get_time.now(bump=True),
         ),
-        e.project_analysis_job,
+        "project_analysis_job",
     )
 
 

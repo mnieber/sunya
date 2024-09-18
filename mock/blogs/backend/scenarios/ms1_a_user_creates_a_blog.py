@@ -19,7 +19,6 @@ def start(a_user):
     blog = add_role("Blog")
 
     with add_scenario(scenario_name):
-        __import__("pudb").set_trace()  # zz
         user.actor = add_actor(a_user, name="user")
 
         with add_goal("create a", blog, "for the", user):

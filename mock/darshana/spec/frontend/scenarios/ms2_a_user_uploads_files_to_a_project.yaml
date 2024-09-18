@@ -1,8 +1,8 @@
-scenario_name: ms2-a-user-uploads-files-to-a-project
+scenario_name: frontend/ms2-a-user-uploads-files-to-a-project
 nodes:
   - root: ''
     child_nodes:
-      - goal: upload [SpecFiles] to the [my-darshana-project+:project]
+      - goal: upload [SpecFiles] to the [Project]
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
           - step: The [alice@example.com+:user] presses the [import-spec-files-button:component]

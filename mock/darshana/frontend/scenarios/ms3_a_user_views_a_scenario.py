@@ -86,7 +86,7 @@ def start(a_user, a_project):
                         ):
                             pass
 
-                with the(g.actor_view).displays_the_highlighted(g.actor):
+                with the(g.actor_view).displays_the_highlighted(actor):
                     pass
 
             with the(g.user).ctrl_clicks_on_the_link_of_the(g.actor):

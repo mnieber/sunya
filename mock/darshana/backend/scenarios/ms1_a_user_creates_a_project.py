@@ -19,7 +19,8 @@ def start():
     with add_scenario(scenario_name):
         with add_goal("create a new", project, "for the", user):
             with the(g.create_project_api_view).calls_the(g.create_project_action):
-                project.actor = project_()
+                with the(g.create_project_action).creates_the(project):
+                    project.actor = project_()
 
         with add_goal("upload", spec_files, "to the", project):
             with (

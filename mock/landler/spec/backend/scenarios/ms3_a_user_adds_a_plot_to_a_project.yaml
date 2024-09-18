@@ -1,55 +1,15 @@
-scenario_name: a-user-adds-a-plot-to-a-project
+scenario_name: backend/ms3-a-user-adds-a-plot-to-a-project
 nodes:
   - root: ''
     child_nodes:
       - goal: create a [Plot] in the [Project]
-        actors_introduced:
-          - name: my-plot@0+:plot
-            deltas:
-              errors: '[] (None)'
-              is_draft: False (None)
-              name: my-plot (None)
-              owner: Role(name='Organization', entities=[Organization(name='my-org', memberships=[OrganizationMembership(organization=..., user=User(email='my-org-owner@example.com', password='my-password', is_authenticated=True, is_active=True), role='admin')])]) (None)
-              plot_questionnaire: my-plot+:plot-questionnaire (None)
-              polygon: +:polygon (None)
-              sequence_number: 1 (None)
-          - name: my-project+:project
-            deltas:
-              memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
-              name: my-project (None)
-              plot_lists: '[''default+:plot-list''] (None)'
         roles_updated:
           Plot: my-plot@0+:plot
         child_nodes:
           - step: The [create-plot:action] creates the [Plot]
-            actors_introduced:
-              - name: my-plot@0+:plot
-                deltas:
-                  errors: '[] (None)'
-                  is_draft: False (None)
-                  name: my-plot (None)
-                  owner: Role(name='Organization', entities=[Organization(name='my-org', memberships=[OrganizationMembership(organization=..., user=User(email='my-org-owner@example.com', password='my-password', is_authenticated=True, is_active=True), role='admin')])]) (None)
-                  plot_questionnaire: my-plot+:plot-questionnaire (None)
-                  polygon: +:polygon (None)
-                  sequence_number: 1 (None)
             roles_updated:
               Plot: my-plot@0+:plot
           - goal: add the [Plot] to the [Project]
-            actors_introduced:
-              - name: my-plot@0+:plot
-                deltas:
-                  errors: '[] (None)'
-                  is_draft: False (None)
-                  name: my-plot (None)
-                  owner: Role(name='Organization', entities=[Organization(name='my-org', memberships=[OrganizationMembership(organization=..., user=User(email='my-org-owner@example.com', password='my-password', is_authenticated=True, is_active=True), role='admin')])]) (None)
-                  plot_questionnaire: my-plot+:plot-questionnaire (None)
-                  polygon: +:polygon (None)
-                  sequence_number: 1 (None)
-              - name: my-project+:project
-                deltas:
-                  memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
-                  name: my-project (None)
-                  plot_lists: '[''default+:plot-list''] (None)'
             child_nodes:
               - step: The [create-plot:action] calls the [add-plot-to-project:action]
 

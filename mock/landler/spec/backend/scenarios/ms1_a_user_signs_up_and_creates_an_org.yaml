@@ -1,115 +1,34 @@
-scenario_name: a-user-signs-up-and-creates-an-org
+scenario_name: backend/ms1-a-user-signs-up-and-creates-an-org
 nodes:
   - root: ''
     child_nodes:
       - goal: sign up as a [User]
-        actors_introduced:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              email: my-org-owner@example.com (None)
-              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-              is_active: True (None)
-              is_authenticated: False (None)
-              password: my-password (None)
-        roles_updated:
-          User: my-org-owner@example.com+:user
         child_nodes:
           - step: The [sign-up-user-:api-view] calls the [create-user:action]
             child_nodes:
               - step: The [create-user:action] creates the [User]
-                actors_introduced:
-                  - name: my-org-owner@example.com+:user
-                    deltas:
-                      email: my-org-owner@example.com (None)
-                      id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-                      is_active: False (None)
-                      is_authenticated: False (None)
-                      password: my-password (None)
-                roles_updated:
-                  User: my-org-owner@example.com+:user
           - step: The [sign-up-user-:api-view] activates the account of the [User]
-            actors_introduced:
-              - name: my-org-owner@example.com+:user
-                deltas:
-                  email: my-org-owner@example.com (None)
-                  id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-                  is_active: True (None)
-                  is_authenticated: False (None)
-                  password: my-password (None)
       - goal: sign in as a [User]
-        actors_introduced:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              email: my-org-owner@example.com (None)
-              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-              is_active: True (None)
-              is_authenticated: True (None)
-              password: my-password (None)
         child_nodes:
           - step: The [sign-in-user-:api-view] calls the [sign-in-user:action]
       - goal: create an [Organization] with admin [my-org-owner@example.com+:user]
-        actors_introduced:
-          - name: my-org+:organization
-            deltas:
-              id: 93122c6d00825101b256ef9e8e830eca (None)
-              memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-              name: my-org (None)
         roles_updated:
           Organization: my-org+:organization
         child_nodes:
           - step: The [create-organization-:api-view] calls the [create-organization:action]
             child_nodes:
               - step: The [create-organization:action] creates the [Organization]
-                actors_introduced:
-                  - name: my-org+:organization
-                    deltas:
-                      id: 93122c6d00825101b256ef9e8e830eca (None)
-                      memberships: '[] (None)'
-                      name: my-org (None)
                 roles_updated:
                   Organization: my-org+:organization
               - step: The [create-organization:action] calls the [add-user-to-organization:action]
       - step: The [User] uses the [organization-picker:component] in the [:frontend] to switch to the [route+:route] of the [Organization]
-        actors_introduced:
-          - name: my-org-owner@example.com+:user
-            deltas:
-              email: my-org-owner@example.com (None)
-              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-              is_active: True (None)
-              is_authenticated: True (None)
-              password: my-password (None)
-          - name: my-org+:organization
-            deltas:
-              id: 93122c6d00825101b256ef9e8e830eca (None)
-              memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-              name: my-org (None)
         child_nodes:
           - step: The [User] is redirected to the [route+:route]
-            actors_introduced:
-              - name: my-org-owner@example.com+:user
-                deltas:
-                  email: my-org-owner@example.com (None)
-                  id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
-                  is_active: True (None)
-                  is_authenticated: True (None)
-                  password: my-password (None)
           - goal: set [Organization] as the active organization
-            actors_introduced:
-              - name: my-org+:organization
-                deltas:
-                  id: 93122c6d00825101b256ef9e8e830eca (None)
-                  memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-                  name: my-org (None)
             child_nodes:
               - step: The [set-active-organization-:api-view] updates the [:user-session] to set the active [Organization]
-                actors_introduced:
-                  - name: my-org+:organization
-                    deltas:
-                      id: 93122c6d00825101b256ef9e8e830eca (None)
-                      memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
-                      name: my-org (None)
                 actors_updated:
                   - name: :user-session
                     deltas:
-                      active_organization: Role(name='Organization', entities=[Organization(name='my-org', memberships=[OrganizationMembership(organization=..., user=User(email='my-org-owner@example.com', password='my-password', is_authenticated=True, is_active=True), role='admin')])]) (None)
+                      active_organization: Role(name='Organization', actor=Organization(name='my-org', memberships=[OrganizationMembership(organization=..., user=User(email='my-org-owner@example.com', password='my-password', is_authenticated=True, is_active=True), role='admin')])) (None)
 
