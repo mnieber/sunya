@@ -16,16 +16,18 @@ from sunya import (
 g.organization_route = Route()
 
 
+scenario_name = "backend/ms1-a-user-signs-up-and-creates-an-org"
+
+
 def start():
     user = add_role("User")
     organization = add_role("Organization")
 
-    scenario_name = "a-user-signs-up-and-creates-an-org"
     with add_scenario(scenario_name):
         with add_goal("sign up as a", user):
             with the(g.sign_up_user_api_view).calls_the(g.create_user_action):
                 with the(g.create_user_action).creates_the(user):
-                    user_()
+                    user.actor = user_()
 
             with the(g.sign_up_user_api_view).activates_the_account_of_the(user):
                 g.user.is_active = True
@@ -40,7 +42,7 @@ def start():
                 g.create_organization_action
             ):
                 with the(g.create_organization_action).creates_the(organization):
-                    organization_()
+                    organization.actor = organization_()
 
                 with the(g.create_organization_action).calls_the(
                     g.add_user_to_organization_action
@@ -77,10 +79,8 @@ def create_admin_membership():
 
 
 def organization_():
-    add_actor(
-        B.Organizations.Models.Organization(name="my-org"),
-        name="organization",
-        role="Organization",
+    return add_actor(
+        B.Organizations.Models.Organization(name="my-org"), name="organization"
     )
 
 
@@ -91,7 +91,6 @@ def user_():
             password="my-password",
         ),
         name="user",
-        role="User",
     )
 
 

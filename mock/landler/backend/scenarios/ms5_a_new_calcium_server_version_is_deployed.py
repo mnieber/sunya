@@ -1,11 +1,14 @@
 from sunya import (
     add_scenario,
+    run_scenario,
     get_scenario,
 )
 
 
+scenario_name = "backend/ms5-a-new-calcium-server-version-is-deployed"
+
+
 def start(user, project, variation="default"):
-    scenario_name = "a-user-schedule-a-project-analysis"
     with add_scenario(scenario_name):
         """
         Describe how existing PlotAnalyses can still continue to run if the
@@ -18,9 +21,9 @@ def start(user, project, variation="default"):
 
 
 def run():
-    import scenarios.s2_a_user_creates_a_project
+    from . import ms2_a_user_creates_a_project
 
-    ms2_scenario = scenarios.s2_a_user_creates_a_project.run()
+    ms2_scenario = run_scenario(ms2_a_user_creates_a_project)
     user = ms2_scenario.get_entity_by_name("user")
     project = ms2_scenario.get_entity_by_name("project")
 
@@ -29,3 +32,4 @@ def run():
 
 if __name__ == "__main__":
     run()
+un

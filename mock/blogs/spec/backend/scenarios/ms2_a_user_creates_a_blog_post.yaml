@@ -1,15 +1,8 @@
-scenario_name: a-user-creates-a-blog-post
+scenario_name: backend/ms2-a-user-creates-a-blog-post
 nodes:
   - root: ''
     child_nodes:
-      - goal: create a [BlogPost] in the [my-personal-blog+:blog]
-        actors_introduced:
-          - name: my-blog-post+:blog-post
-            deltas:
-              blog: my-personal-blog+:blog (None)
-              content: Hello people (None)
-              id: 691f5870d7a1588290e2e812267710ad (None)
-              title: My Blog Post (None)
+      - goal: create a [BlogPost] in the [Blog]
         roles_updated:
           BlogPost: my-blog-post+:blog-post
         child_nodes:

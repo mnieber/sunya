@@ -3,6 +3,9 @@ from sunya import G as g
 from sunya import add_actor, add_goal, add_role, add_scenario, get_scenario, the
 
 
+scenario_name = "backend/ms1-a-user-creates-a-project"
+
+
 def start():
     user = add_role("User")
     project = add_role("Project")
@@ -13,11 +16,10 @@ def start():
     module_spec_files = add_role("ModuleSpecFiles")
     scenario_spec_files = add_role("ScenarioSpecFiles")
 
-    scenario_name = "ms1-a-user-creates-a-project"
     with add_scenario(scenario_name):
         with add_goal("create a new", project, "for the", user):
             with the(g.create_project_api_view).calls_the(g.create_project_action):
-                project_()
+                project.actor = project_()
 
         with add_goal("upload", spec_files, "to the", project):
             with (
@@ -70,13 +72,12 @@ def start():
 
 
 def project_():
-    add_actor(
+    return add_actor(
         B.Projects.Models.Project(
             name="My Darshana Project",
             description="A project to test Darshana",
         ),
         name="project",
-        role="Project",
     )
 
 

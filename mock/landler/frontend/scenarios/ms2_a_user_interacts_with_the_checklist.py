@@ -2,32 +2,32 @@ import landler.frontend.namespace as F
 from sunya import (
     add_goal,
     add_scenario,
-    add_step,
-    get_entities,
+    add_actor,
     get_scenario,
-    register,
+    add_role,
     the,
     G as g,
 )
 
 
-def start(user):
-    scenario_name = "ms2-a-user-interacts-with-the-checklist"
-    register(user, name="user")
+scenario_name = "frontend/ms2-a-user-interacts-with-the-checklist"
+
+
+def start(a_user):
+    user = add_role(name="User")
 
     with add_scenario(scenario_name):
-        e = get_entities()
-        register(user, name="user")
+        user.actor = add_actor(a_user, name="user")
 
-        with the(e.user).signs_in():
+        with the(user).signs_in():
             pass
 
-        with the(e.user).is_redirected_to(g.home_page_route):
-            with add_goal("load the", e.checklist):
+        with the(user).is_redirected_to(g.home_page_route):
+            with add_goal("load the", g.checklist):
                 with the(g.frontend).calls_the(g.get_checklist_query):
                     _create_checklist()
 
-        with the_user_views_checklist():
+        with the(user).views_the(g.checklist).on_the(g.home_page):
             pass
 
         item_to_complete = e.checklist[0]
@@ -39,7 +39,7 @@ def start(user):
 
 
 def _create_checklist():
-    register(
+    return add_actor(
         F.Checklist.Types.Checklist(
             items=[
                 F.Checklist.Types.ChecklistItem(
@@ -69,16 +69,6 @@ def _create_checklist():
             ]
         ),
         name="checklist",
-    )
-
-
-def the_user_views_checklist():
-    return add_step(
-        "The",
-        e.user,
-        "views the",
-        e.checklist,
-        "on the home page",
     )
 
 

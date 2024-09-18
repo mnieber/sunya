@@ -1,11 +1,14 @@
 from sunya import (
     add_scenario,
+    run_scenario,
     get_scenario,
 )
 
 
+scenario_name = "backend/ms6-a-project-can-be-restored-to-a-previous-iteration"
+
+
 def start(user, project, variation="default"):
-    scenario_name = "a-user-schedule-a-project-analysis"
     with add_scenario(scenario_name):
         """
         Describe how we can replay events to bring a Project from its initial
@@ -17,9 +20,9 @@ def start(user, project, variation="default"):
 
 
 def run():
-    import scenarios.ms2_a_user_creates_a_project
+    from . import ms2_a_user_creates_a_project
 
-    ms2_scenario = scenarios.ms2_a_user_creates_a_project.run()
+    ms2_scenario = run_scenario(ms2_a_user_creates_a_project)
     user = ms2_scenario.get_entity_by_name("user")
     project = ms2_scenario.get_entity_by_name("project")
 

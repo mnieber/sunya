@@ -10,13 +10,15 @@ from sunya import (
 )
 
 
+scenario_name = "frontend/ms1-a-user-creates-a-blog"
+
+
 def start(a_user):
     blog = add_role("Blog")
     user = add_role("User")
 
-    scenario_name = "ms1-a-user-creates-a-blog"
     with add_scenario(scenario_name):
-        add_actor(a_user, name="user", role="User")
+        user.actor = add_actor(a_user, name="user")
 
         with add_goal("create a", blog, "for the", user):
             with the(user).visits_the(g.blogs_route):
@@ -30,19 +32,18 @@ def start(a_user):
 
             with the(user).submits_the(g.blog_form_view):
                 with the(g.frontend).calls_the(g.create_blog_mutation):
-                    blog_()
+                    blog.actor = blog_()
 
     return get_scenario(scenario_name)
 
 
 def blog_():
-    add_actor(
+    return add_actor(
         F.Blogs.Types.Blog(
             name="My Personal Blog",
             description="Random things that interest me",
         ),
         name="blog",
-        role="Blog",
     )
 
 

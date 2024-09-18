@@ -1,5 +1,4 @@
 from dataclassy import dataclass
-from sunya.entities import Entity
 from sunya.entities.actor_to_str import actor_to_str
 import typing as T
 
@@ -7,14 +6,7 @@ import typing as T
 @dataclass(kw_only=True)
 class Role:
     name: str
-    entities: T.List[Entity] = []
-
-    def add_entity(self, entity):
-        from sunya.scenarios.store import get_key
-
-        key = get_key(entity)
-        if not next((e for e in self.entities if get_key(e) == key), None):
-            self.entities.append(entity)
+    actor: T.Any = None
 
 
 @actor_to_str.method((Role,))

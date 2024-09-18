@@ -57,7 +57,6 @@ class Command(BaseCommand):
         for file_path in all_files:
             file_objects.append(open(file_path, "rb"))
 
-        __import__("pudb").set_trace()  # zz
         try:
             import_spec_files_form = ImportSpecFilesForm(files=file_objects)
             import_spec_files(import_spec_files_form, project)

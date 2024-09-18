@@ -3,6 +3,7 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
+    run_scenario,
     add_actor,
     the,
     G as g,
@@ -10,15 +11,17 @@ from sunya import (
 )
 
 
+scenario_name = "frontend/ms2-a-user-creates-a-blog-post"
+
+
 def start(a_user, a_blog):
     blog_post = add_role("BlogPost")
     blog = add_role("Blog")
     user = add_role("User")
 
-    scenario_name = "ms2-a-user-creates-a-blog-post"
     with add_scenario(scenario_name):
-        add_actor(a_user, name="user", role="User")
-        add_actor(a_blog, name="blog", role="Blog")
+        user.actor = add_actor(a_user, name="user")
+        blog.actor = add_actor(a_blog, name="blog")
 
         with add_goal("create a", blog_post, "in the", blog):
             with the(user).visits_the(g.blogs_route):
@@ -32,7 +35,7 @@ def start(a_user, a_blog):
 
             with the(user).submits_the(g.blog_post_form_view):
                 with the(g.frontend).calls_the(g.create_blog_post_mutation):
-                    blog_post_()
+                    blog_post.actor = blog_post_()
 
         with add_goal("edit a", blog_post, "in the", blog):
             with the(user).selects_the(blog_post).they_want_to_edit():
@@ -56,7 +59,7 @@ def start(a_user, a_blog):
 
 
 def blog_post_():
-    add_actor(
+    return add_actor(
         F.Blogs.Types.BlogPost(
             title="My First Blog Post",
             content="Hello",
@@ -64,14 +67,13 @@ def blog_post_():
             level="novice",
         ),
         name="blog_post",
-        role="BlogPost",
     )
 
 
 def run():
-    from .ms1_a_user_creates_a_blog import run as run_ms1
+    from . import ms1_a_user_creates_a_blog
 
-    ms1_scenario = run_ms1()
+    ms1_scenario = run_scenario(ms1_a_user_creates_a_blog)
     user = ms1_scenario.get_entity_by_name("user")
     blog = ms1_scenario.get_entity_by_name("blog")
 

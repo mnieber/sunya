@@ -3,6 +3,7 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
+    run_scenario,
     add_actor,
     add_role,
     the,
@@ -10,18 +11,22 @@ from sunya import (
 )
 
 
-def start(user, project):
+scenario_name = "frontend/ms3-a-user-views-a-scenario"
+
+
+def start(a_user, a_project):
+    actor = add_role("Actor")
+    highlight_facet = add_role("HighlightFacet")
+    parent_step = add_role("ParentStep")
+    project = add_role("Project")
     scenario = add_role("Scenario")
     scenarios = add_role("Scenarios")
     step = add_role("Step")
-    parent_step = add_role("ParentStep")
-    actor = add_role("Actor")
-    highlight_facet = add_role("HighlightFacet")
+    user = add_role("User")
 
-    scenario_name = "ms2-a-user-views-a-scenario"
     with add_scenario(scenario_name):
-        add_actor(user, name="user", role="User")
-        add_actor(project, name="project", role="Project")
+        user.actor = add_actor(a_user, name="user")
+        project.actor = add_actor(a_project, name="project")
 
         with add_goal("view a", scenario, "in the", g.project):
             with the(g.user).visits_the(g.project_route):
@@ -37,7 +42,7 @@ def start(user, project):
 
             with the(g.user).clicks_on_a(scenario):
                 with the(g.user).is_redirected_to_the(g.scenario_route):
-                    scenario_()
+                    scenario.actor = scenario_()
 
                 with (
                     the(g.step_tree_view)
@@ -48,7 +53,7 @@ def start(user, project):
 
             with the(g.user).clicks_on_a_root_level(step):
                 with the(g.step_list_view).highlights_the(step):
-                    step_()
+                    step.actor = step_()
 
             with the(g.user).expands_a_root_level(step):
                 with the(g.step_tree_view).opens_a_new(
@@ -63,7 +68,7 @@ def start(user, project):
                 g.step_tree_view,
             ):
                 with the(g.user).clicks_on_the_link_of_an(actor):
-                    actor_()
+                    actor.actor = actor_()
 
                     with (
                         the(highlight_facet)
@@ -94,15 +99,15 @@ def start(user, project):
 
 
 def scenario_():
-    add_actor(g.project.scenarios[0], name="scenario", role="Scenario")
+    return add_actor(g.project.scenarios[0], name="scenario")
 
 
 def step_():
-    add_actor(g.scenario.root_step.child_steps[0], name="step", role="Step")
+    return add_actor(g.scenario.root_step.child_steps[0], name="step")
 
 
 def actor_():
-    add_actor(
+    return add_actor(
         F.Actors.Types.Actor(
             key="example:actor",
             fields={
@@ -112,14 +117,13 @@ def actor_():
             changed_fields=["field2"],
         ),
         name="actor",
-        role="Actor",
     )
 
 
 def run():
-    from .ms2_a_user_uploads_files_to_a_project import run as run_ms2
+    from . import ms2_a_user_uploads_files_to_a_project
 
-    ms2_scenario = run_ms2()
+    ms2_scenario = run_scenario(ms2_a_user_uploads_files_to_a_project)
     user = ms2_scenario.get_entity_by_name("user")
     project = ms2_scenario.get_entity_by_name("project")
 

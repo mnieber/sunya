@@ -10,12 +10,15 @@ from sunya import (
 )
 
 
-def start(user):
-    project = add_role("Project")
+scenario_name = "frontend/ms1-a-user-creates-a-project"
 
-    scenario_name = "ms1-a-user-creates-a-project"
+
+def start(a_user):
+    project = add_role("Project")
+    user = add_role("User")
+
     with add_scenario(scenario_name):
-        add_actor(user, name="user", role="User")
+        user.actor = add_actor(a_user, name="user")
 
         with add_goal("create a new", project, "for the", g.user):
             with the(g.user).visits_the(g.projects_route):
@@ -29,7 +32,7 @@ def start(user):
 
             with the(g.user).submits_the(g.project_lead_form_view):
                 with the(g.frontend).calls_the(g.create_project_mutation):
-                    project_()
+                    project.actor = project_()
 
             with the(g.frontend).redirects_to_the(g.project_route):
                 pass
@@ -49,7 +52,7 @@ def start(user):
 
 
 def project_():
-    add_actor(
+    return add_actor(
         F.Projects.Types.Project(
             name="My Darshana Project",
             scenarios=[
@@ -71,7 +74,6 @@ def project_():
             ],
         ),
         name="project",
-        role="Project",
     )
 
 

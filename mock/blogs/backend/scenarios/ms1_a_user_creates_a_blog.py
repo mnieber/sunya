@@ -11,32 +11,33 @@ from sunya import (
     G as g,
 )
 
+scenario_name = "backend/ms1-a-user-creates-a-blog"
+
 
 def start(a_user):
     user = add_role("User")
     blog = add_role("Blog")
 
-    scenario_name = "a-user-creates-a-blog"
     with add_scenario(scenario_name):
-        add_actor(a_user, name="user", role="User")
+        __import__("pudb").set_trace()  # zz
+        user.actor = add_actor(a_user, name="user")
 
         with add_goal("create a", blog, "for the", user):
             with the(g.create_blog_api_view).calls_the(g.create_blog_action):
                 with the(g.create_blog_action).creates_the(blog):
-                    blog_()
+                    blog.actor = blog_()
 
     return get_scenario(scenario_name)
 
 
 def blog_():
-    add_actor(
+    return add_actor(
         B.Blogs.Models.Blog(
             name="My Personal Blog",
             description="Random things that interest me",
             audience="any",
         ),
         name="blog",
-        role="Blog",
     )
 
 

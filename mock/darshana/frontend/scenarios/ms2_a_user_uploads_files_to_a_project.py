@@ -2,6 +2,7 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
+    run_scenario,
     add_actor,
     add_role,
     the,
@@ -9,13 +10,17 @@ from sunya import (
 )
 
 
-def start(user, project):
-    spec_files = add_role("SpecFiles")
+scenario_name = "frontend/ms2-a-user-uploads-files-to-a-project"
 
-    scenario_name = "ms2-a-user-uploads-files-to-a-project"
+
+def start(a_user, a_project):
+    spec_files = add_role("SpecFiles")
+    user = add_role("User")
+    project = add_role("Project")
+
     with add_scenario(scenario_name):
-        add_actor(user, name="user", role="User")
-        add_actor(project, name="project", role="Project")
+        user.actor = add_actor(a_user, name="user")
+        project.actor = add_actor(a_project, name="project")
 
         with add_goal("upload", spec_files, "to the", project):
             with the(g.user).visits_the(g.project_route):
@@ -38,9 +43,9 @@ def start(user, project):
 
 
 def run():
-    from .ms1_a_user_creates_a_project import run as run_ms1
+    from . import ms1_a_user_creates_a_project
 
-    ms1_scenario = run_ms1()
+    ms1_scenario = run_scenario(ms1_a_user_creates_a_project)
     user = ms1_scenario.get_entity_by_name("user")
     project = ms1_scenario.get_entity_by_name("project")
 

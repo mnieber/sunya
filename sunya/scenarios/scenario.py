@@ -9,7 +9,6 @@ from sunya.scenarios.node import Node
 class EntityRecord:
     name: str
     key: str
-    role: str
     entity: Entity
 
 
@@ -39,12 +38,6 @@ class Scenario:
     def get_entity_by_key(self, key):
         for entity_record in self.entity_records:
             if entity_record.key == key:
-                return entity_record.entity
-        return None
-
-    def get_entity_by_role(self, role):
-        for entity_record in self.entity_records:
-            if entity_record.role == role:
                 return entity_record.entity
         return None
 

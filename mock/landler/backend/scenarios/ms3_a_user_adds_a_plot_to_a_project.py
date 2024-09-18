@@ -11,18 +11,20 @@ from landler.backend.modules.plot_lists import get_project_plot_list_by_name
 import landler.backend.namespace as B
 
 
+scenario_name = "backend/ms3-a-user-adds-a-plot-to-a-project"
+
+
 def start(a_project, variation="default"):
     project = add_role("Project")
     plot = add_role("Plot")
 
-    scenario_name = "a-user-adds-a-plot-to-a-project"
     with add_scenario(scenario_name):
-        add_actor(a_project, name="project", role="Project")
+        project.actor = add_actor(a_project, name="project")
 
         if variation == "default":
             with add_goal("create a", plot, "in the", project):
                 with the(g.create_plot_action).creates_the(plot):
-                    plot_()
+                    plot.actor = plot_()
                     plot_questionnaire_()
                     g.plot.plot_questionnaire = g.plot_questionnaire
 
@@ -43,7 +45,7 @@ def default_plot_list_():
 
 
 def plot_questionnaire_():
-    add_actor(
+    return add_actor(
         B.PlotQuestionnaires.Models.PlotQuestionnaire(
             land_type=B.PlotQuestionnaires.Enums.LandType.CROPLAND,
             plot=g.plot,
@@ -53,7 +55,7 @@ def plot_questionnaire_():
 
 
 def plot_():
-    add_actor(
+    return add_actor(
         B.Plots.Models.Plot(
             name="my-plot",
             owner=g.user_session.active_organization,
@@ -65,7 +67,6 @@ def plot_():
             ),
         ),
         name="plot",
-        role="Plot",
     )
 
 
