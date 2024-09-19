@@ -1,0 +1,26 @@
+scenario_name: frontend/ms2-a-user-interacts-with-the-checklist
+nodes:
+  - root: ''
+    child_nodes:
+      - step: The [User] signs in
+      - step: The [User] is redirected to [home-page+:route]
+        child_nodes:
+          - goal: load the [Checklist]
+            actors_introduced:
+              - name: :checklist
+                deltas:
+                  id: 076e391b56bb53f291b1ad7ece8f50f2 (None)
+                  items: '[''add-your-organization+:checklist_item'', ''create-a-project+:checklist_item'', ''add-a-plot+:checklist_item'', ''trigger-a-project-analysis+:checklist_item''] (None)'
+            roles_updated:
+              Checklist: :checklist
+            child_nodes:
+              - step: The [:frontend] calls the [get-checklist:query]
+      - step: The [User] views the [Checklist] on the [home-page+:route]
+      - goal: The [User] clicks to complete the [add-your-organization+:checklist_item]
+        actors_updated:
+          - name: add-your-organization+:checklist_item
+            deltas:
+              is_completed: True (False)
+        child_nodes:
+          - step: The [:frontend] calls the [update-checklist-items:mutation]
+

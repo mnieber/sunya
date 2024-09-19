@@ -54,6 +54,11 @@ g.get_checklist_query = Checklist.Queries.GetChecklist()
 g.update_checklist_items_mutation = Checklist.Mutations.UpdateChecklistItems()
 
 
+@actor_to_str.method((Checklist.Types.Checklist,))
+def checklist_to_str(checklist):
+    return f":checklist"
+
+
 @actor_to_str.method((Checklist.Types.ChecklistItem,))
 def checklist_item_to_str(checklist_item):
     return f"{checklist_item.title}+:checklist_item"

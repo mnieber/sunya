@@ -26,7 +26,7 @@ def import_spec_files(import_spec_files_form: ImportSpecFilesForm, project: Proj
 
             if "scenario_name" in data:
                 _process_scenario_spec(data, project)
-            elif "name" in data and "models" in data:
+            elif "name" in data:
                 _process_module_spec(data, project)
             else:
                 raise UnknownSpecFileTypeError(file.name)

@@ -1,0 +1,13 @@
+name: frames
+types: []
+mutations: []
+queries: []
+states: []
+routes:
+  - name: HomePageRoute
+state_providers: []
+views:
+  HomePage(Entity): {}
+effects: []
+components: []
+

@@ -1,4 +1,5 @@
 import landler.backend.namespace as B
+import landler.frontend.namespace as F
 from sunya import FileWriter
 from sunya.entrypoint import (
     get_module_and_scenario_names,
@@ -24,12 +25,19 @@ config = dict(
         "backend/project_analysis_jobs",
         "backend/projects",
         "backend/users",
+        "frontend/checklist",
+        "frontend/frames",
+        "frontend/organizations",
+        "frontend/maps",
+        "frontend/users",
+        "frontend/user_settings",
     ],
     all_scenario_names=[
         "backend/ms1_a_user_signs_up_and_creates_an_org",
         "backend/ms2_a_user_creates_a_project",
         "backend/ms3_a_user_adds_a_plot_to_a_project",
         "backend/ms4_a_user_schedules_a_project_analysis",
+        "frontend/ms2_a_user_interacts_with_the_checklist",
     ],
     module_by_name={
         "backend/calculations": B.Calculations,
@@ -44,6 +52,12 @@ config = dict(
         "backend/project_analysis_jobs": B.ProjectAnalysisJobs,
         "backend/projects": B.Projects,
         "backend/users": B.Users,
+        "frontend/checklist": F.Checklist,
+        "frontend/frames": F.Frames,
+        "frontend/organizations": F.Organizations,
+        "frontend/maps": F.Maps,
+        "frontend/users": F.Users,
+        "frontend/user_settings": F.UserSettings,
     },
 )
 
