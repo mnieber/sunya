@@ -19,6 +19,7 @@ def start(a_user, a_project):
     highlight_facet = add_role("HighlightFacet")
     parent_step = add_role("ParentStep")
     project = add_role("Project")
+    reconstructed_actor_by_key = add_role("ReconstructedActorByKey")
     scenario = add_role("Scenario")
     scenarios = add_role("Scenarios")
     step = add_role("Step")
@@ -78,10 +79,10 @@ def start(a_user, a_project):
                     ):
                         with (
                             the(g.set_highlighted_actor_action)
-                            .updates_the(g.reconstructed_actor)
+                            .updates_the(reconstructed_actor_by_key)
                             .of_the(g.step_tree_state)
                             .by_applying_each(g.field_delta_set)
-                            .for_the_related(step)
+                            .for_each_actor_in_the_related(step)
                             .and_each(parent_step)
                         ):
                             pass

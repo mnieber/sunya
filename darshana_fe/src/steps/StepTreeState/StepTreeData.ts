@@ -1,12 +1,13 @@
 import { data } from 'skandha';
-import { ActorT } from '/src/api/types/ActorT';
+import { ActorByKeyT } from '/src/api/types/ActorT';
 import { StepT } from '/src/api/types/StepT';
 
 export class StepTreeData {
   static className = () => 'StepTreeData';
 
   @data rootStep: StepT | null = null;
-  @data reconstructedActor: ActorT | null = null;
+  @data reconstructedActorByKey: ActorByKeyT | null = null;
+  @data actorKey: string | null = null;
   @data get stepById() {
     const result: { [id: string]: StepT } = {};
 

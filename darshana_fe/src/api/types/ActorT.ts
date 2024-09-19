@@ -8,7 +8,7 @@ export type ActorT = {
   changedFields: string[];
 };
 
-export type ActorByIdT = { [id: string]: ActorT };
+export type ActorByKeyT = { [key: string]: ActorT };
 
 export const createActor = (values: ObjT): ActorT => {
   return initRS({

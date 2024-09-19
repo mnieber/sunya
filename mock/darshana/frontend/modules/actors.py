@@ -28,7 +28,6 @@ class Actors(Module):
 g.actor_view = Actors.Views.ActorView()
 g.actor_route = Actors.Routes.Actor()
 g.actor_link = Actors.Components.ActorLink()
-g.reconstructed_actor = Actors.Types.Actor(key="reconstructed:actor")
 g.field_delta_set = GenericEntity(_key=":field_delta_set")
 g.actor = Actors.Types.Actor(key="")
 

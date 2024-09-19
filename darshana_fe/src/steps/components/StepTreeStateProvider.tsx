@@ -24,10 +24,14 @@ export const StepTreeStateProvider = observer(
 
     const cache = useBuilder(() =>
       makeAutoObservable({
-        get reconstructedActor() {
+        get reconstructedActorByKey() {
           return updateSources({
-            resource: stepTreeState.stepTreeCtr.data.reconstructedActor,
+            resource:
+              stepTreeState.stepTreeCtr.data.reconstructedActorByKey ?? {},
           });
+        },
+        get actorKey() {
+          return stepTreeState.stepTreeCtr.data.actorKey ?? '';
         },
         get rootStep() {
           return updateSources(
@@ -44,7 +48,8 @@ export const StepTreeStateProvider = observer(
       return createGetProps({
         stepTreeState: () => stepTreeState,
         rootStep: () => cache.rootStep,
-        reconstructedActor: () => cache.reconstructedActor,
+        reconstructedActorByKey: () => cache.reconstructedActorByKey,
+        actorKey: () => cache.actorKey,
       });
     };
 
