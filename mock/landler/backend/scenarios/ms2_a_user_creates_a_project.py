@@ -18,19 +18,22 @@ def start():
     project = add_role("Project")
 
     with add_scenario(scenario_name):
-        with the(g.frontend).calls_the(g.create_project_api_view):
-            with add_goal(
-                "create a",
-                project,
-                "with admin",
-                g.user_session.active_organization,
-            ):
+        with add_goal(
+            "create a",
+            project,
+            "with admin",
+            g.user_session.active_organization,
+        ):
+            with the(g.frontend).calls_the(g.create_project_api_view):
                 with the(g.create_project_api_view).calls_the(g.create_project_action):
                     with the(g.create_project_action).creates_the(project):
                         project.actor = project_()
 
             with add_goal(
-                "add the", g.user_session.active_organization, "to the", g.project
+                "add the",
+                g.user_session.active_organization,
+                "as admin to the",
+                g.project,
             ):
                 with the(g.create_project_action).calls_the(
                     g.add_organization_to_project_action

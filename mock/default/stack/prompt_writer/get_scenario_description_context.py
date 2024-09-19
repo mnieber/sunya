@@ -1,5 +1,6 @@
 from sunya import get_actor_str, fact_to_string, NoValue, get_entity_delta
 from sunya.entities import Entity
+from sunya.scenarios.roles import Role
 
 
 def get_scenario_description_context(scenario):
@@ -32,9 +33,15 @@ def _get_node_context(node):
 def _get_node_actors(node, add_created, add_updated):
     result = []
     for fact_bit in node.fact:
-        if not isinstance(fact_bit, Entity):
+        if isinstance(fact_bit, Entity):
+            entity = fact_bit
+        elif isinstance(fact_bit, Role):
+            entity = fact_bit.actor
+        else:
+            entity = None
+
+        if not entity:
             continue
-        entity = fact_bit
 
         delta = get_entity_delta(node, entity)
         field_deltas = {}

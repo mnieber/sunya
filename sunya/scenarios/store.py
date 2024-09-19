@@ -89,10 +89,15 @@ def add_node(node):
     for fact_bit in node.fact:
         if isinstance(fact_bit, Role):
             role = fact_bit
-            if entity := role.actor:
+            entity = role.actor
+            if entity:
                 node.pre_entity_key_by_role_name[role.name] = get_key(entity)
         elif isinstance(fact_bit, Entity):
             entity = fact_bit
+        else:
+            entity = None
+
+        if entity:
             node.pre_entity_memo_by_key[get_key(entity)] = create_memo(entity)
 
     return node

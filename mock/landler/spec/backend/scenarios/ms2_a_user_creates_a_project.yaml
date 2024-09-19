@@ -2,18 +2,30 @@ scenario_name: backend/ms2-a-user-creates-a-project
 nodes:
   - root: ''
     child_nodes:
-      - step: The [:frontend] calls the [create-project:api-view]
+      - goal: create a [Project] with admin [Organization]
+        actors_introduced:
+          - name: my-project+:project
+            deltas:
+              memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
+              name: my-project (None)
+              plot_lists: '[] (None)'
+        roles_updated:
+          Project: my-project+:project
         child_nodes:
-          - goal: create a [Project] with admin [Organization]
-            roles_updated:
-              Project: my-project+:project
+          - step: The [:frontend] calls the [create-project:api-view]
             child_nodes:
               - step: The [create-project:api-view] calls the [create-project:action]
                 child_nodes:
                   - step: The [create-project:action] creates the [Project]
+                    actors_introduced:
+                      - name: my-project+:project
+                        deltas:
+                          memberships: '[] (None)'
+                          name: my-project (None)
+                          plot_lists: '[] (None)'
                     roles_updated:
                       Project: my-project+:project
-          - goal: add the [Organization] to the [my-project+:project]
+          - goal: add the [Organization] as admin to the [my-project+:project]
             actors_updated:
               - name: my-project+:project
                 deltas:

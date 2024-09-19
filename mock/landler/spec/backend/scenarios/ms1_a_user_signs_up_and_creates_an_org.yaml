@@ -12,12 +12,24 @@ nodes:
         child_nodes:
           - step: The [sign-in-user-:api-view] calls the [sign-in-user:action]
       - goal: create an [Organization] with admin [my-org-owner@example.com+:user]
+        actors_introduced:
+          - name: my-org+:organization
+            deltas:
+              id: 93122c6d00825101b256ef9e8e830eca (None)
+              memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
+              name: my-org (None)
         roles_updated:
           Organization: my-org+:organization
         child_nodes:
           - step: The [create-organization-:api-view] calls the [create-organization:action]
             child_nodes:
               - step: The [create-organization:action] creates the [Organization]
+                actors_introduced:
+                  - name: my-org+:organization
+                    deltas:
+                      id: 93122c6d00825101b256ef9e8e830eca (None)
+                      memberships: '[] (None)'
+                      name: my-org (None)
                 roles_updated:
                   Organization: my-org+:organization
               - step: The [create-organization:action] calls the [add-user-to-organization:action]
@@ -30,5 +42,5 @@ nodes:
                 actors_updated:
                   - name: :user-session
                     deltas:
-                      active_organization: Role(name='Organization', actor=Organization(name='my-org', memberships=[OrganizationMembership(organization=..., user=User(email='my-org-owner@example.com', password='my-password', is_authenticated=True, is_active=True), role='admin')])) (None)
+                      active_organization: my-org+:organization (None)
 

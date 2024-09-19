@@ -1,6 +1,7 @@
 import copy
 from sunya.entities import Entity
 from sunya.entities.actor_to_str import get_actor_str
+from sunya.scenarios.roles import Role
 
 
 def create_memo(entity):
@@ -18,7 +19,15 @@ def create_memo(entity):
 
 
 def _get_memo_field_value(x):
-    return get_actor_str(x) if isinstance(x, Entity) else copy.deepcopy(x)
+    if isinstance(x, Entity):
+        return get_actor_str(x)
+
+    if isinstance(x, Role):
+        if isinstance(x.actor, Entity):
+            return get_actor_str(x.actor)
+        return x.name
+
+    return copy.deepcopy(x)
 
 
 def _iter_fields(obj):
