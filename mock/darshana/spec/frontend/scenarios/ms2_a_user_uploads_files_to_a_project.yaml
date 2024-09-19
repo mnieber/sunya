@@ -4,6 +4,8 @@ nodes:
   - root: ''
     child_nodes:
       - goal: upload [SpecFiles] to the [Project]
+        pre_entity_key_by_role_name:
+          Project: my-darshana-project+:project
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
           - step: The [alice@example.com+:user] presses the [import-spec-files-button:component]

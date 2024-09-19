@@ -32,7 +32,9 @@ class TestImportScenarioSpecAction:
                             },
                         }
                     ],
-                    "roles_updated": {"Project": "my-test-project+:project"},
+                    "post_entity_key_by_role_name": {
+                        "Project": "my-test-project+:project"
+                    },
                     "child_nodes": [
                         {
                             "step": "The [alice@example.com+:user] visits the [projects+:route]"

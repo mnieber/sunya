@@ -19,7 +19,7 @@ nodes:
               id: 93122c6d00825101b256ef9e8e830eca (None)
               memberships: '[''(my-org)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
               name: my-org (None)
-        roles_updated:
+        post_entity_key_by_role_name:
           Organization: my-org+:organization
         child_nodes:
           - step: The [create-organization-:api-view] calls the [create-organization:action]
@@ -31,17 +31,23 @@ nodes:
                       id: 93122c6d00825101b256ef9e8e830eca (None)
                       memberships: '[] (None)'
                       name: my-org (None)
-                roles_updated:
+                post_entity_key_by_role_name:
                   Organization: my-org+:organization
               - step: The [create-organization:action] calls the [add-user-to-organization:action]
       - step: The [User] uses the [organization-picker:component] in the [:frontend] to switch to the [route+:route] of the [Organization]
+        pre_entity_key_by_role_name:
+          Organization: my-org+:organization
         child_nodes:
           - step: The [User] is redirected to the [route+:route]
           - goal: set [Organization] as the active organization
+            pre_entity_key_by_role_name:
+              Organization: my-org+:organization
             child_nodes:
               - step: The [set-active-organization-:api-view] updates the [:user-session] to set the active [Organization]
                 actors_updated:
                   - name: :user-session
                     deltas:
                       active_organization: my-org+:organization (None)
+                pre_entity_key_by_role_name:
+                  Organization: my-org+:organization
 

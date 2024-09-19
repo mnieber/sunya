@@ -12,7 +12,7 @@ nodes:
               project_analyses: '[] (None)'
               repeats_every: None (None)
               scheduled_at: 2024-01-01 00:00:00 (None)
-        roles_updated:
+        post_entity_key_by_role_name:
           ProjectAnalysisJob: my-project+:project-analysis-job
         child_nodes:
           - step: The [create-project-analysis-job:api-view] calls the [create-project-analysis-job:action]
@@ -26,7 +26,7 @@ nodes:
                       project_analyses: '[] (None)'
                       repeats_every: None (None)
                       scheduled_at: 2024-01-01 00:00:00 (None)
-                roles_updated:
+                post_entity_key_by_role_name:
                   ProjectAnalysisJob: my-project+:project-analysis-job
       - step: the [:project-analysis-queue] finds [JobsToRun]
         actors_introduced:
@@ -34,13 +34,15 @@ nodes:
             deltas:
               items: '[''my-project+:project-analysis-job''] (None)'
               name: jobs_to_run (None)
-        roles_updated:
+        post_entity_key_by_role_name:
           JobsToRun: jobs_to_run+:list
       - step: The [:project-analysis-queue] runs the first [ProjectAnalysisJob]
         actors_updated:
           - name: my-project+:project-analysis-job
             deltas:
               project_analyses: '[''my-project+:project-analysis''] ([])'
+        pre_entity_key_by_role_name:
+          ProjectAnalysisJob: my-project+:project-analysis-job
         child_nodes:
           - goal: create a [ProjectAnalysis] from a [ProjectAnalysisJob]
             actors_introduced:
@@ -56,7 +58,9 @@ nodes:
               - name: my-project+:project-analysis-job
                 deltas:
                   project_analyses: '[''my-project+:project-analysis''] ([])'
-            roles_updated:
+            pre_entity_key_by_role_name:
+              ProjectAnalysisJob: my-project+:project-analysis-job
+            post_entity_key_by_role_name:
               ProjectAnalysis: my-project+:project-analysis
             child_nodes:
               - step: The [:project-analysis-queue] calls the [create-project-analysis:action]
@@ -71,10 +75,15 @@ nodes:
                           plot_analyses: '[] (None)'
                           project: my-project+:project (None)
                           status: running (None)
-                    roles_updated:
+                    post_entity_key_by_role_name:
                       ProjectAnalysis: my-project+:project-analysis
                   - step: The [create-project-analysis:action] gets the [Project] at the now ts of the [ProjectAnalysis]
+                    pre_entity_key_by_role_name:
+                      Project: my-project+:project
+                      ProjectAnalysis: my-project+:project-analysis
                   - step: The [create-project-analysis:action] loops over all plots in the [ProjectAtNow]
+                    pre_entity_key_by_role_name:
+                      ProjectAtNow: my-project+:project
                     child_nodes:
                       - goal: add a [PlotAnalysis] for the [Plot] to the [ProjectAnalysis]
                         actors_introduced:
@@ -89,7 +98,10 @@ nodes:
                           - name: my-project+:project-analysis
                             deltas:
                               plot_analyses: '[''my-plot@2024-01-01-00:00:00+:plot-analysis''] ([])'
-                        roles_updated:
+                        pre_entity_key_by_role_name:
+                          Plot: my-plot@0+:plot
+                          ProjectAnalysis: my-project+:project-analysis
+                        post_entity_key_by_role_name:
                           PlotAnalysis: my-plot@2024-01-01-00:00:00+:plot-analysis
                         child_nodes:
                           - step: The [create-project-analysis:action] creates the [PlotAnalysis]
@@ -101,13 +113,19 @@ nodes:
                                   plot: my-plot@0+:plot (None)
                                   project_analysis: my-project+:project-analysis (None)
                                   status: running (None)
-                            roles_updated:
+                            post_entity_key_by_role_name:
                               PlotAnalysis: my-plot@2024-01-01-00:00:00+:plot-analysis
           - goal: run each [PlotAnalysis] in the [ProjectAnalysis] for the [Plot] at the now timestamp of the [PlotAnalysis]
+            pre_entity_key_by_role_name:
+              PlotAnalysis: my-plot@2024-01-01-00:00:00+:plot-analysis
+              ProjectAnalysis: my-project+:project-analysis
+              Plot: my-plot@0+:plot
             child_nodes:
               - step: The [:project-analysis-queue] calls the [run-project-analysis:action]
                 child_nodes:
                   - step: The [run-project-analysis:action] calls the [run-plot-analysis:action] with [PlotAnalysis]
+                    pre_entity_key_by_role_name:
+                      PlotAnalysis: my-plot@2024-01-01-00:00:00+:plot-analysis
                     child_nodes:
                       - step: The [run-plot-analysis:action] creates the [CalciumPlotAnalysisJob] for the [PlotAtNow]
                         actors_introduced:
@@ -124,7 +142,7 @@ nodes:
                               plot_questionnaire: my-plot+:plot-questionnaire (None)
                               polygon: +:polygon (None)
                               sequence_number: 1 (None)
-                        roles_updated:
+                        post_entity_key_by_role_name:
                           CalciumPlotAnalysisJob: 97ac1d01f01a5efb80a39a807d6c5b15+:calcium-plot-analysis-job
                           PlotAtNow: my-plot@0+:plot
 

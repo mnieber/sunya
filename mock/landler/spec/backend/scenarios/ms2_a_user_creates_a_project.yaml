@@ -10,7 +10,9 @@ nodes:
               memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
               name: my-project (None)
               plot_lists: '[] (None)'
-        roles_updated:
+        pre_entity_key_by_role_name:
+          Organization: my-org+:organization
+        post_entity_key_by_role_name:
           Project: my-project+:project
         child_nodes:
           - step: The [:frontend] calls the [create-project:api-view]
@@ -24,13 +26,15 @@ nodes:
                           memberships: '[] (None)'
                           name: my-project (None)
                           plot_lists: '[] (None)'
-                    roles_updated:
+                    post_entity_key_by_role_name:
                       Project: my-project+:project
           - goal: add the [Organization] as admin to the [my-project+:project]
             actors_updated:
               - name: my-project+:project
                 deltas:
                   memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] ([])'
+            pre_entity_key_by_role_name:
+              Organization: my-org+:organization
             child_nodes:
               - step: The [create-project:action] calls the [add-organization-to-project:action]
 

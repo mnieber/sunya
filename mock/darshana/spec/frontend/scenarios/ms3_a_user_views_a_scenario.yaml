@@ -10,12 +10,14 @@ nodes:
               id: ff5aeda911da5d76ae711522d6d7a17e (None)
               name: My First (None)
               root_step: root:step (None)
-        roles_updated:
+        post_entity_key_by_role_name:
           Scenario: my-first+:scenario
         child_nodes:
           - step: The [alice@example.com+:user] visits the [project+:route]
             child_nodes:
               - step: The [project-page:component] calls the [get-project:query] to load the [Project]
+                pre_entity_key_by_role_name:
+                  Project: my-darshana-project+:project
               - step: The [project-page:component] displays the [Scenarios] in the [my-darshana-project+:project]
           - step: The [alice@example.com+:user] clicks on a [Scenario]
             actors_introduced:
@@ -24,7 +26,7 @@ nodes:
                   id: ff5aeda911da5d76ae711522d6d7a17e (None)
                   name: My First (None)
                   root_step: root:step (None)
-            roles_updated:
+            post_entity_key_by_role_name:
               Scenario: my-first+:scenario
             child_nodes:
               - step: The [alice@example.com+:user] is redirected to the [scenario+:route]
@@ -38,7 +40,7 @@ nodes:
                   fieldDeltaSetByActorKey: '{} (None)'
                   id: 9bb869b27c1d529c97add3304a7808af (None)
                   parent_step: None (None)
-            roles_updated:
+            post_entity_key_by_role_name:
               Step: base-step-1:step
             child_nodes:
               - step: The [step-list-view:component] highlights the [Step]
@@ -50,11 +52,15 @@ nodes:
                       fieldDeltaSetByActorKey: '{} (None)'
                       id: 9bb869b27c1d529c97add3304a7808af (None)
                       parent_step: None (None)
-                roles_updated:
+                post_entity_key_by_role_name:
                   Step: base-step-1:step
           - step: The [alice@example.com+:user] expands a root level [Step]
+            pre_entity_key_by_role_name:
+              Step: base-step-1:step
             child_nodes:
               - step: The [step-tree-view:component] opens a new [step-list-view:component] below the expanded [Step]
+                pre_entity_key_by_role_name:
+                  Step: base-step-1:step
           - goal: view the selected [Actor] in the [step-tree-view:component]
             actors_introduced:
               - name: example-actor+:actor
@@ -63,7 +69,7 @@ nodes:
                   fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
                   id: 8427f8f94fca596dbb9b8c8085180942 (None)
                   key: example:actor (None)
-            roles_updated:
+            post_entity_key_by_role_name:
               Actor: example-actor+:actor
             child_nodes:
               - step: The [alice@example.com+:user] clicks on the link of an [Actor]
@@ -74,13 +80,17 @@ nodes:
                       fields: '{''field1'': ''value1'', ''field2'': ''value2''} (None)'
                       id: 8427f8f94fca596dbb9b8c8085180942 (None)
                       key: example:actor (None)
-                roles_updated:
+                post_entity_key_by_role_name:
                   Actor: example-actor+:actor
                 child_nodes:
                   - step: The [HighlightFacet] of the [step-tree-:state] calls the [set-highlighted-actor:action] of the [step-tree-:state]
                     child_nodes:
-                      - step: The [set-highlighted-actor:action] updates the [reconstructed-actor+:actor] of the [step-tree-:state] by applying each [:field_delta_set] for the related [Step] and each [ParentStep]
+                      - step: The [set-highlighted-actor:action] updates the [ReconstructedActorByKey] of the [step-tree-:state] by applying each [:field_delta_set] for each actor in the related [Step] and each [ParentStep]
+                        pre_entity_key_by_role_name:
+                          Step: base-step-1:step
               - step: The [actor-view:component] displays the highlighted [Actor]
+                pre_entity_key_by_role_name:
+                  Actor: example-actor+:actor
           - step: The [alice@example.com+:user] ctrl clicks on the link of the [example-actor+:actor]
             child_nodes:
               - step: The [step-tree-view:component] redirects to the [actor+:route] for the [example-actor+:actor]

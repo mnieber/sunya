@@ -11,8 +11,9 @@ nodes:
               id: 00dcca049c335a198d7d466b886ec3bb (None)
               name: My Darshana Project (None)
               scenarios: '[] (None)'
-        roles_updated:
+        pre_entity_key_by_role_name:
           Project: my-darshana-project+:project
+          User: alice@example.com+:user
         child_nodes:
           - step: The [create-project:api-view] calls the [create-project:action]
             child_nodes:
@@ -24,7 +25,7 @@ nodes:
                       id: 00dcca049c335a198d7d466b886ec3bb (None)
                       name: My Darshana Project (None)
                       scenarios: '[] (None)'
-                roles_updated:
+                pre_entity_key_by_role_name:
                   Project: my-darshana-project+:project
       - goal: upload [SpecFiles] to the [Project]
         actors_updated:
@@ -32,17 +33,32 @@ nodes:
             deltas:
               scenarios: ([Scenario(name='My First Scenario', project=Project(name='My Darshana Project', description='A project to test Darshana', scenarios=(...)), root_step=Step(fact=(FactBit(type_name='string', value='root'),), parent_step=None, child_steps=[Step(fact=(FactBit(type_name='string', value='the'), FactBit(type_name='actor', value='alice@example.com:user'), FactBit(type_name='string', value='creates a'), FactBit(type_name='role', value='Project')), parent_step=None, child_steps=[Step(fact=(FactBit(type_name='string', value='the'), FactBit(type_name='actor', value='alice@example.com:user'), FactBit(type_name='string', value='uploads the'), FactBit(type_name='role', value='SpecFiles')), parent_step=None, child_steps=[], field_delta_set_by_actor_key={})], field_delta_set_by_actor_key={}), Step(fact=(FactBit(type_name='string', value='the'), FactBit(type_name='actor', value='alice@example.com:user'), FactBit(type_name='string', value='clicks on a'), FactBit(type_name='role',
                 value='Scenario')), parent_step=None, child_steps=[], field_delta_set_by_actor_key={})], field_delta_set_by_actor_key={}))],) ([])
+        pre_entity_key_by_role_name:
+          Project: my-darshana-project+:project
         child_nodes:
           - step: The [import-spec-files:api-view] identifies the [ScenarioSpecFiles] and the [ModuleSpecFiles] in the [SpecFiles]
           - step: The [import-spec-files:api-view] deletes each [Scenario] from the [Project]
+            pre_entity_key_by_role_name:
+              Scenario: my-first+:scenario
+              Project: my-darshana-project+:project
           - step: The [import-spec-files:api-view] calls the [import-spec-files:action]
             child_nodes:
               - step: The [import-spec-files:action] deletes all data in the [Project]
+                pre_entity_key_by_role_name:
+                  Project: my-darshana-project+:project
               - step: The [import-spec-files:action] calls the [import-scenario-spec:action] for each file in the [ScenarioSpecFiles]
                 child_nodes:
                   - step: The [import-scenario-spec:action] iterates the tree structure of the [Scenario]
+                    pre_entity_key_by_role_name:
+                      Scenario: my-first+:scenario
                     child_nodes:
                       - step: The [import-scenario-spec:action] calls the [create-actor:action] for each [Actor]
+                        pre_entity_key_by_role_name:
+                          Actor: example-actor+:actor
                       - step: The [import-scenario-spec:action] calls the [create-step:action] with these [Actor] instances
+                        pre_entity_key_by_role_name:
+                          Actor: example-actor+:actor
                       - step: The [import-scenario-spec:action] calls the [create-scenario:action] with these [Step] instances
+                        pre_entity_key_by_role_name:
+                          Step: base-step-1:step
 

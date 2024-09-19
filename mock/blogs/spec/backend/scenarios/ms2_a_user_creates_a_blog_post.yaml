@@ -11,7 +11,9 @@ nodes:
               content: Hello people (None)
               id: 691f5870d7a1588290e2e812267710ad (None)
               title: My Blog Post (None)
-        roles_updated:
+        pre_entity_key_by_role_name:
+          Blog: my-personal-blog+:blog
+        post_entity_key_by_role_name:
           BlogPost: my-blog-post+:blog-post
         child_nodes:
           - step: The [create-blog:api-view] calls the [create-blog:action]

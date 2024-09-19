@@ -18,7 +18,9 @@ nodes:
           - name: my-project+:project
             deltas:
               plot_lists: '[''default+:plot-list''] ([])'
-        roles_updated:
+        pre_entity_key_by_role_name:
+          Project: my-project+:project
+        post_entity_key_by_role_name:
           Plot: my-plot@0+:plot
         child_nodes:
           - step: The [create-plot:action] creates the [Plot]
@@ -32,13 +34,16 @@ nodes:
                   plot_questionnaire: my-plot+:plot-questionnaire (None)
                   polygon: +:polygon (None)
                   sequence_number: 1 (None)
-            roles_updated:
+            post_entity_key_by_role_name:
               Plot: my-plot@0+:plot
           - goal: add the [Plot] to the [Project]
             actors_updated:
               - name: my-project+:project
                 deltas:
                   plot_lists: '[''default+:plot-list''] ([])'
+            pre_entity_key_by_role_name:
+              Plot: my-plot@0+:plot
+              Project: my-project+:project
             child_nodes:
               - step: The [create-plot:action] calls the [add-plot-to-project:action]
 

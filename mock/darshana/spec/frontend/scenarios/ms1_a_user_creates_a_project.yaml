@@ -11,7 +11,7 @@ nodes:
               id: 00dcca049c335a198d7d466b886ec3bb (None)
               name: My Darshana Project (None)
               scenarios: '[''my-first+:scenario''] (None)'
-        roles_updated:
+        post_entity_key_by_role_name:
           Project: my-darshana-project+:project
         child_nodes:
           - step: The [alice@example.com+:user] visits the [projects+:route]
@@ -22,6 +22,8 @@ nodes:
               - step: The [:frontend] calls the [create-project:mutation]
           - step: The [:frontend] redirects to the [project+:route]
       - goal: delete a [Project] for the [alice@example.com+:user]
+        pre_entity_key_by_role_name:
+          Project: my-darshana-project+:project
         child_nodes:
           - step: The [alice@example.com+:user] visits the [projects+:route]
           - step: The [alice@example.com+:user] presses the [delete-project-button:component]
