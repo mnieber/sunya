@@ -1,5 +1,4 @@
 import axios from 'axios';
-import camelcaseKeys from 'camelcase-keys';
 import snakecaseKeys from 'snakecase-keys';
 
 axios.defaults.withCredentials = true;
@@ -14,7 +13,6 @@ export function get(query: string) {
       headers: getHeaders(),
     })
     .then((response) => {
-      response.data = camelcaseKeys(response.data, { deep: true });
       return response;
     });
 }
@@ -35,7 +33,6 @@ export function post(query: string, variables: any, headers?: any) {
       headers: allHeaders,
     })
     .then((response) => {
-      response.data = camelcaseKeys(response.data, { deep: true });
       return response;
     });
 }
