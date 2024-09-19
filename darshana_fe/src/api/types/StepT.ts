@@ -29,7 +29,7 @@ export const createStep = (values: ObjT): StepT => {
     childSteps: values.childSteps ?? [],
     fieldDeltaSetByActorKey: values.fieldDeltaSetByActorKey ?? {},
     preActorKeyByRoleName: values.preActorKeyByRoleName ?? {},
-    postActorKeyByRoleName: values.preActorKeyByRoleName ?? {},
+    postActorKeyByRoleName: values.postActorKeyByRoleName ?? {},
   } as StepT);
 };
 

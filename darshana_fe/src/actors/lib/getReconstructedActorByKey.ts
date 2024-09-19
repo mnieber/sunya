@@ -23,7 +23,7 @@ export const getReconstructedActorByKey = (
     step.postActorKeyByRoleName,
   ]) {
     for (const roleName of R.keys(actorKeyByRoleName)) {
-      const actorKey = step.preActorKeyByRoleName[roleName];
+      const actorKey = actorKeyByRoleName[roleName];
       createActor(actorKey);
     }
   }

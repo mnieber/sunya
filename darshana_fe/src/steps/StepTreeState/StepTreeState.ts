@@ -22,19 +22,20 @@ export class StepTreeState {
       this.stepTreeCtr.data.reconstructedActorByKey =
         getReconstructedActorByKey(step, this.stepTreeCtr.data.stepById);
 
-      const preActorKey = step.preActorKeyByRoleName[actorKey];
-      const postActorKey = step.postActorKeyByRoleName[actorKey];
+      const maybeRoleName = actorKey[0].toLowerCase() + actorKey.slice(1);
+      const preActorKey = step.preActorKeyByRoleName[maybeRoleName];
+      const postActorKey = step.postActorKeyByRoleName[maybeRoleName];
 
       if (preActorKey || postActorKey) {
-        return {
+        this.stepTreeCtr.data.actorContext = {
           step,
           roleName: actorKey,
           actorKey: preActorKey,
           otherActorKey: postActorKey,
         };
+      } else {
+        this.stepTreeCtr.data.actorContext = { step, actorKey };
       }
-
-      return { step, actorKey };
     }),
   };
 
