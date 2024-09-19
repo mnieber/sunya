@@ -39,7 +39,7 @@ def start(a_project, variation="default"):
 
 
 def default_plot_list_():
-    add_actor(
+    return add_actor(
         get_project_plot_list_by_name(g.project, "default"), name="default_plot_list"
     )
 

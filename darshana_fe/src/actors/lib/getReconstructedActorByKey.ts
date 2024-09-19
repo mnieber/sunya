@@ -7,11 +7,24 @@ export const getReconstructedActorByKey = (
   stepById: StepByIdT
 ): ActorByKeyT => {
   let actorByKey: ActorByKeyT = {};
+  const createActor = (actorKey: string) => {
+    actorByKey[actorKey] = { key: actorKey, fields: {}, changedFields: [] };
+  };
 
   for (const factBit of step.fact) {
     if (factBit.typeName === 'actor') {
       const actorKey = factBit.value as string;
-      actorByKey[actorKey] = { key: actorKey, fields: {}, changedFields: [] };
+      createActor(actorKey);
+    }
+  }
+
+  for (const actorKeyByRoleName of [
+    step.preActorKeyByRoleName,
+    step.postActorKeyByRoleName,
+  ]) {
+    for (const roleName of R.keys(actorKeyByRoleName)) {
+      const actorKey = step.preActorKeyByRoleName[roleName];
+      createActor(actorKey);
     }
   }
 

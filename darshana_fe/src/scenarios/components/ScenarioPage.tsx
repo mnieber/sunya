@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { withContextProps } from 'react-props-from-context';
-import { ActorView } from '/src/actors/components/ActorView';
+import { ActorContextView } from '/src/actors/components/ActorContextView';
 import { StepTreeView } from '/src/steps/components/StepTreeView';
 import { cn } from '/src/utils/classnames';
 
@@ -15,7 +15,7 @@ export const ScenarioPage = observer(
     return (
       <div className={cn('ScenarioPage', props.className)}>
         <StepTreeView />
-        <ActorView />
+        <ActorContextView />
       </div>
     );
   }, ContextProps)

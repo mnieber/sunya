@@ -85,7 +85,7 @@ def organization_():
 
 
 def user_():
-    add_actor(
+    return add_actor(
         B.Users.Models.User(
             email="my-org-owner@example.com",
             password="my-password",

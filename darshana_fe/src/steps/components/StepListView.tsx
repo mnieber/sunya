@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useState } from 'react';
 import { StepT } from '/src/api/types/StepT';
-import { Fact } from '/src/steps/components/FactCard';
+import { FactCard } from '/src/steps/components/FactCard';
 import { cn } from '/src/utils/classnames';
 
 type PropsT = {
@@ -30,7 +30,7 @@ export const StepListView = observer((props: PropsT) => {
             {props.step.childSteps.length > 0 ? (isExpanded ? '▼' : '►') : '•'}
           </span>
           <div className="flex-1 break-words">
-            <Fact
+            <FactCard
               step={props.step}
               setHighlightedActor={props.setHighlightedActor}
             />

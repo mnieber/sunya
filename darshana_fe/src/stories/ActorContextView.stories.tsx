@@ -1,4 +1,5 @@
 import { Meta, StoryFn } from '@storybook/react';
+import { ActorContextView } from '/src/actors/components/ActorContextView';
 import { ActorView } from '/src/actors/components/ActorView';
 import { passthroughHandlers } from '/src/mocks/browser/defaultPassthrough';
 import { handleGetProject } from '/src/mocks/queries/handleGetProject';
@@ -26,7 +27,7 @@ export default {
   ],
 } as Meta;
 
-const Template: StoryFn = () => <ActorView />;
+const Template: StoryFn = () => <ActorContextView />;
 
 export const Default = Template.bind({});
 Default.decorators = [

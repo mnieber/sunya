@@ -12,7 +12,7 @@ export type ActorByKeyT = { [key: string]: ActorT };
 
 export const createActor = (values: ObjT): ActorT => {
   return initRS({
-    id: createUUID(),
+    id: values.id ?? createUUID(),
     key: values.key ?? '',
     fields: values.fields ?? {},
     changedFields: values.changedFields ?? [],

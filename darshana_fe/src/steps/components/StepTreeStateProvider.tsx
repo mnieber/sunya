@@ -30,8 +30,8 @@ export const StepTreeStateProvider = observer(
               stepTreeState.stepTreeCtr.data.reconstructedActorByKey ?? {},
           });
         },
-        get actorKey() {
-          return stepTreeState.stepTreeCtr.data.actorKey ?? '';
+        get actorContext() {
+          return stepTreeState.stepTreeCtr.data.actorContext;
         },
         get rootStep() {
           return updateSources(
@@ -49,7 +49,7 @@ export const StepTreeStateProvider = observer(
         stepTreeState: () => stepTreeState,
         rootStep: () => cache.rootStep,
         reconstructedActorByKey: () => cache.reconstructedActorByKey,
-        actorKey: () => cache.actorKey,
+        actorContext: () => cache.actorContext,
       });
     };
 

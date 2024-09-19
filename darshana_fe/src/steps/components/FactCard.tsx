@@ -5,7 +5,7 @@ type PropsT = {
   setHighlightedActor: (step: StepT, actorKey: string) => void;
 };
 
-export const Fact = (props: PropsT) => {
+export const FactCard = (props: PropsT) => {
   return props.step.fact.map((factBit, index) => {
     if (factBit.typeName === 'actor' || factBit.typeName === 'role') {
       return (

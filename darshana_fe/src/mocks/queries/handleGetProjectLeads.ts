@@ -22,6 +22,6 @@ export const handleGetProjectLeads = http.get(
       }),
     ];
 
-    return HttpResponse.json(mockProjectLeads);
+    return HttpResponse.json({ results: mockProjectLeads });
   }
 );

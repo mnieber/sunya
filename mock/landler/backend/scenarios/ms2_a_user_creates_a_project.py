@@ -49,7 +49,7 @@ def project_():
 
 
 def project_membership_():
-    add_actor(
+    return add_actor(
         B.Projects.Models.ProjectMembership(
             project=g.project,
             organization=g.user_session.active_organization,

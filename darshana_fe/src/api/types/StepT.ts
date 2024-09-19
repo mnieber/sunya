@@ -15,6 +15,8 @@ export type StepT = EntityT & {
   fieldDeltaSetByActorKey: {
     [actorKey: string]: { [field: string]: any };
   };
+  preActorKeyByRoleName: { [roleName: string]: string };
+  postActorKeyByRoleName: { [roleName: string]: string };
 };
 
 export type StepByIdT = { [id: string]: StepT };
@@ -26,6 +28,8 @@ export const createStep = (values: ObjT): StepT => {
     parentStepId: values.parentStepId ?? null,
     childSteps: values.childSteps ?? [],
     fieldDeltaSetByActorKey: values.fieldDeltaSetByActorKey ?? {},
+    preActorKeyByRoleName: values.preActorKeyByRoleName ?? {},
+    postActorKeyByRoleName: values.preActorKeyByRoleName ?? {},
   } as StepT);
 };
 

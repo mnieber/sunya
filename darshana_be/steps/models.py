@@ -19,6 +19,8 @@ class Step(BaseModel):
         related_name="child_steps",
     )
     field_delta_set_by_actor_key = models.JSONField(default=dict)
+    pre_actor_key_by_role_name = models.JSONField(default=dict)
+    post_actor_key_by_role_name = models.JSONField(default=dict)
     scenario = models.ForeignKey(
         "scenarios.Scenario", on_delete=models.CASCADE, related_name="steps"
     )

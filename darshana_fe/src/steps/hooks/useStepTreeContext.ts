@@ -2,6 +2,7 @@ import * as R from 'ramda';
 import React from 'react';
 import { ActorByKeyT } from '/src/api/types/ActorT';
 import { StepT } from '/src/api/types/StepT';
+import { type ActorContextT } from '/src/steps/StepTreeState';
 import { StepTreeState } from '/src/steps/StepTreeState/StepTreeState';
 
 export const StepTreeContext = React.createContext<any>(null);
@@ -27,6 +28,6 @@ export const stepTreeCtx = R.mergeAll([
       useStepTreeContext,
       'reconstructedActorByKey',
     ] as any as ActorByKeyT,
-    actorKey: [useStepTreeContext, 'actorKey'] as any as string,
+    actorContext: [useStepTreeContext, 'actorContext'] as any as ActorContextT,
   },
 ]);

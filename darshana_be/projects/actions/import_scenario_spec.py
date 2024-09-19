@@ -50,33 +50,33 @@ def _process_nodes(
 ):
     steps = []
     for node in nodes:
-        if "goal" in node:
-            step = _create_step(node["goal"], scenario, parent_step)
-        elif "step" in node:
-            step = _create_step(node["step"], scenario, parent_step)
+        if "goal" in node or "step" in node:
+            fact_str = node.get("goal", node.get("step"))
         else:
             if parent_step:
                 raise InvalidNodeError(node)
-            step = _create_step("root", scenario, parent_step)
+            fact_str = "root"
+
+        create_step_form = CreateStepForm(
+            fact=_parse_fact_string(fact_str),
+            parent_step=parent_step,
+            field_delta_set_by_actor_key=node.get("field_delta_set_by_actor_key", {}),
+            pre_actor_key_by_role_name=node.get("pre_actor_key_by_role_name", {}),
+            post_actor_key_by_role_name=node.get("post_actor_key_by_role_name", {}),
+        )
+        step = _create_step(scenario, create_step_form)
 
         steps.append(step)
         _process_actors_introduced(node.get("actors_introduced", []), step)
-        _process_roles(node.get("pre_actor_key_by_role_name", {}), step)
-        _process_roles(node.get("post_actor_key_by_role_name", {}), step)
+        _process_roles(step.pre_actor_key_by_role_name, step)
+        _process_roles(step.post_actor_key_by_role_name, step)
         if "child_nodes" in node:
             _process_nodes(node["child_nodes"], scenario, step)
 
     return steps
 
 
-def _create_step(
-    fact_str: str, scenario: Scenario, parent_step: T.Optional[Step] = None
-) -> Step:
-    fact_bits = _parse_fact_string(fact_str)
-    create_step_form = CreateStepForm(
-        fact=fact_bits, parent_step=parent_step, field_delta_set_by_actor_key={}
-    )
-
+def _create_step(scenario: Scenario, create_step_form) -> Step:
     step = create_step(create_step_form, scenario)
 
     for fact_bit in step.fact:
