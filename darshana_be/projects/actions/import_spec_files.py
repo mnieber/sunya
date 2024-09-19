@@ -24,9 +24,9 @@ def import_spec_files(import_spec_files_form: ImportSpecFilesForm, project: Proj
             content = file.read().decode("utf-8")
             data = yaml.safe_load(content)
 
-            if "scenario_name" in data:
+            if data.get("type") == "scenario":
                 _process_scenario_spec(data, project)
-            elif "name" in data:
+            elif data.get("type") == "module":
                 _process_module_spec(data, project)
             else:
                 raise UnknownSpecFileTypeError(file.name)

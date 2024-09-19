@@ -4,6 +4,7 @@ from sunya.utils import extract_field_types, camel_to_snake, l0, snake_to_camel
 
 def get_module_description_context(module):
     return dict(
+        type="module",
         name=l0(camel_to_snake(module.__name__)),
         types=_get_types(module),
         mutations=_get_mutations(module),

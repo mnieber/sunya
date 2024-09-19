@@ -1,3 +1,4 @@
+type: scenario
 scenario_name: backend/ms2-a-user-creates-a-project
 nodes:
   - root: ''

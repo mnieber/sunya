@@ -1,3 +1,4 @@
+type: module
 name: project_analyses
 models:
   - name: ProjectAnalysis

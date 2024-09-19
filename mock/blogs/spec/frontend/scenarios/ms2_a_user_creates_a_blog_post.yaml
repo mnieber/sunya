@@ -1,8 +1,19 @@
+type: scenario
 scenario_name: frontend/ms2-a-user-creates-a-blog-post
 nodes:
   - root: ''
     child_nodes:
       - goal: create a [BlogPost] in the [Blog]
+        actors_introduced:
+          - name: my-first-blog-post+:blog
+            deltas:
+              blog: my-personal-blog+:blog (None)
+              content: Hello (None)
+              id: cd0c65fb512c547a8817a2088bc6764b (None)
+              isPublished: False (None)
+              level: novice (None)
+              tags: '[] (None)'
+              title: My First Blog Post (None)
         roles_updated:
           BlogPost: my-first-blog-post+:blog
         child_nodes:
@@ -13,6 +24,10 @@ nodes:
             child_nodes:
               - step: The [:frontend] calls the [create-blog-post:mutation]
       - goal: edit a [BlogPost] in the [Blog]
+        actors_updated:
+          - name: my-first-blog-post+:blog
+            deltas:
+              content: Hello, World! (Hello)
         child_nodes:
           - step: The [User] selects the [BlogPost] they want to edit
           - step: The [User] presses the [edit-blog-post-button:dialog_button]

@@ -1,3 +1,4 @@
+type: module
 name: blogs
 models:
   - name: Blog

@@ -4,7 +4,7 @@ from sunya.scenarios.roles import Role
 
 
 def get_scenario_description_context(scenario):
-    context = dict(scenario_name=scenario.name, nodes=[])
+    context = dict(type="scenario", scenario_name=scenario.name, nodes=[])
     context["nodes"].append(_get_node_context(scenario.root_node))
     return context
 

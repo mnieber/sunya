@@ -1,3 +1,4 @@
+type: module
 name: actors
 types:
   - name: Actor

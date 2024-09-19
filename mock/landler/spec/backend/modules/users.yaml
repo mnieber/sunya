@@ -1,3 +1,4 @@
+type: module
 name: users
 models:
   - name: User

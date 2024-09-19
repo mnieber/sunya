@@ -1,3 +1,4 @@
+type: scenario
 scenario_name: frontend/ms2-a-user-uploads-files-to-a-project
 nodes:
   - root: ''

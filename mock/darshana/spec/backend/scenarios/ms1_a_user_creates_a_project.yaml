@@ -1,17 +1,37 @@
+type: scenario
 scenario_name: backend/ms1-a-user-creates-a-project
 nodes:
   - root: ''
     child_nodes:
       - goal: create a new [Project] for the [User]
+        actors_introduced:
+          - name: my-darshana-project+:project
+            deltas:
+              description: A project to test Darshana (None)
+              id: 00dcca049c335a198d7d466b886ec3bb (None)
+              name: My Darshana Project (None)
+              scenarios: '[] (None)'
         roles_updated:
           Project: my-darshana-project+:project
         child_nodes:
           - step: The [create-project:api-view] calls the [create-project:action]
             child_nodes:
               - step: The [create-project:action] creates the [Project]
+                actors_introduced:
+                  - name: my-darshana-project+:project
+                    deltas:
+                      description: A project to test Darshana (None)
+                      id: 00dcca049c335a198d7d466b886ec3bb (None)
+                      name: My Darshana Project (None)
+                      scenarios: '[] (None)'
                 roles_updated:
                   Project: my-darshana-project+:project
       - goal: upload [SpecFiles] to the [Project]
+        actors_updated:
+          - name: my-darshana-project+:project
+            deltas:
+              scenarios: ([Scenario(name='My First Scenario', project=Project(name='My Darshana Project', description='A project to test Darshana', scenarios=(...)), root_step=Step(fact=(FactBit(type_name='string', value='root'),), parent_step=None, child_steps=[Step(fact=(FactBit(type_name='string', value='the'), FactBit(type_name='actor', value='alice@example.com:user'), FactBit(type_name='string', value='creates a'), FactBit(type_name='role', value='Project')), parent_step=None, child_steps=[Step(fact=(FactBit(type_name='string', value='the'), FactBit(type_name='actor', value='alice@example.com:user'), FactBit(type_name='string', value='uploads the'), FactBit(type_name='role', value='SpecFiles')), parent_step=None, child_steps=[], field_delta_set_by_actor_key={})], field_delta_set_by_actor_key={}), Step(fact=(FactBit(type_name='string', value='the'), FactBit(type_name='actor', value='alice@example.com:user'), FactBit(type_name='string', value='clicks on a'), FactBit(type_name='role',
+                value='Scenario')), parent_step=None, child_steps=[], field_delta_set_by_actor_key={})], field_delta_set_by_actor_key={}))],) ([])
         child_nodes:
           - step: The [import-spec-files:api-view] identifies the [ScenarioSpecFiles] and the [ModuleSpecFiles] in the [SpecFiles]
           - step: The [import-spec-files:api-view] deletes each [Scenario] from the [Project]

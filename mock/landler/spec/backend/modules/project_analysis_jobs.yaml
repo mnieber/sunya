@@ -1,3 +1,4 @@
+type: module
 name: project_analysis_jobs
 models:
   - name: ProjectAnalysisJob

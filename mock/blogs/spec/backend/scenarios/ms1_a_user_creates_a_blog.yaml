@@ -1,14 +1,29 @@
+type: scenario
 scenario_name: backend/ms1-a-user-creates-a-blog
 nodes:
   - root: ''
     child_nodes:
       - goal: create a [Blog] for the [User]
+        actors_introduced:
+          - name: my-personal-blog+:blog
+            deltas:
+              audience: any (None)
+              description: Random things that interest me (None)
+              id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
+              name: My Personal Blog (None)
         roles_updated:
           Blog: my-personal-blog+:blog
         child_nodes:
           - step: The [create-blog:api-view] calls the [create-blog:action]
             child_nodes:
               - step: The [create-blog:action] creates the [Blog]
+                actors_introduced:
+                  - name: my-personal-blog+:blog
+                    deltas:
+                      audience: any (None)
+                      description: Random things that interest me (None)
+                      id: 2fc4bd1c19a158c4b0eeb255b9d8a370 (None)
+                      name: My Personal Blog (None)
                 roles_updated:
                   Blog: my-personal-blog+:blog
 

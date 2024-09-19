@@ -1,3 +1,4 @@
+type: module
 name: steps
 types:
   - name: FactBit

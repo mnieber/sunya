@@ -1,3 +1,4 @@
+type: scenario
 scenario_name: backend/ms3-a-user-adds-a-plot-to-a-project
 nodes:
   - root: ''

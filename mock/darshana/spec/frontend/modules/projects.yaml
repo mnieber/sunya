@@ -1,3 +1,4 @@
+type: module
 name: projects
 types:
   - name: ProjectLead

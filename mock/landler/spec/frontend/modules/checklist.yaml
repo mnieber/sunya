@@ -1,3 +1,4 @@
+type: module
 name: checklist
 types:
   - name: Checklist

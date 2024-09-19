@@ -1,3 +1,4 @@
+type: module
 name: facts
 models:
   - name: Fact

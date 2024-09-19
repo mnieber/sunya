@@ -1,3 +1,4 @@
+type: scenario
 scenario_name: backend/ms4-a-user-schedules-a-project-analysis
 nodes:
   - root: ''

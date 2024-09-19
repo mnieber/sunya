@@ -1,3 +1,4 @@
+type: module
 name: scenarios
 types:
   - name: Scenario
