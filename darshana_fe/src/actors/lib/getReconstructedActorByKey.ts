@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 import { ActorByKeyT } from '/src/api/types/ActorT';
-import { StepByIdT, StepT, getStepSequence } from '/src/api/types/StepT';
+import { StepByIdT, StepT } from '/src/api/types/StepT';
+import { getStepSequence } from '/src/steps/utils/getStepSequence';
 
 export const getReconstructedActorByKey = (
   step: StepT,
