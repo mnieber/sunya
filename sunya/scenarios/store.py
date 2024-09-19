@@ -91,7 +91,7 @@ def add_node(node):
             role = fact_bit
             entity = role.actor
             if entity:
-                node.pre_entity_key_by_role_name[role.name] = get_key(entity)
+                node.pre_actor_key_by_role_name[role.name] = get_key(entity)
         elif isinstance(fact_bit, Entity):
             entity = fact_bit
         else:
@@ -124,6 +124,6 @@ def finalize_node(node):
             key = get_key(entity)
             node.post_entity_memo_by_key[key] = create_memo(entity)
             if role:
-                node.post_entity_key_by_role_name[role.name] = key
+                node.post_actor_key_by_role_name[role.name] = key
 
     node.is_finalized = True

@@ -14,9 +14,9 @@ class Node:
     nodes: T.List["Node"] = []
     level: int = 0
     pre_entity_memo_by_key: Internal[T.Dict] = {}
-    pre_entity_key_by_role_name: Internal[T.Dict] = {}
+    pre_actor_key_by_role_name: Internal[T.Dict] = {}
     post_entity_memo_by_key: Internal[T.Dict] = {}
-    post_entity_key_by_role_name: Internal[T.Dict] = {}
+    post_actor_key_by_role_name: Internal[T.Dict] = {}
     is_finalized: bool = False
 
     def __post_init__(self):

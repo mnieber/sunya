@@ -32,7 +32,7 @@ class TestImportScenarioSpecAction:
                             },
                         }
                     ],
-                    "post_entity_key_by_role_name": {
+                    "post_actor_key_by_role_name": {
                         "Project": "my-test-project+:project"
                     },
                     "child_nodes": [

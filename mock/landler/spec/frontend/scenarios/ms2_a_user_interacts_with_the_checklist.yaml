@@ -4,10 +4,10 @@ nodes:
   - root: ''
     child_nodes:
       - step: The [User] signs in
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           User: alice@example.com+:user
       - step: The [User] is redirected to [home-page+:route]
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           User: alice@example.com+:user
         child_nodes:
           - goal: load the [Checklist]
@@ -16,12 +16,12 @@ nodes:
                 deltas:
                   id: 076e391b56bb53f291b1ad7ece8f50f2 (None)
                   items: '[''add-your-organization+:checklist_item'', ''create-a-project+:checklist_item'', ''add-a-plot+:checklist_item'', ''trigger-a-project-analysis+:checklist_item''] (None)'
-            post_entity_key_by_role_name:
+            post_actor_key_by_role_name:
               Checklist: :checklist
             child_nodes:
               - step: The [:frontend] calls the [get-checklist:query]
       - step: The [User] views the [Checklist] on the [home-page+:route]
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           User: alice@example.com+:user
           Checklist: :checklist
       - goal: The [User] clicks to complete the [add-your-organization+:checklist_item]
@@ -29,7 +29,7 @@ nodes:
           - name: add-your-organization+:checklist_item
             deltas:
               is_completed: True (False)
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           User: alice@example.com+:user
         child_nodes:
           - step: The [:frontend] calls the [update-checklist-items:mutation]

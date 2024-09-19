@@ -61,8 +61,8 @@ def _process_nodes(
 
         steps.append(step)
         _process_actors_introduced(node.get("actors_introduced", []), step)
-        _process_roles(node.get("pre_entity_key_by_role_name", {}), step)
-        _process_roles(node.get("post_entity_key_by_role_name", {}), step)
+        _process_roles(node.get("pre_actor_key_by_role_name", {}), step)
+        _process_roles(node.get("post_actor_key_by_role_name", {}), step)
         if "child_nodes" in node:
             _process_nodes(node["child_nodes"], scenario, step)
 
@@ -118,8 +118,8 @@ def _process_actors_introduced(actors_introduced: T.List[dict], step: Step):
     step.save()
 
 
-def _process_roles(entity_key_by_role_name: dict, step: Step):
-    for role_name, actor_key in entity_key_by_role_name.items():
+def _process_roles(actor_key_by_role_name: dict, step: Step):
+    for role_name, actor_key in actor_key_by_role_name.items():
         _get_or_create_actor(actor_key)
 
 

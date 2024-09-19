@@ -25,6 +25,8 @@ class StepSerializer(ReadSerializerMixin, BaseModelSerializer):
             "parent_step_id",
             "field_delta_set_by_actor_key",
             "child_steps",
+            "pre_actor_key_by_role_name",
+            "post_actor_key_by_role_name",
         ]
 
     def get_child_steps(self, obj):

@@ -14,24 +14,24 @@ nodes:
               level: novice (None)
               tags: '[] (None)'
               title: My First Blog Post (None)
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           BlogPost: my-blog-post+:blog-post
           Blog: my-personal-blog+:blog
-        post_entity_key_by_role_name:
+        post_actor_key_by_role_name:
           BlogPost: my-first-blog-post+:blog
         child_nodes:
           - step: The [User] visits the [blogs+:route]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
           - step: The [User] clicks on a [Blog] to visit the [blog+:route]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
               Blog: my-personal-blog+:blog
           - step: The [User] presses the [create-blog-post-button:dialog_button]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
           - step: The [User] submits the [blog-post-form-view:component]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
             child_nodes:
               - step: The [:frontend] calls the [create-blog-post:mutation]
@@ -40,32 +40,32 @@ nodes:
           - name: my-first-blog-post+:blog
             deltas:
               content: Hello, World! (Hello)
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           BlogPost: my-first-blog-post+:blog
           Blog: my-personal-blog+:blog
         child_nodes:
           - step: The [User] selects the [BlogPost] they want to edit
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
               BlogPost: my-first-blog-post+:blog
           - step: The [User] presses the [edit-blog-post-button:dialog_button]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
           - step: The [User] submits the [blog-post-form-view:component]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
             child_nodes:
               - step: The [:frontend] calls the [update-blog-post:mutation]
       - goal: delete a [BlogPost] in the [Blog]
-        pre_entity_key_by_role_name:
+        pre_actor_key_by_role_name:
           BlogPost: my-first-blog-post+:blog
           Blog: my-personal-blog+:blog
         child_nodes:
           - step: The [User] selects the [BlogPost] they want to delete
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
               BlogPost: my-first-blog-post+:blog
           - step: The [User] presses the [delete-blog-posts-button:dialog_button]
-            pre_entity_key_by_role_name:
+            pre_actor_key_by_role_name:
               User: alice@example.com+:user
 

@@ -20,15 +20,15 @@ def _get_node_context(node):
     if actors_updated := _get_node_actors(node, add_created=False, add_updated=True):
         result["actors_updated"] = actors_updated
 
-    if pre_entity_key_by_role_name := _get_entity_key_by_role_name(
-        node.pre_entity_key_by_role_name
+    if pre_actor_key_by_role_name := _get_actor_key_by_role_name(
+        node.pre_actor_key_by_role_name
     ):
-        result["pre_entity_key_by_role_name"] = pre_entity_key_by_role_name
+        result["pre_actor_key_by_role_name"] = pre_actor_key_by_role_name
 
-    if post_entity_key_by_role_name := _get_entity_key_by_role_name(
-        node.post_entity_key_by_role_name, pre_entity_key_by_role_name
+    if post_actor_key_by_role_name := _get_actor_key_by_role_name(
+        node.post_actor_key_by_role_name, pre_actor_key_by_role_name
     ):
-        result["post_entity_key_by_role_name"] = post_entity_key_by_role_name
+        result["post_actor_key_by_role_name"] = post_actor_key_by_role_name
 
     child_nodes = [_get_node_context(child_node) for child_node in node.nodes]
     if child_nodes:
@@ -71,12 +71,12 @@ def _get_node_actors(node, add_created, add_updated):
     return result
 
 
-def _get_entity_key_by_role_name(
-    entity_key_by_role_name, pre_entity_key_by_role_name=None
+def _get_actor_key_by_role_name(
+    actor_key_by_role_name, pre_actor_key_by_role_name=None
 ):
     return {
         role_name: actor_key[1]
-        for role_name, actor_key in entity_key_by_role_name.items()
-        if pre_entity_key_by_role_name is None
-        or actor_key[1] != pre_entity_key_by_role_name.get(role_name)
+        for role_name, actor_key in actor_key_by_role_name.items()
+        if pre_actor_key_by_role_name is None
+        or actor_key[1] != pre_actor_key_by_role_name.get(role_name)
     }
