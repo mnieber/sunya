@@ -6,7 +6,11 @@ from projects.models import Project
 
 
 class Scenario(BaseModel):
+    class Meta:
+        ordering = ["order"]
+
     name = SingleLineTextField()
+    order = models.PositiveIntegerField(default=1)
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE, related_name="scenarios"
     )

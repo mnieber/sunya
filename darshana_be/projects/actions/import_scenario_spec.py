@@ -29,7 +29,7 @@ def import_scenario_spec(
 
     with transaction.atomic():
         scenario = create_scenario(
-            CreateScenarioForm(name=data["scenario_name"]), project
+            CreateScenarioForm(name=data["scenario_name"], order=data["order"]), project
         )
         steps = _process_nodes(data["nodes"], scenario)
 
@@ -43,6 +43,12 @@ def _validate_args(import_scenario_spec_form: ImportScenarioSpecForm):
     root_nodes = import_scenario_spec_form.scenario_data.get("nodes", [])
     if len(root_nodes) != 1:
         raise NotExactlyOneRootNodeError()
+
+    if "scenario_name" not in import_scenario_spec_form.scenario_data:
+        raise ScenarioSpecSyntaxError("scenario_name is required")
+
+    if "order" not in import_scenario_spec_form.scenario_data:
+        raise ScenarioSpecSyntaxError("order is required")
 
 
 def _process_nodes(
@@ -143,4 +149,8 @@ class NotExactlyOneRootNodeError(Exception):
 
 
 class InvalidNodeError(ValueError):
+    pass
+
+
+class ScenarioSpecSyntaxError(ValueError):
     pass

@@ -19,6 +19,8 @@ class TestImportScenarioSpecAction:
     @pytest.fixture
     def scenario_data(self):
         return {
+            "type": "scenario",
+            "order": 1,
             "scenario_name": "Test Scenario",
             "nodes": [
                 {

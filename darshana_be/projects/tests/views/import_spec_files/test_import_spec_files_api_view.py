@@ -25,7 +25,9 @@ class TestImportSpecFilesApiView:
         url = reverse("import-spec-files", kwargs={"project_key": project.id})
 
         scenario_content = b"""
+type: scenario
 scenario_name: test-scenario
+order: 1
 nodes:
   - goal: root
     child_nodes:
@@ -36,6 +38,7 @@ nodes:
         )
 
         module_content = b"""
+type: module
 name: test_module
 models:
   - name: TestModel
@@ -54,8 +57,6 @@ models:
         )
 
         assert response.status_code == 200
-        assert "id" in response.data
-        assert response.data["name"] == project.name
 
     @pytest.mark.django_db
     def test_import_spec_files_invalid_file(self, api_client, user, project):

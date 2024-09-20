@@ -27,16 +27,16 @@ dir_list = [
 ]
 
 file_map = {
-    f"{in_blogs_fe}/modules/*.py": f"{blogs}/frontend/modules",
-    f"{in_blogs_fe}/scenarios/*.py": f"{blogs}/frontend/scenarios",
     f"{in_blogs_be}/modules/*.py": f"{blogs}/backend/modules",
     f"{in_blogs_be}/scenarios/*.py": f"{blogs}/backend/scenarios",
-    f"{in_darshana_fe}/modules/*.py": f"{darshana}/frontend/modules",
-    f"{in_darshana_fe}/scenarios/*.py": f"{darshana}/frontend/scenarios",
+    f"{in_blogs_fe}/modules/*.py": f"{blogs}/frontend/modules",
+    f"{in_blogs_fe}/scenarios/*.py": f"{blogs}/frontend/scenarios",
+    f"{in_blogs_prompts}/instructions*.md": "instructions",
     f"{in_darshana_be}/modules/*.py": f"{darshana}/backend/modules",
     f"{in_darshana_be}/scenarios/*.py": f"{darshana}/backend/scenarios",
+    f"{in_darshana_fe}/modules/*.py": f"{darshana}/frontend/modules",
+    f"{in_darshana_fe}/scenarios/*.py": f"{darshana}/frontend/scenarios",
     f"{in_darshana_spec}/roadmap.md": f"spec",
-    f"{in_blogs_prompts}/instructions*.md": "instructions",
 }
 
 if __name__ == "__main__":

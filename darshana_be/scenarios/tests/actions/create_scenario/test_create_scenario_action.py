@@ -16,9 +16,7 @@ class TestCreateScenarioAction:
     @pytest.mark.django_db
     def test_create_scenario_action_success(self, project):
         # Given
-        create_scenario_form = CreateScenarioForm(
-            name="Test Scenario"
-        )
+        create_scenario_form = CreateScenarioForm(name="Test Scenario", order=1)
 
         # When
         scenario = create_scenario(create_scenario_form, project=project)
@@ -32,9 +30,7 @@ class TestCreateScenarioAction:
         # Given
         ScenarioFactory(name="Existing Scenario", project=project)
 
-        create_scenario_form = CreateScenarioForm(
-            name="Existing Scenario"
-        )
+        create_scenario_form = CreateScenarioForm(name="Existing Scenario", order=1)
 
         # When / Then
         with pytest.raises(ScenarioWithNameAlreadyExistsError):

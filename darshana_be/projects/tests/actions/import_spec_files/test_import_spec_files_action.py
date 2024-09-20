@@ -15,7 +15,9 @@ class TestImportSpecFilesAction:
     @pytest.fixture
     def scenario_spec_file(self):
         content = """
+        type: scenario
         scenario_name: Test Scenario
+        order: 1
         nodes:
           - goal: "create a [Project] for the [alice@example.com+:user]"
             child_nodes:
@@ -26,6 +28,7 @@ class TestImportSpecFilesAction:
     @pytest.fixture
     def module_spec_file(self):
         content = """
+        type: module
         name: test_module
         models:
           - name: TestModel

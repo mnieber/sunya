@@ -3,8 +3,8 @@ from sunya.entities import Entity
 from sunya.scenarios.roles import Role
 
 
-def get_scenario_description_context(scenario):
-    context = dict(type="scenario", scenario_name=scenario.name, nodes=[])
+def get_scenario_description_context(scenario, idx):
+    context = dict(type="scenario", order=idx, scenario_name=scenario.name, nodes=[])
     context["nodes"].append(_get_node_context(scenario.root_node))
     return context
 

@@ -1,13 +1,12 @@
-
 from scenarios.models import Scenario
 from dataclassy import dataclass
 from projects.models import Project
 
 
-
 @dataclass
 class CreateScenarioForm:
     name: str
+    order: int
 
 
 def create_scenario(create_scenario_form: CreateScenarioForm, project: Project):
@@ -15,6 +14,7 @@ def create_scenario(create_scenario_form: CreateScenarioForm, project: Project):
 
     scenario = Scenario(
         name=create_scenario_form.name,
+        order=create_scenario_form.order,
         project=project,
     )
     scenario.save()

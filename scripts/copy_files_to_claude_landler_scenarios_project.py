@@ -1,16 +1,15 @@
 import sync_files_to_local_claude_dir
 
 in_landler_spec = "/home/maarten/projects/sunya/src/mock/landler/spec"
-in_landler_fe = "/home/maarten/projects/sunya/src/mock/landler/frontend"
-in_landler_be = "/home/maarten/projects/sunya/src/mock/landler/backend"
-landler = "landler"
 
-in_blogs_spec = "/home/maarten/projects/sunya/src/mockf/{blogs}/spec"
-in_blogs_be = "/home/maarten/projects/sunya/src/mockf/{blogs}/backend"
+in_blogs_prompts = "/home/maarten/projects/sunya/src/mock/blogs/spec/prompts"
+in_blogs_be = "/home/maarten/projects/sunya/src/mock/{blogs}/backend"
 in_blogs_fe = "/home/maarten/projects/sunya/src/mock/blogs/frontend"
 blogs = "blogs"
 
-in_prompts = "/home/maarten/projects/sunya/src/mock/sunya/prompts"
+landler = "landler"
+in_landler_fe = "/home/maarten/projects/sunya/src/mock/landler/frontend"
+in_landler_be = "/home/maarten/projects/sunya/src/mock/landler/backend"
 
 
 dir_list = [
@@ -28,7 +27,7 @@ dir_list = [
 ]
 
 file_map = {
-    f"{in_blogs_spec}/roadmap.md": f"{blogs}/spec",
+    f"{in_blogs_prompts}/instructions*.md": "instructions",
     f"{in_blogs_fe}/modules/*.py": f"{blogs}/frontend/modules",
     f"{in_blogs_fe}/scenarios/*.py": f"{blogs}/frontend/scenarios",
     f"{in_blogs_be}/modules/*.py": f"{blogs}/backend/modules",
@@ -38,7 +37,6 @@ file_map = {
     f"{in_landler_fe}/scenarios/*.py": f"{landler}/frontend/scenarios",
     f"{in_landler_be}/modules/*.py": f"{landler}/backend/modules",
     f"{in_landler_be}/scenarios/*.py": f"{landler}/backend/scenarios",
-    f"{in_prompts}/instructions*.md": "instructions",
 }
 
 if __name__ == "__main__":
