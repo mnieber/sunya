@@ -20,7 +20,11 @@ export class StepTreeState {
   actionsCtr = {
     setHighlightedActor: action((step: StepT, actorKey: string) => {
       this.stepTreeCtr.data.reconstructedActorByKey =
-        getReconstructedActorByKey(step, this.stepTreeCtr.data.stepById);
+        getReconstructedActorByKey(
+          this.stepTreeCtr.data.rootStep!,
+          step.id,
+          this.stepTreeCtr.data.stepById
+        );
 
       const maybeRoleName = actorKey;
       const preActorKey = step.preActorKeyByRoleName[maybeRoleName];

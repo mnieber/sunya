@@ -67,7 +67,8 @@ def _process_nodes(
         step = _create_step(scenario, create_step_form)
 
         steps.append(step)
-        _process_actors_introduced(node.get("actors_introduced", []), step)
+        _process_actors(node.get("actors_introduced", []), step)
+        _process_actors(node.get("actors_updated", []), step)
         _process_roles(step.pre_actor_key_by_role_name, step)
         _process_roles(step.post_actor_key_by_role_name, step)
         if "child_nodes" in node:
@@ -109,8 +110,8 @@ def _parse_fact_string(fact_str: str) -> T.List[FactBit]:
     return fact_bits
 
 
-def _process_actors_introduced(actors_introduced: T.List[dict], step: Step):
-    for actor in actors_introduced:
+def _process_actors(actors: T.List[dict], step: Step):
+    for actor in actors:
         actor_key = actor["name"]
         deltas = actor.get("deltas", {})
         step.field_delta_set_by_actor_key[actor_key] = deltas

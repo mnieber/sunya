@@ -4,13 +4,16 @@ import { StepByIdT, StepT } from '/src/api/types/StepT';
 import { getStepSequence } from '/src/steps/utils/getStepSequence';
 
 export const getReconstructedActorByKey = (
-  step: StepT,
+  rootStep: StepT,
+  stepId: string,
   stepById: StepByIdT
 ): ActorByKeyT => {
   let actorByKey: ActorByKeyT = {};
   const createActor = (actorKey: string) => {
     actorByKey[actorKey] = { key: actorKey, fields: {}, changedFields: [] };
   };
+
+  const step = stepById[stepId];
 
   for (const factBit of step.fact) {
     if (factBit.typeName === 'actor') {
@@ -29,7 +32,7 @@ export const getReconstructedActorByKey = (
     }
   }
 
-  for (const currentStep of getStepSequence(step, stepById)) {
+  for (const currentStep of getStepSequence(rootStep, stepId, stepById)) {
     for (const actorKey of R.keys(actorByKey)) {
       const actor = actorByKey[actorKey];
 
