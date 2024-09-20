@@ -1,13 +1,13 @@
 import { z } from 'zod';
 import { convertDataToCamelCase } from '/src/api/utils/convertDataToCamelCase';
 import { ObjT } from '/src/utils/types';
+import { AnyZodSchema } from '/src/utils/zod';
 
-export const parseSchema = <SchemaT extends z.ZodType<any, any, any>>(
+export const parseResponse = <SchemaT extends AnyZodSchema>(
   schema: SchemaT,
   data: ObjT
-) => {
+): z.infer<SchemaT> => {
   try {
-    debugger;
     const transformedData = convertDataToCamelCase(schema, data);
     return schema.parse(transformedData);
   } catch (error) {

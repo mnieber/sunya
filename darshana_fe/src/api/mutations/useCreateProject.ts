@@ -1,6 +1,8 @@
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { invalidateGetProjectLeads } from '/src/api/queries/useGetProjectLeads';
 import { post } from '/src/api/restClient';
+import { ProjectSchema } from '/src/api/types/ProjectSchema';
+import { parseResponse } from '/src/api/utils/parseResponse';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
@@ -14,10 +16,11 @@ export type CreateProjectArgsT = {
 export const createProject = (args: CreateProjectArgsT) => {
   const url = `/projects/create/`;
   return post(url, {
-    createProjectForm: args.createProjectForm,
+    create_project_form: args.createProjectForm,
   })
     .then((response) => {
-      return waitOnDev(1000, response);
+      const res = parseResponse(ProjectSchema, response.data);
+      return waitOnDev(1000, res);
     })
     .catch((error) => {
       const errorCodes = error.response.data;

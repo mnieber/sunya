@@ -1,5 +1,4 @@
 import axios from 'axios';
-import snakecaseKeys from 'snakecase-keys';
 
 axios.defaults.withCredentials = true;
 
@@ -23,13 +22,8 @@ export function post(query: string, variables: any, headers?: any) {
     ...(headers ?? {}),
   };
 
-  const body =
-    variables instanceof FormData
-      ? variables
-      : snakecaseKeys(variables, { deep: true });
-
   return axios
-    .post(`${hostUrl}${trimLeadingSlash(query)}`, body, {
+    .post(`${hostUrl}${trimLeadingSlash(query)}`, variables, {
       headers: allHeaders,
     })
     .then((response) => {

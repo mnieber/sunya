@@ -1,8 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryClient } from '/src/api/queryClient';
 import { get } from '/src/api/restClient';
-import { ProjectT } from '/src/api/types/ProjectT';
+import { getPaginatedSchema } from '/src/api/types/PaginatedSchema';
+import { PaginatedT } from '/src/api/types/PaginatedT';
+import { ProjectLeadSchema } from '/src/api/types/ProjectLeadSchema';
+import { ProjectLeadT } from '/src/api/types/ProjectLeadT';
 import { createQueryKey } from '/src/api/utils/createQueryKey';
+import { parseResponse } from '/src/api/utils/parseResponse';
 import { waitOnDev } from '/src/utils/wait';
 
 export type GetProjectLeadsArgsT = {};
@@ -19,7 +23,12 @@ export const getProjectLeadsUrl = '/projects/leads/list/';
 
 export const getProjectLeads = (args: GetProjectLeadsArgsT) => {
   return get(getProjectLeadsUrl).then((response) => {
-    return waitOnDev(100, { projectLeads: response.data as ProjectT[] });
+    const schema = getPaginatedSchema(ProjectLeadSchema);
+    const res = parseResponse(schema, response.data);
+
+    return waitOnDev(100, {
+      projectLeads: res as PaginatedT<ProjectLeadT>,
+    });
   });
 };
 

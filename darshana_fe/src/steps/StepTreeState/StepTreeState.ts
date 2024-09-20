@@ -22,7 +22,7 @@ export class StepTreeState {
       this.stepTreeCtr.data.reconstructedActorByKey =
         getReconstructedActorByKey(step, this.stepTreeCtr.data.stepById);
 
-      const maybeRoleName = actorKey[0].toLowerCase() + actorKey.slice(1);
+      const maybeRoleName = actorKey;
       const preActorKey = step.preActorKeyByRoleName[maybeRoleName];
       const postActorKey = step.postActorKeyByRoleName[maybeRoleName];
 

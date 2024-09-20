@@ -4,7 +4,7 @@ import { get } from '/src/api/restClient';
 import { ProjectSchema } from '/src/api/types/ProjectSchema';
 import { ProjectT } from '/src/api/types/ProjectT';
 import { createQueryKey } from '/src/api/utils/createQueryKey';
-import { parseSchema } from '/src/api/utils/parseSchema';
+import { parseResponse } from '/src/api/utils/parseResponse';
 import { waitOnDev } from '/src/utils/wait';
 
 export type GetProjectArgsT = {
@@ -13,8 +13,10 @@ export type GetProjectArgsT = {
 
 export const getProject = (args: GetProjectArgsT) => {
   return get(`/projects/${args.projectId}/`).then((response) => {
+    const res = parseResponse(ProjectSchema, response.data);
+
     return waitOnDev(100, {
-      project: parseSchema(ProjectSchema, response.data) as ProjectT,
+      project: res as ProjectT,
     });
   });
 };

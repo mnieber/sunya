@@ -1,7 +1,9 @@
+import { z } from 'zod';
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { invalidateGetProject } from '/src/api/queries/useGetProject';
 import { post } from '/src/api/restClient';
 import { ProjectT } from '/src/api/types/ProjectT';
+import { parseResponse } from '/src/api/utils/parseResponse';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
@@ -20,7 +22,10 @@ export const importSpecFiles = (args: ImportSpecFilesArgsT) => {
 
   return post(url, formData)
     .then((response) => {
-      return waitOnDev(1000, response);
+      const schema = z.object({});
+      const res = parseResponse(schema, response.data);
+
+      return waitOnDev(1000, res);
     })
     .catch((error) => {
       // Handle specific error codes if needed

@@ -1,6 +1,8 @@
+import { z } from 'zod';
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { queryClient } from '/src/api/queryClient';
 import { post, setAuthTokens } from '/src/api/restClient';
+import { parseResponse } from '/src/api/utils/parseResponse';
 import { AuthState, anonymous } from '/src/auth/AuthState';
 import { States } from '/src/auth/endpoints/states';
 import { hasErrorCode } from '/src/auth/utils/hasErrorCode';
@@ -15,16 +17,23 @@ export type SignInArgsT = {
 export function signIn(args: SignInArgsT) {
   const url = '/users/sign-in/';
   return post(url, {
-    signInUserForm: {
+    sign_in_user_form: {
       email: args.userId,
       password: args.password,
     },
   })
     .then((response) => {
-      setAuthTokens(response.data.accessToken, response.data.refreshToken);
+      const schema = z.object({
+        accessToken: z.string(),
+        refreshToken: z.string(),
+        userId: z.string(),
+      });
+      const res = parseResponse(schema, response.data);
+
+      setAuthTokens(res.accessToken, res.refreshToken);
       return waitOnDev(1000, {
-        success: !!response.data.accessToken,
-        userId: response.data.userId,
+        success: !!res.accessToken,
+        userId: res.userId,
       });
     })
     .catch((error) => {

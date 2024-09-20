@@ -1,5 +1,6 @@
 from common.form_serializer import FormSerializer
 from common.permissions import user_is_authenticated
+from common.serializers import EmptySerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -9,7 +10,6 @@ from projects.actions.import_spec_files import (
     ImportSpecFilesForm,
     UnknownSpecFileTypeError,
 )
-from projects.serializers import ProjectLeadSerializer
 from projects.shortcuts import get_project_or_400
 from api.utils.extend_schema import extend_schema
 from rest_framework import serializers
@@ -29,7 +29,7 @@ class ImportSpecFilesApiView(APIView):
     @extend_schema(
         request=ImportSpecFilesSerializer,
         responses={
-            200: ProjectLeadSerializer,
+            200: EmptySerializer,
         },
         data=dict(
             project=get_project_or_400,
@@ -44,8 +44,6 @@ class ImportSpecFilesApiView(APIView):
                 import_spec_files_form=ImportSpecFilesForm(files=request_data.files),
                 project=project,
             )
-            return Response(
-                ProjectLeadSerializer(project).data, status=status.HTTP_200_OK
-            )
+            return Response(EmptySerializer().data, status=status.HTTP_200_OK)
         except UnknownSpecFileTypeError as e:
             raise ValidationError(code="UNKNOWN_SPEC_FILE_TYPE", detail=str(e))
