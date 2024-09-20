@@ -11,7 +11,7 @@ type PropsT = {
 };
 
 export const StepListView = observer((props: PropsT) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);

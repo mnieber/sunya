@@ -55,7 +55,7 @@ export const ProjectPage = observer(
             <ProjectLeadFormView projectLead={props.projectLead} />
           )}
           {props.projectEdit.isEditing && <ImportSpecFilesFormView />}
-          <ScenarioListView className="mb-4" />
+          <ScenarioListView className="" />
         </div>
       </div>
     );
