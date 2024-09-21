@@ -3,6 +3,8 @@ name: projects
 models:
   - name: Project
     fields:
+      - name: id
+        type: UUID
       - name: name
         type: str
       - name: memberships

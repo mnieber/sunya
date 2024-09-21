@@ -7,12 +7,12 @@ from landler.backend.modules.organizations import Organizations
 from default.stack.namespace import Module, Enum, Form
 from default.backend.namespace import Action, ApiView
 
-from sunya import Entity, actor_to_str, G as g
+from sunya import get_now_suffix, NowMixin, Entity, EntityWithId, actor_to_str, G as g
 
 
 class Projects(Module):
     class Models:
-        class Project(Entity):
+        class Project(NowMixin, EntityWithId):
             name: str
             memberships: T.List["Projects.Models.ProjectMembership"] = []
 
@@ -64,7 +64,7 @@ g.add_plot_to_project_action = Projects.Actions.AddPlotToProject()
 
 @actor_to_str.method((Projects.Models.Project,))
 def project_to_str(project):
-    return f"{project.name}+:project"
+    return f"{project.name}+:project{get_now_suffix(project)}"
 
 
 @actor_to_str.method((Projects.Models.ProjectMembership,))

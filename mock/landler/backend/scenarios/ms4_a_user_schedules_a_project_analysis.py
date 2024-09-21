@@ -35,6 +35,8 @@ def start(a_project, variation="default"):
         project.actor = add_actor(a_project, name="project")
 
         with add_goal("create a", project_analysis_job):
+            get_time.now(bump=True)
+
             with the(g.create_project_analysis_job_api_view).calls_the(
                 g.create_project_analysis_job_action
             ):
@@ -70,7 +72,8 @@ def start(a_project, variation="default"):
 
                         with (
                             the(g.create_project_analysis_action)
-                            .gets_the(project)
+                            .determines_the(project_at_now)
+                            .as_the(project)
                             .at_the_now_ts_of_the(project_analysis)
                         ):
                             project_at_now.actor = project_at_now_(

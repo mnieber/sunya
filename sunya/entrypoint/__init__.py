@@ -33,11 +33,11 @@ config = dict(
 
 
 def write_scenarios(config, scenario_names, file_writer):
-    for scenario_name in scenario_names:
+    for idx, scenario_name in enumerate(scenario_names):
         layer, scenario_path = get_scenario_path(config, scenario_name)
         scenario = run_scenario(scenario_path)
         prompt_writer = get_prompt_writer(config, layer)
-        scenario_yaml = prompt_writer.get_scenario_description(scenario)
+        scenario_yaml = prompt_writer.get_scenario_description(scenario, idx)
         file_writer.write_scenario(scenario_name, scenario_yaml)
 
 

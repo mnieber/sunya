@@ -17,16 +17,19 @@ scenario_name = "backend/ms3-a-user-adds-a-plot-to-a-project"
 def start(a_project, variation="default"):
     project = add_role("Project")
     plot = add_role("Plot")
+    plot_questionnaire = add_role("PlotQuestionnaire")
 
     with add_scenario(scenario_name):
         project.actor = add_actor(a_project, name="project")
 
         if variation == "default":
             with add_goal("create a", plot, "in the", project):
-                with the(g.create_plot_action).creates_the(plot):
+                with the(g.create_plot_action).creates_the(plot).and_its(
+                    plot_questionnaire
+                ):
                     plot.actor = plot_()
-                    plot_questionnaire_()
-                    g.plot.plot_questionnaire = g.plot_questionnaire
+                    plot_questionnaire.actor = plot_questionnaire_()
+                    plot.actor.plot_questionnaire = plot_questionnaire.actor
 
                 with add_goal("add the", plot, "to the", project):
                     with the(g.create_plot_action).calls_the(

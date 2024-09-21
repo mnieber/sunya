@@ -1,4 +1,5 @@
 type: scenario
+order: 0
 scenario_name: backend/ms1-a-user-signs-up-and-creates-an-org
 nodes:
   - root: ''

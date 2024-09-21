@@ -1,4 +1,10 @@
-from .entities import Entity, EntityWithId, GenericEntity  # noqa
+from .entities import (
+    get_now_suffix,
+    NowMixin,
+    Entity,
+    EntityWithId,
+    GenericEntity,
+)  # noqa
 from .entities.actor_to_str import actor_to_str, get_actor_str  # noqa
 from .extension.extend import extend  # noqa
 from .extension.mem_field import MemField  # noqa

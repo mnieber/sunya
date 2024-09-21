@@ -3,6 +3,8 @@ name: plots
 models:
   - name: Plot
     fields:
+      - name: id
+        type: UUID
       - name: name
         type: str
       - name: sequence_number

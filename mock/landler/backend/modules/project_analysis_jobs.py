@@ -15,9 +15,9 @@ class ProjectAnalysisJobs(Module):
     class Models:
         class ProjectAnalysisJob(Entity):
             """
-            From this model, ProjectAnalyses are created. If repeats_every is not None,
-            then multiple ProjectAnalyses will be created, each with a scheduled_at
-            that is scheduled_at + repeats_every.
+            From this model, ProjectAnalyses are created (if is_active).
+            If repeats_every is not None, then multiple ProjectAnalyses will be created,
+            each with a scheduled_at that is scheduled_at + repeats_every.
             """
 
             project: Projects.Models.Project

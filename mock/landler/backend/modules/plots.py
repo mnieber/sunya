@@ -6,15 +6,15 @@ from landler.backend.modules.polygons import Polygons
 from default.stack.namespace import Module, Form
 from default.backend.namespace import Action, ApiView
 from landler.utils.sequence_number_generator import SequenceNumberGenerator
-from sunya import Entity, actor_to_str, G as g
+from sunya import get_now_suffix, NowMixin, EntityWithId, actor_to_str, G as g
 
 
 class Plots(Module):
     class Models:
-        class Plot(Entity):
+        class Plot(NowMixin, EntityWithId):
             name: str
-            # The sequence_number is used to unique identify a plot in
-            # a user-friendly way.
+            # The (globally unique) sequence_number is used to identify a plot in
+            # a user-friendly way. It's similar to a Jira ticket number.
             sequence_number: int
             owner: Organizations.Models.Organization
             polygon: Polygons.Models.Polygon
@@ -23,7 +23,6 @@ class Plots(Module):
             ] = None
             is_draft: bool = False
             errors: list[str] = []
-            __iteration__: int = 0
 
     class Actions:
         class CreatePlot(Action):
@@ -41,7 +40,7 @@ g.create_plot_api_view = Plots.Api.CreatePlot()
 
 @actor_to_str.method((Plots.Models.Plot,))
 def plot_to_str(plot):
-    return f"{plot.name}@{plot.__iteration__}+:plot"
+    return f"{plot.name}+:plot{get_now_suffix(plot)}"
 
 
 plot_sequence_number_generator = SequenceNumberGenerator()
