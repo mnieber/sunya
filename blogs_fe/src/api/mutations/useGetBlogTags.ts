@@ -15,7 +15,7 @@ export function getBlogTagsQueryKey(args: QueryKeyT) {
 export const getBlogTagsUrl = '/blogs/tags/';
 
 export const getBlogTags = (args: GetBlogTagsArgsT) => {
-  return get(`${getBlogTagsUrl}?inputValue=${args.inputValue}`).then(
+  return get(`${getBlogTagsUrl}?input_value=${args.inputValue}`).then(
     (response) => {
       return waitOnDev(1000, response.data);
     }

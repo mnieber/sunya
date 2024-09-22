@@ -17,8 +17,8 @@ export type DeleteBlogPostsArgsT = {
 export const deleteBlogPosts = (args: DeleteBlogPostsArgsT) => {
   const url = `/blogs/${args.blog.id}/blog-posts/delete/`;
   return post(url, {
-    deleteBlogPostsForm: {
-      blogPostIds: args.blogPostIds,
+    delete_blog_posts_form: {
+      blog_post_ids: args.blogPostIds,
     },
   })
     .then((response) => {

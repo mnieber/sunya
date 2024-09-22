@@ -11,3 +11,11 @@ export type RecursivePartial<T> = {
     ? RecursivePartial<T[P]>
     : T[P];
 };
+
+export type Exactly<T, U> = T extends U
+  ? U extends T
+    ? unknown
+    : never
+  : never;
+
+export const assertTypesEqual = <T, U>(_: Exactly<T, U>) => {};

@@ -9,7 +9,10 @@ import {
   useCreateBlogPost,
 } from '/src/api/mutations/useCreateBlogPost';
 import { useMarkBlogPostAsPublished } from '/src/api/mutations/useMarkBlogPostAsPublished';
-import { useUpdateBlogPost } from '/src/api/mutations/useUpdateBlogPost';
+import {
+  UpdateBlogPostArgsT,
+  useUpdateBlogPost,
+} from '/src/api/mutations/useUpdateBlogPost';
 import { useGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
 import { BlogT } from '/src/api/types/BlogT';
 import { BlogPostsState } from '/src/blogPosts/BlogPostsState';
@@ -62,17 +65,25 @@ export const useBlogPostsState = (props: PropsT) => {
       },
       //
       saveBlogPost: (values: ObjT) => {
-        const mutation = values.blogPostForm.isTransient
-          ? createBlogPost
-          : updateBlogPost;
-        return trackPromise({
-          name: 'saveBlogPost',
-          promise: mutation.mutateAsync({
-            blog: props.getBlog(),
-            blogPost: blogPostsHighlightRef.current?.item,
-            createBlogPostForm: values.blogPostForm,
-          } as CreateBlogPostArgsT),
-        }).result;
+        if (values.blogPostForm.isTransient) {
+          return trackPromise({
+            name: 'createBlogPost',
+            promise: createBlogPost.mutateAsync({
+              blog: props.getBlog(),
+              blogPost: blogPostsHighlightRef.current?.item,
+              createBlogPostForm: values.blogPostForm,
+            } as CreateBlogPostArgsT),
+          }).result;
+        } else {
+          return trackPromise({
+            name: 'saveBlogPost',
+            promise: updateBlogPost.mutateAsync({
+              blog: props.getBlog(),
+              blogPost: blogPostsHighlightRef.current?.item,
+              updateBlogPostForm: values.blogPostForm,
+            } as UpdateBlogPostArgsT),
+          }).result;
+        }
       },
       //
       deleteBlogPosts: (ids: string[]) => {

@@ -1,7 +1,9 @@
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { invalidateGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
 import { post } from '/src/api/restClient';
+import { BlogPostSchema } from '/src/api/types/BlogPostSchema';
 import { BlogT } from '/src/api/types/BlogT';
+import { parseResponse } from '/src/api/utils/parseResponse';
 import { ObjT } from '/src/utils/types';
 import { waitOnDev } from '/src/utils/wait';
 
@@ -20,7 +22,9 @@ export const createBlogPost = (args: CreateBlogPostArgsT) => {
     blogId: args.blog.id,
   })
     .then((response) => {
-      return waitOnDev(1000, response);
+      const res = parseResponse(BlogPostSchema, response);
+
+      return waitOnDev(1000, res);
     })
     .catch((error) => {
       const errorCodes = error.response.data;

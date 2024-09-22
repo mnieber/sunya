@@ -4,25 +4,25 @@ import { ObjT } from '/src/utils/types';
 
 export type MutationStatusT = 'idle' | 'loading' | 'success' | 'error';
 
-export type ArgsT = {
-  mutationFn: (args: any) => Promise<any> | void;
-  onMutate?: (args: any) => Promise<any> | void;
-  onSuccess?: (response: ObjT, args: any) => Promise<any> | void;
-  onError?: (args: any) => void;
+export type ArgsT<MutationArgsT = any> = {
+  mutationFn: (args: MutationArgsT) => Promise<any> | void;
+  onMutate?: (args: MutationArgsT) => Promise<any> | void;
+  onSuccess?: (response: ObjT, args: MutationArgsT) => Promise<any> | void;
+  onError?: (error: Error, args: MutationArgsT) => void;
 };
 
-export class ObservableMutation {
+export class ObservableMutation<MutationArgsT = any> {
   status = 'idle';
-  mutationFn: (args: any) => Promise<any> | void;
-  onMutate?: (args: any) => Promise<any> | void;
-  onSuccess?: (response: ObjT, args: any) => Promise<any> | void;
-  onError?: (args: any) => void;
+  mutationFn: (args: MutationArgsT) => Promise<any> | void;
+  onMutate?: (args: MutationArgsT) => Promise<any> | void;
+  onSuccess?: (response: ObjT, args: MutationArgsT) => Promise<any> | void;
+  onError?: (error: Error, args: MutationArgsT) => void;
 
   setStatus = (status: MutationStatusT) => {
     this.status = status;
   };
 
-  mutateAsync = (args: any) => {
+  mutateAsync = (args: MutationArgsT) => {
     this.setStatus('loading');
     return Promise.resolve(this.onMutate ? this.onMutate(args) : undefined)
       .then(() => this.mutationFn(args))
@@ -36,7 +36,7 @@ export class ObservableMutation {
       })
       .catch((error: any) => {
         return Promise.resolve(
-          this.onError ? this.onError(error) : undefined
+          this.onError ? this.onError(error, args) : undefined
         ).then(() => {
           this.setStatus('error');
           return error;
@@ -44,7 +44,7 @@ export class ObservableMutation {
       });
   };
 
-  constructor(args: ArgsT) {
+  constructor(args: ArgsT<MutationArgsT>) {
     this.mutationFn = args.mutationFn;
     this.onSuccess = args.onSuccess;
     this.onError = args.onError;
@@ -61,6 +61,8 @@ export const isRunning = (observableMutation: ObservableMutation) => {
   return observableMutation.status === 'loading';
 };
 
-export const useObservableMutation = (args: ArgsT) => {
-  return useBuilder(() => new ObservableMutation(args));
+export const useObservableMutation = <MutationArgsT = any>(
+  args: ArgsT<MutationArgsT>
+) => {
+  return useBuilder(() => new ObservableMutation<MutationArgsT>(args));
 };
