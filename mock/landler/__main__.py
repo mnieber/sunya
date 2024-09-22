@@ -14,6 +14,7 @@ config = dict(
     scenario_path_by_name={},
     all_module_names=[
         "backend/calculations",
+        "backend/domain_events",
         "backend/facts",
         "backend/organizations",
         "backend/plot_analyses",
@@ -41,6 +42,7 @@ config = dict(
     ],
     module_by_name={
         "backend/calculations": B.Calculations,
+        "backend/domain_events": B.DomainEvents,
         "backend/facts": B.Facts,
         "backend/organizations": B.Organizations,
         "backend/plot_analyses": B.PlotAnalyses,

@@ -1,0 +1,32 @@
+type: module
+name: domain_events
+models:
+  - name: DomainEvent
+    fields:
+      - name: id
+        type: UUID
+      - name: type_id
+        type: int
+  - name: DomainEventType
+    fields:
+      - name: type_id
+        type: int
+      - name: type_name
+        type: str
+  - name: Lock
+    fields:
+      - name: lock_id
+        type: str
+  - name: EntityId2DomainEventId
+    fields:
+      - name: entity_id
+        type: str
+      - name: domain_event_id
+        type: str
+actions:
+  - name: process_domain_events
+    args: []
+  - name: update_view_tables
+    args: []
+api_views: []
+

@@ -28,7 +28,6 @@ add_code(file_map, dir_list, code_in=f"{in_landler_be}")
 
 
 if __name__ == "__main__":
-    __import__("pudb").set_trace()  # zz
     args = sync_files_to_local_claude_dir.parse_args()
     files_copied = sync_files_to_local_claude_dir.sync_files(
         file_map, dir_list, args.target_dir
