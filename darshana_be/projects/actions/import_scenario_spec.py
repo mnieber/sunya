@@ -10,7 +10,7 @@ from steps.models import Step, FactBit
 from steps.actions.create_step import create_step, CreateStepForm
 from actors.models import Actor, Role
 from actors.actions.create_actor import create_actor, CreateActorForm
-from steps.enums import FactBitTypeNames
+from steps.enums import FactBitTypeNames, StepTypeNames
 from actors.actions.create_role import create_role, CreateRoleForm
 
 
@@ -56,7 +56,9 @@ def _process_nodes(
 ):
     steps = []
     for node in nodes:
-        if "goal" in node or "step" in node:
+        is_goal = "goal" in node
+        is_step = "step" in node
+        if is_goal or is_step:
             fact_str = node.get("goal", node.get("step"))
         else:
             if parent_step:
@@ -65,6 +67,11 @@ def _process_nodes(
 
         create_step_form = CreateStepForm(
             fact=_parse_fact_string(fact_str),
+            step_type_name=(
+                StepTypeNames.GOAL.value
+                if is_goal
+                else StepTypeNames.STEP.value if is_step else StepTypeNames.ROOT.value
+            ),
             parent_step=parent_step,
             field_delta_set_by_actor_key=node.get("field_delta_set_by_actor_key", {}),
             pre_actor_key_by_role_name=node.get("pre_actor_key_by_role_name", {}),
@@ -96,10 +103,24 @@ def _create_step(scenario: Scenario, create_step_form) -> Step:
 
 
 def _parse_fact_string(fact_str: str) -> T.List[FactBit]:
+    current_string_fact_bits = []
+
+    def maybe_add_string_fact_bits():
+        nonlocal current_string_fact_bits, fact_bits
+        if current_string_fact_bits:
+            fact_bits.append(
+                FactBit(
+                    type_name=FactBitTypeNames.STRING.value,
+                    value=" ".join(current_string_fact_bits),
+                )
+            )
+            current_string_fact_bits = []
+
     fact_bits = []
     parts = fact_str.split()
     for part in parts:
         if part.startswith("[") and part.endswith("]"):
+            maybe_add_string_fact_bits()
             actor_key = part[1:-1]
             if ":" in actor_key:
                 fact_bits.append(
@@ -110,9 +131,9 @@ def _parse_fact_string(fact_str: str) -> T.List[FactBit]:
                     FactBit(type_name=FactBitTypeNames.ROLE.value, value=actor_key)
                 )
         else:
-            fact_bits.append(
-                FactBit(type_name=FactBitTypeNames.STRING.value, value=part)
-            )
+            current_string_fact_bits.append(part)
+
+    maybe_add_string_fact_bits()
     return fact_bits
 
 

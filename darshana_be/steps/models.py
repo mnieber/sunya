@@ -1,6 +1,8 @@
+from common.fields import SingleLineTextField
 from django.db import models
 from common.models import BaseModel
 from dataclassy import dataclass
+from steps.enums import StepTypeNames
 
 
 @dataclass
@@ -10,6 +12,7 @@ class FactBit:
 
 
 class Step(BaseModel):
+    type_name = SingleLineTextField(choices=StepTypeNames.choices)
     fact_json = models.JSONField()
     parent_step = models.ForeignKey(
         "self",

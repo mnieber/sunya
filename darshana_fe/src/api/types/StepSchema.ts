@@ -6,6 +6,7 @@ import { StepT } from '/src/api/types/StepT';
 export const StepSchema: z.ZodType<StepT> = z.object({
   ...EntitySchema.shape,
   fact: z.array(FactBitSchema),
+  typeName: z.enum(['goal', 'step', 'root']),
   parentStepId: z.string().nullable(),
   childSteps: z.lazy(() => z.array(StepSchema)),
   fieldDeltaSetByActorKey: z.record(z.string(), z.record(z.string(), z.any())),

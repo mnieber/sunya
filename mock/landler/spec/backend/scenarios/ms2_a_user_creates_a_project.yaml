@@ -31,13 +31,14 @@ nodes:
                           plot_lists: '[] (None)'
                     post_actor_key_by_role_name:
                       Project: my-project+:project@@2024-01-01 00:00:00
-          - goal: add the [Organization] as admin to the [my-project+:project@@2024-01-01 00:00:00]
+          - goal: add the [Organization] as admin to the [Project]
             actors_updated:
               - name: my-project+:project@@2024-01-01 00:00:00
                 deltas:
                   memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] ([])'
             pre_actor_key_by_role_name:
               Organization: my-org+:organization
+              Project: my-project+:project@@2024-01-01 00:00:00
             child_nodes:
               - step: The [create-project:action] calls the [add-organization-to-project:action]
 

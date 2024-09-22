@@ -13,7 +13,7 @@ from sunya import (
 )
 
 
-g.organization_route = Route()
+g.organization_route = Route(name="organization")
 
 
 scenario_name = "backend/ms1-a-user-signs-up-and-creates-an-org"

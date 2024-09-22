@@ -6,6 +6,7 @@ import { ObjT } from '/src/utils/types';
 
 export type StepT = EntityT & {
   fact: FactBitT[];
+  typeName: 'goal' | 'step' | 'root';
   parentStepId: string | null;
   childSteps: StepT[];
   fieldDeltaSetByActorKey: {

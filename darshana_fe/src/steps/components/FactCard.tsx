@@ -7,6 +7,12 @@ type PropsT = {
 
 export const FactCard = (props: PropsT) => {
   return props.step.fact.map((factBit, index) => {
+    const prefix =
+      index === 0 && props.step.typeName === 'goal' ? (
+        <span className="font-bold">Goal: </span>
+      ) : (
+        ''
+      );
     if (factBit.typeName === 'actor' || factBit.typeName === 'role') {
       return (
         <span
@@ -23,6 +29,7 @@ export const FactCard = (props: PropsT) => {
     }
     return (
       <span className="ml-1 text-gray-text" key={index}>
+        {prefix}
         {factBit.value}
       </span>
     );

@@ -33,7 +33,7 @@ def start():
                 "add the",
                 g.user_session.active_organization,
                 "as admin to the",
-                g.project,
+                project,
             ):
                 with the(g.create_project_action).calls_the(
                     g.add_organization_to_project_action

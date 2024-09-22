@@ -21,7 +21,7 @@ export const StepListView = observer((props: PropsT) => {
 
   return (
     <div className={cn({ 'ml-7': props.depth > 1, 'ml-0': props.depth <= 1 })}>
-      {hasFact && (
+      {hasFact && props.step.typeName !== 'root' && (
         <div
           onClick={toggleExpand}
           className="mb-2 flex cursor-pointer items-start"
