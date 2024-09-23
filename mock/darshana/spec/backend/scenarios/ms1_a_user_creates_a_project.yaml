@@ -1,5 +1,6 @@
 type: scenario
-scenario_name: backend/ms1-a-user-creates-a-project
+order: 3
+scenario_name: backend/ms1_a_user_creates_a_project
 nodes:
   - root: ''
     child_nodes:

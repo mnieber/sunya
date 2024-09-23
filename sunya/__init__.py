@@ -19,6 +19,7 @@ from .scenarios.store import (  # noqa
     add_step,
     add_goal,
     get_scenario,
+    get_scenario_name,
 )
 from .scenarios.global_namespace import G  # noqa
 from .scenarios.get_entity_delta import NoValue, get_entity_delta  # noqa

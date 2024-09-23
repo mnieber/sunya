@@ -1,6 +1,5 @@
 import landler.backend.namespace as B
 import landler.frontend.namespace as F  # noqa
-from default.frontend.namespace import Route
 
 from sunya import (
     add_goal,
@@ -9,15 +8,13 @@ from sunya import (
     add_role,
     add_actor,
     get_scenario,
+    get_scenario_name,
     the,
     G as g,
 )
 
 
-g.organization_route = Route(name="organization")
-
-
-scenario_name = "backend/ms1-a-user-signs-up-and-creates-an-org"
+scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 
 def start(a_user):
@@ -97,10 +94,10 @@ def create_admin_membership(organization):
 
 
 def run():
-    from . import ms1_a_user_signs_up_and_sees_a_checklist
+    from . import mrd1_a_user_signs_up_and_sees_a_checklist
 
-    ms1_scenario = run_scenario(ms1_a_user_signs_up_and_sees_a_checklist)
-    a_user = ms1_scenario.get_entity_by_name("user")
+    mrd1_scenario = run_scenario(mrd1_a_user_signs_up_and_sees_a_checklist)
+    a_user = mrd1_scenario.get_entity_by_name("user")
 
     return start(a_user)
 

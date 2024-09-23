@@ -1,5 +1,6 @@
 type: scenario
-scenario_name: frontend/ms2-a-user-uploads-files-to-a-project
+order: 1
+scenario_name: frontend/ms2_a_user_uploads_files_to_a_project
 nodes:
   - root: ''
     child_nodes:

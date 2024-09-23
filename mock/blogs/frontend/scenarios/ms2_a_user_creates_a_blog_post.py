@@ -3,6 +3,7 @@ from sunya import (
     add_goal,
     add_scenario,
     get_scenario,
+    get_scenario_name,
     run_scenario,
     add_actor,
     the,
@@ -11,7 +12,7 @@ from sunya import (
 )
 
 
-scenario_name = "frontend/ms2-a-user-creates-a-blog-post"
+scenario_name = f"frontend/{get_scenario_name(__file__)}"
 
 
 def start(a_user, a_blog):

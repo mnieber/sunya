@@ -42,6 +42,9 @@ class Organizations(Module):
         class CreateOrganizationApiView(ApiView):
             pass
 
+        class AddUserToDemoOrganizationApiView(ApiView):
+            pass
+
     class DomainEvents:
         class OrganizationCreated:
             pass
@@ -59,6 +62,9 @@ class Organizations(Module):
 
 g.create_organization_action = Organizations.Actions.CreateOrganization()
 g.create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
+g.add_user_to_demo_organization_api_view = (
+    Organizations.ApiViews.AddUserToDemoOrganizationApiView()
+)
 g.add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
 g.create_demo_organization_task = Organizations.Tasks.CreateDemoOrganization()
 

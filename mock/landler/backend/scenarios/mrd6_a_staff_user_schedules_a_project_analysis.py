@@ -9,6 +9,7 @@ from sunya import (
     add_step,
     add_actor,
     get_scenario,
+    get_scenario_name,
     add_role,
     the,
     G as g,
@@ -17,7 +18,7 @@ from sunya import (
 from sunya.utils import get_time
 
 
-scenario_name = "backend/ms4-a-user-schedules-a-project-analysis"
+scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 
 def start(a_project, variation="default"):
@@ -216,9 +217,9 @@ def project_analysis_job_(a_project):
 
 
 def run():
-    from . import ms3_a_user_adds_a_plot_to_a_project
+    from . import mrd5_a_user_adds_a_plot_to_a_project
 
-    ms3_scenario = run_scenario(ms3_a_user_adds_a_plot_to_a_project)
+    ms3_scenario = run_scenario(mrd5_a_user_adds_a_plot_to_a_project)
     project = ms3_scenario.get_entity_by_name("project")
 
     return start(a_project=project)

@@ -1,5 +1,6 @@
 type: scenario
-scenario_name: backend/ms2-a-user-creates-a-blog-post
+order: 1
+scenario_name: backend/ms2_a_user_creates_a_blog_post
 nodes:
   - root: ''
     child_nodes:

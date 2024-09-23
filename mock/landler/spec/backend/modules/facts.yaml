@@ -7,9 +7,9 @@ models:
         type: FactNames
       - name: value
         type: JSON
-      - name: ref_date
+      - name: cutoff_date
         type: datetime
-      - name: ref_source_id
+      - name: source_id
         type: str
 actions: []
 api_views: []

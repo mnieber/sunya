@@ -4,6 +4,7 @@ from sunya import (
     add_scenario,
     add_actor,
     get_scenario,
+    get_scenario_name,
     run_scenario,
     add_role,
     the,
@@ -11,7 +12,7 @@ from sunya import (
 )
 
 
-scenario_name = "backend/ms2-a-user-creates-a-project"
+scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 
 def start():
@@ -60,9 +61,9 @@ def project_membership_():
 
 
 def run():
-    from . import ms2_a_user_joins_the_demo_org_and_creates_an_org
+    from . import mrd2_a_user_joins_the_demo_org_and_creates_an_org
 
-    run_scenario(ms2_a_user_joins_the_demo_org_and_creates_an_org)
+    run_scenario(mrd2_a_user_joins_the_demo_org_and_creates_an_org)
 
     return start()
 

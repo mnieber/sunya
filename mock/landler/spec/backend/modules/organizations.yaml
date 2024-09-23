@@ -43,4 +43,6 @@ actions:
 api_views:
   - name: CreateOrganizationApiView
     filters: []
+  - name: AddUserToDemoOrganizationApiView
+    filters: []
 

@@ -1,7 +1,9 @@
 from sunya import (
     add_goal,
     add_scenario,
+    run_scenario,
     get_scenario,
+    get_scenario_name,
     add_role,
     the,
     G as g,
@@ -11,7 +13,7 @@ from landler.backend.modules.plot_lists import get_project_plot_list_by_name
 import landler.backend.namespace as B
 
 
-scenario_name = "backend/ms3-a-user-adds-a-plot-to-a-project"
+scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 
 def start(a_project, variation="default"):
@@ -74,10 +76,10 @@ def plot_():
 
 
 def run():
-    import landler.backend.scenarios.ms2_a_user_creates_a_project
+    from . import mrd4_a_user_creates_a_project
 
-    ms2_scenario = landler.backend.scenarios.ms2_a_user_creates_a_project.run()
-    project = ms2_scenario.get_entity_by_name("project")
+    mrd4_scenario = run_scenario(mrd4_a_user_creates_a_project)
+    project = mrd4_scenario.get_entity_by_name("project")
 
     return start(a_project=project)
 

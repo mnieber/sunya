@@ -1,9 +1,17 @@
 import darshana.backend.namespace as B
 from sunya import G as g
-from sunya import add_actor, add_goal, add_role, add_scenario, get_scenario, the
+from sunya import (
+    add_actor,
+    add_goal,
+    add_role,
+    add_scenario,
+    get_scenario,
+    get_scenario_name,
+    the,
+)
 
 
-scenario_name = "backend/ms1-a-user-creates-a-project"
+scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 
 def start():

@@ -34,10 +34,11 @@ config = dict(
         "frontend/user_settings",
     ],
     all_scenario_names=[
-        "backend/mrd1_a_user_signs_up_and_creates_an_org",
-        "backend/ms2_a_user_creates_a_project",
-        "backend/ms3_a_user_adds_a_plot_to_a_project",
-        "backend/ms4_a_user_schedules_a_project_analysis",
+        "backend/mrd1_a_user_signs_up_and_sees_a_checklist",
+        "backend/mrd2_a_user_joins_the_demo_org_and_creates_an_org",
+        "backend/mrd4_a_user_creates_a_project",
+        "backend/mrd5_a_user_adds_a_plot_to_a_project",
+        "backend/mrd6_a_staff_user_schedules_a_project_analysis",
         "frontend/ms2_a_user_interacts_with_the_checklist",
     ],
     module_by_name={

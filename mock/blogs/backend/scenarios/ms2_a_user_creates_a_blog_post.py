@@ -6,12 +6,13 @@ from sunya import (
     run_scenario,
     add_actor,
     get_scenario,
+    get_scenario_name,
     the,
     add_role,
 )
 
 
-scenario_name = "backend/ms2-a-user-creates-a-blog-post"
+scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 
 def start(a_user, a_blog):

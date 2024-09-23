@@ -1,0 +1,159 @@
+type: scenario
+order: 4
+scenario_name: backend/mrd6_a_staff_user_schedules_a_project_analysis
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: create a [ProjectAnalysisJob]
+        actors_introduced:
+          - name: my-project+:project-analysis-job
+            deltas:
+              is_active: True (None)
+              project: my-project+:project@@2024-01-01 00:00:00 (None)
+              project_analyses: '[] (None)'
+              repeats_every: None (None)
+              scheduled_at: 2024-01-01 00:01:00 (None)
+        post_actor_key_by_role_name:
+          ProjectAnalysisJob: my-project+:project-analysis-job
+        child_nodes:
+          - step: The [create-project-analysis-job:api-view] calls the [create-project-analysis-job:action]
+            child_nodes:
+              - step: The [create-project-analysis-job:action] creates the [ProjectAnalysisJob]
+                actors_introduced:
+                  - name: my-project+:project-analysis-job
+                    deltas:
+                      is_active: True (None)
+                      project: my-project+:project@@2024-01-01 00:00:00 (None)
+                      project_analyses: '[] (None)'
+                      repeats_every: None (None)
+                      scheduled_at: 2024-01-01 00:01:00 (None)
+                post_actor_key_by_role_name:
+                  ProjectAnalysisJob: my-project+:project-analysis-job
+      - step: the [:project-analysis-queue] finds [JobsToRun]
+        actors_introduced:
+          - name: jobs_to_run+:list
+            deltas:
+              items: '[''my-project+:project-analysis-job''] (None)'
+              name: jobs_to_run (None)
+        post_actor_key_by_role_name:
+          JobsToRun: jobs_to_run+:list
+      - step: The [:project-analysis-queue] runs the first [ProjectAnalysisJob]
+        actors_updated:
+          - name: my-project+:project-analysis-job
+            deltas:
+              project_analyses: '[''my-project+:project-analysis''] ([])'
+        pre_actor_key_by_role_name:
+          ProjectAnalysisJob: my-project+:project-analysis-job
+        child_nodes:
+          - goal: create a [ProjectAnalysis] from a [ProjectAnalysisJob]
+            actors_introduced:
+              - name: my-project+:project-analysis
+                deltas:
+                  id: f65f340b768b537fb6305706cd54962d (None)
+                  job: my-project+:project-analysis-job (None)
+                  now: 2024-01-01 00:01:00 (None)
+                  plot_analyses: '[''my-plot@2024-01-01-00:01:00+:plot-analysis''] (None)'
+                  project: my-project+:project@@2024-01-01 00:00:00 (None)
+                  status: running (None)
+            actors_updated:
+              - name: my-project+:project-analysis-job
+                deltas:
+                  project_analyses: '[''my-project+:project-analysis''] ([])'
+            pre_actor_key_by_role_name:
+              ProjectAnalysisJob: my-project+:project-analysis-job
+            post_actor_key_by_role_name:
+              ProjectAnalysis: my-project+:project-analysis
+            child_nodes:
+              - step: The [:project-analysis-queue] calls the [create-project-analysis:action]
+                child_nodes:
+                  - step: The [create-project-analysis:action] creates a [ProjectAnalysis]
+                    actors_introduced:
+                      - name: my-project+:project-analysis
+                        deltas:
+                          id: f65f340b768b537fb6305706cd54962d (None)
+                          job: my-project+:project-analysis-job (None)
+                          now: 2024-01-01 00:01:00 (None)
+                          plot_analyses: '[] (None)'
+                          project: my-project+:project@@2024-01-01 00:00:00 (None)
+                          status: running (None)
+                    post_actor_key_by_role_name:
+                      ProjectAnalysis: my-project+:project-analysis
+                  - step: The [create-project-analysis:action] determines the [ProjectAtNow] as the [Project] at the now ts of the [ProjectAnalysis]
+                    actors_introduced:
+                      - name: my-project+:project@@2024-01-01 00:01:00
+                        deltas:
+                          id: 422564372c455ce1befeb944ffceb5e3 (None)
+                          memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
+                          name: my-project (None)
+                          plot_lists: '[''default+:plot-list''] (None)'
+                    pre_actor_key_by_role_name:
+                      Project: my-project+:project@@2024-01-01 00:00:00
+                      ProjectAnalysis: my-project+:project-analysis
+                    post_actor_key_by_role_name:
+                      ProjectAtNow: my-project+:project@@2024-01-01 00:01:00
+                  - step: The [create-project-analysis:action] loops over all plots in the [ProjectAtNow]
+                    pre_actor_key_by_role_name:
+                      ProjectAtNow: my-project+:project@@2024-01-01 00:01:00
+                    child_nodes:
+                      - goal: add a [PlotAnalysis] for the [Plot] to the [ProjectAnalysis]
+                        actors_introduced:
+                          - name: my-plot@2024-01-01-00:01:00+:plot-analysis
+                            deltas:
+                              id: f716eed877635431ae1a48287ea69562 (None)
+                              now: 2024-01-01 00:01:00 (None)
+                              plot: my-plot+:plot@@2024-01-01 00:00:00 (None)
+                              project_analysis: my-project+:project-analysis (None)
+                              status: running (None)
+                        actors_updated:
+                          - name: my-project+:project-analysis
+                            deltas:
+                              plot_analyses: '[''my-plot@2024-01-01-00:01:00+:plot-analysis''] ([])'
+                        pre_actor_key_by_role_name:
+                          Plot: my-plot+:plot@@2024-01-01 00:00:00
+                          ProjectAnalysis: my-project+:project-analysis
+                        post_actor_key_by_role_name:
+                          PlotAnalysis: my-plot@2024-01-01-00:01:00+:plot-analysis
+                        child_nodes:
+                          - step: The [create-project-analysis:action] creates the [PlotAnalysis]
+                            actors_introduced:
+                              - name: my-plot@2024-01-01-00:01:00+:plot-analysis
+                                deltas:
+                                  id: f716eed877635431ae1a48287ea69562 (None)
+                                  now: 2024-01-01 00:01:00 (None)
+                                  plot: my-plot+:plot@@2024-01-01 00:00:00 (None)
+                                  project_analysis: my-project+:project-analysis (None)
+                                  status: running (None)
+                            post_actor_key_by_role_name:
+                              PlotAnalysis: my-plot@2024-01-01-00:01:00+:plot-analysis
+          - goal: run each [PlotAnalysis] in the [ProjectAnalysis] for the [Plot] at the now timestamp of the [PlotAnalysis]
+            pre_actor_key_by_role_name:
+              PlotAnalysis: my-plot@2024-01-01-00:01:00+:plot-analysis
+              ProjectAnalysis: my-project+:project-analysis
+              Plot: my-plot+:plot@@2024-01-01 00:00:00
+            child_nodes:
+              - step: The [:project-analysis-queue] calls the [run-project-analysis:action]
+                child_nodes:
+                  - step: The [run-project-analysis:action] calls the [run-plot-analysis:action] with [PlotAnalysis]
+                    pre_actor_key_by_role_name:
+                      PlotAnalysis: my-plot@2024-01-01-00:01:00+:plot-analysis
+                    child_nodes:
+                      - step: The [run-plot-analysis:action] creates the [CalciumPlotAnalysisJob] for the [PlotAtNow]
+                        actors_introduced:
+                          - name: f716eed877635431ae1a48287ea69562+:calcium-plot-analysis-job
+                            deltas:
+                              id: f716eed877635431ae1a48287ea69562 (None)
+                              polygon: +:polygon (None)
+                          - name: my-plot+:plot@@2024-01-01 00:01:00
+                            deltas:
+                              errors: '[] (None)'
+                              id: 397400ddd19854aa92650a22d1e32c9b (None)
+                              is_draft: False (None)
+                              name: my-plot (None)
+                              owner: my-org+:organization (None)
+                              plot_questionnaire: my-plot+:plot-questionnaire (None)
+                              polygon: +:polygon (None)
+                              sequence_number: 1 (None)
+                        post_actor_key_by_role_name:
+                          CalciumPlotAnalysisJob: f716eed877635431ae1a48287ea69562+:calcium-plot-analysis-job
+                          PlotAtNow: my-plot+:plot@@2024-01-01 00:01:00
+

@@ -4,13 +4,14 @@ from sunya import (
     add_scenario,
     add_actor,
     get_scenario,
+    get_scenario_name,
     add_role,
     the,
     G as g,
 )
 
 
-scenario_name = "frontend/ms2-a-user-interacts-with-the-checklist"
+scenario_name = f"frontend/{get_scenario_name(__file__)}"
 
 
 def start(a_user):

@@ -1,4 +1,5 @@
 import typing as T
+import os
 
 from dataclassy import dataclass
 from sunya import get_actor_str
@@ -59,6 +60,10 @@ def get_scenario(name: str):
         if scenario.name == name:
             return scenario
     return None
+
+
+def get_scenario_name(file_path):
+    return os.path.basename(file_path).replace(".py", "")
 
 
 def create_goal(fact_bits):

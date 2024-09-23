@@ -1,0 +1,48 @@
+type: scenario
+order: 0
+scenario_name: backend/mrd1_a_user_signs_up_and_sees_a_checklist
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: sign up as a [User]
+        actors_introduced:
+          - name: my-org-owner@example.com+:user
+            deltas:
+              email: my-org-owner@example.com (None)
+              id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
+              is_active: True (None)
+              is_authenticated: False (None)
+              password: my-password (None)
+        post_actor_key_by_role_name:
+          User: my-org-owner@example.com+:user
+        child_nodes:
+          - step: The [sign-up-user-:api-view] calls the [create-user:action]
+            child_nodes:
+              - step: The [create-user:action] creates the [User]
+                actors_introduced:
+                  - name: my-org-owner@example.com+:user
+                    deltas:
+                      email: my-org-owner@example.com (None)
+                      id: 1b61e3b9041e554e9b1bdeee21df4ef4 (None)
+                      is_active: False (None)
+                      is_authenticated: False (None)
+                      password: my-password (None)
+                post_actor_key_by_role_name:
+                  User: my-org-owner@example.com+:user
+          - step: The [sign-up-user-:api-view] activates the account of the [User]
+            actors_updated:
+              - name: my-org-owner@example.com+:user
+                deltas:
+                  is_active: True (False)
+            pre_actor_key_by_role_name:
+              User: my-org-owner@example.com+:user
+      - goal: sign in as a [User]
+        actors_updated:
+          - name: my-org-owner@example.com+:user
+            deltas:
+              is_authenticated: True (False)
+        pre_actor_key_by_role_name:
+          User: my-org-owner@example.com+:user
+        child_nodes:
+          - step: The [sign-in-user-:api-view] calls the [sign-in-user:action]
+

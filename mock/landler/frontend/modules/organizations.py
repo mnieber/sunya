@@ -1,5 +1,5 @@
 from default.stack.namespace import Module
-from default.frontend.entities import Component
+from default.frontend.entities import Component, Route
 from sunya import G as g
 
 
@@ -18,3 +18,4 @@ class Organizations(Module):
 
 
 g.organization_picker = Organizations.Components.OrganizationPicker()
+g.organization_route = Route(name="organization")
