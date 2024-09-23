@@ -9,6 +9,8 @@ models:
         type: str
       - name: memberships
         type: list[OrganizationMembership]
+      - name: staff_settings
+        type: OrganizationStaffSettings
   - name: OrganizationMembership
     fields:
       - name: organization
@@ -17,6 +19,10 @@ models:
         type: User
       - name: role
         type: UserInOrganizationRoles
+      - name: display_name
+        type: str
+      - name: member_email
+        type: str
   - name: OrganizationStaffSettings
     fields:
       - name: id

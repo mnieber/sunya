@@ -15,8 +15,7 @@ class Users(Module):
             is_authenticated: bool = False
             is_active: bool = False
 
-            # Related names
-            # These are automatically added to the User model based on foreign keys
+            # Related names (automatically added based on foreign keys)
             checklist: "Checklists.Models.Checklist" = any_dict()
 
     class Actions:

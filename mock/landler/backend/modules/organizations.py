@@ -3,7 +3,7 @@ import typing as T
 
 from landler.backend.modules.users import Users
 from default.backend.namespace import Action, ApiView
-from sunya import Entity, EntityWithId, actor_to_str, G as g
+from sunya import Entity, EntityWithId, actor_to_str, G as g, any_dict
 
 
 class Organizations(Module):
@@ -11,6 +11,11 @@ class Organizations(Module):
         class Organization(EntityWithId):
             name: str
             memberships: T.List["Organizations.Models.OrganizationMembership"] = []
+
+            # Related names (automatically added based on foreign keys)
+            staff_settings: "Organizations.Models.OrganizationStaffSettings" = (
+                any_dict()
+            )
 
         class OrganizationMembership(Entity):
             organization: "Organizations.Models.Organization"
@@ -57,10 +62,6 @@ class Organizations(Module):
         class UserRemovedFromOrganization:
             pass
 
-    class Tasks:
-        class CreateDemoOrganization:
-            pass
-
 
 g.create_organization_action = Organizations.Actions.CreateOrganization()
 g.create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
@@ -68,12 +69,18 @@ g.add_user_to_demo_organization_api_view = (
     Organizations.ApiViews.AddUserToDemoOrganizationApiView()
 )
 g.add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
-g.create_demo_organization_task = Organizations.Tasks.CreateDemoOrganization()
 
 
 @actor_to_str.method((Organizations.Models.Organization,))
 def organization_to_str(organization):
     return f"{organization.name}+:organization"
+
+
+@actor_to_str.method((Organizations.Models.OrganizationStaffSettings,))
+def organization_staff_settings_to_str(organization_staff_settings):
+    return (
+        f"{organization_staff_settings.organization.name}+:organization-staff-settings"
+    )
 
 
 @actor_to_str.method((Organizations.Models.OrganizationMembership,))

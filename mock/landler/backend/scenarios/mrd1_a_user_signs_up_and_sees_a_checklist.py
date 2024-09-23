@@ -33,6 +33,7 @@ def start():
             with the(g.sign_up_user_api_view).calls_the(g.create_checklist_action):
                 with the(g.create_checklist_action).creates_the(checklist):
                     checklist.actor = checklist_()
+                    user.actor.checklist = checklist.actor
 
         with add_goal("sign in as a", user):
             with the(g.sign_in_user_api_view).calls_the(g.sign_in_user_action):

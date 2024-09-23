@@ -44,6 +44,10 @@ nodes:
             deltas:
               id: 076e391b56bb53f291b1ad7ece8f50f2 (None)
               items: '[''welcome+:checklist-item'', ''join-the-demo-org+:checklist-item'', ''add-your-organization+:checklist-item'', ''create-a-project+:checklist-item'', ''add-a-plot+:checklist-item'', ''trigger-a-project-analysis+:checklist-item''] (None)'
+        actors_updated:
+          - name: my-org-owner@example.com+:user
+            deltas:
+              checklist: :checklist ({})
         pre_actor_key_by_role_name:
           User: my-org-owner@example.com+:user
         post_actor_key_by_role_name:
