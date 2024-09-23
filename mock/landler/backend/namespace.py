@@ -1,4 +1,5 @@
 from landler.backend.modules.calculations import Calculations  # noqa
+from landler.backend.modules.checklists import Checklists  # noqa
 from landler.backend.modules.domain_events import DomainEvents  # noqa
 from landler.backend.modules.facts import Facts  # noqa
 from landler.backend.modules.organizations import Organizations  # noqa

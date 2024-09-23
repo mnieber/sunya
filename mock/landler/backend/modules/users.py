@@ -1,6 +1,10 @@
 from default.backend.namespace import Action, ApiView
 from default.stack.namespace import Form, Module
-from sunya import actor_to_str, EntityWithId, G as g
+from sunya import actor_to_str, EntityWithId, G as g, any_dict
+import typing as T
+
+if T.TYPE_CHECKING:
+    from landler.backend.modules.checklists import Checklists
 
 
 class Users(Module):
@@ -10,6 +14,10 @@ class Users(Module):
             password: str
             is_authenticated: bool = False
             is_active: bool = False
+
+            # Related names
+            # These are automatically added to the User model based on foreign keys
+            checklist: "Checklists.Models.Checklist" = any_dict()
 
     class Actions:
         class CreateUser(Action):

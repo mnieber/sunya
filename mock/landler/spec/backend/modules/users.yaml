@@ -13,6 +13,8 @@ models:
         type: bool
       - name: is_active
         type: bool
+      - name: checklist
+        type: Checklist
 actions:
   - name: create_user
     args:

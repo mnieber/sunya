@@ -17,6 +17,7 @@ def _args():
             "darshana_backend",
         ],
     )
+    parser.add_argument("--skip-upload", action="store_true")
 
     # Use the parser to create the command arguments
     args = Dodo.parse_args(parser, config_args=[])
@@ -45,14 +46,6 @@ if Dodo.is_main(__name__, safe=True):
 
     Dodo.run(
         [
-            "cp",
-            config_file,
-            f"/home/maarten/.claudesync/config.json",
-        ]
-    )
-
-    Dodo.run(
-        [
             "python",
             copy_script,
             local_dir,
@@ -60,10 +53,19 @@ if Dodo.is_main(__name__, safe=True):
         ]
     )
 
-    Dodo.run(
-        [
-            "claudesync",
-            "project",
-            "sync",
-        ]
-    )
+    if not args.skip_upload:
+        Dodo.run(
+            [
+                "cp",
+                config_file,
+                f"/home/maarten/.claudesync/config.json",
+            ]
+        )
+
+        Dodo.run(
+            [
+                "claudesync",
+                "project",
+                "sync",
+            ]
+        )
