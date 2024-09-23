@@ -26,9 +26,11 @@ def start(a_user):
         user.actor = add_actor(a_user, name="user")
 
         with add_goal("add admin", g.user_session.user, "to the", demo_organization):
-            with the(g.add_user_to_demo_organization_api_view).calls_the(
-                g.create_organization_action
-            ).to_create_the(demo_organization):
+            with (
+                the(g.add_user_to_demo_organization_api_view)
+                .calls_the(g.create_organization_action)
+                .to_create_the(demo_organization)
+            ):
                 demo_organization.actor = demo_organization_()
 
             with the(g.add_user_to_demo_organization_api_view).calls_the(

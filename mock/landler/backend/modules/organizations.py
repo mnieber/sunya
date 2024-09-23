@@ -16,6 +16,8 @@ class Organizations(Module):
             organization: "Organizations.Models.Organization"
             user: Users.Models.User
             role: "Organizations.Enums.UserInOrganizationRoles"
+            display_name: str
+            member_email: str
 
         class OrganizationStaffSettings(EntityWithId):
             organization: "Organizations.Models.Organization"
