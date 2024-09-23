@@ -9,8 +9,8 @@ class Facts(Module):
         class Fact(Entity):
             name: "Facts.Enums.FactNames"
             value: JSON
-            ref_date: datetime
-            ref_source_id: str
+            cutoff_date: datetime
+            source_id: str
 
     class Enums:
         class FactNames(Enum):

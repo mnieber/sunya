@@ -45,10 +45,10 @@ def run():
     from . import ms1_a_user_creates_a_blog
 
     ms1_scenario = run_scenario(ms1_a_user_creates_a_blog)
-    user = ms1_scenario.get_entity_by_name("user")
-    blog = ms1_scenario.get_entity_by_name("blog")
+    a_user = ms1_scenario.get_entity_by_name("user")
+    a_blog = ms1_scenario.get_entity_by_name("blog")
 
-    return start(user, blog)
+    return start(a_user, a_blog)
 
 
 if __name__ == "__main__":

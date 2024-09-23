@@ -34,7 +34,7 @@ config = dict(
         "frontend/user_settings",
     ],
     all_scenario_names=[
-        "backend/ms1_a_user_signs_up_and_creates_an_org",
+        "backend/mrd1_a_user_signs_up_and_creates_an_org",
         "backend/ms2_a_user_creates_a_project",
         "backend/ms3_a_user_adds_a_plot_to_a_project",
         "backend/ms4_a_user_schedules_a_project_analysis",

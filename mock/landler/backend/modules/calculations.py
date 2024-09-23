@@ -5,10 +5,6 @@ from sunya import Entity, actor_to_str
 class Calculations(Module):
     class Models:
         class Calculation(Entity):
-            """
-            Calculation model
-            """
-
             name: "Calculations.Enums.CalculationNames"
             source_id: str
             required_fact_names: list[str] = []

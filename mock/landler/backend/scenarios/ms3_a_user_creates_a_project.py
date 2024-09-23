@@ -60,9 +60,9 @@ def project_membership_():
 
 
 def run():
-    from . import ms1_a_user_signs_up_and_creates_an_org
+    from . import ms2_a_user_joins_the_demo_org_and_creates_an_org
 
-    run_scenario(ms1_a_user_signs_up_and_creates_an_org)
+    run_scenario(ms2_a_user_joins_the_demo_org_and_creates_an_org)
 
     return start()
 

@@ -5,6 +5,7 @@ def add_sample_code(file_map, dir_list, sample_code_in):
             f"{sample_code_in}/api/mutations/useCreateBlogPost.ts": f"{sample_code}/api/mutations",
             f"{sample_code_in}/api/queries/useGetBlogPosts.ts": f"{sample_code}/api/queries",
             f"{sample_code_in}/api/types/*T.ts": f"{sample_code}/api/types",
+            f"{sample_code_in}/api/types/*Schema.ts": f"{sample_code}/api/types",
             f"{sample_code_in}/app/components/App.*": f"{sample_code}/app/components",
             f"{sample_code_in}/blogPosts/BlogPostsState": f"{sample_code}/blogPosts/BlogPostsState",
             f"{sample_code_in}/blogPosts/components/BlogPostFormView": f"{sample_code}/blogPosts/components/BlogPostFormView",
