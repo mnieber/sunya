@@ -50,6 +50,13 @@ def write_modules(config, module_names, file_writer):
         file_writer.write_module_spec(module_name, module_spec_yaml)
 
 
+def wipe_spec_files(file_writer):
+    for prefix in ["backend", "frontend"]:
+        for pattern in ["modules", "scenarios"]:
+            for file in (file_writer.output_dir / prefix / pattern).rglob("*.yaml"):
+                file.unlink()
+
+
 def get_scenario_path(config, scenario_name):
     scenario_path = config["scenario_path_by_name"].get(scenario_name)
     if scenario_path:

@@ -61,7 +61,16 @@ def start(a_user):
             .to_switch_to_the(g.organization_route)
             .of_the(organization)
         ):
-            g.user_session.active_organization = organization.actor
+            with the(user).is_redirected_to_the(g.organization_route):
+                pass
+
+            with add_goal("set", organization, "as the active organization"):
+                with (
+                    the(g.set_active_organization_api_view)
+                    .updates_the(g.user_session)
+                    .to_set_the_active(organization)
+                ):
+                    g.user_session.active_organization = organization.actor
 
     return get_scenario(scenario_name)
 

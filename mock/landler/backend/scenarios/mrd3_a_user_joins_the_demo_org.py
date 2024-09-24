@@ -18,7 +18,6 @@ scenario_name = f"backend/{get_scenario_name(__file__)}"
 
 def start(a_user):
     user = add_role("User")
-    organization = add_role("Organization")
     demo_organization = add_role("DemoOrganization")
     demo_org_checklist_item = add_role("DemoOrgChecklistItem")
 
@@ -55,24 +54,6 @@ def start(a_user):
                     demo_org_checklist_item
                 ):
                     demo_org_checklist_item.actor.is_completed = True
-
-        with (
-            the(user)
-            .uses_the(g.organization_picker)
-            .in_the(g.frontend)
-            .to_switch_to_the(g.organization_route)
-            .of_the(organization)
-        ):
-            with the(user).is_redirected_to_the(g.organization_route):
-                pass
-
-            with add_goal("set", organization, "as the active organization"):
-                with (
-                    the(g.set_active_organization_api_view)
-                    .updates_the(g.user_session)
-                    .to_set_the_active(organization)
-                ):
-                    g.user_session.active_organization = organization.actor
 
     return get_scenario(scenario_name)
 

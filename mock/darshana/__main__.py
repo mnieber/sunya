@@ -1,6 +1,7 @@
 from sunya import FileWriter
 from sunya.entrypoint import (
     get_module_and_scenario_names,
+    wipe_spec_files,
     write_modules,
     write_scenarios,
     parse_args,
@@ -47,6 +48,7 @@ def run(args):
     module_names, scenario_names = get_module_and_scenario_names(config, args)
 
     file_writer = FileWriter("darshana/spec")
+    wipe_spec_files(file_writer)
     write_modules(config, module_names, file_writer)
     write_scenarios(config, scenario_names, file_writer)
 
