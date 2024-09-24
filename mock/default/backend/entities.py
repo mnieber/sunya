@@ -7,6 +7,10 @@ class Action(Function):
     pass
 
 
+class Rule(Function):
+    pass
+
+
 class ApiView(Entity):
     pass
 
@@ -19,6 +23,11 @@ class Request(Entity):
 @actor_to_str.method((Action,))
 def action_to_str(action):
     return f"{type_name_to_kebab(action)}:action"
+
+
+@actor_to_str.method((Rule,))
+def rule_to_str(rule):
+    return f"{type_name_to_kebab(rule)}:rule"
 
 
 @actor_to_str.method((ApiView,))

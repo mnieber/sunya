@@ -24,6 +24,9 @@ def start(a_user):
 
         with add_goal("create a", blog, "for the", user):
             with the(g.create_blog_api_view).calls_the(g.create_blog_action):
+                with the(g.create_blog_action).runs_the(g.has_forbidden_words_rule):
+                    pass
+
                 with the(g.create_blog_action).creates_the(blog):
                     blog.actor = blog_()
 

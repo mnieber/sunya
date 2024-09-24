@@ -26,6 +26,10 @@ def start(a_user, a_blog):
 
         with add_goal("create a", blog_post, "in the", blog):
             with the(g.create_blog_post_api_view).calls_the(g.create_blog_post_action):
+                with the(g.create_blog_post_action).runs_the(
+                    g.has_forbidden_words_rule
+                ):
+                    pass
                 blog_post.actor = blog_post_(blog)
 
     return get_scenario(scenario_name)

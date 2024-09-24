@@ -19,6 +19,7 @@ nodes:
         child_nodes:
           - step: The [create-blog:api-view] calls the [create-blog:action]
             child_nodes:
+              - step: The [create-blog:action] runs the [has-forbidden-words:rule]
               - step: The [create-blog:action] creates the [Blog]
                 actors_introduced:
                   - name: my-personal-blog+:blog

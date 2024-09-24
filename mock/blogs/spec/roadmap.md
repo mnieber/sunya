@@ -13,7 +13,8 @@ BlogPost: a post within a weblog
 2.  The user fills out the create-blog form
     1. They enter the name and description
 3.  The user presses the create-blog-post button
-    1. They use the form to create the blog-post and submit the form.
+    1. They enter the title and content.
+4.  The backend checks if blogs and blog-posts do not contain forbidden words.
 
 ## MS2: A user edits and deletes a blog-post
 

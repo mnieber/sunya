@@ -1,5 +1,5 @@
 from default.stack.namespace import Module, Form
-from default.backend.namespace import Action, ApiView
+from default.backend.namespace import Action, ApiView, Rule
 import typing as T
 
 from sunya import EntityWithId, actor_to_str, G as g
@@ -32,6 +32,11 @@ class Blogs(Module):
                 update_blog_form: Form
                 blog: "Blogs.Models.Blog"
 
+    class Rules:
+        class HasForbiddenWords(Rule):
+            class Args:
+                text: str
+
     class ApiViews:
         class CreateBlog(ApiView):
             pass
@@ -54,6 +59,7 @@ g.create_blog_action = Blogs.Actions.CreateBlog()
 g.create_blog_post_action = Blogs.Actions.CreateBlog()
 g.create_blog_api_view = Blogs.ApiViews.CreateBlog()
 g.create_blog_post_api_view = Blogs.ApiViews.CreateBlog()
+g.has_forbidden_words_rule = Blogs.Rules.HasForbiddenWords()
 g.update_blog_action = Blogs.Actions.UpdateBlog()
 g.update_blog_api_view = Blogs.ApiViews.UpdateBlog()
 
