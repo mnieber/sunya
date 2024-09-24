@@ -3,7 +3,6 @@ import { withContextProps } from 'react-props-from-context';
 import { Route, Switch } from 'wouter';
 import { SignInPage } from '/src/auth/components/SignInPage';
 import { authRoutes } from '/src/auth/routes';
-import { blogsNav } from '/src/blogs/routes';
 import { RedirectEffect } from '/src/routes/components';
 
 type PropsT = {};
@@ -15,7 +14,7 @@ export const AuthSwitch = observer(
     return (
       <Switch>
         <Route path={authRoutes.home()}>
-          <RedirectEffect getRoute={() => blogsNav.blogs({})} />
+          <RedirectEffect getRoute={() => 'home'} />
         </Route>
         <Route path={authRoutes.signIn()}>
           <SignInPage />

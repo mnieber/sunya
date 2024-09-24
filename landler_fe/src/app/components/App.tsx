@@ -4,9 +4,6 @@ import { queryClient } from '/src/api/queryClient';
 import { flags } from '/src/app/flags';
 import { AuthStateProvider } from '/src/auth/components/AuthStateProvider';
 import { AuthSwitch } from '/src/auth/components/AuthSwitch';
-import { BlogPostsStateProvider } from '/src/blogPosts/components/BlogPostsStateProvider';
-import { BlogsStateProvider } from '/src/blogs/components/BlogsStateProvider';
-import { BlogsSwitch } from '/src/blogs/components/BlogsSwitch';
 import { DashboardFrame } from '/src/frames/components/DashboardFrame';
 import { MainView } from '/src/frames/components/MainView';
 import { L } from '/src/frames/layout';
@@ -26,13 +23,7 @@ export const App = () => {
           <AppBody>
             <DashboardFrame>
               <AuthSwitch />
-              <BlogsStateProvider>
-                <BlogPostsStateProvider>
-                  <MainView className="">
-                    <BlogsSwitch />
-                  </MainView>
-                </BlogPostsStateProvider>
-              </BlogsStateProvider>
+              <MainView className=""></MainView>
             </DashboardFrame>
           </AppBody>
         </NavStateProvider>

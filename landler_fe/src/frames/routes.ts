@@ -3,7 +3,7 @@ import { navHandler, RouteSpecT } from '/src/routes/navHandler';
 import { generatePath } from '/src/routes/utils/generatePath';
 
 export const framesRoutes = {
-  dashboard: () => '/blogs',
+  dashboard: () => '/dashboard',
 };
 
 export class FramesNav {

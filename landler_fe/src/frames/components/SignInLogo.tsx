@@ -13,8 +13,7 @@ export const SignInLogo = (props: PropsT) => {
     //
     <div className={cn('SignInLogo', L.col.skewer())}>
       <div className={cn('SignInLogo__Title', [L.row.banner()])}>
-        <div className={cn('SignInLogo__TitlePrefix')}>Blog</div>
-        <div className={cn('SignInLogo__TitleSuffix')}>Manager</div>
+        <div className={cn('SignInLogo__TitlePrefix')}>Landler</div>
       </div>
     </div>
   );
