@@ -13,7 +13,7 @@
    2. The demo organization already has some projects and associated plots.
 2. For every organization membership, we store a display-name.
    1. In the case of a demo-organization membership, the display-name will be chosen randomly to hide the user’s identity.
-      1. E.g. the display names will be chosen randomly, e.g. “busy blue horse”
+      1. E.g. the display name might be “busy blue horse”
       2. The user should be able to regenerate their display-name (this helps when the random name is unflattering).
       3. The member-email for the demo organization will be based on the display name, e.g. busybluehorse@demo-org.com.
          1. Instead of sending emails to this particular (fake) member-email, the backend will instead send it to the users main email account.

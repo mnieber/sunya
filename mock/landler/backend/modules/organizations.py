@@ -2,7 +2,7 @@ from default.stack.namespace import Module, Form, Enum
 import typing as T
 
 from landler.backend.modules.users import Users
-from default.backend.namespace import Action, ApiView
+from default.backend.namespace import Action, ApiView, Rule
 from sunya import Entity, EntityWithId, actor_to_str, G as g, any_dict
 
 
@@ -40,6 +40,10 @@ class Organizations(Module):
                 user: Users.Models.User
                 role: "Organizations.Enums.UserInOrganizationRoles"
 
+    class Rules:
+        class GenerateRandomDisplayName(Rule):
+            pass
+
     class Enums:
         class UserInOrganizationRoles(Enum):
             ADMIN = "admin"
@@ -63,12 +67,13 @@ class Organizations(Module):
             pass
 
 
-g.create_organization_action = Organizations.Actions.CreateOrganization()
-g.create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
 g.add_user_to_demo_organization_api_view = (
     Organizations.ApiViews.AddUserToDemoOrganizationApiView()
 )
 g.add_user_to_organization_action = Organizations.Actions.AddUserToOrganization()
+g.create_organization_action = Organizations.Actions.CreateOrganization()
+g.create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
+g.generate_random_display_name_rule = Organizations.Rules.GenerateRandomDisplayName()
 
 
 @actor_to_str.method((Organizations.Models.Organization,))
