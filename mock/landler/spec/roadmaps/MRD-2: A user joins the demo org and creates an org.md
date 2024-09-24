@@ -18,8 +18,9 @@
       3. The member-email for the demo organization will be based on the display name, e.g. busybluehorse@demo-org.com.
          1. Instead of sending emails to this particular (fake) member-email, the backend will instead send it to the users main email account.
    2. When information about other users is returned to the frontend, we always use the display_name and member_email instead of the real name and account email.
-3. The checklist card updates to show the link to visit the landler-site of the demo organization.
-4. The checklist card also shows a link to the user’s organization settings where the user can leave (or rejoin) the demo organization.
+3. Joining the demo organization should complete the demo organization checklist item.
+   1. The checklist card updates to show the link to navigate to the url of the demo-organization.
+   2. The checklist card also shows a link to the user’s organization settings where the user can leave the demo organization.
 
 ## MS2: The user adds an organization
 
@@ -35,4 +36,4 @@
    2. The organization links are also shown in the organization switcher on top of the page
 4. When the organization is added, the related check-list card is checked.
    1. The card now also contains a hint to try the organization switcher.
-   2. Adding the organization should send a domain event that is picked up by the checklist module.
+   2. Adding the organization should complete the checklist item for adding your organization.
