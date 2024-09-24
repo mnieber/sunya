@@ -1,4 +1,3 @@
-import blogs.urls
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
@@ -13,7 +12,6 @@ from app.utils.serve_static import serve_static
 urlpatterns = [
     path(r"admin/", admin.site.urls),
     path(r"", include(api.urls)),
-    path(r"api/blogs/", include(blogs.urls)),
     path(r"api/organizations/", include(organizations.urls)),
     path(r"api/users/", include(users.urls)),
     path(

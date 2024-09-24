@@ -7,5 +7,4 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "admin_reorder.middleware.ModelAdminReorder",
 ]

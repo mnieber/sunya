@@ -6,7 +6,6 @@ django-cors-headers
 django-dbbackup
 django-extensions
 django-filter==22.1
-django-modeladmin-reorder
 djangorestframework==3.14.0
 djangorestframework-gis==1.0
 djangorestframework-simplejwt==5.3.1

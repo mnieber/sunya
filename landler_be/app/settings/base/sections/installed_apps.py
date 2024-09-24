@@ -11,7 +11,6 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "adminsortable2",
-    "admin_reorder",
     "corsheaders",
     "dbbackup",
     "django_extensions",
@@ -27,7 +26,6 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "api.apps.ApiConfig",
     "app.apps.AppConfig",
-    "blogs.apps.BlogsConfig",
     "kyc.apps.KYCConfig",
     "organizations.apps.OrganizationsConfig",
     "users.apps.UsersConfig",
@@ -35,11 +33,3 @@ LOCAL_APPS = [
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
-
-ADMIN_REORDER = (
-    "users",
-    "organizations",
-    "blogs",
-    "auth",
-    "sites",
-)
