@@ -56,6 +56,9 @@ class Organizations(Module):
         class AddUserToDemoOrganizationApiView(ApiView):
             pass
 
+        class SetActiveOrganizationApiView(ApiView):
+            pass
+
     class DomainEvents:
         class OrganizationCreated:
             pass
@@ -74,6 +77,9 @@ g.add_user_to_organization_action = Organizations.Actions.AddUserToOrganization(
 g.create_organization_action = Organizations.Actions.CreateOrganization()
 g.create_organization_api_view = Organizations.ApiViews.CreateOrganizationApiView()
 g.generate_random_display_name_rule = Organizations.Rules.GenerateRandomDisplayName()
+g.set_active_organization_api_view = (
+    Organizations.ApiViews.SetActiveOrganizationApiView()
+)
 
 
 @actor_to_str.method((Organizations.Models.Organization,))

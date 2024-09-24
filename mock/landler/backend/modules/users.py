@@ -34,9 +34,6 @@ class Users(Module):
         class SignInUserApiView(ApiView):
             pass
 
-        class SetActiveOrganizationApiView(ApiView):
-            pass
-
     class DomainEvents:
         class UserCreated:
             user: "Users.Models.User"
@@ -46,7 +43,6 @@ g.sign_up_user_api_view = Users.ApiViews.SignUpUserApiView()
 g.sign_in_user_api_view = Users.ApiViews.SignInUserApiView()
 g.create_user_action = Users.Actions.CreateUser()
 g.sign_in_user_action = Users.Actions.SignInUser()
-g.set_active_organization_api_view = Users.ApiViews.SetActiveOrganizationApiView()
 
 
 @actor_to_str.method((Users.Models.User,))
