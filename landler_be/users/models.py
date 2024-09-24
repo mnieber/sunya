@@ -50,7 +50,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     firstname = models.CharField(max_length=255, default="anonymous")
     lastname = models.CharField(max_length=255, default="anonymous")
     is_active = models.BooleanField("active", default=False)
-    is_anonymous = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField("date joined", auto_now_add=True)
     language = models.CharField(

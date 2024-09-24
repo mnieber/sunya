@@ -26,6 +26,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "api.apps.ApiConfig",
     "app.apps.AppConfig",
+    "checklists.apps.ChecklistsConfig",
     "kyc.apps.KYCConfig",
     "organizations.apps.OrganizationsConfig",
     "users.apps.UsersConfig",
