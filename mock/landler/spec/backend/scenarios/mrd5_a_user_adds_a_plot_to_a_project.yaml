@@ -1,5 +1,5 @@
 type: scenario
-order: 3
+order: 4
 scenario_name: backend/mrd5_a_user_adds_a_plot_to_a_project
 nodes:
   - root: ''

@@ -1,5 +1,5 @@
 type: scenario
-order: 4
+order: 5
 scenario_name: backend/mrd6_a_staff_user_schedules_a_project_analysis
 nodes:
   - root: ''
@@ -83,7 +83,7 @@ nodes:
                       - name: my-project+:project@@2024-01-01 00:01:00
                         deltas:
                           id: 422564372c455ce1befeb944ffceb5e3 (None)
-                          memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
+                          memberships: '[''(my-project)-(my-org)-(admin)+:project-membership''] (None)'
                           name: my-project (None)
                           plot_lists: '[''default+:plot-list''] (None)'
                     pre_actor_key_by_role_name:

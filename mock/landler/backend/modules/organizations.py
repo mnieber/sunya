@@ -82,6 +82,16 @@ g.set_active_organization_api_view = (
 )
 
 
+def create_admin_membership(organization, display_name, member_email):
+    return Organizations.Models.OrganizationMembership(
+        organization=organization,
+        user=g.user_session.user,
+        role=Organizations.Enums.UserInOrganizationRoles.ADMIN,
+        display_name=display_name,
+        member_email=member_email,
+    )
+
+
 @actor_to_str.method((Organizations.Models.Organization,))
 def organization_to_str(organization):
     return f"{organization.name}+:organization"

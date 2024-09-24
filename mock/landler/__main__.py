@@ -35,7 +35,8 @@ config = dict(
     ],
     all_scenario_names=[
         "backend/mrd1_a_user_signs_up_and_sees_a_checklist",
-        "backend/mrd2_a_user_joins_the_demo_org_and_creates_an_org",
+        "backend/mrd2_a_user_creates_an_org_and_invites_a_user",
+        "backend/mrd3_a_user_joins_the_demo_org",
         "backend/mrd4_a_user_creates_a_project",
         "backend/mrd5_a_user_adds_a_plot_to_a_project",
         "backend/mrd6_a_staff_user_schedules_a_project_analysis",

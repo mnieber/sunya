@@ -1,5 +1,5 @@
 type: scenario
-order: 5
+order: 6
 scenario_name: frontend/ms2_a_user_interacts_with_the_checklist
 nodes:
   - root: ''

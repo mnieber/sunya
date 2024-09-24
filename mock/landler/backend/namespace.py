@@ -1,8 +1,11 @@
 from landler.backend.modules.calculations import Calculations  # noqa
-from landler.backend.modules.checklists import Checklists  # noqa
+from landler.backend.modules.checklists import Checklists, get_checklist_item  # noqa
 from landler.backend.modules.domain_events import DomainEvents  # noqa
 from landler.backend.modules.facts import Facts  # noqa
-from landler.backend.modules.organizations import Organizations  # noqa
+from landler.backend.modules.organizations import (
+    Organizations,
+    create_admin_membership,
+)  # noqa
 from landler.backend.modules.plot_analyses import PlotAnalyses  # noqa
 from landler.backend.modules.plot_lists import (
     PlotLists,

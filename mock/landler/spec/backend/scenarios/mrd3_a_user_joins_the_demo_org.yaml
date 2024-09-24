@@ -1,0 +1,59 @@
+type: scenario
+order: 2
+scenario_name: backend/mrd3_a_user_joins_the_demo_org
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: add admin [my-org-owner@example.com+:user] to the [DemoOrganization]
+        actors_introduced:
+          - name: demo+:organization
+            deltas:
+              id: 9f540355c08a5facbca8eb43015a7313 (None)
+              memberships: '[''(demo)-(my-org-owner@example.com)-(admin)+:organization-membership''] (None)'
+              name: demo (None)
+              staff_settings: demo+:organization-staff-settings (None)
+        post_actor_key_by_role_name:
+          DemoOrganization: demo+:organization
+        child_nodes:
+          - step: The [add-user-to-demo-organization-:api-view] calls the [create-organization:action] to create the [DemoOrganization]
+            actors_introduced:
+              - name: demo+:organization
+                deltas:
+                  id: 9f540355c08a5facbca8eb43015a7313 (None)
+                  memberships: '[] (None)'
+                  name: demo (None)
+                  staff_settings: demo+:organization-staff-settings (None)
+            post_actor_key_by_role_name:
+              DemoOrganization: demo+:organization
+          - step: The [add-user-to-demo-organization-:api-view] calls the [add-user-to-organization:action]
+          - step: The [add-user-to-demo-organization-:api-view] calls the [update-checklist-item:action] to mark the [DemoOrgChecklistItem] as completed
+            actors_updated:
+              - name: join-the-demo-org+:checklist-item
+                deltas:
+                  is_completed: True (False)
+            pre_actor_key_by_role_name:
+              DemoOrgChecklistItem: join-the-demo-org+:checklist-item
+            child_nodes:
+              - step: The [update-checklist-item:action] updates the [DemoOrgChecklistItem]
+                actors_updated:
+                  - name: join-the-demo-org+:checklist-item
+                    deltas:
+                      is_completed: True (False)
+                pre_actor_key_by_role_name:
+                  DemoOrgChecklistItem: join-the-demo-org+:checklist-item
+      - step: The [User] uses the [organization-picker:component] in the [:frontend] to switch to the [organization+:route] of the [Organization]
+        pre_actor_key_by_role_name:
+          User: my-org-owner@example.com+:user
+          Organization: my-org+:organization
+        child_nodes:
+          - step: The [User] is redirected to the [organization+:route]
+            pre_actor_key_by_role_name:
+              User: my-org-owner@example.com+:user
+          - goal: set [Organization] as the active organization
+            pre_actor_key_by_role_name:
+              Organization: my-org+:organization
+            child_nodes:
+              - step: The [set-active-organization-:api-view] updates the [:user-session] to set the active [Organization]
+                pre_actor_key_by_role_name:
+                  Organization: my-org+:organization
+

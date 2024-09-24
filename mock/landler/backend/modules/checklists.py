@@ -47,6 +47,12 @@ g.get_checklist_api_view = Checklists.ApiViews.GetChecklist()
 g.update_checklist_item_api_view = Checklists.ApiViews.UpdateChecklistItem()
 
 
+def get_checklist_item(title):
+    return next(
+        item for item in g.user_session.user.checklist.items if item.title == title
+    )
+
+
 @actor_to_str.method((Checklists.Models.Checklist,))
 def checklist_to_str(checklist):
     return f":checklist"

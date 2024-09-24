@@ -21,12 +21,10 @@ def start(a_user):
     organization = add_role("Organization")
     demo_organization = add_role("DemoOrganization")
     demo_org_checklist_item = add_role("DemoOrgChecklistItem")
-    create_org_checklist_item = add_role("CreateOrgChecklistItem")
 
     with add_scenario(scenario_name):
         user.actor = add_actor(a_user, name="user")
-        demo_org_checklist_item.actor = get_checklist_item("Join the demo org")
-        create_org_checklist_item.actor = get_checklist_item("Add your organization")
+        demo_org_checklist_item.actor = B.get_checklist_item("Join the demo org")
 
         with add_goal("add admin", g.user_session.user, "to the", demo_organization):
             with (
@@ -40,7 +38,7 @@ def start(a_user):
                 g.add_user_to_organization_action
             ):
                 demo_organization.actor.memberships = [
-                    create_admin_membership(
+                    B.create_admin_membership(
                         demo_organization.actor,
                         display_name="busy-blue-horse",
                         member_email="busybluehorse@demo-org.com",
@@ -58,35 +56,6 @@ def start(a_user):
                 ):
                     demo_org_checklist_item.actor.is_completed = True
 
-        with add_goal("create an", organization, "with admin", g.user_session.user):
-            with the(g.create_organization_api_view).calls_the(
-                g.create_organization_action
-            ):
-                with the(g.create_organization_action).creates_the(organization):
-                    organization.actor = organization_()
-
-                with the(g.create_organization_action).calls_the(
-                    g.add_user_to_organization_action
-                ):
-                    g.organization.memberships = [
-                        create_admin_membership(
-                            organization.actor,
-                            display_name="hello-tim",
-                            member_email=f"tim@{organization.actor.name}.com",
-                        )
-                    ]
-
-            with (
-                the(g.create_organization_api_view)
-                .calls_the(g.update_checklist_item_action)
-                .to_mark_the(create_org_checklist_item)
-                .as_completed()
-            ):
-                with the(g.update_checklist_item_action).updates_the(
-                    create_org_checklist_item
-                ):
-                    create_org_checklist_item.actor.is_completed = True
-
         with (
             the(user)
             .uses_the(g.organization_picker)
@@ -103,15 +72,9 @@ def start(a_user):
                     .updates_the(g.user_session)
                     .to_set_the_active(organization)
                 ):
-                    g.user_session.active_organization = organization
+                    g.user_session.active_organization = organization.actor
 
     return get_scenario(scenario_name)
-
-
-def get_checklist_item(title):
-    return next(
-        item for item in g.user_session.user.checklist.items if item.title == title
-    )
 
 
 def demo_organization_():
@@ -122,27 +85,11 @@ def demo_organization_():
     return add_actor(demo_org, name="demo_organization")
 
 
-def organization_():
-    return add_actor(
-        B.Organizations.Models.Organization(name="my-org"), name="organization"
-    )
-
-
-def create_admin_membership(organization, display_name, member_email):
-    return B.Organizations.Models.OrganizationMembership(
-        organization=organization,
-        user=g.user_session.user,
-        role=B.Organizations.Enums.UserInOrganizationRoles.ADMIN,
-        display_name=display_name,
-        member_email=member_email,
-    )
-
-
 def run():
-    from . import mrd1_a_user_signs_up_and_sees_a_checklist
+    from . import mrd2_a_user_creates_an_org_and_invites_a_user
 
-    mrd1_scenario = run_scenario(mrd1_a_user_signs_up_and_sees_a_checklist)
-    a_user = mrd1_scenario.get_entity_by_name("user")
+    mrd2_scenario = run_scenario(mrd2_a_user_creates_an_org_and_invites_a_user)
+    a_user = mrd2_scenario.get_entity_by_name("user")
 
     return start(a_user)
 

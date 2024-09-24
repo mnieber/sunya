@@ -29,6 +29,4 @@ api_views:
     filters: []
   - name: SignInUserApiView
     filters: []
-  - name: SetActiveOrganizationApiView
-    filters: []
 

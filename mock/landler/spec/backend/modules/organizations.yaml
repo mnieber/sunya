@@ -51,4 +51,6 @@ api_views:
     filters: []
   - name: AddUserToDemoOrganizationApiView
     filters: []
+  - name: SetActiveOrganizationApiView
+    filters: []
 

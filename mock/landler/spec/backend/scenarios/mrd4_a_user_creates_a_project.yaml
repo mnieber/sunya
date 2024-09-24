@@ -1,19 +1,17 @@
 type: scenario
-order: 2
+order: 3
 scenario_name: backend/mrd4_a_user_creates_a_project
 nodes:
   - root: ''
     child_nodes:
-      - goal: create a [Project] with admin [Organization]
+      - goal: create a [Project] with admin [my-org+:organization]
         actors_introduced:
           - name: my-project+:project@@2024-01-01 00:00:00
             deltas:
               id: 422564372c455ce1befeb944ffceb5e3 (None)
-              memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] (None)'
+              memberships: '[''(my-project)-(my-org)-(admin)+:project-membership''] (None)'
               name: my-project (None)
               plot_lists: '[] (None)'
-        pre_actor_key_by_role_name:
-          Organization: my-org+:organization
         post_actor_key_by_role_name:
           Project: my-project+:project@@2024-01-01 00:00:00
         child_nodes:
@@ -31,13 +29,12 @@ nodes:
                           plot_lists: '[] (None)'
                     post_actor_key_by_role_name:
                       Project: my-project+:project@@2024-01-01 00:00:00
-          - goal: add the [Organization] as admin to the [Project]
+          - goal: add the [my-org+:organization] as admin to the [Project]
             actors_updated:
               - name: my-project+:project@@2024-01-01 00:00:00
                 deltas:
-                  memberships: '[''(my-project)-(-organization)-(admin)+:project-membership''] ([])'
+                  memberships: '[''(my-project)-(my-org)-(admin)+:project-membership''] ([])'
             pre_actor_key_by_role_name:
-              Organization: my-org+:organization
               Project: my-project+:project@@2024-01-01 00:00:00
             child_nodes:
               - step: The [create-project:action] calls the [add-organization-to-project:action]
