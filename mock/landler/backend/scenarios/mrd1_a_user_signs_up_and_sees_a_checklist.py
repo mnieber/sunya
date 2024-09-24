@@ -56,6 +56,7 @@ def user_():
 def checklist_():
     return add_actor(
         B.Checklists.Models.Checklist(
+            owner=g.user,
             items=[
                 B.Checklists.Models.ChecklistItem(
                     title="Welcome",
@@ -87,7 +88,7 @@ def checklist_():
                     description="Run your first project analysis",
                     is_completed=False,
                 ),
-            ]
+            ],
         ),
         name="checklist",
     )

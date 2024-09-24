@@ -40,29 +40,31 @@ nodes:
               User: my-org-owner@example.com+:user
       - goal: create a [Checklist] for the [User]
         actors_introduced:
-          - name: :checklist
+          - name: my-org-owner@example.com+:checklist
             deltas:
-              id: 076e391b56bb53f291b1ad7ece8f50f2 (None)
+              id: 28265db879c756d0bc63df3584f5a16f (None)
               items: '[''welcome+:checklist-item'', ''join-the-demo-org+:checklist-item'', ''add-your-organization+:checklist-item'', ''create-a-project+:checklist-item'', ''add-a-plot+:checklist-item'', ''trigger-a-project-analysis+:checklist-item''] (None)'
+              owner: my-org-owner@example.com+:user (None)
         actors_updated:
           - name: my-org-owner@example.com+:user
             deltas:
-              checklist: :checklist ({})
+              checklist: my-org-owner@example.com+:checklist ({})
         pre_actor_key_by_role_name:
           User: my-org-owner@example.com+:user
         post_actor_key_by_role_name:
-          Checklist: :checklist
+          Checklist: my-org-owner@example.com+:checklist
         child_nodes:
           - step: The [sign-up-user-:api-view] calls the [create-checklist:action]
             child_nodes:
               - step: The [create-checklist:action] creates the [Checklist]
                 actors_introduced:
-                  - name: :checklist
+                  - name: my-org-owner@example.com+:checklist
                     deltas:
-                      id: 076e391b56bb53f291b1ad7ece8f50f2 (None)
+                      id: 28265db879c756d0bc63df3584f5a16f (None)
                       items: '[''welcome+:checklist-item'', ''join-the-demo-org+:checklist-item'', ''add-your-organization+:checklist-item'', ''create-a-project+:checklist-item'', ''add-a-plot+:checklist-item'', ''trigger-a-project-analysis+:checklist-item''] (None)'
+                      owner: my-org-owner@example.com+:user (None)
                 post_actor_key_by_role_name:
-                  Checklist: :checklist
+                  Checklist: my-org-owner@example.com+:checklist
       - goal: sign in as a [User]
         actors_updated:
           - name: my-org-owner@example.com+:user

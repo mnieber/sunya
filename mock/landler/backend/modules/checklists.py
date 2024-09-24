@@ -10,6 +10,7 @@ class Checklists(Module):
     class Models:
         class Checklist(EntityWithId):
             items: T.List["Checklists.Models.ChecklistItem"]
+            owner: "Users.Models.User"
 
         class ChecklistItem(EntityWithId):
             title: str
@@ -55,7 +56,7 @@ def get_checklist_item(title):
 
 @actor_to_str.method((Checklists.Models.Checklist,))
 def checklist_to_str(checklist):
-    return f":checklist"
+    return f"{checklist.owner.email}+:checklist"
 
 
 @actor_to_str.method((Checklists.Models.ChecklistItem,))

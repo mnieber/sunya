@@ -18,6 +18,8 @@ nodes:
                   id: 076e391b56bb53f291b1ad7ece8f50f2 (None)
                   items: '[''add-your-organization+:checklist_item'', ''create-a-project+:checklist_item'', ''add-a-plot+:checklist_item'', ''trigger-a-project-analysis+:checklist_item''] (None)'
             pre_actor_key_by_role_name:
+              Checklist: my-org-owner@example.com+:checklist
+            post_actor_key_by_role_name:
               Checklist: :checklist
             child_nodes:
               - step: The [:frontend] calls the [get-checklist:query]

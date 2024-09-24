@@ -7,6 +7,8 @@ models:
         type: UUID
       - name: items
         type: list[ChecklistItem]
+      - name: owner
+        type: User
   - name: ChecklistItem
     fields:
       - name: id
