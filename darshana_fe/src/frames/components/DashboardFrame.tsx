@@ -50,7 +50,7 @@ export const DashboardFrame = observer(
             R.values({
               //
               layout: ['p-4', L.col.canvas()],
-              color: ['bg-gray-800'],
+              color: ['bg-gray-900'],
             })
           )}
         >

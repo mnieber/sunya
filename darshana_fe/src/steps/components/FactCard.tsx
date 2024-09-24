@@ -17,7 +17,7 @@ export const FactCard = (props: PropsT) => {
       return (
         <span
           key={index}
-          className="ml-1 cursor-pointer text-blue-400 hover:underline"
+          className="ml-1 cursor-pointer text-blue-300 hover:underline"
           onClick={(e) => {
             e.stopPropagation();
             props.setHighlightedActor(props.step, factBit.value);

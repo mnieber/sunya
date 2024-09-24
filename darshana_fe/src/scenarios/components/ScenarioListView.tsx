@@ -38,7 +38,7 @@ export const ScenarioListView = observer(
         className={cn(
           'ScenarioListView__Item',
           R.values({
-            color: ['border-2 border-blue-400 bg-gray-900 text-blue-400'],
+            color: ['border-2 border-blue-400 bg-gray-900 text-blue-300'],
             layout: ['mb-8 rounded-xl p-4'],
             appearance: ['font-bold hover:bg-blue-900 hover:underline'],
           })

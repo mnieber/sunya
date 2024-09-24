@@ -31,7 +31,7 @@ export const ProjectListView = observer(
         >
           <RouterLink
             to={projectsNav.project({ projectId: projectLead.id }).url}
-            className={cn('mr-2 text-blue-400 hover:underline')}
+            className={cn('mr-2 text-blue-300 hover:underline')}
           >
             {projectLead.name}
           </RouterLink>

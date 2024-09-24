@@ -26,7 +26,7 @@ export const ActorLink = observer(
       <span
         className={cn(
           'ActorLink',
-          'cursor-pointer text-blue-400 hover:text-blue-300',
+          'cursor-pointer text-blue-300 hover:text-blue-300',
           props.className
         )}
         onClick={handleClick}

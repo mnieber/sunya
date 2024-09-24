@@ -123,7 +123,7 @@ const Step = ({ step, depth = 0, onActorClick }: any) => {
         return (
           <span
             key={index}
-            className="cursor-pointer text-blue-400 hover:underline"
+            className="cursor-pointer text-blue-300 hover:underline"
             onClick={(e) => {
               e.stopPropagation();
               onActorClick(actorKey);
