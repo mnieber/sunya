@@ -2,6 +2,7 @@ import typing as T
 
 from blogs.models import Blog, BlogPost
 from dataclassy import dataclass
+from blogs.rules.has_forbidden_words import has_forbidden_words
 
 from common.utils.arg_utils import optional_args
 
@@ -29,6 +30,16 @@ def _validate_args(create_blog_post_form: CreateBlogPostForm, blog: Blog):
     if BlogPost.objects.filter(title=create_blog_post_form.title, blog=blog).exists():
         raise BlogPostWithTitleAlreadyExistsError()
 
+    if has_forbidden_words(create_blog_post_form.title):
+        raise CreateBlogPostFormContainsForbiddenWordsError("title")
+
+    if has_forbidden_words(create_blog_post_form.content):
+        raise CreateBlogPostFormContainsForbiddenWordsError("content")
+
 
 class BlogPostWithTitleAlreadyExistsError(Exception):
+    pass
+
+
+class CreateBlogPostFormContainsForbiddenWordsError(ValueError):
     pass

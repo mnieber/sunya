@@ -1,6 +1,7 @@
 import pytest
 from blogs.actions.create_blog_post import (
     BlogPostWithTitleAlreadyExistsError,
+    CreateBlogPostFormContainsForbiddenWordsError,
     CreateBlogPostForm,
     create_blog_post,
 )
@@ -43,4 +44,17 @@ class TestCreateBlogPostAction:
 
         # When / Then
         with pytest.raises(BlogPostWithTitleAlreadyExistsError):
+            create_blog_post(create_blog_post_form, blog=blog)
+
+    @pytest.mark.django_db
+    def test_create_blog_post_action_with_forbidden_words(self, blog):
+        # Given
+        BlogPostFactory(title="Existing BlogPost", blog=blog)
+
+        create_blog_post_form = CreateBlogPostForm(
+            title="Another BlogPost", content="A forbidden blog post"
+        )
+
+        # When / Then
+        with pytest.raises(CreateBlogPostFormContainsForbiddenWordsError):
             create_blog_post(create_blog_post_form, blog=blog)

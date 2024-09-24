@@ -1,5 +1,8 @@
-from blogs.actions.create_blog import create_blog
-from blogs.actions.create_blog_post import BlogPostWithTitleAlreadyExistsError
+from blogs.actions.create_blog import (
+    create_blog,
+    BlogWithNameAlreadyExistsError,
+    CreateBlogFormContainsForbiddenWordsError,
+)
 from blogs.serializers import BlogSerializer, CreateBlogFormSerializer
 from common.permissions import user_is_authenticated
 from rest_framework import status
@@ -30,7 +33,9 @@ class CreateBlogApiView(APIView):
                 create_blog_form=request_data.create_blog_form,
                 owner=request.user,
             )
-        except BlogPostWithTitleAlreadyExistsError:
-            raise ValidationError(code="BLOG_POST_TITLE_ALREADY_EXISTS")
+        except BlogWithNameAlreadyExistsError:
+            raise ValidationError(code="BLOG_NAME_ALREADY_EXISTS")
+        except CreateBlogFormContainsForbiddenWordsError as e:
+            raise ValidationError(code="FORM_CONTAINS_FORBIDDEN_WORDS", detail=str(e))
 
         return Response(BlogSerializer(blog).data, status=status.HTTP_201_CREATED)

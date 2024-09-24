@@ -1,6 +1,7 @@
 import typing as T
 
 from blogs.models import Blog
+from blogs.rules.has_forbidden_words import has_forbidden_words
 from dataclassy import dataclass
 from django.contrib.auth import get_user_model
 
@@ -32,6 +33,16 @@ def _validate_args(create_blog_form: CreateBlogForm):
     if Blog.objects.filter(name=create_blog_form.name).exists():
         raise BlogWithNameAlreadyExistsError()
 
+    if has_forbidden_words(create_blog_form.name):
+        raise CreateBlogFormContainsForbiddenWordsError("name")
+
+    if has_forbidden_words(create_blog_form.description):
+        raise CreateBlogFormContainsForbiddenWordsError("description")
+
 
 class BlogWithNameAlreadyExistsError(Exception):
+    pass
+
+
+class CreateBlogFormContainsForbiddenWordsError(ValueError):
     pass

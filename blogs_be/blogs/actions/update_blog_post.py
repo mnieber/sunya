@@ -2,6 +2,7 @@ import typing as T
 
 from blogs.models import BlogPost
 from dataclassy import dataclass
+from blogs.rules.has_forbidden_words import has_forbidden_words
 
 
 @dataclass
@@ -35,6 +36,18 @@ def _validate_args(update_blog_post_form: UpdateBlogPostForm, blog_post: BlogPos
     ):
         raise BlogPostWithTitleAlreadyExistsError()
 
+    if update_blog_post_form.title and has_forbidden_words(update_blog_post_form.title):
+        raise UpdateBlogPostFormContainsForbiddenWordsError("title")
+
+    if update_blog_post_form.content and has_forbidden_words(
+        update_blog_post_form.content
+    ):
+        raise UpdateBlogPostFormContainsForbiddenWordsError("content")
+
 
 class BlogPostWithTitleAlreadyExistsError(Exception):
+    pass
+
+
+class UpdateBlogPostFormContainsForbiddenWordsError(ValueError):
     pass

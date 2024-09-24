@@ -3,6 +3,7 @@ from blogs.tests.factories import BlogFactory, BlogPostFactory
 
 from blogs.actions.update_blog_post import (
     BlogPostWithTitleAlreadyExistsError,
+    UpdateBlogPostFormContainsForbiddenWordsError,
     UpdateBlogPostForm,
     update_blog_post,
 )
@@ -58,6 +59,16 @@ class TestUpdateBlogPostAction:
 
         # When / Then
         with pytest.raises(BlogPostWithTitleAlreadyExistsError):
+            update_blog_post(update_blog_post_form, blog_post=blog_post)
+
+    @pytest.mark.django_db
+    def test_update_blog_post_action_with_forbidden_words(self, blog, blog_post):
+        # Given
+        BlogPostFactory(title="Existing Blog-post", blog=blog)
+        update_blog_post_form = UpdateBlogPostForm(title="Forbidden Blog-post")
+
+        # When / Then
+        with pytest.raises(UpdateBlogPostFormContainsForbiddenWordsError):
             update_blog_post(update_blog_post_form, blog_post=blog_post)
 
     @pytest.mark.django_db

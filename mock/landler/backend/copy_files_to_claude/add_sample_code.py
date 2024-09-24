@@ -4,6 +4,7 @@ def add_sample_code(file_map, dir_list, sample_code_in):
         {
             f"{sample_code_in}/blogs/actions/create_blog_post.py": f"{sample_code}/blogs/actions",
             f"{sample_code_in}/blogs/actions/create_blog.py": f"{sample_code}/blogs/actions",
+            f"{sample_code_in}/blogs/rules/add_forbidden_words.py": f"{sample_code}/blogs/rules",
             f"{sample_code_in}/blogs/admin.py": f"{sample_code}/blogs",
             f"{sample_code_in}/blogs/enums.py": f"{sample_code}/blogs",
             f"{sample_code_in}/blogs/models.py": f"{sample_code}/blogs",
@@ -24,6 +25,7 @@ def add_sample_code(file_map, dir_list, sample_code_in):
     dir_list += [
         f"{sample_code}/blogs",
         f"{sample_code}/blogs/actions",
+        f"{sample_code}/blogs/rules",
         f"{sample_code}/blogs/tests/actions/create_blog",
         f"{sample_code}/blogs/tests/actions/create_blog_post",
         f"{sample_code}/blogs/tests",
