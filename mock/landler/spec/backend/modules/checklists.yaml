@@ -1,0 +1,36 @@
+type: module
+name: checklists
+models:
+  - name: Checklist
+    fields:
+      - name: id
+        type: UUID
+      - name: items
+        type: list[ChecklistItem]
+  - name: ChecklistItem
+    fields:
+      - name: id
+        type: UUID
+      - name: title
+        type: str
+      - name: description
+        type: str
+      - name: is_completed
+        type: bool
+actions:
+  - name: create_checklist
+    args:
+      - name: user
+        type: User
+  - name: update_checklist_item
+    args:
+      - name: checklist_item
+        type: ChecklistItem
+      - name: is_completed
+        type: bool
+api_views:
+  - name: GetChecklist
+    filters: []
+  - name: UpdateChecklistItem
+    filters: []
+
