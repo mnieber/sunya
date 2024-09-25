@@ -22,10 +22,23 @@ class OrganizationMembership(BaseModel):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="organization_memberships"
     )
-    role = models.CharField(max_length=20, choices=UserInOrganizationRoles.choices)
+    role = SingleLineTextField(choices=UserInOrganizationRoles.choices)
+    display_name = SingleLineTextField()
+    member_email = SingleLineTextField()
 
     class Meta:
         unique_together = ("organization", "user", "role")
 
     def __str__(self):
         return f"{self.user.email} - {self.organization.name} ({self.role})"
+
+
+class OrganizationStaffSettings(BaseModel):
+    organization = models.OneToOneField(
+        Organization, on_delete=models.CASCADE, related_name="staff_settings"
+    )
+    is_managed_by_tlg = models.BooleanField(default=False)
+    is_demo_org = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Staff Settings for {self.organization.name}"

@@ -1,9 +1,11 @@
-from default.stack.namespace import Module, Form, Enum
 import typing as T
 
-from landler.backend.modules.users import Users
 from default.backend.namespace import Action, ApiView, Rule
-from sunya import Entity, EntityWithId, actor_to_str, G as g, any_dict
+from default.stack.namespace import Enum, Form, Module
+from landler.backend.modules.users import Users
+from sunya import Entity, EntityWithId
+from sunya import G as g
+from sunya import actor_to_str, any_dict
 
 
 class Organizations(Module):
@@ -33,6 +35,10 @@ class Organizations(Module):
         class CreateOrganization(Action):
             class Args:
                 create_organization_form: Form
+
+        class AddUserToDemoOrganization(Action):
+            class Args:
+                user: Users.Models.User
 
         class AddUserToOrganization(Action):
             class Args:

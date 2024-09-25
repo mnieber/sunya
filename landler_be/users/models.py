@@ -4,11 +4,10 @@ import django.contrib.auth.models
 from django.conf import settings
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
+from common.fields import SingleLineTextField
 from common.models import BaseModel
 from users.actions.create_user import CreateUserForm
-from django.db import models
 
 
 class UserManager(django.contrib.auth.models.UserManager):
@@ -41,11 +40,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     EMAIL_FIELD = "email"
     REQUIRED_FIELDS: T.List[str] = []
 
-    email = models.EmailField(
-        max_length=settings.MAX_EMAIL_LENGTH,
-        unique=True,
-        error_messages={"unique": _("User with this email already exists.")},
-    )
+    email = models.EmailField(max_length=settings.MAX_EMAIL_LENGTH, unique=True)
+    display_email = SingleLineTextField()
     is_email_activated = models.BooleanField(default=False)
     firstname = models.CharField(max_length=255, default="anonymous")
     lastname = models.CharField(max_length=255, default="anonymous")

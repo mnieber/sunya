@@ -16,8 +16,8 @@ from organizations.actions.create_organization import (
     OrganizationWithNameAlreadyExistsError,
     create_organization,
 )
-from organizations.enums import UserInOrganizationRoles
 from organizations.serializers import (
+    AddUserToOrganizationFormSerializer,
     CreateOrganizationFormSerializer,
     OrganizationSerializer,
 )
@@ -25,6 +25,7 @@ from organizations.serializers import (
 
 class CreateOrganizationRequestSerializer(FormSerializer):
     create_organization_form = CreateOrganizationFormSerializer()
+    add_user_to_organization_form = AddUserToOrganizationFormSerializer()
 
 
 class CreateOrganizationApiView(APIView):
@@ -56,7 +57,9 @@ class CreateOrganizationApiView(APIView):
 
         try:
             add_user_to_organization(
-                organization, request.user, UserInOrganizationRoles.ADMIN
+                request_data.add_user_to_organization_form,
+                organization,
+                request.user,
             )
         except UserAlreadyInOrganizationError:
             raise ValidationError(code="USER_ALREADY_IN_ORGANIZATION")

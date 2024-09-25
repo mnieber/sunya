@@ -16,7 +16,8 @@ class TestCreateOrganizationApiView:
 
     @pytest.fixture
     def user(self):
-        return UserFactory()
+        user = UserFactory()
+        return user
 
     @pytest.mark.django_db
     def test_create_organization_api_view_success(self, api_client, user):
@@ -26,7 +27,12 @@ class TestCreateOrganizationApiView:
         data = {
             "create_organization_form": {
                 "name": "New Organization",
-            }
+            },
+            "add_user_to_organization_form": {
+                "role": "admin",
+                "display_name": user.email,
+                "member_email": user.email,
+            },
         }
 
         # When

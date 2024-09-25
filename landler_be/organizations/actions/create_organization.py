@@ -1,7 +1,7 @@
 from dataclassy import dataclass
 from django.contrib.auth import get_user_model
 
-from organizations.models import Organization
+from organizations.models import Organization, OrganizationStaffSettings
 
 User = get_user_model()
 
@@ -18,6 +18,8 @@ def create_organization(create_organization_form: CreateOrganizationForm):
         name=create_organization_form.name,
     )
     organization.save()
+
+    OrganizationStaffSettings.objects.create(organization=organization)
 
     return organization
 

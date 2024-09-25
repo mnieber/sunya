@@ -1,6 +1,7 @@
 import pytest
 
 from organizations.actions.add_user_to_organization import (
+    AddUserToOrganizationForm,
     InvalidRoleError,
     UserAlreadyInOrganizationError,
     add_user_to_organization,
@@ -19,7 +20,13 @@ class TestAddUserToOrganizationAction:
 
         # When
         membership = add_user_to_organization(
-            organization, user, UserInOrganizationRoles.ADMIN
+            AddUserToOrganizationForm(
+                role=UserInOrganizationRoles.ADMIN,
+                display_name="Test User",
+                member_email="testuser@example.org",
+            ),
+            organization,
+            user,
         )
 
         # Then
@@ -32,18 +39,33 @@ class TestAddUserToOrganizationAction:
         # Given
         organization = OrganizationFactory()
         user = UserFactory()
-        add_user_to_organization(organization, user, UserInOrganizationRoles.EDITOR)
+        form = AddUserToOrganizationForm(
+            role=UserInOrganizationRoles.EDITOR,
+            display_name="Test User",
+            member_email="testuser@example.org",
+        )
+
+        add_user_to_organization(
+            form,
+            organization,
+            user,
+        )
 
         # When / Then
         with pytest.raises(UserAlreadyInOrganizationError):
-            add_user_to_organization(organization, user, UserInOrganizationRoles.ADMIN)
+            add_user_to_organization(form, organization, user)
 
     @pytest.mark.django_db
     def test_add_user_with_invalid_role(self):
         # Given
         organization = OrganizationFactory()
         user = UserFactory()
+        form = AddUserToOrganizationForm(
+            role="invalid_role",
+            display_name="Test User",
+            member_email="testuser@example.org",
+        )
 
         # When / Then
         with pytest.raises(InvalidRoleError):
-            add_user_to_organization(organization, user, "invalid_role")
+            add_user_to_organization(form, organization, user)

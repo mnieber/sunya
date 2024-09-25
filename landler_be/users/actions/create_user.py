@@ -1,8 +1,8 @@
 import copy
+import typing as T
 
 from dataclassy import dataclass
 from django.contrib.auth import get_user_model
-import typing as T
 
 
 @dataclass
@@ -19,11 +19,15 @@ def create_user(create_user_form: CreateUserForm):
     User = get_user_model()
 
     create_user_form = copy.deepcopy(create_user_form)
+
+    display_email = create_user_form.email
     create_user_form.email = User.objects.normalize_email(create_user_form.email)
+
     _validate_args(create_user_form)
 
     user = User(
         email=create_user_form.email,
+        display_email=display_email,
         is_staff=create_user_form.is_staff,
         is_superuser=create_user_form.is_superuser,
         is_active=create_user_form.is_active,
