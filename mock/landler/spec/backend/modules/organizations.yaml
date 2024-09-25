@@ -38,6 +38,10 @@ actions:
     args:
       - name: create_organization_form
         type: Form
+  - name: add_user_to_demo_organization
+    args:
+      - name: user
+        type: User
   - name: add_user_to_organization
     args:
       - name: organization

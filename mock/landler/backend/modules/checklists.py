@@ -16,11 +16,10 @@ class Checklists(Module):
 
         class ChecklistItem(EntityWithId):
             name: str
-            description: str
             is_completed: bool = False
 
     class Actions:
-        class CreateChecklist(Action):
+        class GetOrCreateChecklist(Action):
             class Args:
                 user: "Users.Models.User"
 
@@ -44,7 +43,7 @@ class Checklists(Module):
             pass
 
 
-g.create_checklist_action = Checklists.Actions.CreateChecklist()
+g.get_or_create_checklist_action = Checklists.Actions.GetOrCreateChecklist()
 g.update_checklist_item_action = Checklists.Actions.UpdateChecklistItem()
 g.get_checklist_api_view = Checklists.ApiViews.GetChecklist()
 g.update_checklist_item_api_view = Checklists.ApiViews.UpdateChecklistItem()

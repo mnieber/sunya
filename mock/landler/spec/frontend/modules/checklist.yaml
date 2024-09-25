@@ -11,7 +11,7 @@ types:
     fields:
       - name: id
         type: UUID
-      - name: title
+      - name: name
         type: str
       - name: description
         type: str

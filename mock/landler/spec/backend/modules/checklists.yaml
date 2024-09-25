@@ -13,14 +13,12 @@ models:
     fields:
       - name: id
         type: UUID
-      - name: title
-        type: str
-      - name: description
+      - name: name
         type: str
       - name: is_completed
         type: bool
 actions:
-  - name: create_checklist
+  - name: get_or_create_checklist
     args:
       - name: user
         type: User

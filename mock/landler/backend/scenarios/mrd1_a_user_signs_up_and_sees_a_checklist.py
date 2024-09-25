@@ -28,8 +28,10 @@ def start():
                 g.user.is_active = True
 
         with add_goal("create a", checklist, "for the", user):
-            with the(g.sign_up_user_api_view).calls_the(g.create_checklist_action):
-                with the(g.create_checklist_action).creates_the(checklist):
+            with the(g.sign_up_user_api_view).calls_the(
+                g.get_or_create_checklist_action
+            ):
+                with the(g.get_or_create_checklist_action).creates_the(checklist):
                     checklist.actor = checklist_()
                     user.actor.checklist = checklist.actor
 
@@ -58,32 +60,26 @@ def checklist_():
             items=[
                 B.Checklists.Models.ChecklistItem(
                     name="Welcome",
-                    description="Welcome to the application",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
                     name="Join the demo org",
-                    description="Join the demo organization",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
                     name="Add your organization",
-                    description="Create your own organization",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
                     name="Create a project",
-                    description="Start your first project",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
                     name="Add a plot",
-                    description="Add your first plot to the project",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
                     name="Trigger a project-analysis",
-                    description="Run your first project analysis",
                     is_completed=False,
                 ),
             ],

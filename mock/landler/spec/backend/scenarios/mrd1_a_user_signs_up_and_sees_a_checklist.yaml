@@ -54,9 +54,9 @@ nodes:
         post_actor_key_by_role_name:
           Checklist: my-org-owner@example.com+:checklist
         child_nodes:
-          - step: The [sign-up-user-:api-view] calls the [create-checklist:action]
+          - step: The [sign-up-user-:api-view] calls the [get-or-create-checklist:action]
             child_nodes:
-              - step: The [create-checklist:action] creates the [Checklist]
+              - step: The [get-or-create-checklist:action] creates the [Checklist]
                 actors_introduced:
                   - name: my-org-owner@example.com+:checklist
                     deltas:
