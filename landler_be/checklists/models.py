@@ -1,9 +1,9 @@
-from django.db import models
 from django.contrib.auth import get_user_model
+from django.db import models
 
-from common.models import BaseModel
-from common.fields import SingleLineTextField
 from checklists.enums import ChecklistItemNames
+from common.fields import SingleLineTextField
+from common.models import BaseModel
 
 User = get_user_model()
 
@@ -19,8 +19,8 @@ class ChecklistItem(BaseModel):
     checklist = models.ForeignKey(
         Checklist, on_delete=models.CASCADE, related_name="items"
     )
-    title = SingleLineTextField(choices=ChecklistItemNames.choices)
+    name = SingleLineTextField(choices=ChecklistItemNames.choices)
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.title
+        return self.name

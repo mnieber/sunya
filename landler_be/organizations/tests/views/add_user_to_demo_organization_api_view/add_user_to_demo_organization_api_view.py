@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from api.utils.extend_schema.permissions import checks_permission
-from checklists.actions.create_checklist import create_checklist
+from checklists.actions.get_or_create_checklist import get_or_create_checklist
 from checklists.enums import ChecklistItemNames
 from checklists.models import ChecklistItem
 from organizations.actions.get_or_create_demo_organization import (
@@ -37,7 +37,7 @@ class TestAddUserToDemoOrganizationApiView:
         self, authenticated_client, url, user
     ):
         # Given
-        create_checklist(user)
+        get_or_create_checklist(user)
         data = {
             "add_user_to_demo_organization_form": {"display_name": "Busy Blue Horse"}
         }
@@ -58,7 +58,7 @@ class TestAddUserToDemoOrganizationApiView:
 
         # Check if checklist item is marked as completed
         checklist_item = ChecklistItem.objects.get(
-            checklist__owner=user, title=ChecklistItemNames.JOIN_DEMO_ORG
+            checklist__owner=user, name=ChecklistItemNames.JOIN_DEMO_ORG
         )
         assert checklist_item.is_completed is True
 

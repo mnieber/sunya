@@ -15,10 +15,10 @@ class UserFactory(DjangoModelFactory):
 
     @classmethod
     def create(cls, **kwargs):
-        from checklists.actions.create_checklist import create_checklist
+        from checklists.actions.get_or_create_checklist import get_or_create_checklist
 
         user = super().create(**kwargs)
-        create_checklist(user)
+        get_or_create_checklist(user)
         return user
 
 

@@ -3,9 +3,11 @@ import typing as T
 if T.TYPE_CHECKING:
     pass
 
-from default.frontend.entities import Mutation, Facet, Query
+from default.frontend.entities import Facet, Mutation, Query
 from default.stack.namespace import Module
-from sunya import EntityWithId, actor_to_str, G as g
+from sunya import EntityWithId
+from sunya import G as g
+from sunya import actor_to_str
 
 
 class Checklist(Module):
@@ -14,7 +16,7 @@ class Checklist(Module):
             items: T.List["Checklist.Types.ChecklistItem"] = []
 
         class ChecklistItem(EntityWithId):
-            title: str
+            name: str
             description: str
             is_completed: bool
 
@@ -61,4 +63,4 @@ def checklist_to_str(checklist):
 
 @actor_to_str.method((Checklist.Types.ChecklistItem,))
 def checklist_item_to_str(checklist_item):
-    return f"{checklist_item.title}+:checklist_item"
+    return f"{checklist_item.name}+:checklist_item"

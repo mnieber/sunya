@@ -1,17 +1,15 @@
 import landler.backend.namespace as B
 import landler.frontend.namespace as F  # noqa
-
+from sunya import G as g
 from sunya import (
-    add_goal,
-    add_scenario,
-    add_role,
     add_actor,
+    add_goal,
+    add_role,
+    add_scenario,
     get_scenario,
     get_scenario_name,
     the,
-    G as g,
 )
-
 
 scenario_name = f"backend/{get_scenario_name(__file__)}"
 
@@ -59,32 +57,32 @@ def checklist_():
             owner=g.user,
             items=[
                 B.Checklists.Models.ChecklistItem(
-                    title="Welcome",
+                    name="Welcome",
                     description="Welcome to the application",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
-                    title="Join the demo org",
+                    name="Join the demo org",
                     description="Join the demo organization",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
-                    title="Add your organization",
+                    name="Add your organization",
                     description="Create your own organization",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
-                    title="Create a project",
+                    name="Create a project",
                     description="Start your first project",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
-                    title="Add a plot",
+                    name="Add a plot",
                     description="Add your first plot to the project",
                     is_completed=False,
                 ),
                 B.Checklists.Models.ChecklistItem(
-                    title="Trigger a project-analysis",
+                    name="Trigger a project-analysis",
                     description="Run your first project analysis",
                     is_completed=False,
                 ),

@@ -1,15 +1,14 @@
 import landler.frontend.namespace as F
+from sunya import G as g
 from sunya import (
-    add_goal,
-    add_scenario,
     add_actor,
+    add_goal,
+    add_role,
+    add_scenario,
     get_scenario,
     get_scenario_name,
-    add_role,
     the,
-    G as g,
 )
-
 
 scenario_name = f"frontend/{get_scenario_name(__file__)}"
 
@@ -45,22 +44,22 @@ def checklist_():
         F.Checklist.Types.Checklist(
             items=[
                 F.Checklist.Types.ChecklistItem(
-                    title="Add your organization",
+                    name="Add your organization",
                     description="Set up your organization details",
                     is_completed=False,
                 ),
                 F.Checklist.Types.ChecklistItem(
-                    title="Create a project",
+                    name="Create a project",
                     description="Start your first project",
                     is_completed=False,
                 ),
                 F.Checklist.Types.ChecklistItem(
-                    title="Add a plot",
+                    name="Add a plot",
                     description="Create your first plot",
                     is_completed=False,
                 ),
                 F.Checklist.Types.ChecklistItem(
-                    title="Trigger a project-analysis",
+                    name="Trigger a project-analysis",
                     description="Analyze your project data",
                     is_completed=False,
                 ),

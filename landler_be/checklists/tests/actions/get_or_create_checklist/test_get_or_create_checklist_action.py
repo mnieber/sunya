@@ -1,18 +1,19 @@
 import pytest
-from checklists.actions.create_checklist import create_checklist
+
+from checklists.actions.get_or_create_checklist import get_or_create_checklist
 from checklists.models import Checklist, ChecklistItem
 from users.tests.factories import UserFactory
 
 
-class TestCreateChecklistAction:
+class TestGetOrCreateChecklistAction:
     @pytest.fixture
     def user(self):
         return UserFactory()
 
     @pytest.mark.django_db
-    def test_create_checklist_action_success(self, user):
+    def test_get_or_create_checklist_action_success(self, user):
         # When
-        checklist = create_checklist(user)
+        checklist = get_or_create_checklist(user)
 
         # Then
         assert isinstance(checklist, Checklist)
@@ -32,28 +33,28 @@ class TestCreateChecklistAction:
             "Trigger a project analysis",
         ]
         for item, expected_title in zip(checklist_items, expected_titles):
-            assert item.title == expected_title
+            assert item.name == expected_title
             assert (
                 not item.is_completed
             )  # Check that items are not completed by default
 
     @pytest.mark.django_db
-    def test_create_checklist_creates_only_one_checklist(self, user):
+    def test_get_or_create_checklist_creates_only_one_checklist(self, user):
         # When
-        create_checklist(user)
-        create_checklist(user)
+        get_or_create_checklist(user)
+        get_or_create_checklist(user)
 
         # Then
-        assert Checklist.objects.filter(owner=user).count() == 2
+        assert Checklist.objects.filter(owner=user).count() == 1
 
     @pytest.mark.django_db
-    def test_create_checklist_for_different_users(self, user):
+    def test_get_or_create_checklist_for_different_users(self, user):
         # Given
         another_user = UserFactory()
 
         # When
-        checklist1 = create_checklist(user)
-        checklist2 = create_checklist(another_user)
+        checklist1 = get_or_create_checklist(user)
+        checklist2 = get_or_create_checklist(another_user)
 
         # Then
         assert checklist1.owner == user

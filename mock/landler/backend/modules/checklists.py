@@ -1,9 +1,11 @@
-from default.stack.namespace import Module
-from default.backend.namespace import Action, ApiView
-from landler.backend.modules.users import Users
 import typing as T
 
-from sunya import EntityWithId, actor_to_str, G as g
+from default.backend.namespace import Action, ApiView
+from default.stack.namespace import Module
+from landler.backend.modules.users import Users
+from sunya import EntityWithId
+from sunya import G as g
+from sunya import actor_to_str
 
 
 class Checklists(Module):
@@ -13,7 +15,7 @@ class Checklists(Module):
             owner: "Users.Models.User"
 
         class ChecklistItem(EntityWithId):
-            title: str
+            name: str
             description: str
             is_completed: bool = False
 
@@ -48,9 +50,9 @@ g.get_checklist_api_view = Checklists.ApiViews.GetChecklist()
 g.update_checklist_item_api_view = Checklists.ApiViews.UpdateChecklistItem()
 
 
-def get_checklist_item(title):
+def get_checklist_item(name):
     return next(
-        item for item in g.user_session.user.checklist.items if item.title == title
+        item for item in g.user_session.user.checklist.items if item.name == name
     )
 
 
@@ -61,4 +63,4 @@ def checklist_to_str(checklist):
 
 @actor_to_str.method((Checklists.Models.ChecklistItem,))
 def checklist_item_to_str(checklist_item):
-    return f"{checklist_item.title}+:checklist-item"
+    return f"{checklist_item.name}+:checklist-item"
