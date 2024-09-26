@@ -15,6 +15,7 @@ def _args():
             "darshana_scenarios",
             "darshana_frontend",
             "darshana_backend",
+            "cft",
         ],
     )
     parser.add_argument("--skip-upload", action="store_true")
