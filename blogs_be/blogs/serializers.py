@@ -32,7 +32,7 @@ class BlogSerializer(ReadSerializerMixin, BaseModelSerializer):
 class BlogPostSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = BlogPost
-        fields = ["id", "title", "slug", "blog_id", "content"]
+        fields = ["id", "title", "slug", "blog_id", "content", "is_published", "level"]
 
 
 class DeleteBlogPostsFormSerializer(FormSerializer):

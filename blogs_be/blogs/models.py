@@ -1,6 +1,6 @@
 from django.db import models
 
-from blogs.enums import Audiences
+from blogs.enums import Audiences, BlogPostLevels
 from common.fields import SingleLineTextField
 from common.models import BaseModel
 from django.utils.text import slugify
@@ -32,6 +32,9 @@ class BlogPost(BaseModel):
     slug = SingleLineTextField()
     content = models.TextField(blank=True, null=True)
     is_published = models.BooleanField(default=False)
+    level = models.TextField(
+        choices=BlogPostLevels.choices, default=BlogPostLevels.MEDIUM
+    )
 
     def save(self, *args, **kwargs):
         if not self.slug or self.slug == "-":

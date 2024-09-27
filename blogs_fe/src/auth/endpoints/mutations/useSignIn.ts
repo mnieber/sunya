@@ -15,16 +15,16 @@ export type SignInArgsT = {
 export function signIn(args: SignInArgsT) {
   const url = '/users/sign-in/';
   return post(url, {
-    signInUserForm: {
+    sign_in_user_form: {
       email: args.userId,
       password: args.password,
     },
   })
     .then((response) => {
-      setAuthTokens(response.data.accessToken, response.data.refreshToken);
+      setAuthTokens(response.data.access_token, response.data.refresh_token);
       return waitOnDev(1000, {
-        success: !!response.data.accessToken,
-        userId: response.data.userId,
+        success: !!response.data.access_token,
+        userId: response.data.user_id,
       });
     })
     .catch((error) => {

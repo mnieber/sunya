@@ -9,6 +9,6 @@ export const BlogPostSchema: z.ZodType<BlogPostT> = z.object({
   slug: z.string(),
   isPublished: z.boolean(),
   level: z.union([z.literal('easy'), z.literal('medium'), z.literal('hard')]),
-  tags: z.array(z.string()),
+  // tags: z.array(z.string()),
   isTransient: z.boolean().optional(),
 });

@@ -9,7 +9,6 @@ export type BlogPostT = EntityT & {
   slug: string;
   isPublished: boolean;
   level: BlogPostLevelT;
-  tags: string[];
   isTransient?: boolean;
 };
 
@@ -25,7 +24,6 @@ export const createBlogPost = (values: ObjT): BlogPostT => {
     content: values.content,
     isPublished: values.isPublished ?? false,
     level: values.level ?? 'medium',
-    tags: values.tags ?? [],
     isTransient: true,
   } as BlogPostT);
 };

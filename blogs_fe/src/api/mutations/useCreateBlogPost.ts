@@ -1,3 +1,4 @@
+import snakecaseKeys from 'snakecase-keys';
 import { useObservableMutation } from '/src/api/lib/ObservableMutation';
 import { invalidateGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
 import { post } from '/src/api/restClient';
@@ -18,7 +19,7 @@ export type CreateBlogPostArgsT = {
 export const createBlogPost = (args: CreateBlogPostArgsT) => {
   const url = `/blogs/${args.blog.id}/blog-posts/create/`;
   return post(url, {
-    createBlogPostForm: args.createBlogPostForm,
+    create_blog_post_form: snakecaseKeys(args.createBlogPostForm),
     blogId: args.blog.id,
   })
     .then((response) => {
