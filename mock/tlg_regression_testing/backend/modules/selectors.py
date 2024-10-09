@@ -1,8 +1,11 @@
-from default.stack.namespace import Module, Function
-from sunya import EntityWithId, actor_to_str, G as g
+from default.stack.namespace import Module
+from default.backend.namespace import Action
+from sunya import EntityWithId, actor_to_str, G as g, use_spec
+import sunya.spec as spec
 
 
 class Selectors(Module):
+    @use_spec(spec.backend_model)
     class Models:
         class Selector(EntityWithId):
             name: str
@@ -11,13 +14,14 @@ class Selectors(Module):
         class SelectorsRepository(EntityWithId):
             selectors: list["Selectors.Models.Selector"] = []
 
-    class Functions:
-        class RegisterSelector(Function):
+    @use_spec(spec.backend_action)
+    class Actions:
+        class RegisterSelector(Action):
             pass
 
 
 g.selectors_repository = Selectors.Models.SelectorsRepository()
-g.register_selector = Selectors.Functions.RegisterSelector()
+g.register_selector_action = Selectors.Actions.RegisterSelector()
 
 
 @actor_to_str.method((Selectors.Models.Selector,))

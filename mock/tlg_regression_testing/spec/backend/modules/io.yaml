@@ -27,6 +27,9 @@ models:
         type: str
       - name: output_json
         type: str
-actions: []
-api_views: []
+actions:
+  - name: ClearExamples
+  - name: DownloadExamples
+  - name: DownloadExampleRepository
+  - name: UploadExample
 

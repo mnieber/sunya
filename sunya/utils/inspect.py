@@ -18,3 +18,12 @@ def find_root_class(cls, base_cls):
             for part in parts:
                 target = getattr(target, part)
     return None
+
+
+def get_cls_members(container):
+    classes = []
+    for cls_name, cls in container.__dict__.items():
+        if cls_name.startswith("_"):
+            continue
+        classes.append((cls_name, cls))
+    return classes

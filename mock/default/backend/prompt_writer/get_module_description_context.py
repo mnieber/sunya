@@ -1,75 +1,23 @@
-from sunya.utils import extract_field_types, camel_to_snake, l0
+from sunya.utils import camel_to_snake, l0, get_cls_members
 
 
 def get_module_description_context(module):
-    return dict(
+    result = dict(
         type="module",
         name=l0(camel_to_snake(module.__name__)),
-        models=_get_models(module),
-        actions=_get_actions(module),
-        api_views=_get_api_views(module),
     )
-
-
-def _get_models(module):
-    result = []
-    if models := getattr(module, "Models", None):
-        for model_name, model in _get_members(models):
-            result.append(
-                dict(
-                    name=model_name,
-                    fields=[
-                        dict(name=field_name, type=field_type)
-                        for field_name, field_type in extract_field_types(model).items()
-                    ],
-                )
-            )
+    for section_name, section in get_cls_members(module):
+        yaml_section_name = camel_to_snake(section_name).lower()
+        result[yaml_section_name] = get_section_description_context(section)
     return result
 
 
-def _get_actions(module):
-    result = []
-    if actions := getattr(module, "Actions", None):
-        for action_name, action in _get_members(actions):
-            if isinstance(action, type):
-                args = getattr(action, "Args", None) or []
-                result.append(
-                    dict(
-                        name=camel_to_snake(action_name),
-                        args=[
-                            dict(name=name, type=cls)
-                            for name, cls in extract_field_types(args).items()
-                        ],
-                    )
-                )
-    return result
-
-
-def _get_api_views(module):
-    result = []
-    if api_views := getattr(module, "ApiViews", None):
-        for api_view_name, api_view in _get_members(api_views):
-            if isinstance(api_view, type):
-                result.append(dict(name=api_view_name, filters=_get_filters(api_view)))
-    return result
-
-
-def _get_members(container):
-    classes = []
-    for cls_name, cls in container.__dict__.items():
-        if cls_name.startswith("_"):
+def get_section_description_context(section):
+    result = list()
+    default_create_spec = getattr(section, "_create_spec", None)
+    for sub_section_name, sub_section in get_cls_members(section):
+        create_spec = getattr(sub_section, "_create_spec", default_create_spec)
+        if not create_spec:
             continue
-        classes.append((cls_name, cls))
-    return classes
-
-
-def _get_filters(api_view):
-    result = []
-    filters = getattr(api_view, "Filters", None) or []
-    for filter_name in filters:
-        result.append(
-            dict(
-                name=camel_to_snake(filter_name),
-            )
-        )
+        result.append(create_spec(sub_section))
     return result

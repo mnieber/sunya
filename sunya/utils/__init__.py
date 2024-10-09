@@ -11,3 +11,4 @@ from .case import (
 from .extract_field_types import extract_field_types  # noqa
 from .get_time import get_time  # noqa
 from .any_dict import any_dict  # noqa
+from .inspect import get_cls_members  # noqa

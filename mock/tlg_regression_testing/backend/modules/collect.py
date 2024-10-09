@@ -1,13 +1,16 @@
-from default.stack.namespace import Module, Function
-from sunya import G as g
+from default.stack.namespace import Module
+from default.backend.namespace import Action
+from sunya import G as g, use_spec
+import sunya.spec as spec
 
 
 class Collect(Module):
-    class Functions:
-        class CollectRegressionTestingExamples(Function):
+    @use_spec(spec.backend_action)
+    class Actions:
+        class CollectRegressionTestingExamples(Action):
             pass
 
 
-g.collect_regression_testing_examples_function = (
-    Collect.Functions.CollectRegressionTestingExamples()
+g.collect_regression_testing_examples_action = (
+    Collect.Actions.CollectRegressionTestingExamples()
 )

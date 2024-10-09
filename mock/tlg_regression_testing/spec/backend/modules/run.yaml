@@ -13,6 +13,7 @@ models:
         type: bool
       - name: diff
         type: str
-actions: []
-api_views: []
+actions:
+  - name: RunRegressionTests
+  - name: GenerateHtmlReport
 

@@ -14,7 +14,7 @@ nodes:
         post_actor_key_by_role_name:
           Selector: cover_crop_last_year+:selector
         child_nodes:
-          - step: The [User] decorates a [Selector] with [register-selector+:function] decorator
+          - step: The [User] decorates a [Selector] with [register-selector:action] decorator
             actors_introduced:
               - name: cover_crop_last_year+:selector
                 deltas:
@@ -23,7 +23,7 @@ nodes:
                   num_examples: 5 (None)
             post_actor_key_by_role_name:
               Selector: cover_crop_last_year+:selector
-          - step: The [register-selector+:function] decorator registers the [cover_crop_last_year+:selector] with [selectors_repository+:selectors_repository]
+          - step: The [register-selector:action] decorator registers the [cover_crop_last_year+:selector] with [selectors_repository+:selectors_repository]
             actors_updated:
               - name: selectors_repository+:selectors_repository
                 deltas:
@@ -32,15 +32,15 @@ nodes:
         child_nodes:
           - step: The [Geomodel] runs with input
             child_nodes:
-              - step: The [collect-regression-testing-examples+:function] calls the [io->download_examples+:function] to download the current [ExampleRepository]
-              - step: The [collect-regression-testing-examples+:function] uses the [ExampleRepository] to determine which selectors need additional examples
-              - step: The [collect-regression-testing-examples+:function] runs each selected [Selector] to check if the input matches the selector criteria
+              - step: The [collect-regression-testing-examples:action] calls the [download-examples:action] to download the current [ExampleRepository]
+              - step: The [collect-regression-testing-examples:action] uses the [ExampleRepository] to determine which selectors need additional examples
+              - step: The [collect-regression-testing-examples:action] runs each selected [Selector] to check if the input matches the selector criteria
                 pre_actor_key_by_role_name:
                   Selector: cover_crop_last_year+:selector
                 child_nodes:
-                  - step: The [collect-regression-testing-examples+:function] calls  [io->upload_example+:function] to upload new examples to s3
+                  - step: The [collect-regression-testing-examples:action] calls  [upload-example:action] to upload new examples to s3
                     child_nodes:
-                      - step: The [io->upload_example+:function] uses a dedicated [S3Filename] for the nth example to prevent writing more examples than needed
+                      - step: The [upload-example:action] uses a dedicated [S3Filename] for the nth example to prevent writing more examples than needed
       - goal: create a regression [TestResult] for the [Geomodel]
         actors_introduced:
           - name: cover_crop_last_year-test_1+:test_result
@@ -55,9 +55,9 @@ nodes:
         child_nodes:
           - step: The [User] initiates regression testing
             child_nodes:
-              - step: The [io->download_examples+:function] downloads the examples from s3
-              - step: The [run-regression-tests+:function] runs tests
-              - step: The [generate-html-report+:function] generates a [Test_report] for the [TestResult]
+              - step: The [download-examples:action] downloads the examples from s3
+              - step: The [run-regression-tests:action] runs tests
+              - step: The [generate-html-report:action] generates a [Test_report] for the [TestResult]
                 pre_actor_key_by_role_name:
                   TestResult: cover_crop_last_year-test_1+:test_result
                 child_nodes:
@@ -66,5 +66,5 @@ nodes:
         child_nodes:
           - step: The [User] requests to invalidate examples
             child_nodes:
-              - step: The [io->clear_examples+:function] clears the s3 bucket and its [ExampleRepository]
+              - step: The [clear-examples:action] clears the s3 bucket and its [ExampleRepository]
 

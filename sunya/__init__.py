@@ -11,6 +11,7 @@ from .extension.mem_field import MemField  # noqa
 from .extension.memfun import MemFun  # noqa
 from .extension.prop import Prop  # noqa
 from .render.file_writer import FileWriter  # noqa
+from .spec import use_spec  # noqa
 from .scenarios.fact_to_string import fact_to_string  # noqa
 from .scenarios.run_scenario import run_scenario  # noqa
 from .scenarios.step_builder import the  # noqa

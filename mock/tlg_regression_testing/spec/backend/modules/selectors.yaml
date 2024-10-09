@@ -15,6 +15,6 @@ models:
         type: UUID
       - name: selectors
         type: list[Selector]
-actions: []
-api_views: []
+actions:
+  - name: RegisterSelector
 
