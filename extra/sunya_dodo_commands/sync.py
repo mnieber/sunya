@@ -32,9 +32,6 @@ def _args():
 # Use safe=False if the script makes changes other than through Dodo.run
 if Dodo.is_main(__name__, safe=True):
     args = _args()
-    config_file = f"/home/maarten/.claudesync/{args.project}.json"
-    if not os.path.exists(config_file):
-        raise Exception(f"Config file {config_file} does not exist")
 
     sunya_dir = f"/home/maarten/projects/sunya"
     local_dir = f"{sunya_dir}/res/claude/{args.project}"
@@ -56,7 +53,11 @@ if Dodo.is_main(__name__, safe=True):
         ]
     )
 
-    if not args.skip_upload:
+    if False and not args.skip_upload:
+        config_file = f"/home/maarten/.claudesync/{args.project}.json"
+        if not os.path.exists(config_file):
+            raise Exception(f"Config file {config_file} does not exist")
+
         Dodo.run(
             [
                 "cp",
