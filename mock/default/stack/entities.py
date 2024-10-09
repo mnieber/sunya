@@ -32,6 +32,7 @@ class List(Entity):
 
 class Function(Entity):
     name: str = ""
+    container: str = ""
 
     def __post_init__(self):
         self.name = self.name or type_name_to_kebab(self)
@@ -39,7 +40,8 @@ class Function(Entity):
 
 @actor_to_str.method((Function,))
 def function_to_str(function):
-    return f"{function.name}+:function"
+    prefix = function.container + "->" if function.container else ""
+    return f"{prefix}{function.name}+:function"
 
 
 @actor_to_str.method((List,))

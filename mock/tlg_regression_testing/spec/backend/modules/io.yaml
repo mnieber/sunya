@@ -1,0 +1,32 @@
+type: module
+name: io
+models:
+  - name: S3Client
+    fields:
+      - name: id
+        type: UUID
+      - name: bucket_name
+        type: str
+  - name: ExampleRepository
+    fields:
+      - name: id
+        type: UUID
+      - name: examples
+        type: list[Example]
+  - name: Example
+    fields:
+      - name: id
+        type: UUID
+      - name: selector_name
+        type: str
+      - name: hash
+        type: str
+      - name: slot_nr
+        type: int
+      - name: input_json
+        type: str
+      - name: output_json
+        type: str
+actions: []
+api_views: []
+

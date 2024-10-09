@@ -15,6 +15,8 @@ def _args():
             "darshana_scenarios",
             "darshana_frontend",
             "darshana_backend",
+            "tlg_regression_testing_scenarios",
+            "tlg_regression_testing_backend",
             "cft",
         ],
     )

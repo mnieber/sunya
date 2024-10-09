@@ -1,0 +1,70 @@
+type: scenario
+order: 0
+scenario_name: tlg-geomodel-testing-workflow
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: define regression-testing [Selector] functions
+        actors_introduced:
+          - name: cover_crop_last_year+:selector
+            deltas:
+              id: bf7bb3598bfc5d559c7467b387950433 (None)
+              name: cover_crop_last_year (None)
+              num_examples: 5 (None)
+        post_actor_key_by_role_name:
+          Selector: cover_crop_last_year+:selector
+        child_nodes:
+          - step: The [User] decorates a [Selector] with [register-selector+:function] decorator
+            actors_introduced:
+              - name: cover_crop_last_year+:selector
+                deltas:
+                  id: bf7bb3598bfc5d559c7467b387950433 (None)
+                  name: cover_crop_last_year (None)
+                  num_examples: 5 (None)
+            post_actor_key_by_role_name:
+              Selector: cover_crop_last_year+:selector
+          - step: The [register-selector+:function] decorator registers the [cover_crop_last_year+:selector] with [selectors_repository+:selectors_repository]
+            actors_updated:
+              - name: selectors_repository+:selectors_repository
+                deltas:
+                  selectors: '[''cover_crop_last_year+:selector''] ([])'
+      - goal: collect input/output [Examples] for the [Geomodel]
+        child_nodes:
+          - step: The [Geomodel] runs with input
+            child_nodes:
+              - step: The [collect-regression-testing-examples+:function] calls the [io->download_examples+:function] to download the current [ExampleRepository]
+              - step: The [collect-regression-testing-examples+:function] uses the [ExampleRepository] to determine which selectors need additional examples
+              - step: The [collect-regression-testing-examples+:function] runs each selected [Selector] to check if the input matches the selector criteria
+                pre_actor_key_by_role_name:
+                  Selector: cover_crop_last_year+:selector
+                child_nodes:
+                  - step: The [collect-regression-testing-examples+:function] calls  [io->upload_example+:function] to upload new examples to s3
+                    child_nodes:
+                      - step: The [io->upload_example+:function] uses a dedicated [S3Filename] for the nth example to prevent writing more examples than needed
+      - goal: create a regression [TestResult] for the [Geomodel]
+        actors_introduced:
+          - name: cover_crop_last_year-test_1+:test_result
+            deltas:
+              diff: ' (None)'
+              id: 88117a27b75e529f803314df1f3d83c7 (None)
+              input_id: test_1 (None)
+              passed: True (None)
+              selector: cover_crop_last_year (None)
+        post_actor_key_by_role_name:
+          TestResult: cover_crop_last_year-test_1+:test_result
+        child_nodes:
+          - step: The [User] initiates regression testing
+            child_nodes:
+              - step: The [io->download_examples+:function] downloads the examples from s3
+              - step: The [run-regression-tests+:function] runs tests
+              - step: The [generate-html-report+:function] generates a [Test_report] for the [TestResult]
+                pre_actor_key_by_role_name:
+                  TestResult: cover_crop_last_year-test_1+:test_result
+                child_nodes:
+                  - step: The [Test_report] html contains collapsible sections with the [OutputDiff] for the failing [Examples]
+      - goal: invalidate regression test examples
+        child_nodes:
+          - step: The [User] requests to invalidate examples
+            child_nodes:
+              - step: The [io->clear_examples+:function] clears the s3 bucket and its [ExampleRepository]
+
