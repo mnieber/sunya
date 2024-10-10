@@ -8,8 +8,16 @@ nodes:
         child_nodes:
           - step: The [Geomodel] runs with input
             child_nodes:
-              - step: The [collect-regression-testing-examples:action] calls the [download-examples:action] to download the current [ExampleRepository]
-              - step: The [collect-regression-testing-examples:action] uses the [ExampleRepository] to determine which selectors need additional examples
+              - step: The [collect-regression-testing-examples:action] calls the [download-example-repository-stat:action] to download the current [ExampleRepositoryStat]
+                actors_introduced:
+                  - name: example-repository-stat:model
+                    deltas:
+                      nr_of_stored_examples_by_selector_name: '{''cover_crop_last_year'': 2} (None)'
+                post_actor_key_by_role_name:
+                  ExampleRepositoryStat: example-repository-stat:model
+              - step: The [collect-regression-testing-examples:action] uses the [ExampleRepositoryStat] to determine which selectors need additional examples
+                pre_actor_key_by_role_name:
+                  ExampleRepositoryStat: example-repository-stat:model
               - step: The [collect-regression-testing-examples:action] runs each selected [Selector] to check if the input matches the selector criteria
                 pre_actor_key_by_role_name:
                   Selector: cover_crop_last_year+:selector

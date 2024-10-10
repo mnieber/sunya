@@ -26,8 +26,10 @@ def start():
     with add_scenario(scenario_name):
         with add_goal("create a regression", test_result, "for the", geomodel):
             with the(user).initiates_regression_testing():
-                with the(g.download_examples_action).downloads_the_examples_from_s3():
-                    pass
+                with the(g.download_examples_action).downloads_the(
+                    example_repository
+                ).from_s3():
+                    example_repository.actor = example_repository_()
                 with the(g.run_regression_tests_action).runs_tests():
                     test_result.actor = test_result_()
                 with the(g.generate_html_report_action).generates_a(
@@ -46,6 +48,16 @@ def start():
                     pass
 
     return get_scenario(scenario_name)
+
+
+def example_repository_():
+    return add_actor(
+        B.IO.Models.ExampleRepository(
+            geomodel_name="geomodel_1",
+            examples=[],
+        ),
+        name="example_repository",
+    )
 
 
 def test_result_():

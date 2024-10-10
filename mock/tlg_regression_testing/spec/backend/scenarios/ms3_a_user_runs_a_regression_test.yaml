@@ -18,7 +18,14 @@ nodes:
         child_nodes:
           - step: The [User] initiates regression testing
             child_nodes:
-              - step: The [download-examples:action] downloads the examples from s3
+              - step: The [download-examples:action] downloads the [ExampleRepository] from s3
+                actors_introduced:
+                  - name: example-repository:model
+                    deltas:
+                      examples: '[] (None)'
+                      geomodel_name: geomodel_1 (None)
+                post_actor_key_by_role_name:
+                  ExampleRepository: example-repository:model
               - step: The [run-regression-tests:action] runs tests
               - step: The [generate-html-report:action] generates a [Test_report] for the [TestResult]
                 pre_actor_key_by_role_name:
@@ -30,4 +37,6 @@ nodes:
           - step: The [User] requests to invalidate examples
             child_nodes:
               - step: The [clear-examples:action] clears the s3 bucket and its [ExampleRepository]
+                pre_actor_key_by_role_name:
+                  ExampleRepository: example-repository:model
 

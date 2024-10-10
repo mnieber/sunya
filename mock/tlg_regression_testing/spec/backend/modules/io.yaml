@@ -3,20 +3,20 @@ name: io
 models:
   - name: S3Client
     fields:
-      - name: id
-        type: UUID
       - name: bucket_name
         type: str
   - name: ExampleRepository
     fields:
-      - name: id
-        type: UUID
+      - name: geomodel_name
+        type: str
       - name: examples
         type: list[Example]
+  - name: ExampleRepositoryStat
+    fields:
+      - name: nr_of_stored_examples_by_selector_name
+        type: dict[str, int]
   - name: Example
     fields:
-      - name: id
-        type: UUID
       - name: selector_name
         type: str
       - name: hash
@@ -31,5 +31,6 @@ actions:
   - name: ClearExamples
   - name: DownloadExamples
   - name: DownloadExampleRepository
+  - name: DownloadExampleRepositoryStat
   - name: UploadExample
 

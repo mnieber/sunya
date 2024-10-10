@@ -7,6 +7,10 @@ class Action(Function):
     pass
 
 
+class Model(Entity):
+    pass
+
+
 class Rule(Function):
     pass
 
@@ -38,3 +42,8 @@ def api_view_to_str(api_view):
 @actor_to_str.method((Request,))
 def request_to_str(request):
     return f"{request.endpoint}:request"
+
+
+@actor_to_str.method((Model,))
+def model_to_str(model):
+    return f"{type_name_to_kebab(model)}:model"

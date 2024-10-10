@@ -1,5 +1,6 @@
 from sunya import (
     add_goal,
+    add_actor,
     add_scenario,
     get_scenario,
     get_scenario_name,
@@ -7,7 +8,7 @@ from sunya import (
     the,
     G as g,
 )
-
+import tlg_regression_testing.backend.namespace as B
 
 scenario_name = f"backend/{get_scenario_name(__file__)}"
 
@@ -17,21 +18,21 @@ def start():
     selector = add_role("Selector")
     examples = add_role("Examples")
     s3_filename = add_role("S3Filename")
-    example_repository = add_role("ExampleRepository")
+    example_repository_stat = add_role("ExampleRepositoryStat")
 
     with add_scenario(scenario_name):
         with add_goal("collect input/output", examples, "for the", geomodel):
             with the(geomodel).runs_with_input():
                 with (
                     the(g.collect_regression_testing_examples_action)
-                    .calls_the(g.download_examples_action)
-                    .to_download_the_current(example_repository)
+                    .calls_the(g.download_example_repository_stat_action)
+                    .to_download_the_current(example_repository_stat)
                 ):
-                    pass
+                    example_repository_stat.actor = example_repository_stat_()
 
                 with (
                     the(g.collect_regression_testing_examples_action)
-                    .uses_the(example_repository)
+                    .uses_the(example_repository_stat)
                     .to_determine_which_selectors_need_additional_examples()
                 ):
                     pass
@@ -54,6 +55,15 @@ def start():
                             pass
 
     return get_scenario(scenario_name)
+
+
+def example_repository_stat_():
+    return add_actor(
+        B.IO.Models.ExampleRepositoryStat(
+            nr_of_stored_examples_by_selector_name={"cover_crop_last_year": 2}
+        ),
+        name="example_repository_stat",
+    )
 
 
 def run():

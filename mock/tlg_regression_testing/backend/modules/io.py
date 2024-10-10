@@ -1,19 +1,23 @@
 from default.stack.namespace import Module
-from default.backend.namespace import Action
-from sunya import EntityWithId, actor_to_str, G as g, use_spec
+from default.backend.namespace import Action, Model
+from sunya import actor_to_str, G as g, use_spec
 import sunya.spec as spec
 
 
 class IO(Module):
     @use_spec(spec.backend_model)
     class Models:
-        class S3Client(EntityWithId):
+        class S3Client(Model):
             bucket_name: str
 
-        class ExampleRepository(EntityWithId):
+        class ExampleRepository(Model):
+            geomodel_name: str
             examples: list["IO.Models.Example"] = []
 
-        class Example(EntityWithId):
+        class ExampleRepositoryStat(Model):
+            nr_of_stored_examples_by_selector_name: dict[str, int]
+
+        class Example(Model):
             selector_name: str
             hash: str
             slot_nr: int
@@ -31,15 +35,18 @@ class IO(Module):
         class DownloadExampleRepository(Action):
             pass
 
+        class DownloadExampleRepositoryStat(Action):
+            pass
+
         class UploadExample(Action):
             pass
 
 
-g.example_repository = IO.Models.ExampleRepository()
 g.s3_client = IO.Models.S3Client(bucket_name="geomodel-regression-tests")
 g.clear_examples_action = IO.Actions.ClearExamples()
 g.download_examples_action = IO.Actions.DownloadExamples()
 g.download_example_repository_action = IO.Actions.DownloadExampleRepository()
+g.download_example_repository_stat_action = IO.Actions.DownloadExampleRepositoryStat()
 g.upload_example_action = IO.Actions.UploadExample()
 
 
