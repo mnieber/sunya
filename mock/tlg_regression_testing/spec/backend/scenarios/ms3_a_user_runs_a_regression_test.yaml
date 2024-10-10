@@ -1,0 +1,33 @@
+type: scenario
+order: 2
+scenario_name: backend/ms3_a_user_runs_a_regression_test
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: create a regression [TestResult] for the [Geomodel]
+        actors_introduced:
+          - name: cover_crop_last_year-test_1+:test_result
+            deltas:
+              diff: ' (None)'
+              id: 88117a27b75e529f803314df1f3d83c7 (None)
+              input_id: test_1 (None)
+              passed: True (None)
+              selector: cover_crop_last_year (None)
+        post_actor_key_by_role_name:
+          TestResult: cover_crop_last_year-test_1+:test_result
+        child_nodes:
+          - step: The [User] initiates regression testing
+            child_nodes:
+              - step: The [download-examples:action] downloads the examples from s3
+              - step: The [run-regression-tests:action] runs tests
+              - step: The [generate-html-report:action] generates a [Test_report] for the [TestResult]
+                pre_actor_key_by_role_name:
+                  TestResult: cover_crop_last_year-test_1+:test_result
+                child_nodes:
+                  - step: The [Test_report] html contains collapsible sections with the [OutputDiff] for the failing [Examples]
+      - goal: invalidate regression test examples
+        child_nodes:
+          - step: The [User] requests to invalidate examples
+            child_nodes:
+              - step: The [clear-examples:action] clears the s3 bucket and its [ExampleRepository]
+

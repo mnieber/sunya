@@ -1,0 +1,20 @@
+type: scenario
+order: 1
+scenario_name: backend/ms2_a_user_collects_examples
+nodes:
+  - root: ''
+    child_nodes:
+      - goal: collect input/output [Examples] for the [Geomodel]
+        child_nodes:
+          - step: The [Geomodel] runs with input
+            child_nodes:
+              - step: The [collect-regression-testing-examples:action] calls the [download-examples:action] to download the current [ExampleRepository]
+              - step: The [collect-regression-testing-examples:action] uses the [ExampleRepository] to determine which selectors need additional examples
+              - step: The [collect-regression-testing-examples:action] runs each selected [Selector] to check if the input matches the selector criteria
+                pre_actor_key_by_role_name:
+                  Selector: cover_crop_last_year+:selector
+                child_nodes:
+                  - step: The [collect-regression-testing-examples:action] calls  [upload-example:action] to upload new examples to s3
+                    child_nodes:
+                      - step: The [upload-example:action] uses a dedicated [S3Filename] for the nth example to prevent writing more examples than needed
+

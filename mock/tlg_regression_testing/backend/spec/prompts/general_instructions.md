@@ -13,3 +13,23 @@ An action is a state-changing function that lives in the actions sub-directory o
 # Models
 
 A model is a dataclass that is based on the dataclassy package from pypi. All models are placed in the models.py file inside of a module package.
+
+# Testing
+
+Please use pytest when generating the test-code.
+
+# Error handling
+
+If a function encounters an error then it should raise a dedicated exception class such as "CannotOpenS3Bucket". The entry-point should catch all exceptions and print a related message on the console.
+
+# Dependencies
+
+Don't worry about them, I will manage them myself. Feel free to use whatever pypi package you find appropriate, such as difflib.
+
+# Documentation
+
+Please be minimalistic. Only add some inline comments if the reader would otherwise not be able to follow what's happening.
+
+# Versioning
+
+Don't worry about this, I will manage it myself.

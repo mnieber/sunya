@@ -21,6 +21,8 @@ config = dict(
     ],
     all_scenario_names=[
         "backend/ms1_a_user_defines_selectors",
+        "backend/ms2_a_user_collects_examples",
+        "backend/ms3_a_user_runs_a_regression_test",
     ],
     module_by_name={
         "backend/collect": B.Collect,
