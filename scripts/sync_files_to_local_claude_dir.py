@@ -74,7 +74,7 @@ def sync_files(file_map, dir_list, target_dir):
     # Remove files that are no longer needed
     for file in file_inventory:
         if os.path.isfile(file):
-            if "claude_chats" not in file:
+            if ".claudesync" not in file:
                 print("Removing file: ", file)
                 os.remove(file)
 
@@ -83,7 +83,7 @@ def sync_files(file_map, dir_list, target_dir):
         for dir in dirs:
             dir_path = os.path.join(root, dir)
             if not os.listdir(dir_path):
-                if "claude_chats" not in dir_path:
+                if ".claudesync" not in dir_path:
                     print("Removing empty directory: ", dir_path)
                     os.rmdir(dir_path)
 

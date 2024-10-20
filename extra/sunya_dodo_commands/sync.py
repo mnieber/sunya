@@ -1,5 +1,7 @@
-from argparse import ArgumentParser
 import os
+from argparse import ArgumentParser
+
+import plumbum
 from dodo_commands import Dodo
 
 
@@ -53,23 +55,11 @@ if Dodo.is_main(__name__, safe=True):
         ]
     )
 
-    if False and not args.skip_upload:
-        config_file = f"/home/maarten/.claudesync/{args.project}.json"
-        if not os.path.exists(config_file):
-            raise Exception(f"Config file {config_file} does not exist")
-
-        Dodo.run(
-            [
-                "cp",
-                config_file,
-                f"/home/maarten/.claudesync/config.json",
-            ]
-        )
-
-        Dodo.run(
-            [
-                "claudesync",
-                "project",
-                "sync",
-            ]
-        )
+    if not args.skip_upload:
+        with plumbum.local.cwd(local_dir):
+            Dodo.run(
+                [
+                    "claudesync",
+                    "push",
+                ]
+            )
