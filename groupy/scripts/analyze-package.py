@@ -3,6 +3,7 @@ import os
 from typing import Dict, List, Optional, Tuple, Union
 
 import libcst as cst
+from groupy.models import FileInfo
 
 
 class ImportCollector(cst.CSTVisitor):
@@ -137,10 +138,13 @@ def analyze_file(
                 for func in collector.functions
             ]
 
-            return {
-                "functions": functions_with_callers,
-                "constants": collector.constants,
-            }
+            # return {
+            #     "functions": functions_with_callers,
+            #     "constants": collector.constants,
+            # }
+            return FileInfo(
+                functions=functions_with_callers, constants=collector.constants
+            )
         except Exception as e:
             print(f"Error analyzing file {file_path}: {str(e)}")
             return {"functions": [], "constants": []}
