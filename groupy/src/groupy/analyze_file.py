@@ -2,7 +2,7 @@ import os
 from typing import Dict, List, Optional
 
 import libcst as cst
-from groupy.models.file_info import FileInfo
+from groupy.models import FileInfo, FunctionInfo
 
 
 def analyze_file(file_path: str, package_path: str) -> FileInfo:
@@ -23,23 +23,29 @@ def analyze_file(file_path: str, package_path: str) -> FileInfo:
             relative_path = os.path.relpath(file_path, package_path)
             module_path = os.path.splitext(relative_path)[0].replace(os.path.sep, ".")
 
-            functions_with_callers = [
-                (
-                    func,
-                    [
-                        f"{module_path}.{caller}" if "." not in caller else caller
-                        for caller in call_collector.callers.get(func, [])
-                    ],
+            function_infos = [
+                _create_function_info(
+                    ".".join([module_path, func]), call_collector.callers.get(func, [])
                 )
                 for func in collector.functions
             ]
 
             return FileInfo(
-                functions=functions_with_callers, constants=collector.constants
+                file_path=file_path,
+                function_infos=function_infos,
+                constants=collector.constants,
             )
         except Exception as e:
             print(f"Error analyzing file {file_path}: {str(e)}")
-            return FileInfo(functions=[], constants=[])
+            return FileInfo(file_path=file_path, function_infos=[], constants=[])
+
+
+def _create_function_info(function_path: str, callers):
+    caller_paths = []
+    for caller in callers:
+        caller_paths.append(caller)
+
+    return FunctionInfo(function_path=function_path, caller_paths=caller_paths)
 
 
 class ImportCollector(cst.CSTVisitor):
