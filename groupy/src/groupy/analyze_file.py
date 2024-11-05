@@ -1,9 +1,45 @@
-import json
 import os
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional
 
 import libcst as cst
-from groupy.models import FileInfo
+from groupy.models.file_info import FileInfo
+
+
+def analyze_file(file_path: str, package_path: str) -> FileInfo:
+    with open(file_path, "r") as file:
+        try:
+            code = file.read()
+            tree = cst.parse_module(code)
+
+            import_collector = ImportCollector()
+            tree.visit(import_collector)
+
+            call_collector = FunctionCallCollector(import_collector.imports)
+            tree.visit(call_collector)
+
+            collector = FunctionAndConstantCollector()
+            tree.visit(collector)
+
+            relative_path = os.path.relpath(file_path, package_path)
+            module_path = os.path.splitext(relative_path)[0].replace(os.path.sep, ".")
+
+            functions_with_callers = [
+                (
+                    func,
+                    [
+                        f"{module_path}.{caller}" if "." not in caller else caller
+                        for caller in call_collector.callers.get(func, [])
+                    ],
+                )
+                for func in collector.functions
+            ]
+
+            return FileInfo(
+                functions=functions_with_callers, constants=collector.constants
+            )
+        except Exception as e:
+            print(f"Error analyzing file {file_path}: {str(e)}")
+            return FileInfo(functions=[], constants=[])
 
 
 class ImportCollector(cst.CSTVisitor):
@@ -105,89 +141,3 @@ class FunctionAndConstantCollector(cst.CSTVisitor):
         for target in node.targets:
             if isinstance(target.target, cst.Name) and target.target.value.isupper():
                 self.constants.append(target.target.value)
-
-
-def analyze_file(
-    file_path: str, package_path: str
-) -> Dict[str, Union[List[str], List[Tuple[str, List[str]]]]]:
-    with open(file_path, "r") as file:
-        try:
-            code = file.read()
-            tree = cst.parse_module(code)
-
-            import_collector = ImportCollector()
-            tree.visit(import_collector)
-
-            call_collector = FunctionCallCollector(import_collector.imports)
-            tree.visit(call_collector)
-
-            collector = FunctionAndConstantCollector()
-            tree.visit(collector)
-
-            relative_path = os.path.relpath(file_path, package_path)
-            module_path = os.path.splitext(relative_path)[0].replace(os.path.sep, ".")
-
-            functions_with_callers = [
-                (
-                    func,
-                    [
-                        f"{module_path}.{caller}" if "." not in caller else caller
-                        for caller in call_collector.callers.get(func, [])
-                    ],
-                )
-                for func in collector.functions
-            ]
-
-            # return {
-            #     "functions": functions_with_callers,
-            #     "constants": collector.constants,
-            # }
-            return FileInfo(
-                functions=functions_with_callers, constants=collector.constants
-            )
-        except Exception as e:
-            print(f"Error analyzing file {file_path}: {str(e)}")
-            return {"functions": [], "constants": []}
-
-
-def scan_package(package_path: str) -> Dict[str, Dict[str, Union[Dict, List]]]:
-    tree_structure = {}
-
-    for root, dirs, files in os.walk(package_path):
-        if os.path.basename(root).startswith("__") or os.path.basename(root).startswith(
-            "."
-        ):
-            continue
-
-        relative_path = os.path.relpath(root, package_path)
-        current_level = tree_structure
-
-        if relative_path != ".":
-            for part in relative_path.split(os.sep):
-                if part not in current_level:
-                    current_level[part] = {}
-                current_level = current_level[part]
-
-        for file in files:
-            if file.endswith(".py"):
-                file_path = os.path.join(root, file)
-                analysis = analyze_file(file_path, package_path)
-                current_level[file] = analysis
-
-    return tree_structure
-
-
-def main(package_path: str):
-    tree_structure = scan_package(package_path)
-    print(json.dumps(tree_structure, indent=2))
-
-
-if __name__ == "__main__":
-    import sys
-
-    if len(sys.argv) != 2:
-        print("Usage: python script.py <package_path>")
-        sys.exit(1)
-
-    package_path = sys.argv[1]
-    main(package_path)
