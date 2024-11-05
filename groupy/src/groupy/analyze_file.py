@@ -11,29 +11,36 @@ def analyze_file(file_path: str, package_path: str) -> FileInfo:
             code = file.read()
             tree = cst.parse_module(code)
 
+            # Calculate module path
+            relative_path = os.path.relpath(file_path, package_path)
+            module_path = os.path.splitext(relative_path)[0].replace(os.path.sep, ".")
+
             import_collector = ImportCollector()
             tree.visit(import_collector)
 
-            call_collector = FunctionCallCollector(import_collector.imports)
+            # Collect functions first
+            function_collector = FunctionAndConstantCollector()
+            tree.visit(function_collector)
+
+            # Pass the function_collector to FunctionCallCollector
+            call_collector = FunctionCallCollector(
+                imports=import_collector.imports,
+                module_path=module_path,
+                function_collector=function_collector,
+            )
             tree.visit(call_collector)
-
-            collector = FunctionAndConstantCollector()
-            tree.visit(collector)
-
-            relative_path = os.path.relpath(file_path, package_path)
-            module_path = os.path.splitext(relative_path)[0].replace(os.path.sep, ".")
 
             function_infos = [
                 _create_function_info(
                     ".".join([module_path, func]), call_collector.callers.get(func, [])
                 )
-                for func in collector.functions
+                for func in function_collector.functions
             ]
 
             return FileInfo(
                 file_path=file_path,
                 function_infos=function_infos,
-                constants=collector.constants,
+                constants=function_collector.constants,
             )
         except Exception as e:
             print(f"Error analyzing file {file_path}: {str(e)}")
@@ -82,8 +89,15 @@ class ImportCollector(cst.CSTVisitor):
 
 
 class FunctionCallCollector(cst.CSTVisitor):
-    def __init__(self, imports: Dict[str, str]):
+    def __init__(
+        self,
+        imports: Dict[str, str],
+        module_path: str,
+        function_collector: "FunctionAndConstantCollector",
+    ):
         self.imports = imports
+        self.module_path = module_path
+        self.function_collector = function_collector
         self.callers: Dict[str, List[str]] = {}
         self.current_function: Optional[str] = None
         self.current_class: Optional[str] = None
@@ -111,6 +125,9 @@ class FunctionCallCollector(cst.CSTVisitor):
 
     def get_called_function_name(self, node: cst.CSTNode) -> Optional[str]:
         if isinstance(node, cst.Name):
+            # Check if this is a local top-level function
+            if node.value in self.function_collector.functions:
+                return f"{self.module_path}.{node.value}"
             return self.imports.get(node.value, node.value)
         elif isinstance(node, cst.Attribute):
             module = self.get_full_name(node.value)
