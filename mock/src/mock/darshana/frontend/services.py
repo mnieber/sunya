@@ -1,0 +1,30 @@
+g.actor_view = Actors.Views.ActorView()
+g.actor_route = Actors.Routes.Actor()
+g.actor_link = Actors.Components.ActorLink()
+g.field_delta_set = GenericEntity(_key=":field_delta_set")
+g.actor = Actors.Types.Actor(key="")
+
+g.create_project_button = Projects.Components.CreateProjectButton()
+g.delete_project_button = Projects.Components.DeleteProjectButton()
+g.project_lead_form_view = Projects.Views.ProjectLeadFormView()
+g.create_project_mutation = Projects.Mutations.CreateProject()
+g.delete_project_mutation = Projects.Mutations.DeleteProjects()
+g.get_project_leads_query = Projects.Queries.GetProjectLeads()
+g.get_project_query = Projects.Queries.GetProject()
+g.project_page = Projects.Views.ProjectPage()
+g.project_route = Projects.Routes.Project()
+g.projects_route = Projects.Routes.Projects()
+g.update_project_mutation = Projects.Mutations.UpdateProject()
+g.upload_spec_files_form_view = Projects.Views.ImportSpecFilesFormView()
+g.upload_spec_files_button = Projects.Components.ImportSpecFilesButton()
+g.upload_spec_files_mutation = Projects.Mutations.ImportSpecFiles()
+
+g.scenario_route = Scenarios.Routes.Scenario()
+g.scenario_list_view = Scenarios.Views.ScenarioListView()
+
+g.step_tree_view = Steps.Views.StepTreeView()
+g.step_list_view = Steps.Views.StepListView()
+g.step_tree_state = Steps.States.StepTreeState()
+g.set_highlighted_actor_action = (
+    Steps.States.StepTreeState.Containers.ActionsCtr.set_highlighted_actor
+)

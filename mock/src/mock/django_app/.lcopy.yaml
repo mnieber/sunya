@@ -1,0 +1,7 @@
+use-scenarios:
+  instructions:
+    default:
+      .:
+        - backend
+        - frontend
+        - stack

@@ -1,0 +1,5 @@
+# Instructions for writing model files
+
+When writing an model file, please follow the example in `bookie/books/models/book.py`.
+
+Model files live in the models sub-directory. An model is a class based on the `dataclass` type from the dataclassy package.
