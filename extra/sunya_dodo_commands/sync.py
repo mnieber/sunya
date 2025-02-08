@@ -1,4 +1,3 @@
-import os
 from argparse import ArgumentParser
 
 import plumbum
@@ -36,25 +35,11 @@ if Dodo.is_main(__name__, safe=True):
     args = _args()
 
     sunya_dir = f"/home/maarten/projects/sunya"
+    lcopy_config = f"scripts/lcopy.{args.project}.yaml"
+
+    Dodo.run(["lcopy", "--options", lcopy_config, "copy"])
+
     local_dir = f"{sunya_dir}/res/claude/{args.project}"
-    if not os.path.exists(local_dir):
-        raise Exception(f"Local dir {local_dir} does not exist")
-
-    copy_script = (
-        f"{sunya_dir}/src/scripts/copy_files_to_claude_{args.project}_project.py"
-    )
-    if not os.path.exists(copy_script):
-        raise Exception(f"Script {copy_script} does not exist")
-
-    Dodo.run(
-        [
-            "python",
-            copy_script,
-            local_dir,
-            "-v",
-        ]
-    )
-
     if not args.skip_upload:
         with plumbum.local.cwd(local_dir):
             Dodo.run(

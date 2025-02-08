@@ -2,12 +2,11 @@
 # Python
 #
 
-install:
-	pip install -r .requirements/dev.txt
-
 pip-compile:
-	pip-compile .requirements/base.in -o .requirements/base.txt
-	pip-compile .requirements/dev.in -o .requirements/dev.txt
+	uv pip compile --upgrade .requirements/requirements.in .requirements/requirements.editable -o .requirements/requirements.txt
+
+install:
+	pip install -e . -r .requirements/requirements.txt -r .requirements/requirements.dev.txt
 
 #
 # Stack

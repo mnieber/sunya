@@ -1,0 +1,26 @@
+generate-scenarios:
+  spec:
+    .:
+      - spec/roadmaps
+      - frontend
+      - backend
+      - stack
+      - utils
+
+use-be-scenarios:
+  spec:
+    .:
+      - spec/roadmaps
+      - frontend
+      - backend
+      - stack
+      - utils
+
+generate-be:
+  spec:
+    .:
+      - spec/roadmaps
+      - frontend
+      - backend
+      - stack
+      - utils

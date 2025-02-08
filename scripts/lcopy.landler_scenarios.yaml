@@ -1,0 +1,29 @@
+# lcopy-options.yaml - Sample options file for lcopy tool
+
+# Configuration files to use (can list multiple)
+config:
+  - ../mock/src/mock/blogs/.lcopy.yaml
+  - ../mock/src/mock/default/.lcopy.yaml
+  - ../mock/src/mock/landler/.lcopy.yaml
+
+# Destination directory for copied files
+destination: ~/projects/sunya/res/claude/landler_scenarios
+
+# Labels to include (can list multiple)
+labels:
+  - generate-scenarios
+  - use-scenarios
+  - use-be-scenarios
+  - use-fe-scenarios
+
+# Conflict resolution strategy (overwrite, skip, prompt)
+conflict: overwrite
+
+# Enable verbose output
+verbose: true
+
+# Purge files in destination that weren't copied
+purge: true
+
+# Enable dry run mode (no actual copying)
+dry_run: false
