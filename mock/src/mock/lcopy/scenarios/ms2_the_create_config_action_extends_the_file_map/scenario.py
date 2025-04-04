@@ -36,5 +36,12 @@ def start():
                     """
                     If there is no regex pattern, the target directory is processed as a simple directory.
                     """
+                    with it().may_encounter_an(r.exclude_pattern).in_the(
+                        r.target_directory
+                    ):
+                        """
+                        If a file or directory must be excluded from the destination directory, then its pattern
+                        is prefixed with an exclamation mark.
+                        """
 
             assert len(r.file_map_tree)
