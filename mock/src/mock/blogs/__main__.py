@@ -7,8 +7,8 @@ from sunya.runtime import (
 )
 import mock.blogs.backend.namespace as B
 import mock.blogs.frontend.namespace as F
-import mock.django_app.namespace as DefaultB
-import mock.react_app.namespace as DefaultF
+import kits.django_app.namespace as DefaultB
+import kits.react_app.namespace as DefaultF
 
 
 config = dict(

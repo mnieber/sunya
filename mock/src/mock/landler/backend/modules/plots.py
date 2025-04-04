@@ -3,8 +3,8 @@ import typing as T
 from mock.landler.backend.modules.organizations import Organizations
 from mock.landler.backend.modules.plot_questionnaires import PlotQuestionnaires
 from mock.landler.backend.modules.polygons import Polygons
-from mock.python_app.namespace import Form
-from mock.django_app.namespace import Action, ApiView, DjangoModule
+from kits.python_app.namespace import Form
+from kits.django_app.namespace import Action, ApiView, DjangoModule
 from sunya import NowMixin, Entity, FK
 
 

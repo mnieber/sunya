@@ -1,5 +1,5 @@
 from sunya import Entity
-from mock.django_app.namespace import DjangoModule
+from kits.django_app.namespace import DjangoModule
 
 
 class Users(DjangoModule):

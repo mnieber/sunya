@@ -1,6 +1,6 @@
 import typing as T
 from datetime import datetime
-from mock.django_app.namespace import DjangoModule
+from kits.django_app.namespace import DjangoModule
 
 if T.TYPE_CHECKING:
     pass
@@ -8,8 +8,8 @@ if T.TYPE_CHECKING:
 
 from mock.landler.backend.modules.plots import Plots
 from mock.landler.backend.modules.project_analyses import ProjectAnalyses
-from mock.python_app.namespace import Enum
-from mock.django_app.namespace import Action
+from kits.python_app.namespace import Enum
+from kits.django_app.namespace import Action
 from sunya import Entity, FK
 
 

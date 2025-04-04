@@ -1,5 +1,5 @@
 from sunya import Entity
-from mock.react_app.namespace import ReactModule
+from kits.react_app.namespace import ReactModule
 
 
 class Users(ReactModule):

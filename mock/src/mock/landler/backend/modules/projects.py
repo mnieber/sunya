@@ -4,8 +4,8 @@ if T.TYPE_CHECKING:
     from mock.landler.backend.modules.plots import Plots
 
 from mock.landler.backend.modules.organizations import Organizations
-from mock.python_app.namespace import Enum, Form
-from mock.django_app.namespace import Action, ApiView, DjangoModule
+from kits.python_app.namespace import Enum, Form
+from kits.django_app.namespace import Action, ApiView, DjangoModule
 
 from sunya import NowMixin, Entity, FK
 

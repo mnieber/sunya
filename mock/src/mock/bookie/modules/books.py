@@ -1,4 +1,4 @@
-from mock.django_app.namespace import Action
+from kits.django_app.namespace import Action
 import typing as T
 
 from sunya import RelatedSet, Entity

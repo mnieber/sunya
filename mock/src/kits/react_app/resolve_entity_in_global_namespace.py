@@ -1,5 +1,5 @@
-import mock.react_app.namespace as F
-from mock.react_app.entities import Route
+import kits.react_app.namespace as F
+from kits.react_app.entities import Route
 from unittest.mock import MagicMock
 
 

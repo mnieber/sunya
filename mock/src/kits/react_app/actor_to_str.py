@@ -1,6 +1,6 @@
 from sunya import actor_to_str
 from sunya.utils.case import type_name_to_kebab
-import mock.react_app.entities as E
+import kits.react_app.entities as E
 
 
 @actor_to_str.method((E.Frontend,))

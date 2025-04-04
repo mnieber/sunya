@@ -1,4 +1,4 @@
-from mock.react_app.namespace import Component, ReactModule
+from kits.react_app.namespace import Component, ReactModule
 from sunya import FK
 
 

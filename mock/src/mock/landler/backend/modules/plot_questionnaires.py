@@ -1,7 +1,7 @@
 import typing as T
 
-from mock.python_app.namespace import Enum, Form
-from mock.django_app.namespace import Action, DjangoModule
+from kits.python_app.namespace import Enum, Form
+from kits.django_app.namespace import Action, DjangoModule
 from sunya import Entity, FK
 
 

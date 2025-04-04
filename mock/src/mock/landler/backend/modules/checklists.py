@@ -1,4 +1,4 @@
-from mock.django_app.namespace import Action, ApiView, DjangoModule
+from kits.django_app.namespace import Action, ApiView, DjangoModule
 from mock.landler.backend.modules.users import Users
 from sunya import Entity, RelatedSet, FK
 

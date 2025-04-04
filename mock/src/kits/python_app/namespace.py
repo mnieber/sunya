@@ -1,4 +1,4 @@
-from mock.python_app.entities import (
+from kits.python_app.entities import (
     Module,
     Enum,
     JSON,

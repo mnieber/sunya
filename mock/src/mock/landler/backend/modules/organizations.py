@@ -1,5 +1,5 @@
-from mock.django_app.namespace import Action, ApiView, Rule, DjangoModule
-from mock.python_app.namespace import Enum, Form
+from kits.django_app.namespace import Action, ApiView, Rule, DjangoModule
+from kits.python_app.namespace import Enum, Form
 from mock.landler.backend.modules.users import Users
 from sunya import Entity, RelatedSet, FK
 from sunya.utils.any_dict import any_dict

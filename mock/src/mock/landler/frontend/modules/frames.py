@@ -1,4 +1,4 @@
-from mock.react_app.namespace import Route, ReactModule
+from kits.react_app.namespace import Route, ReactModule
 
 from sunya import Entity
 

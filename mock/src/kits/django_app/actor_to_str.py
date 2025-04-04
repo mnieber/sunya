@@ -1,5 +1,5 @@
 from sunya import actor_to_str
-import mock.django_app.entities as E
+import kits.django_app.entities as E
 from sunya.utils.case import type_name_to_kebab
 
 

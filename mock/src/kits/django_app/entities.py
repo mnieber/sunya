@@ -1,5 +1,5 @@
 from sunya import Entity
-from mock.python_app.namespace import Function
+from kits.python_app.namespace import Function
 from python_app.namespace import PythonModule
 
 

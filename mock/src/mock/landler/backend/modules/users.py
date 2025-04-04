@@ -1,5 +1,5 @@
-from mock.django_app.namespace import Action, ApiView, DjangoModule
-from mock.python_app.namespace import Form
+from kits.django_app.namespace import Action, ApiView, DjangoModule
+from kits.python_app.namespace import Form
 from sunya import Entity
 import typing as T
 

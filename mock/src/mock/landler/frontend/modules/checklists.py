@@ -3,7 +3,7 @@ import typing as T
 if T.TYPE_CHECKING:
     pass
 
-from mock.react_app.namespace import Facet, Mutation, Query, ReactModule
+from kits.react_app.namespace import Facet, Mutation, Query, ReactModule
 from sunya import Entity, FK, RelatedSet
 
 

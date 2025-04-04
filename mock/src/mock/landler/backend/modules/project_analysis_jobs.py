@@ -5,7 +5,7 @@ if T.TYPE_CHECKING:
     from .project_analyses import ProjectAnalyses
 
 from mock.landler.backend.modules.projects import Projects
-from mock.django_app.namespace import Action, ApiView, DjangoModule
+from kits.django_app.namespace import Action, ApiView, DjangoModule
 
 from sunya import Entity, RelatedSet, FK
 

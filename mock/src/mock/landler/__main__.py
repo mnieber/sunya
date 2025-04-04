@@ -7,8 +7,8 @@ from sunya.runtime import (
 )
 import mock.landler.backend.namespace as B
 import mock.landler.frontend.namespace as F
-import mock.django_app.namespace as DefaultB
-import mock.react_app.namespace as DefaultF
+import kits.django_app.namespace as DefaultB
+import kits.react_app.namespace as DefaultF
 
 config = dict(
     prompt_writer_path_tpl="mock.default.{layer}.prompt_writer",

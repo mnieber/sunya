@@ -1,4 +1,4 @@
-from mock.django_app.namespace import Action, DjangoModule
+from kits.django_app.namespace import Action, DjangoModule
 from sunya import Entity
 
 
