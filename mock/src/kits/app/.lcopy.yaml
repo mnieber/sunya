@@ -4,6 +4,11 @@ target:
       writing_specs:
         - prompts/writing_specs/*
 
+  generate-code:
+    instructions:
+      writing_code:
+        - prompts/writing_code/*
+
   use-scenarios:
     instructions:
       using_specs:

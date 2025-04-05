@@ -1,13 +1,13 @@
 import typing as T
 
 from sunya import Entity
-from kits.python_app.namespace import PythonModule
+from kits.python_app.namespace import PythonModule, Action
 
 
 class Configs(PythonModule):
     class Models:
         class Config(Entity):
-            # List of other lcopy configs
+            # List of other lcopy configs to include
             include: T.List[str] = []
             root_config_nodes: T.List["Configs.Models.RootConfigNode"] = []
 
@@ -30,7 +30,13 @@ class Configs(PythonModule):
             child_nodes: T.List["Configs.Models.ConfigNode"] = []
 
     class Actions:
-        pass
+        class ParseConfigFile(Action):
+            class Args:
+                config_file: str
+                # This is the list of config files that have already been processed and
+                # should be skipped. Files in this list should have an absolute path.
+                # The action should extend this list with the config files that it processes.
+                config_file_skip_list: T.List[str] = []
 
     class Rules:
         pass

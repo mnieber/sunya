@@ -36,3 +36,7 @@ class Function(Entity):
 
     def __post_init__(self):
         self.name = self.name or type_name_to_kebab(self)
+
+
+class Action(Function):
+    pass

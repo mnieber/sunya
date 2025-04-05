@@ -1,0 +1,14 @@
+target:
+  generate-code:
+    examples:
+      code:
+        bookie:
+          books:
+            .:
+              - *.py
+          chapters:
+            .:
+              - *.py
+          runtime:
+            .:
+              - *.py

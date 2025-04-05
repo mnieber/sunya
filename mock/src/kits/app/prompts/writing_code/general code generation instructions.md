@@ -15,8 +15,15 @@ The process of generating code together should be stepwise. When writing backend
 4. Next, we implement the first `action` file.
 5. We repeat this process until all code has been generated.
 
-Please always generate just one file at a time. This allows us to check each file and iterate on it before we move on.
+## Generate just one file at a time!
+
+Please always generate just one file at a time. This is very important! This allows us to check each file and iterate on it before we move on.
 In the rare cases that I would like you to generate multiple files at once, then I will explicitly ask you to do so.
+
+## Ignore broken imports
+
+If the generated file contains imports to symbols that do not yet exist, then don't worry about it, as we will generate these
+related files later.
 
 ## Use of specific code generation instructions relevant to the code unit
 
@@ -30,11 +37,13 @@ The sample code is always based on spec files that are also provided. By studyin
 
 ## Use of comments
 
-Functions, classes and files should not have a "header" comment at the top. However, inline comments in the code are welcome.
+Functions, classes and files should not have a "header" comment at the top, nor should they have a docstring.
+Inline comments in the code are welcome, but don't add comments for things that are already obvious from reading the code.
+Rather, use comments to broadly outline the steps that are taken in the function, grouping related lines of code below a comment that announces the step.
 
 ## Use of logging
 
-Please use the `logging` package for producing progress messages and error/warning messages. The print statement statement should only be used for the actual application output. Use `logger.info` when running with the verbose option, and `logger.debug` when the running with the "double verbose" option. Use `logger.debug` sparingly or not at all. Use `logger.warning` if there are warnings that the user should definitely fix (otherwise, use `logger.info`). Use `logger.error` when appropriate.
+Please use the `logging` package for producing progress messages and error/warning messages. The print statement statement should only be used for the actual application output. Use `logger.info` when running with the verbose option. We'll use `logger.debug` when the running with the "double verbose" option. I might add `logger.debug` manually myself, but don't put `logger.debug` in the generated code. Use `logger.warning` if there are warnings that the user should definitely fix (otherwise, use `logger.info`). Use `logger.error` when appropriate.
 
 ## Use of dataclassy
 
