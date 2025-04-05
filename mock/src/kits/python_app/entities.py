@@ -40,3 +40,7 @@ class Function(Entity):
 
 class Action(Function):
     pass
+
+
+class Rule(Function):
+    pass

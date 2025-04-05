@@ -7,18 +7,13 @@ def start():
     with add_scenario(scenario_name):
         with the(g.lcopy_tool).calls_the(g.process_config_action).with_a(
             r.config
-        ).to_extend_the(r.file_map_tree):
+        ).to_extend_the(r.filemap_tree):
             with (
                 it()
                 .adds_a(r.filemap_node)
                 .for_every(r.target_directory)
                 .in_the(r.root_config_node)
             ):
-                with it().skips_files_and_directories_that_are_in_the_list_of(
-                    r.ignore_patterns
-                ):
-                    pass
-
                 with it().may_encounter_a(r.regex_pattern).in_the(r.target_directory):
                     """
                     A regex pattern is recognized by the parentheses at the start and end of the pattern string.
@@ -35,12 +30,28 @@ def start():
                     """
                     If there is no regex pattern, the target directory is processed as a simple directory.
                     """
-                    with it().may_encounter_an(r.exclude_pattern).in_the(
-                        r.target_directory
+                    with (
+                        it()
+                        .determines_the(r.list_of_exclude_patterns)
+                        .in_the(r.target_directory)
+                        .of_the(r.config)
                     ):
                         """
                         If a file or directory must be excluded from the destination directory, then its pattern
                         is prefixed with an exclamation mark.
                         """
+                        assert r.list_of_exclude_patterns
 
-            assert len(r.file_map_tree)
+                    with (
+                        it()
+                        .determines_the(r.list_of_filenames)
+                        .in_the(r.target_directory)
+                        .of_the(r.config)
+                        .and_adds_them_to_the(r.filemap_node)
+                    ):
+                        """
+                        The list of filenames is found by using the filename patterns in the config node. Filenames that
+                        match one of the ignore patterns or one of the exclude patterns are ignored.
+                        """
+
+            assert len(r.filemap_tree)

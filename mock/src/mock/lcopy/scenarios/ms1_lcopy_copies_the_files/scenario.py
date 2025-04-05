@@ -34,19 +34,28 @@ def start():
 
                 with (
                     it()
-                    .recursively_calls_the(g.parse_config_file_action)
-                    .for_each(r.config_file)
-                    .in_the(r.options)
+                    .calls_the(g.resolve_includes_rule)
+                    .on_each(r.config_file)
+                    .in_the(r.options_file)
+                    .to_obtain_a(r.list_of_config_files)
                 ):
+                    assert r.list_of_config_files
+
+                with (
+                    it()
+                    .calls_the(g.parse_config_file_action)
+                    .for_each(r.config_file)
+                    .in_the(r.list_of_config_files)
+                    .to_obtain_the(r.list_of_configs)
+                ):
+                    """
+                    At this point, each config-node in a config has the same source path,
+                    which is the config file path.
+                    """
                     comment(get_example_config_file())
-                    with it().determines_the(r.root_config_nodes):
-                        assert r.list_of_root_config_nodes
+                    assert r.list_of_configs
 
-                    with it().determines_the_other(r.lcopy_config_files).to_include():
-                        comment("skip config files that have already been processed")
-                        assert r.list_of_lcopy_config_files
-
-                with it().creates_an_empty(r.file_map_tree):
+                with it().creates_an_empty(r.filemap_tree):
                     pass
 
                 with (
@@ -55,12 +64,12 @@ def start():
                     .for_each(r.root_config_node)
                     .in_the(r.list_of_root_config_nodes)
                 ):
-                    assert r.file_map_tree
+                    assert r.filemap_tree
 
                 with (
                     it()
                     .calls_the(g.copy_files_action)
-                    .with_the(r.file_map_tree)
+                    .with_the(r.filemap_tree)
                     .and_received_back_the(r.list_of_copied_files)
                 ):
                     pass

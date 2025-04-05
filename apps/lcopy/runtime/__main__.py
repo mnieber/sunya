@@ -66,7 +66,7 @@ def main():
             options.dry_run = True
 
         # Create an empty file map tree
-        file_map_tree = []
+        filemap_tree = []
 
         # Parse each config file and process the root config nodes
         config_file_skip_list = []
@@ -79,10 +79,10 @@ def main():
             # Process each root config node
             for root_config_node in config.root_config_nodes:
                 if any(label in root_config_node.label for label in options.labels):
-                    process_config(root_config_node, file_map_tree, options)
+                    process_config(root_config_node, filemap_tree, options)
 
         # Copy the files according to the file map
-        copied_files = copy_files(file_map_tree, options)
+        copied_files = copy_files(filemap_tree, options)
 
         # Purge files if required
         if options.purge:

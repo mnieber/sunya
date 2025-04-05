@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 def process_config(
     root_config_node: RootConfigNode,
-    file_map_tree: T.List[FilemapNode],
+    filemap_tree: T.List[FilemapNode],
     options: Options,
 ) -> None:
     # Get the destination directory from options
@@ -29,7 +29,7 @@ def process_config(
             child_node,
             source_base_dir,
             target_base_dir,
-            file_map_tree,
+            filemap_tree,
             options,
         )
 
@@ -38,7 +38,7 @@ def _process_config_node(
     config_node: ConfigNode,
     source_base_dir: str,
     target_base_dir: str,
-    file_map_tree: T.Union[T.List[FilemapNode], FilemapNode],
+    filemap_tree: T.Union[T.List[FilemapNode], FilemapNode],
     options: Options,
 ) -> None:
     # Check if this is a regex pattern
@@ -46,11 +46,11 @@ def _process_config_node(
         "("
     ) and config_node.dirname_pattern.endswith(")"):
         _process_regex_pattern(
-            config_node, source_base_dir, target_base_dir, file_map_tree, options
+            config_node, source_base_dir, target_base_dir, filemap_tree, options
         )
     else:
         _process_simple_target_directory(
-            config_node, source_base_dir, target_base_dir, file_map_tree, options
+            config_node, source_base_dir, target_base_dir, filemap_tree, options
         )
 
 
@@ -58,7 +58,7 @@ def _process_regex_pattern(
     config_node: ConfigNode,
     source_base_dir: str,
     target_base_dir: str,
-    file_map_tree: T.Union[T.List[FilemapNode], FilemapNode],
+    filemap_tree: T.Union[T.List[FilemapNode], FilemapNode],
     options: Options,
 ) -> None:
     pattern = config_node.dirname_pattern
@@ -105,7 +105,7 @@ def _process_regex_pattern(
             new_config_node,
             source_base_dir,
             os.path.join(target_base_dir, target_subdir),
-            file_map_tree,
+            filemap_tree,
             options,
         )
 
@@ -114,7 +114,7 @@ def _process_simple_target_directory(
     config_node: ConfigNode,
     source_base_dir: str,
     target_base_dir: str,
-    file_map_tree: T.Union[T.List[FilemapNode], FilemapNode],
+    filemap_tree: T.Union[T.List[FilemapNode], FilemapNode],
     options: Options,
 ) -> None:
     # Determine the source and target directories
@@ -135,10 +135,10 @@ def _process_simple_target_directory(
     )
 
     # Add the filemap node to the file map tree
-    if isinstance(file_map_tree, list):
-        file_map_tree.append(filemap_node)
+    if isinstance(filemap_tree, list):
+        filemap_tree.append(filemap_node)
     else:
-        file_map_tree.child_nodes.append(filemap_node)
+        filemap_tree.child_nodes.append(filemap_node)
 
     # Get all files in the source directory matching the filename patterns
     all_files = []

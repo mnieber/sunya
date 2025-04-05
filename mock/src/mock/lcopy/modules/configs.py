@@ -1,7 +1,10 @@
 import typing as T
 
 from sunya import Entity
-from kits.python_app.namespace import PythonModule, Action
+from kits.python_app.namespace import PythonModule, Action, Rule, Function
+
+if T.TYPE_CHECKING:
+    from .filemaps import Filemaps
 
 
 class Configs(PythonModule):
@@ -38,5 +41,15 @@ class Configs(PythonModule):
                 # The action should extend this list with the config files that it processes.
                 config_file_skip_list: T.List[str] = []
 
+        class ProcessConfig(Action):
+            class Args:
+                config: "Configs.Models.Config"
+                filemap_tree: "Filemaps.Models.FilemapNode"
+
     class Rules:
-        pass
+        class ResolveIncludes(Rule):
+            pass
+
+    class Utils:
+        class NormalizePath(Function):
+            pass

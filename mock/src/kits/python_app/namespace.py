@@ -7,4 +7,5 @@ from kits.python_app.entities import (
     List,
     Function,
     Action,
+    Rule,
 )  # noqa
