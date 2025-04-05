@@ -1,10 +1,16 @@
 import typing as T
 
 from sunya import Entity
+from kits.python_app.namespace import PythonModule
 
 
 class Configs(PythonModule):
-    class Types:
+    class Models:
+        class Config(Entity):
+            # List of other lcopy configs
+            include: T.List[str] = []
+            root_config_nodes: T.List["Configs.Models.RootConfigNode"] = []
+
         class RootConfigNode(Entity):
             label: str
             child_nodes: T.List["Configs.Models.ConfigNode"] = []

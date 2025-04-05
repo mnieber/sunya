@@ -1,22 +1,26 @@
 example_config = """
-use-scenarios:
-  instructions:
-    .:
-      - stack/prompts/general-explanation-of-technical-specifications.md
-      - stack/prompts/structure-of-a-*.md
-    blogs:
-      .:
-        - stack/roadmaps/roadmap.md
+include:
+  - ../app/.lcopy.yaml
 
-use-be-scenarios:
-  instructions:
-    blogs:
-      backend:
-        scenarios:
-          (backend/scenarios/[scenario_name]):
-            .:
-              - scenario.py
-              - steps.py
+target:
+  use-scenarios:
+    instructions:
+      .:
+        - stack/prompts/general-explanation-of-technical-specifications.md
+        - stack/prompts/structure-of-a-*.md
+      blogs:
+        .:
+          - stack/roadmaps/roadmap.md
+
+  use-be-scenarios:
+    instructions:
+      blogs:
+        backend:
+          scenarios:
+            (backend/scenarios/[scenario_name]):
+              .:
+                - scenario.py
+                - steps.py
 """
 
 

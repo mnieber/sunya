@@ -24,6 +24,13 @@ purge: true
 
 # Enable dry run mode (no actual copying)
 dry_run: false
+
+# Enable default ignore patterns
+default_ignore: true
+
+# Extra ignore patterns
+extra_ignore:
+  - .foo
 """
 
 

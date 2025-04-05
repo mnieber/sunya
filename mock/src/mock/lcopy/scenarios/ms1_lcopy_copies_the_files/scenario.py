@@ -34,12 +34,17 @@ def start():
 
                 with (
                     it()
-                    .calls_the(g.parse_config_file_action)
+                    .recursively_calls_the(g.parse_config_file_action)
                     .for_each(r.config_file)
                     .in_the(r.options)
                 ):
                     comment(get_example_config_file())
-                    assert r.list_of_root_config_nodes
+                    with it().determines_the(r.root_config_nodes):
+                        assert r.list_of_root_config_nodes
+
+                    with it().determines_the_other(r.lcopy_config_files).to_include():
+                        comment("skip config files that have already been processed")
+                        assert r.list_of_lcopy_config_files
 
                 with it().creates_an_empty(r.file_map_tree):
                     pass

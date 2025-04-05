@@ -1,0 +1,25 @@
+target:
+  use-scenarios:
+    instructions:
+      examples:
+        spec:
+          blogs:
+            backend:
+              scenarios:
+                (scenarios/[scenario_name]):
+                  .:
+                    - scenario.py
+              modules:
+                  .:
+                    - *.py
+
+  generate-scenarios:
+    instructions:
+      examples:
+        spec:
+          blogs:
+            backend:
+              scenarios:
+                (scenarios/[scenario_name]):
+                  .:
+                    - steps.py

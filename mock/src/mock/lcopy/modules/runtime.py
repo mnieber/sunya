@@ -1,10 +1,11 @@
 import typing as T
 
 from sunya import Entity, JSON
+from kits.python_app.entities import PythonModule
 
 
 class Runtime(PythonModule):
-    class Types:
+    class Models:
         class Options(Entity):
             configs: JSON
             destination: str
@@ -13,6 +14,11 @@ class Runtime(PythonModule):
             verbose: bool
             purge: bool
             dry_run: bool
+            default_ignore: bool
+            extra_ignore: T.List[str]
+
+            def get_ignore_patterns(self):
+                pass
 
     class Actions:
         pass

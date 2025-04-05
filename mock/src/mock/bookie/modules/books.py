@@ -17,6 +17,5 @@ class Books(PythonModule):
         class CreateBook(Action):
             class Args:
                 title: str
-                description: T.Optional[str] = None
                 num_chapters: int = 3
                 paragraphs_per_chapter: int = 5

@@ -1,7 +1,23 @@
-use-scenarios:
-  instructions:
-    default:
+include:
+  # the base app
+  - ../app/.lcopy.yaml
+  # the example spec code
+  - ../../mock/blogs/backend/.lcopy.yaml
+  # the example source code
+  - ../../../../../apps/blogs_be/.lcopy.yaml
+
+target:
+  generate-scenarios:
+    instructions:
       .:
-        - backend
-        - frontend
-        - stack
+        - prompts/writing_specs
+
+  use-scenarios:
+    instructions:
+      .:
+        - prompts/using_specs
+
+  generate-code:
+    instructions:
+      .:
+        - prompts/writing_code

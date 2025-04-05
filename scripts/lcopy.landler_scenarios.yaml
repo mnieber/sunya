@@ -3,7 +3,7 @@
 # Configuration files to use (can list multiple)
 config:
   - ../mock/src/mock/blogs/.lcopy.yaml
-  - ../mock/src/mock/default/.lcopy.yaml
+  - ../mock/src/kits/app/.lcopy.yaml
   - ../mock/src/mock/landler/.lcopy.yaml
 
 # Destination directory for copied files

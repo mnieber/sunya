@@ -1,0 +1,10 @@
+target:
+  generate-scenarios:
+    instructions:
+      writing_specs:
+        - prompts/writing_specs/*
+
+  use-scenarios:
+    instructions:
+      using_specs:
+        - prompts/using_specs/*

@@ -1,0 +1,23 @@
+include:
+  # the base app
+  - ../app/.lcopy.yaml
+  # the example spec code
+  - ../../mock/blogs/frontend/.lcopy.yaml
+  # example source code
+  - ../../../../../apps/blogs_fe/.lcopy.yaml
+
+target:
+  generate-scenarios:
+    instructions:
+      writing_specs:
+        - prompts/writing_specs/*
+
+  use-scenarios:
+    instructions:
+      using_specs:
+        - prompts/using_specs/*
+
+  generate-code:
+    instructions:
+      writing_code:
+        - prompts/writing_code/*

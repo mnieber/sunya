@@ -1,0 +1,23 @@
+target:
+  generate-code:
+    instructions:
+      examples:
+        code:
+          blogs_be:
+            app:
+              .:
+                - app/urls.py
+                - app/models.py
+            blogs:
+              .:
+                - blogs/actions
+                - blogs/admin.py
+                - blogs/enums.py
+                - blogs/models.py
+                - blogs/permissions.py
+                - blogs/rules
+                - blogs/serializers.py
+                - blogs/shortcuts.py
+                - blogs/tests
+                - blogs/urls.py
+                - blogs/views

@@ -1,5 +1,5 @@
 from kits.python_app.entities import (
-    Module,
+    PythonModule,
     Enum,
     JSON,
     Form,

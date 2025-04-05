@@ -1,10 +1,4 @@
-from sunya import (
-    the,
-    add_scenario,
-    G as g,
-    R as r,
-    it,
-)
+from sunya import the, add_scenario, G as g, R as r, it
 
 scenario_name = f"backend/ms2_the_create_config_action_extends_the_file_map"
 
@@ -20,6 +14,11 @@ def start():
                 .for_every(r.target_directory)
                 .in_the(r.root_config_node)
             ):
+                with it().skips_files_and_directories_that_are_in_the_list_of(
+                    r.ignore_patterns
+                ):
+                    pass
+
                 with it().may_encounter_a(r.regex_pattern).in_the(r.target_directory):
                     """
                     A regex pattern is recognized by the parentheses at the start and end of the pattern string.
