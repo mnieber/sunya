@@ -9,8 +9,7 @@ destination: ~/projects/sunya/res/claude/lcopy2
 # Labels to include (can list multiple)
 labels:
   - use-scenarios
-  - use-be-scenarios
-  - generate-be
+  - generate-code
 
 # Conflict resolution strategy (overwrite, skip, prompt)
 conflict: overwrite

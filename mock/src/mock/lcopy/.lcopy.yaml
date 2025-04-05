@@ -6,8 +6,8 @@ target:
           .:
             - scenario.py
       modules:
-          .:
-            - *.py
+        .:
+          - "*.py"
 
   generate-scenarios:
     spec:

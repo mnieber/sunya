@@ -13,8 +13,6 @@ destination: ~/projects/sunya/res/claude/landler_scenarios
 labels:
   - generate-scenarios
   - use-scenarios
-  - use-be-scenarios
-  - use-fe-scenarios
 
 # Conflict resolution strategy (overwrite, skip, prompt)
 conflict: overwrite

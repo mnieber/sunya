@@ -9,8 +9,8 @@ target:
                 .:
                   - scenario.py
             modules:
-                .:
-                  - *.py
+              .:
+                - "*.py"
 
   generate-scenarios:
     instructions:

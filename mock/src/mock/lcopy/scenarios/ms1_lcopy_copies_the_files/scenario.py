@@ -53,6 +53,15 @@ def start():
                     which is the config file path.
                     """
                     comment(get_example_config_file())
+                    with (
+                        it()
+                        .ignores_a(r.target_directory)
+                        .if_its(r.label)
+                        .is_not_included_in_the(r.options)
+                    ):
+                        pass
+
+                        assert r.list_of_configs
                     assert r.list_of_configs
 
                 with it().creates_an_empty(r.filemap_tree):

@@ -5,10 +5,10 @@ target:
         bookie:
           books:
             .:
-              - *.py
+              - "*.py"
           chapters:
             .:
-              - *.py
+              - "*.py"
           runtime:
             .:
-              - *.py
+              - "*.py"

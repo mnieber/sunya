@@ -4,10 +4,11 @@ include:
   # the example spec code
   - ../../mock/bookie/.lcopy.yaml
   # the example source code
-  - ../../../../../apps/bookie/.lcopy.yaml
+  - ../../../../apps/bookie/.lcopy.yaml
 
 target:
   generate-code:
     instructions:
       writing_code:
-        - prompts/writing_code/*
+        .:
+          - prompts/writing_code/*
