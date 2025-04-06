@@ -1,6 +1,6 @@
 example_options = """
 # Configuration files to use (can list multiple)
-configs:
+config_fns:
   - mock/src/mock/blogs/blogs.lcopy-config.yaml
   - mock/src/mock/landler/landler.lcopy-config.yaml
 
@@ -9,9 +9,8 @@ destination: ~/projects/sunya/res/claude/landler_be
 
 # Labels to include (can list multiple)
 labels:
-  - use-scenarios
-  - use-be-scenarios
-  - generate-be
+  - organize-dinner-party
+  - music-friends
 
 # Conflict resolution strategy (overwrite, skip, prompt)
 conflict: overwrite

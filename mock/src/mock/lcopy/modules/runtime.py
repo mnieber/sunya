@@ -1,13 +1,13 @@
 import typing as T
 
-from sunya import Entity, JSON
-from kits.python_app.entities import PythonModule
+from sunya import Entity
+from kits.python_app.entities import PythonModule, Rule
 
 
 class Runtime(PythonModule):
     class Models:
         class Options(Entity):
-            configs: JSON
+            config_fns: T.List[str]
             destination: str
             labels: T.List[str]
             conflict: str
@@ -17,11 +17,16 @@ class Runtime(PythonModule):
             default_ignore: bool
             extra_ignore: T.List[str]
 
-            def get_ignore_patterns(self):
-                pass
-
     class Actions:
         pass
 
     class Rules:
-        pass
+        # Returns the list of ignore patterns based on default_ignore
+        # and extra_ignore.
+        class GetIgnorePatterns(Rule):
+            class Args:
+                default_ignore: bool
+                extra_ignore: T.List[str]
+
+            class Returns:
+                ignore_patterns: T.List[str]

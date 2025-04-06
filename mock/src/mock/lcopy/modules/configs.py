@@ -1,38 +1,38 @@
 import typing as T
 
 from sunya import Entity
-from kits.python_app.namespace import PythonModule, Action, Rule, Function
-
-if T.TYPE_CHECKING:
-    from .filemaps import Filemaps
+from kits.python_app.namespace import PythonModule, Action, JSON, Rule
 
 
 class Configs(PythonModule):
     class Models:
         class Config(Entity):
-            # List of other lcopy configs to include
-            include: T.List[str] = []
-            root_config_nodes: T.List["Configs.Models.RootConfigNode"] = []
+            # List of filenames of other lcopy configs to include. These filenames are
+            # interpreted relative to the source_dirname.
+            include_fns: T.List[str] = []
+            # The source dirname is based on the config filename.
+            source_dirname: str
+            target_nodes: T.List["Configs.Models.TargetNode"] = []
 
-        class RootConfigNode(Entity):
-            label: str
-            child_nodes: T.List["Configs.Models.ConfigNode"] = []
+        class TargetNode(Entity):
+            # The filename_patterns for this target node are relative to the source dirname.
+            # Note that source_dirname is an absolute path.
+            source_dirname: str
 
-        class ConfigNode(Entity):
-            # The dirname_pattern indicates a subdirectory of the destination directory.
-            #
-            # However, there is a special case where the dirname is a regex pattern that
-            # is enclosed in brackets and which contains a variable part that is in square
-            # brackets such as /some/path/[var]/subdir. In that case, the dirname is
-            # interpreted as a relative path to the source directory and the variable part is
-            # replaced with a wildcard for glob matching. The match for the wildcard is then
-            # used to create the target subdirectory in the destination directory, whereas
-            # the full matching path is used as the new source directory for any child nodes.
-            dirname_pattern: str
+            # Files for this TargetNode are copied to this subdirectory.
+            target_basename: str
+
+            # The filename_patterns are relative to the source_dirname.
+            # If a filename pattern matches, then only its base name is used in the
+            # destination directory.
+            # Filename patterns that start with an exclamation mark
+            # are interpreted as patterns to exclude.
             filename_patterns: T.List[str]
-            child_nodes: T.List["Configs.Models.ConfigNode"] = []
+            child_nodes: T.List["Configs.Models.TargetNode"] = []
 
     class Actions:
+        # This action creates a Config instance from a config file.
+        # It does not yet create an FilenameNodes.
         class ParseConfigFile(Action):
             class Args:
                 config_file: str
@@ -40,16 +40,34 @@ class Configs(PythonModule):
                 # should be skipped. Files in this list should have an absolute path.
                 # The action should extend this list with the config files that it processes.
                 config_file_skip_list: T.List[str] = []
+                # If true, then include_fns will be resolved recursively.
+                recursive: bool = True
 
-        class ProcessConfig(Action):
+                class Returns:
+                    configs: T.List["Configs.Models.Config"]
+
+        # This action creates a Config instance from a config file.
+        # It does not yet create an FilenameNodes.
+        class ParseTargetNode(Action):
             class Args:
-                config: "Configs.Models.Config"
-                filemap_tree: "Filemaps.Models.FilemapNode"
+                source_dirname: str
+                target_node_json: JSON
+                # The labels of the target nodes that must be included
+                labels: str
+
+                class Returns:
+                    target_node: "Configs.Models.TargetNode"
+
+        class CreateConfig(Action):
+            pass
+
+        class CreateConfigNode(Action):
+            pass
 
     class Rules:
-        class ResolveIncludes(Rule):
-            pass
+        class GetListOfLabels(Rule):
+            class Args:
+                config_file: str
 
-    class Utils:
-        class NormalizePath(Function):
-            pass
+                class Returns:
+                    labels: T.List[str]
