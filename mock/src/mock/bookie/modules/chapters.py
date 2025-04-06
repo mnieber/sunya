@@ -1,4 +1,4 @@
-from kits.django_app.namespace import Action
+from kits.python_app.namespace import Action, PythonModule
 import typing as T
 
 from sunya import Entity
