@@ -32,7 +32,6 @@ class Configs(PythonModule):
 
     class Actions:
         # This action creates a Config instance from a config file.
-        # It does not yet create an FilenameNodes.
         class ParseConfigFile(Action):
             class Args:
                 config_file: str
@@ -46,8 +45,7 @@ class Configs(PythonModule):
                 class Returns:
                     configs: T.List["Configs.Models.Config"]
 
-        # This action creates a Config instance from a config file.
-        # It does not yet create an FilenameNodes.
+        # This action creates a TargetNode instance from a target node json in the config file.
         class ParseTargetNode(Action):
             class Args:
                 source_dirname: str

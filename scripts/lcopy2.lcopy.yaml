@@ -1,5 +1,5 @@
 # Configuration files to use (can list multiple)
-configs:
+config_fns:
   - ../mock/src/kits/python_app/.lcopy.yaml
   - ../mock/src/mock/lcopy/.lcopy.yaml
 

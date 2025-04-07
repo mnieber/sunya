@@ -1,16 +1,16 @@
-target:
+targets:
   use-scenarios:
     instructions:
       examples:
-        blogs:
-          frontend:
-            scenarios:
-              (scenarios/[scenario_name]):
-                .:
-                  - scenario.py
-            modules:
-              .:
-                - "*.py"
+        spec:
+          blogs:
+            frontend:
+              scenarios:
+                (scenarios/<scenario_name>):
+                  "*.py": true
+                  "steps.py": false
+              modules:
+                "modules/*.py": true
 
   generate-scenarios:
     instructions:
@@ -19,6 +19,5 @@ target:
           blogs:
             frontend:
               scenarios:
-                (scenarios/[scenario_name]):
-                  .:
-                    - steps.py
+                (scenarios/<scenario_name>):
+                  "steps.py": true

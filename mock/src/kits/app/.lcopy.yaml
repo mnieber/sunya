@@ -1,18 +1,15 @@
-target:
+targets:
   generate-scenarios:
     instructions:
       writing_specs:
-        .:
-          - prompts/writing_specs/*
+        "prompts/writing_specs/*": true
 
   generate-code:
     instructions:
       writing_code:
-        .:
-          - prompts/writing_code/*
+        "prompts/writing_code/*": true
 
   use-scenarios:
     instructions:
       using_specs:
-        .:
-          - prompts/using_specs/*
+        "prompts/using_specs/*": true

@@ -1,14 +1,11 @@
-target:
+targets:
   generate-code:
     examples:
       code:
         bookie:
           books:
-            .:
-              - "*.py"
+            "books": true
           chapters:
-            .:
-              - "*.py"
+            "chapters": true
           runtime:
-            .:
-              - "*.py"
+            "runtime": true

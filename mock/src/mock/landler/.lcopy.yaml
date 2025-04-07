@@ -1,15 +1,7 @@
-target:
+targets:
   use-scenarios:
     spec:
-      .:
-        - roadmaps
-        - frontend
-        - backend
-        - stack
-
-  generate-scenarios:
-    spec:
-      .:
-        - frontend
-        - backend
-        - stack
+      "roadmaps": true
+      "frontend": true
+      "backend": true
+      "stack": true

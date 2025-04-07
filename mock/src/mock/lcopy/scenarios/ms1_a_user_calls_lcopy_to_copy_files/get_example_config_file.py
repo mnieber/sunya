@@ -3,22 +3,18 @@ include_fns:
   - ../app/.lcopy.yaml
 
 targets:
-  instructions:
-    __labels__: [organize-dinner-party]
-    recipes:
-      .:
-        - recipes/soups
-        - recipes/salads/green-salad.md
-    music:
-      jazz:
-        __labels__: [music-friends]
-        .:
-          - music/jazz/*.md
-      rock:
-        (album-name):
-          __source__: music/rock/<album-name>/songs
-          .:
-            - greatest-hits-of-*.md
+  organize-dinner-party:
+    instructions:
+      recipes:
+        "recipes/soups": true
+        "recipes/salads/green-salad.md": true
+      music:
+        jazz:
+          "music/jazz/*.md": true
+        rock:
+          (music/rock/<album-name>/songs):
+            "greatest-hits-of-*.md": true
+            "greatest-hits-of-me.md": false
 """
 
 

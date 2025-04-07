@@ -1,7 +1,7 @@
 import typing as T
 
 from sunya import Entity
-from kits.python_app.entities import PythonModule, Rule
+from kits.python_app.entities import PythonModule, Rule, Action
 
 
 class Runtime(PythonModule):
@@ -18,7 +18,13 @@ class Runtime(PythonModule):
             extra_ignore: T.List[str]
 
     class Actions:
-        pass
+        # This action creates a Config instance from a config file.
+        class ParseOptionsFile(Action):
+            class Args:
+                options_file: str
+
+                class Returns:
+                    options: T.List["Runtime.Models.Options"]
 
     class Rules:
         # Returns the list of ignore patterns based on default_ignore

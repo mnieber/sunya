@@ -23,12 +23,10 @@ def start():
                 """
                 A regex pattern is recognized by the parentheses at the start and end of the target_basename string.
 
-                If a regex pattern is found, then the string inside of the parentheses is the
-                variable name for that regex pattern. In that case, the r.target_node_json must have
-                a __source__ key that contains the variable name enclosed in angle brackets.
-
-                The value of the __source__ key is joined with the source directory to create a glob pattern.
-                The variable name is a wildcard within this glob pattern.
+                If a regex pattern is found, then the string inside of the parentheses contains the glob-path
+                for finding additional source dirnames from which files must be copied. This glob-path contains
+                a wildcard (in angle brackets). The match for this wildcard is used as the target_basename
+                for the target node.
 
                 For every match M of the glob pattern, a new TargetNode is created with source path M
                 and target_basename T, where T is the string that matches the wildcard. These target

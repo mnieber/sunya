@@ -1,4 +1,4 @@
-include:
+include_fns:
   # the base app
   - ../app/.lcopy.yaml
   # the example spec code
@@ -6,9 +6,8 @@ include:
   # the example source code
   - ../../../../apps/bookie/.lcopy.yaml
 
-target:
+targets:
   generate-code:
     instructions:
       writing_code:
-        .:
-          - prompts/writing_code/*
+        "prompts/writing_code/*": true

@@ -6,18 +6,15 @@ include:
   # the example source code
   - ../../../../../apps/blogs_be/.lcopy.yaml
 
-target:
+targets:
   generate-scenarios:
     instructions:
-      .:
-        - prompts/writing_specs
+      "prompts/writing_specs": true
 
   use-scenarios:
     instructions:
-      .:
-        - prompts/using_specs
+      "prompts/using_specs": true
 
   generate-code:
     instructions:
-      .:
-        - prompts/writing_code
+      "prompts/writing_code": true
