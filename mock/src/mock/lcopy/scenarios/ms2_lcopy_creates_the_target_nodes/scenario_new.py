@@ -34,6 +34,19 @@ def start():
                 in the same way as the other simple child nodes.
                 """
 
+            with it().processes_filename_patterns_and_resolves_to_actual_files():
+                """
+                The parse_target_node action processes the filename patterns in the target_node_json
+                and resolves them to concrete file paths. This includes:
+
+                1. Expanding glob patterns (e.g. "*.md", "**/*.py") to concrete file paths
+                2. Applying exclusion patterns (patterns that have false as their associated value)
+                3. Filtering files according to any ignore patterns
+
+                The resulting target_node will have filename_patterns that contain only
+                concrete file paths that should be copied, not patterns.
+                """
+
             with (
                 it()
                 .calls_the(r.create_target_node_action)
@@ -49,12 +62,18 @@ def start():
                 if with the target_basename).
                 """
 
-            with it().handles(r.directories).recursively():
+            with it().handles_directories_recursively():
                 """
-                If the file that must be copied is a directory, then parse_target_node dynamically adds a new
-                TargetNode to the list of child nodes of the parent node. This new TargetNode
-                has '*' as the sole entries in its list of filename patterns so that all files and subdirectories
-                in the directory are copied. In this case, it uses recursion to parse the child nodes of the new TargetNode.
+                If a filename pattern resolves to a directory, the parse_target_node_action
+                dynamically creates a new target node for that directory. This new target node
+                has '*' as its filename pattern so that the entire directory will be copied.
+
+                These dynamically created target nodes are then processed recursively just like
+                any other target node, which means their contents will be resolved to concrete
+                file paths before being passed to the copy_files action.
+
+                This approach ensures that directories are handled properly and that all files
+                within them are copied to the correct destination structure.
                 """
 
             assert len(r.list_target_nodes)

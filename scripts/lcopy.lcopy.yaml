@@ -2,9 +2,10 @@
 config_fns:
   - ../mock/src/kits/python_app/.lcopy.yaml
   - ../mock/src/mock/lcopy/.lcopy.yaml
+  - ~/projects/lcopy/src/.lcopy.yaml
 
 # Destination directory for copied files
-destination: ~/projects/sunya/res/claude/lcopy2
+destination: ~/projects/sunya/res/claude/lcopy
 
 # Labels to include (can list multiple)
 labels:
