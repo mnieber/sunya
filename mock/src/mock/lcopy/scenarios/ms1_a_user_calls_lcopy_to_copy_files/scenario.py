@@ -21,7 +21,7 @@ def start():
     with add_scenario(scenario_name):
         with goal(i.copy_selected_files_to_the_(r.destination).directory()):
             with the(g.user).calls_the(g.lcopy_tool).with_the_copy_command():
-                comment("lcopy --options <options_file> copy")
+                comment("lcopy --options <options_file> copy --dry-run")
                 comment(get_example_options_file())
 
                 with it().calls_the(g.parse_options_file_action):

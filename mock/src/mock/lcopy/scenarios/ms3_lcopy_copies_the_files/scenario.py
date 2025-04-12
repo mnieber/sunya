@@ -12,30 +12,41 @@ def start():
                 .with_the(r.target_nodes)
                 .and_the(r.options)
             ):
-                with it().uses_the(r.target_node.filename_patterns).to_determine_the(
-                    r.list_of_excluded_patterns
-                ):
-                    assert r.list_of_excluded_patterns
-
-                with it().uses_the(r.target_node.filename_patterns).to_determine_the(
-                    r.list_of_filenames
-                ):
+                with it().works_with_concrete_file_paths_in_target_nodes():
                     """
-                    Every filename pattern that is not an exclude pattern is combined with the source_dirname
-                    to create a glob pattern. The glob pattern is used to find the list of filenames.
+                    The copy_files_action receives target_nodes with filename_patterns that contain
+                    only concrete file paths (not glob patterns or exclusion rules). This is because
+                    the parse_target_node_action has already processed all patterns and produced a
+                    list of specific files to be copied.
                     """
-                    assert r.list_of_filenames
+                    assert (
+                        r.target_node.filename_patterns
+                    )  # Contains concrete file paths, not patterns
 
-                with (
-                    it()
-                    .uses_the(g.get_filtered_files_rule)
-                    .to_filter_out_the_excluded_and_ignored_files()
-                ):
-                    # The r.list_of_filenames will now be smaller
-                    assert r.list_of_filenames
-
-                with it().copies(g.list_of_filenames).to_the(r.destination).directory():
+                with it().copies_each_specified_file_to_the_destination():
+                    """
+                    For each concrete file path in target_node.filename_patterns, the copy_files_action
+                    copies the file to the appropriate destination path, maintaining the appropriate
+                    directory structure.
+                    """
                     pass
+
+                with it().respects_the_dry_run_flag():
+                    """
+                    When the dry_run flag is set in the options, the copy_files_action should not
+                    actually modify any files or directories, but should output what actions would
+                    be taken as if the copy was being performed.
+                    """
+                    pass
+
+                with it().tracks_all_copied_files():
+                    """
+                    The copy_files_action keeps track of all files that were copied (or would be copied
+                    in the case of a dry run) and returns this list. This list can later be used by
+                    other actions, such as the purge_files_action, which is called separately from
+                    the main entry point rather than within the copy_files_action.
+                    """
+                    assert r.list_of_copied_files
 
     return get_scenario(scenario_name)
 

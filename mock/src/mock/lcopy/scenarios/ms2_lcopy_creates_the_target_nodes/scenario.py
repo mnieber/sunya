@@ -34,6 +34,19 @@ def start():
                 in the same way as the other simple child nodes.
                 """
 
+            with it().processes_filename_patterns_and_resolves_to_actual_files():
+                """
+                The parse_target_node action processes the filename patterns in the target_node_json
+                and resolves them to concrete file paths. This includes:
+
+                1. Expanding glob patterns (e.g. "*.md", "**/*.py") to concrete file paths
+                2. Applying exclusion patterns (patterns that have false as their associated value)
+                3. Filtering files according to any ignore patterns
+
+                The resulting target_node will have filename_patterns that contain only
+                concrete file paths that should be copied, not patterns.
+                """
+
             with (
                 it()
                 .calls_the(r.create_target_node_action)
@@ -47,6 +60,20 @@ def start():
                 When we use recursion to parse a simple target_node_json (without a regex pattern),
                 then the source_dirname is the source directory of the parent node (we don't extend
                 if with the target_basename).
+                """
+
+            with it().handles_directories_recursively():
+                """
+                If a filename pattern resolves to a directory, the parse_target_node_action
+                dynamically creates a new target node for that directory. This new target node
+                has '*' as its filename pattern so that the entire directory will be copied.
+
+                These dynamically created target nodes are then processed recursively just like
+                any other target node, which means their contents will be resolved to concrete
+                file paths before being passed to the copy_files action.
+
+                This approach ensures that directories are handled properly and that all files
+                within them are copied to the correct destination structure.
                 """
 
             assert len(r.list_target_nodes)
