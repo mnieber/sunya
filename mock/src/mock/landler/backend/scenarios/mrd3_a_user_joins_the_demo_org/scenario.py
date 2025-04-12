@@ -17,10 +17,8 @@ scenario_name = f"backend/mrd3_a_user_joins_the_demo_org"
 def start():
     with add_scenario(scenario_name):
         with goal(i.add(g.user_session.user).as_admin_to_the(r.demo_organization)):
-
             # add user to the demo organization
             with the(g.frontend).calls_the(g.add_user_to_demo_organization_api_view):
-
                 # create demo organization
                 with it().calls_the(g.create_organization_action):
                     with it().creates_the(r.demo_organization):
