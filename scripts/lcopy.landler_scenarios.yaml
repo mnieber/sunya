@@ -1,9 +1,6 @@
-# lcopy-options.yaml - Sample options file for lcopy tool
-
 # Configuration files to use (can list multiple)
 config:
-  - ../mock/src/mock/blogs/.lcopy.yaml
-  - ../mock/src/kits/app/.lcopy.yaml
+  - ../mock/src/kits/django_app/.lcopy.yaml
   - ../mock/src/mock/landler/.lcopy.yaml
 
 # Destination directory for copied files

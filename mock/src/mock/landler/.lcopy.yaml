@@ -1,7 +1,33 @@
 targets:
   use-scenarios:
     spec:
-      "roadmaps": true
-      "frontend": true
-      "backend": true
-      "stack": true
+      frontend:
+        scenarios:
+          (frontend/scenarios/<scenario_name>):
+            "*.py": true
+            "steps.py": false
+        modules:
+          "frontend/modules/*.py": true
+      backend:
+        scenarios:
+          (backend/scenarios/<scenario_name>):
+            "*.py": true
+            "steps.py": false
+        modules:
+          "backend/modules/*.py": true
+      roadmaps: true
+
+  generate-scenarios:
+    spec:
+      frontend:
+        frontend/*.py: true
+        scenarios:
+          (frontend/scenarios/<scenario_name>):
+            "steps.py": true
+      backend:
+        backend/*.py: true
+        scenarios:
+          (backend/scenarios/<scenario_name>):
+            "steps.py": true
+      stack:
+        stack/*.py: true

@@ -16,7 +16,6 @@ scenario_name = f"backend/mrd_6_a_staff_user_schedules_a_project_analysis"
 
 def start():
     with add_scenario(scenario_name):
-
         # create a project analysis job
         with goal(i.create_a(r.project_analysis_job)):
             with the(g.frontend).calls_the(g.create_project_analysis_job_api_view):

@@ -1,6 +1,6 @@
 # Configuration files to use (can list multiple)
 config_fns:
-  - ~/projects/landler/src/platform/geographic_models/models/coolfarmtool-co2/src/coolfarmtool_co2_dev/.lcopy.yaml
+  - ~/projects/landler/src/platform/geographic_models/models/coolfarmtool-co2/.lcopy.yaml
 
 # Destination directory for copied files
 destination: ~/projects/sunya/res/claude/cft
@@ -19,4 +19,6 @@ verbose: false
 purge: true
 
 # Enable dry run mode (no actual copying)
-dry_run: true
+dry_run: false
+
+extra_ignore: ["data"]

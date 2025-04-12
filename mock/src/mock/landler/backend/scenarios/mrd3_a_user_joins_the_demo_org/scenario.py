@@ -27,14 +27,17 @@ def start():
                         assert r.demo_organization.name == "demo"
 
                 # add user to organization
-                with it().calls_the(g.add_user_to_organization_action):
-                    with it().creates_the(r.demo_organization_membership).using_the(
-                        g.generate_random_display_name_rule
-                    ):
-                        comment(
-                            "Since we want the user to be anonymous within the demo org, "
-                            + "we use a random display name and corresponding email address."
-                        )
+                with (
+                    it()
+                    .calls_the(g.add_user_to_organization_action)
+                    .using_the(g.display_name)
+                    .in_the(r.form)
+                ):
+                    comment(
+                        "The user can choose their display name in the frontend. "
+                        + "We use a fake email address based on the display name."
+                    )
+                    with it().creates_the(r.demo_organization_membership):
                         assert r.demo_organization_membership.display_name
                         assert (
                             r.demo_organization_membership.member_email

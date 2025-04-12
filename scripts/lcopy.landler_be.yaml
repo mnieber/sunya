@@ -1,7 +1,8 @@
 # Configuration files to use (can list multiple)
-configs:
-  - ../mock/src/mock/blogs/.lcopy.yaml
+config_fns:
+  - ../mock/src/kits/django_app/.lcopy.yaml
   - ../mock/src/mock/landler/.lcopy.yaml
+  - ../apps/landler_be/.lcopy.yaml
 
 # Destination directory for copied files
 destination: ~/projects/sunya/res/claude/landler_be

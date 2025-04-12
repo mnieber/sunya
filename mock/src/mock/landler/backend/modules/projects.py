@@ -37,6 +37,7 @@ class Projects(DjangoModule):
             class Args:
                 project: "Projects.Models.Project"
                 plot: "Plots.Models.Plot"
+                plot_list_name: T.Optional[str] = None
 
     class Api:
         class CreateProjectApiView(ApiView):

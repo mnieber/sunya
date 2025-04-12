@@ -1,0 +1,24 @@
+targets:
+  generate-code:
+    code:
+      (checklists):
+        "actions": true
+        "*.py": true
+        (tests):
+          factories.py: true
+      (common):
+        "utils": true
+        "*.py": true
+      (organizations):
+        "actions": true
+        "views": true
+        "*.py": true
+        (tests):
+          factories.py: true
+      (users):
+        "actions": true
+        "utils": true
+        "views": true
+        "*.py": true
+        (tests):
+          factories.py: true
