@@ -26,7 +26,8 @@ config = dict(
         "backend/mrd3_a_user_joins_the_demo_org",
         "backend/mrd4_a_user_creates_a_project",
         "backend/mrd5_a_user_adds_a_plot_to_a_project",
-        "backend/mrd6_a_staff_user_schedules_a_project_analysis",
+        "backend/mrd6_domain_events_are_processed",
+        "backend/mrd7_a_staff_user_schedules_a_project_analysis",
         "frontend/ms2_a_user_interacts_with_the_checklist",
     ],
 )

@@ -24,9 +24,11 @@ def start():
                 A regex pattern is recognized by the parentheses at the start and end of the target_basename string.
 
                 If a regex pattern is found, then the string inside of the parentheses contains the glob-path
-                for finding additional source dirnames from which files must be copied. This glob-path contains
-                a wildcard (in angle brackets). The match for this wildcard is used as the target_basename
-                for the target node.
+                for finding additional source dirnames from which files must be copied.
+
+                This glob-path may contain a wildcard (in angle brackets). The match for this wildcard is used
+                as the target_basename for the target node. If there is no wildcard, then the target_basename is set to the
+                basename of the string inside the parentheses.
 
                 For every match M of the glob pattern, a new TargetNode is created with source path M
                 and target_basename T, where T is the string that matches the wildcard. These target

@@ -6,7 +6,7 @@ from sunya import Entity, RelatedSet, FK
 class Checklists(DjangoModule):
     class Models:
         class Checklist(Entity):
-            _owner: "Users.Models.User"
+            owner: "Users.Models.User"
             items: RelatedSet["Checklists.Models.ChecklistItem"] = []
 
         class ChecklistItem(Entity):

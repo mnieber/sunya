@@ -40,18 +40,24 @@ def start():
                         pass
 
         # set organization as the active organization
-        with the(r.user).uses_the(g.organization_picker).in_the(
-            g.frontend
-        ).to_switch_to_the(g.organization_route).of_the(r.organization):
+        with (
+            the(r.user)
+            .uses_the(g.organization_picker)
+            .in_the(g.frontend)
+            .to_switch_to_the(g.organization_route)
+            .of_the(r.organization)
+        ):
             with the(r.user).is_redirected_to_the(g.organization_route):
                 pass
 
             with goal(i.set(r.organization).as_the_active_organization()):
                 with the(g.frontend).calls_the(g.set_active_organization_api_view):
                     with it().calls_the(g.set_active_organization_action):
-                        with it().sets(
-                            r.organization
-                        ).as_the_active_organization_in_the(g.user_session):
+                        with (
+                            it()
+                            .sets(r.organization)
+                            .as_the_active_organization_in_the(g.user_session)
+                        ):
                             pass
 
     return get_scenario(scenario_name)

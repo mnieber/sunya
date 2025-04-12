@@ -1,5 +1,5 @@
 # Configuration files to use (can list multiple)
-config:
+config_fns:
   - ../mock/src/kits/django_app/.lcopy.yaml
   - ../mock/src/mock/landler/.lcopy.yaml
 

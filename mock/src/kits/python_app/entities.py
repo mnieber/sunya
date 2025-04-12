@@ -25,6 +25,10 @@ class JSON(Value):
     data: str = ""
 
 
+class Guid(Value):
+    data: str = ""
+
+
 class List(Entity):
     name: str
     items: list = []

@@ -7,15 +7,14 @@ from mock.landler.backend.modules.organizations import Organizations
 from kits.python_app.namespace import Enum, Form
 from kits.django_app.namespace import Action, ApiView, DjangoModule
 
-from sunya import NowMixin, Entity, FK
+from sunya import NowMixin, Entity, FK, RelatedSet
 
 
 class Projects(DjangoModule):
     class Models:
         class Project(NowMixin, Entity):
             name: str
-            # Automatically added by Django as related sets
-            memberships: T.List["Projects.Models.ProjectMembership"] = []
+            memberships: RelatedSet["Projects.Models.ProjectMembership"] = []
 
         class ProjectMembership(Entity):
             role: "Projects.Enums.OrganizationInProjectRoles"

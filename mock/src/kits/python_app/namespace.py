@@ -4,6 +4,7 @@ from kits.python_app.entities import (
     JSON,
     Form,
     Value,
+    Guid,
     List,
     Function,
     Action,

@@ -1,4 +1,4 @@
-include:
+include_fns:
   # the base app
   - ../app/.lcopy.yaml
   # the example spec code

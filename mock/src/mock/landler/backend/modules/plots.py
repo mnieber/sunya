@@ -35,7 +35,8 @@ class Plots(DjangoModule):
         class CreatePlot(Action):
             class Args:
                 create_plot_form: Form
-                polygon: Polygons.Models.Polygon
+                polygon: FK[Polygons.Models.Polygon]
+                plot_questionnaire: FK[PlotQuestionnaires.Models.PlotQuestionnaire]
 
         class ValidatePlot(Action):
             class Args:

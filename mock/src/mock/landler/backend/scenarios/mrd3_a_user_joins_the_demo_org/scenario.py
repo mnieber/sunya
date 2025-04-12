@@ -5,7 +5,6 @@ from sunya import (
     get_scenario,
     the,
     it,
-    comment,
     G as g,
     R as r,
     I as i,
@@ -20,7 +19,12 @@ def start():
             # add user to the demo organization
             with the(g.frontend).calls_the(g.add_user_to_demo_organization_api_view):
                 # create demo organization
-                with it().calls_the(g.create_organization_action):
+                with (
+                    it()
+                    .finds_the(r.demo_organization)
+                    .and_if_not_found_it()
+                    .calls_the(g.create_organization_action)
+                ):
                     with it().creates_the(r.demo_organization):
                         assert r.demo_organization.name == "demo"
 
@@ -29,12 +33,12 @@ def start():
                     it()
                     .calls_the(g.add_user_to_organization_action)
                     .using_the(g.display_name)
-                    .in_the(r.form)
+                    .found_in_the(r.form)
                 ):
-                    comment(
-                        "The user can choose their display name in the frontend. "
-                        + "We use a fake email address based on the display name."
-                    )
+                    """
+                    The user can choose their display name in the frontend.
+                    We use a fake email address based on the display name.
+                    """
                     with it().creates_the(r.demo_organization_membership):
                         assert r.demo_organization_membership.display_name
                         assert (
