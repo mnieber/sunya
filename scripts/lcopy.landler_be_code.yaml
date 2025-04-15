@@ -1,0 +1,22 @@
+# Configuration files to use (can list multiple)
+config_fns:
+  - ../apps/landler_be/.lcopy.yaml
+
+# Destination directory for copied files
+destination: ~/projects/sunya/res/claude/landler_be_code
+
+# Labels to include (can list multiple)
+labels:
+  - copy-code
+
+# Conflict resolution strategy (overwrite, skip, prompt)
+conflict: overwrite
+
+# Enable verbose output
+verbose: false
+
+# Purge files in destination that weren't copied
+purge: true
+
+# Enable dry run mode (no actual copying)
+dry_run: false

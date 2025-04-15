@@ -4,7 +4,7 @@ include_fns:
   # the example spec code
   - ../../mock/blogs/backend/.lcopy.yaml
   # the example source code
-  - ../../../../../apps/blogs_be/.lcopy.yaml
+  - ../../../../apps/blogs_be/.lcopy.yaml
 
 targets:
   generate-scenarios:

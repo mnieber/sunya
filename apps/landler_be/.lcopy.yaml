@@ -1,5 +1,5 @@
 targets:
-  generate-code:
+  copy-code:
     code:
       (checklists):
         "actions": true
@@ -15,6 +15,13 @@ targets:
         "*.py": true
         (tests):
           factories.py: true
+      (polygons):
+        "actions": true
+        "views": true
+        "*.py": true
+        (tests):
+          factories.py: true
+          actions: true
       (users):
         "actions": true
         "utils": true

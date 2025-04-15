@@ -29,6 +29,7 @@ LOCAL_APPS = [
     "checklists.apps.ChecklistsConfig",
     "kyc.apps.KYCConfig",
     "organizations.apps.OrganizationsConfig",
+    "polygons.apps.PolygonsConfig",
     "users.apps.UsersConfig",
 ]
 

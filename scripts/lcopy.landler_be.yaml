@@ -2,15 +2,16 @@
 config_fns:
   - ../mock/src/kits/django_app/.lcopy.yaml
   - ../mock/src/mock/landler/.lcopy.yaml
-  - ../apps/landler_be/.lcopy.yaml
 
 # Destination directory for copied files
 destination: ~/projects/sunya/res/claude/landler_be
 
 # Labels to include (can list multiple)
 labels:
-  - use-scenarios
+  - use-be-scenarios
+  - generate-be-code
   - generate-code
+  - use-scenarios
 
 # Conflict resolution strategy (overwrite, skip, prompt)
 conflict: overwrite

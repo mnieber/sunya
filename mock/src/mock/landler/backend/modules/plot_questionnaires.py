@@ -1,26 +1,28 @@
 import typing as T
 
-from kits.python_app.namespace import Enum, Form
+from kits.python_app.namespace import Form, JSON
 from kits.django_app.namespace import Action, DjangoModule
-from sunya import Entity, FK
+from sunya import Entity
 
 
 if T.TYPE_CHECKING:
-    from mock.landler.backend.modules.plots import Plots
+    pass
 
 
 class PlotQuestionnaires(DjangoModule):
     class Models:
         class PlotQuestionnaire(Entity):
-            land_type: "PlotQuestionnaires.Enums.LandType"
-            plot: FK["Plots.Models.Plot"]
-
-    class Enums:
-        class LandType(Enum):
-            CROPLAND = "cropland"
-            GRASSLAND = "grassland"
+            values: JSON
 
     class Actions:
         class CreatePlotQuestionnaire(Action):
             class Args:
                 create_plot_questionnaire_form: Form
+
+    class Rules:
+        class GetErrorsInPlotQuestionnaireValues:
+            class Args:
+                values: JSON
+
+            class Returns:
+                errors: JSON
