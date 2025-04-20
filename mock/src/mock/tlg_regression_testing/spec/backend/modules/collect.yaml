@@ -1,5 +1,0 @@
-type: module
-name: collect
-actions:
-  - name: CollectRegressionTestingExamples
-

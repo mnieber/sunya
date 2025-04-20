@@ -1,0 +1,19 @@
+targets:
+  use-scenarios:
+    spec:
+      roadmaps:
+        ./roadmaps/*: true
+  use-be-scenarios:
+    spec:
+      scenarios:
+        (backend/scenarios/<scenario_name>):
+          "*.py": true
+          "steps.py": false
+      modules:
+        "modules/*.py": true
+
+  generate-be-scenarios:
+    spec:
+      scenarios:
+        (backend/scenarios/<scenario_name>):
+          "steps.py": true
