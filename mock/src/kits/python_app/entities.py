@@ -25,6 +25,10 @@ class JSON(Value):
     data: str = ""
 
 
+class Schema(Value):
+    data: str = ""
+
+
 class Guid(Value):
     data: str = ""
 

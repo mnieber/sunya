@@ -9,4 +9,5 @@ from kits.python_app.entities import (
     Function,
     Action,
     Rule,
+    Schema,
 )  # noqa

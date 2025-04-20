@@ -15,7 +15,7 @@ labels:
 conflict: overwrite
 
 # Enable verbose output
-verbose: true
+verbose: false
 
 # Purge files in destination that weren't copied
 purge: true

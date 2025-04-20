@@ -9,7 +9,7 @@ destination: ~/projects/sunya/res/claude/landler_be
 # Labels to include (can list multiple)
 labels:
   - use-be-scenarios
-  - generate-be-code
+  - copy-code
   - generate-code
   - use-scenarios
 

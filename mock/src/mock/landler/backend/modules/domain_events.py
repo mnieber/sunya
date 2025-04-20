@@ -1,5 +1,5 @@
 from kits.django_app.namespace import Action, DjangoModule, Rule
-from kits.python_app.namespace import Form, Guid
+from kits.python_app.namespace import Form, Guid, Function
 from sunya import Entity
 import typing as T
 
@@ -52,3 +52,6 @@ class DomainEvents(DjangoModule):
 
             def exit(self):
                 pass
+
+        class GetDomainEventManager(Function):
+            pass

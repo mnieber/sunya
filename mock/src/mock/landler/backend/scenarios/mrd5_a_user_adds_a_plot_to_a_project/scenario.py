@@ -24,9 +24,25 @@ def start():
                 The transaction_id is later used to call back to the frontend (using a server
                 event) to inform about the status of the plot creation.
                 """
-                with it().creates_a(r.domain_event_manager).context().with_the(
-                    r.transaction_id
+                with (
+                    it()
+                    .uses_the(r.domain_event_manager_function)
+                    .to_create_a(r.domain_manager_context)
+                    .with_the(r.transaction_id)
                 ):
+                    with (
+                        the(r.domain_event_manager_function)
+                        .instantiates_the(r.domain_event_manager)
+                        .in_the_(g.thread_storage)
+                    ):
+                        """
+                        Every thread has its own instance of the domain_event_manager.
+                        We also store the reference count to this domain_event_manager instance.
+                        When there are nested calls to the domain_event_manager function, we
+                        increment the reference count. When the reference count goes to zero,
+                        we remove the domain_event_manager instance from the thread storage.
+                        """
+
                     """
                     The domain event manager stores the the transaction_id and the
                     timestamp N of the plot creation, where N stands for "now".
@@ -55,6 +71,16 @@ def start():
 
                     # create the plot questionnaire
                     with it().calls_the(r.create_plot_questionnaire_action):
+                        with (
+                            it()
+                            .calls_the(g.get_errors_in_plot_questionnaire_values_rule)
+                            .to_validate_the_values_in_the(
+                                g.create_plot_questionnaire_form
+                            )
+                            .against_the(g.plot_questionnaire_schema)
+                        ):
+                            pass
+
                         assert r.plot_questionnaire
 
                     # create the plot
@@ -66,6 +92,14 @@ def start():
                             .several_times_to_create_new(r.domain_events)
                             .that_are_added_to_the(r.domain_event_manager)
                         ):
+                            with (
+                                the(g.create_domain_event_action)
+                                .calls_the(g.get_event_manager_function)
+                                .to_get_the(r.domain_event_manager)
+                                .from_the(g.thread_storage)
+                            ):
+                                assert r.domain_event_manager
+
                             """
                             The call to the create_domain_event action includes the list of entity
                             ids of the affected entities. The domain events and associated entity ids
