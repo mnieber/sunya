@@ -2,8 +2,8 @@ targets:
   use-scenarios:
     instructions:
       examples:
-        spec:
-          bookie:
+        bookie:
+          spec:
             scenarios:
               (scenarios/<scenario_name>):
                 "*.py": true
@@ -14,8 +14,8 @@ targets:
   generate-scenarios:
     instructions:
       examples:
-        spec:
-          bookie:
+        bookie:
+          spec:
             scenarios:
               (scenarios/<scenario_name>):
                 "steps.py": true
