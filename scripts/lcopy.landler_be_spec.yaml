@@ -1,0 +1,16 @@
+sources:
+  ../mock/src/kits/django_app: django_app
+  ../mock/src/mock/landler: landler
+
+targets:
+  default:
+    include:
+      - django_app.generate-be-specs
+      - landler.generate-be-specs
+
+options:
+  destination: ~/projects/sunya/res/claude/landler_be_spec
+  conflict: overwrite
+  verbose: false
+  purge: true
+  dry_run: false

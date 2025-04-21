@@ -1,21 +1,22 @@
 targets:
   generate-code:
-    instructions:
-      examples:
-        code:
-          blogs_be:
-            app:
-              app/urls.py: true
-              app/models.py: true
-            blogs:
-              blogs/actions: true
-              blogs/admin.py: true
-              blogs/enums.py: true
-              blogs/models.py: true
-              blogs/permissions.py: true
-              blogs/rules: true
-              blogs/serializers.py: true
-              blogs/shortcuts.py: true
-              blogs/tests: true
-              blogs/urls.py: true
-              blogs/views: true
+    files:
+      instructions:
+        examples:
+          code:
+            blogs_be:
+              app:
+                app/urls.py: true
+                app/models.py: true
+              blogs:
+                blogs/actions: true
+                blogs/admin.py: true
+                blogs/enums.py: true
+                blogs/models.py: true
+                blogs/permissions.py: true
+                blogs/rules: true
+                blogs/serializers.py: true
+                blogs/shortcuts.py: true
+                blogs/tests: true
+                blogs/urls.py: true
+                blogs/views: true

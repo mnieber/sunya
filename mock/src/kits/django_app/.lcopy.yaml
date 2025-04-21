@@ -1,20 +1,23 @@
-include_fns:
-  # the base app
-  - ../app/.lcopy.yaml
-  # the example spec code
-  - ../../mock/blogs/backend/.lcopy.yaml
-  # the example source code
-  - ../../../../apps/blogs_be/.lcopy.yaml
+sources:
+  ../app: app
+  ../../mock/blogs/backend: blogs_be_spec
+  ../../../../apps/blogs_be: blogs_be_code
 
 targets:
-  generate-scenarios:
-    instructions:
-      "prompts/writing_specs": true
+  generate-be-specs:
+    include:
+      - app.generate-specs
+      - blogs_be_spec.generate-specs
+    files:
+      instructions:
+        "prompts/writing_specs": true
 
-  use-scenarios:
-    instructions:
-      "prompts/using_specs": true
-
-  generate-code:
-    instructions:
-      "prompts/writing_code": true
+  generate-be-code:
+    include:
+      - app.generate-code
+      - blogs_be_spec.generate-code
+      - blogs_be_code.generate-code
+    files:
+      instructions:
+        "prompts/using_specs": true
+        "prompts/writing_code": true
