@@ -1,15 +1,18 @@
 targets:
-  generate-scenarios:
-    instructions:
-      writing_specs:
-        "prompts/writing_specs/*": true
+  instructions-for-generating-scenarios:
+    files:
+      instructions:
+        writing_specs:
+          "prompts/writing_specs/*": true
 
-  generate-code:
-    instructions:
-      writing_code:
-        "prompts/writing_code/*": true
+  instructions-for-generating-code:
+    files:
+      instructions:
+        writing_code:
+          "prompts/writing_code/*": true
 
-  use-scenarios:
-    instructions:
-      using_specs:
-        "prompts/using_specs/*": true
+  instructions-for-using-scenarios:
+    files:
+      instructions:
+        using_specs:
+          "prompts/using_specs/*": true

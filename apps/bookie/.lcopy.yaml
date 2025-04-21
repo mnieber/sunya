@@ -1,12 +1,13 @@
 targets:
-  generate-code:
-    instructions:
-      examples:
-        bookie:
-          code:
-            books:
-              "books": true
-            chapters:
-              "chapters": true
-            runtime:
-              "runtime": true
+  copy-code:
+    files:
+      instructions:
+        examples:
+          bookie:
+            code:
+              books:
+                "books": true
+              chapters:
+                "chapters": true
+              runtime:
+                "runtime": true

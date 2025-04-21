@@ -1,21 +1,23 @@
 targets:
   use-scenarios:
-    instructions:
-      examples:
-        bookie:
-          spec:
-            scenarios:
-              (scenarios/<scenario_name>):
-                "*.py": true
-                "steps.py": false
-            modules:
-              "modules/*.py": true
+    files:
+      instructions:
+        examples:
+          bookie:
+            spec:
+              scenarios:
+                (scenarios/<scenario_name>):
+                  "*.py": true
+                  "steps.py": false
+              modules:
+                "modules/*.py": true
 
   generate-scenarios:
-    instructions:
-      examples:
-        bookie:
-          spec:
-            scenarios:
-              (scenarios/<scenario_name>):
-                "steps.py": true
+    files:
+      instructions:
+        examples:
+          bookie:
+            spec:
+              scenarios:
+                (scenarios/<scenario_name>):
+                  "steps.py": true

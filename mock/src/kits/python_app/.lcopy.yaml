@@ -1,13 +1,25 @@
-include_fns:
-  # the base app
-  - ../app/.lcopy.yaml
+sources:
+  # basic app instructions
+  ../app: app
   # the example spec code
-  - ../../mock/bookie/.lcopy.yaml
+  ../../mock/bookie: bookie_spec
   # the example source code
-  - ../../../../apps/bookie/.lcopy.yaml
+  ../../../../apps/bookie: bookie_src
 
 targets:
-  generate-code:
-    instructions:
-      writing_code:
-        "prompts/writing_code/*": true
+  instructions-for-generating-code:
+    include:
+      - app.instructions-for-generating-code
+      - bookie_src.copy-code
+    files:
+      instructions:
+        writing_code:
+          "prompts/writing_code/*": true
+  instructions-for-using-scenarios:
+    include:
+      - app.instructions-for-using-scenarios
+      - bookie_spec.use-scenarios
+  instructions-for-generating-scenarios:
+    include:
+      - app.instructions-for-generating-scenarios
+      - bookie_spec.generate-scenarios

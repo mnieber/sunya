@@ -1,15 +1,17 @@
 targets:
   use-scenarios:
-    spec:
-      scenarios:
-        (scenarios/<scenario_name>):
-          "*.py": true
-          "steps.py": false
-      modules:
-        "modules/*.py": true
+    files:
+      spec:
+        scenarios:
+          (scenarios/<scenario_name>):
+            "*.py": true
+            "steps.py": false
+        modules:
+          "modules/*.py": true
 
   generate-scenarios:
-    spec:
-      scenarios:
-        (scenarios/<scenario_name>):
-          "steps.py": true
+    files:
+      spec:
+        scenarios:
+          (scenarios/<scenario_name>):
+            "steps.py": true
