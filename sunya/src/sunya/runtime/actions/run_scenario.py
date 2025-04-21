@@ -1,4 +1,5 @@
 import importlib
+
 from sunya.scenarios.models.scenario_context import get_scenario_context
 
 
@@ -7,10 +8,10 @@ def run_scenario(scenario_pkg):
 
     if isinstance(scenario_pkg, str):
         scenario_module = importlib.import_module(f"{scenario_pkg}.scenario")
-        steps_module_path = f"{scenario_pkg}.steps"
+        steps_module_path = f"{scenario_pkg}.impl.steps"
     else:
         scenario_module = scenario_pkg
-        steps_module_path = f"{scenario_module.__package__}.steps"
+        steps_module_path = f"{scenario_module.__package__}.impl.steps"
 
     scenario_name = getattr(scenario_module, "scenario_name")
     assert scenario_name, f"scenario_name not found in {scenario_module}"

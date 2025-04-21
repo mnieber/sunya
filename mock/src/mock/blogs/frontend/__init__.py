@@ -1,1 +1,1 @@
-import mock.blogs.frontend.actor_to_str  # noqa
+import mock.blogs.frontend.impl.actor_to_str  # noqa

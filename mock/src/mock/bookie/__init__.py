@@ -1,1 +1,1 @@
-import mock.bookie.actor_to_str  # noqa
+import mock.bookie.impl.actor_to_str  # noqa

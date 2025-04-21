@@ -7,12 +7,12 @@ include:
   - ../../../../../apps/blogs_fe/.lcopy.yaml
 
 targets:
-  generate-scenarios:
+  generate-specs:
     instructions:
       writing_specs:
         "prompts/writing_specs/*": true
 
-  use-scenarios:
+  use-specs:
     instructions:
       using_specs:
         "prompts/using_specs/*": true

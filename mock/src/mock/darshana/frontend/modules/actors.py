@@ -1,13 +1,13 @@
-from mock.default.stack.namespace import Module
-from mock.default.frontend.entities import Component, Route
-from sunya import EntityWithId
-
 import typing as T
 
+from sunya import Entity
 
-class Actors(Module):
+from kits.react_app.impl.entities import Component, ReactModule, Route
+
+
+class Actors(ReactModule):
     class Types:
-        class Actor(EntityWithId):
+        class Actor(Entity):
             key: str
             fields: T.Dict[str, T.Any] = {}
             changed_fields: T.List[str] = []

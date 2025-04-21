@@ -1,5 +1,5 @@
 targets:
-  use-scenarios:
+  use-specs:
     files:
       instructions:
         examples:
@@ -12,12 +12,15 @@ targets:
               modules:
                 "modules/*.py": true
 
-  generate-scenarios:
+  generate-specs:
     files:
       instructions:
         examples:
           bookie:
             spec:
+              "*.py": true
               scenarios:
                 (scenarios/<scenario_name>):
-                  "steps.py": true
+                  "*.py": true
+              modules:
+                "modules/*.py": true

@@ -1,39 +1,47 @@
 targets:
-  use-be-scenarios:
-    spec:
-      backend:
-        scenarios:
-          (backend/scenarios/<scenario_name>):
-            "*.py": true
-            "steps.py": false
-        modules:
-          "backend/modules/*.py": true
-      # roadmaps: true
+  generate-be-code:
+    files:
+      spec:
+        backend:
+          scenarios:
+            (backend/scenarios/<scenario_name>):
+              "*.py": true
+              "steps.py": false
+          modules:
+            "backend/modules/*.py": true
+        # roadmaps: true
 
-  use-fe-scenarios:
-    spec:
-      frontend:
-        scenarios:
-          (frontend/scenarios/<scenario_name>):
-            "*.py": true
-            "steps.py": false
-        modules:
-          "frontend/modules/*.py": true
+  generate-fe-code:
+    files:
+      spec:
+        frontend:
+          scenarios:
+            (frontend/scenarios/<scenario_name>):
+              "*.py": true
+              "steps.py": false
+          modules:
+            "frontend/modules/*.py": true
 
-  generate-be-scenarios:
-    spec:
-      backend:
-        backend/*.py: true
-        scenarios:
-          (backend/scenarios/<scenario_name>):
-            "steps.py": true
-      # stack:
-      #   stack/*.py: true
+  generate-be-specs:
+    files:
+      spec:
+        backend:
+          backend/*.py: true
+          scenarios:
+            (backend/scenarios/<scenario_name>):
+              "*.py": true
+          modules:
+            "backend/modules/*.py": true
+        # stack:
+        #   stack/*.py: true
 
-  generate-fe-scenarios:
-    spec:
-      frontend:
-        frontend/*.py: true
-        scenarios:
-          (frontend/scenarios/<scenario_name>):
-            "steps.py": true
+  generate-fe-specs:
+    files:
+      spec:
+        frontend:
+          frontend/*.py: true
+          scenarios:
+            (frontend/scenarios/<scenario_name>):
+              "*.py": true
+          modules:
+            "frontend/modules/*.py": true

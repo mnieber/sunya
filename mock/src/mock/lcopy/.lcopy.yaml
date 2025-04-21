@@ -1,5 +1,5 @@
 targets:
-  use-scenarios:
+  generate-code:
     files:
       spec:
         scenarios:
@@ -9,9 +9,12 @@ targets:
         modules:
           "modules/*.py": true
 
-  generate-scenarios:
+  generate-specs:
     files:
       spec:
+        "*.py": true
         scenarios:
           (scenarios/<scenario_name>):
-            "steps.py": true
+            "*.py": true
+        modules:
+          "modules/*.py": true

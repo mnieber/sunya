@@ -1,5 +1,5 @@
 targets:
-  use-scenarios:
+  use-specs:
     instructions:
       examples:
         spec:
@@ -12,12 +12,15 @@ targets:
               modules:
                 "modules/*.py": true
 
-  generate-scenarios:
+  generate-specs:
     instructions:
       examples:
         spec:
           blogs:
             frontend:
+              "*.py": true
               scenarios:
                 (scenarios/<scenario_name>):
-                  "steps.py": true
+                  "*.py": true
+              modules:
+                "modules/*.py": true

@@ -15,11 +15,11 @@ targets:
       instructions:
         writing_code:
           "prompts/writing_code/*": true
-  instructions-for-using-scenarios:
+  instructions-for-using-specs:
     include:
-      - app.instructions-for-using-scenarios
-      - bookie_spec.use-scenarios
-  instructions-for-generating-scenarios:
+      - app.instructions-for-using-specs
+      - bookie_spec.use-specs
+  instructions-for-generating-specs:
     include:
-      - app.instructions-for-generating-scenarios
-      - bookie_spec.generate-scenarios
+      - app.instructions-for-generating-specs
+      - bookie_spec.generate-specs
