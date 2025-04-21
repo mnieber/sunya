@@ -1,7 +1,6 @@
-from kits.python_app.namespace import Action, PythonModule, Rule, Function
 import typing as T
 
-
+from kits.python_app.namespace import Action, Function, PythonModule, Rule
 
 if T.TYPE_CHECKING:
     from .configs import Configs
@@ -11,31 +10,27 @@ class Files(PythonModule):
     class Actions:
         class CopyFiles(Action):
             class Args:
-                # The filemap nodes indicate which files to copy
+                destination: str
                 target_nodes: T.List["Configs.Models.TargetNode"]
-                # The overwrite mode
-                overwrite: str
+                overwrite: str = "skip"
+                dry_run: bool = False
 
-            class Returns:
-                # The list of absolute filenames of the copied files
-                copied_files: T.List[str]
+                class Returns:
+                    copied_files: T.List[str]
 
         class PurgeFiles(Action):
             class Args:
-                # Files are purged from this directory
                 destination: str
-                # The list of absolute filenames of the files that must be kept
                 files_to_keep: T.List[str]
+                dry_run: bool = False
+
+        class CreateConcatenatedOutput(Action):
+            class Args:
+                concatenated_output_filename: str
+                destination: str
+                dry_run: bool = False
 
     class Rules:
-        # Filters the list of files.
-        # Files that match the exclude patterns are excluded,
-        # where exclude patterns are interpreted relative to
-        # the source_direname.
-        #
-        # Files that match the ignore patterns are also excluded,
-        # where ignore patterns are interpreted similar to how
-        # gitignore patterns are interpreted.
         class GetFilteredFiles(Rule):
             class Args:
                 files: T.List[str]
@@ -43,13 +38,21 @@ class Files(PythonModule):
                 ignore_patterns: T.List[str]
                 exclude_patterns: T.List[str]
 
-            class Returns:
-                filtered_files: T.List[str]
+                class Returns:
+                    filtered_files: T.List[str]
 
     class Utils:
-        # This class returns an absolute normalized path in which environment variables
-        # and the user home directory are expanded.
         class NormalizePath(Function):
             class Args:
-                base_path: str
                 rel_path: str
+                base_path: str = ""
+
+                class Returns:
+                    normalized_path: str
+
+        class ConcatenateDirectory(Function):
+            class Args:
+                dirname: str
+                output_file: str
+                exclude_dirs: T.List[str] = None
+                exclude_patterns: T.List[str] = None

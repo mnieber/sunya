@@ -1,66 +1,69 @@
 import typing as T
 
+from kits.python_app.namespace import Action, PythonModule, Rule
 from sunya import Entity
-from kits.python_app.namespace import PythonModule, Action, JSON, Rule
 
 
 class Configs(PythonModule):
     class Models:
         class Config(Entity):
-            # List of filenames of other lcopy configs to include. These filenames are
-            # interpreted relative to the source_dirname.
-            include_fns: T.List[str] = []
-            # The source dirname is based on the config filename.
             source_dirname: str
+            source_basename: str
             target_nodes: T.List["Configs.Models.TargetNode"] = []
+            sources: T.Dict[str, "Configs.Models.SourceConfig"] = {}
+            options: T.Optional["Configs.Models.Options"] = None
+
+            @property
+            def source_filename(self) -> str:
+                return f"{self.source_dirname}/{self.source_basename}"
+
+        class Options(Entity):
+            destination: str = ""
+            conflict: str = "skip"
+            verbose: bool = False
+            purge: bool = False
+            dry_run: bool = False
+            default_ignore: bool = True
+            extra_ignore: T.List[str] = []
+            labels: T.List[str] = []
+            concatenated_output_filename: T.Optional[str] = None
+
+        class SourceConfig(Entity):
+            path: str  # Absolute path to the source directory
+            alias: str  # Name used to reference this source directory
 
         class TargetNode(Entity):
-            # The filename_patterns for this target node are relative to the source dirname.
-            # Note that source_dirname is an absolute path.
             source_dirname: str
-
-            # Files for this TargetNode are copied to this subdirectory.
             target_basename: str
-
-            # The filename_patterns are relative to the source_dirname.
-            # If a filename pattern matches, then only its base name is used in the
-            # destination directory.
-            # Filename patterns that start with an exclamation mark
-            # are interpreted as patterns to exclude.
             filename_patterns: T.List[str]
             child_nodes: T.List["Configs.Models.TargetNode"] = []
+            includes: T.List[str] = []  # List of references like "source_alias.label"
 
     class Actions:
-        # This action creates a Config instance from a config file.
         class ParseConfigFile(Action):
             class Args:
                 config_file: str
-                # This is the list of config files that have already been processed and
-                # should be skipped. Files in this list should have an absolute path.
-                # The action should extend this list with the config files that it processes.
-                config_file_skip_list: T.List[str] = []
-                # If true, then include_fns will be resolved recursively.
-                recursive: bool = True
 
                 class Returns:
-                    configs: T.List["Configs.Models.Config"]
+                    config: T.Optional["Configs.Models.Config"]
 
-        # This action creates a TargetNode instance from a target node json in the config file.
         class ParseTargetNode(Action):
             class Args:
+                target_basename: str
                 source_dirname: str
-                target_node_json: JSON
-                # The labels of the target nodes that must be included
-                labels: str
+                target_node_json: dict
+                labels: T.List[str] = None
+                ignore_patterns: T.List[str] = None
 
                 class Returns:
-                    target_node: "Configs.Models.TargetNode"
+                    target_nodes: T.List["Configs.Models.TargetNode"]
 
-        class CreateConfig(Action):
-            pass
-
-        class CreateConfigNode(Action):
-            pass
+        class ParseTargetSection(Action):
+            class Args:
+                config: "Configs.Models.Config"
+                skip_list: T.List[T.Tuple[str, str]]
+                ignore_patterns: T.List[str]
+                labels: T.List[str]
 
     class Rules:
         class GetListOfLabels(Rule):
