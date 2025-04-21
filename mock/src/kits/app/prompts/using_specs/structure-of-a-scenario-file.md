@@ -44,5 +44,4 @@ When a step contains a `calls_the` clause then the argument of that clause becom
 
 ### The it() function
 
-Another magical shortcut is offered by the `it()` function. The it function can be used to reference the anchor of the parent step.
-This allows for a more concise scenario description.
+Another magical shortcut is offered by the `it()` function. The it function can be used to reference the anchor of the parent step. This allows for a more concise scenario description.
