@@ -15,7 +15,7 @@ def start():
                 .decorator()
             ):
                 """
-                They use the nr_of_example argument to control the number of examples
+                They use the nr_of_examples argument to control the number of examples
                 that is collected.
                 """
                 assert r.selector_function.actor

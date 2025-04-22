@@ -1,19 +1,13 @@
-from sunya import (
-    goal,
-    add_scenario,
-    get_scenario,
-    R as r,
-    the,
-    G as g,
-)
-
+from sunya import G as g
+from sunya import R as r
+from sunya import add_scenario, get_scenario, goal, the
 
 scenario_name = f"backend/ms3_a_user_runs_a_regression_test"
 
 
 def start():
     with add_scenario(scenario_name):
-        with goal("create a regression", r.test_result, "for the", r.geomodel):
+        with goal("create a regression", r.test_result, "for the", g.geomodel):
             with the(r.user).initiates_regression_testing():
                 with (
                     the(g.download_examples_action)

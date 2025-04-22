@@ -48,6 +48,13 @@ def start():
                     with the(g.collect_example_function).decides_whether_to_collect_a(
                         r.rtest_example
                     ):
+                        with the(g.collect_example_function).determines_whether_the(
+                            g.geomodel
+                        ).crashed():
+                            """
+                            We know the geomodel crashed if the runtime data has no output data.
+                            """
+
                         """
                         Note that if the geomodel crashed then an rtest example is always collected.
                         Otherwise, it collects the example if this example is not already stored in the

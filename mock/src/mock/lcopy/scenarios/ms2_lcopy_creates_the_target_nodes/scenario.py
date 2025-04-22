@@ -31,6 +31,8 @@ def start():
                 target nodes for the specified label.
 
                 The loaded target nodes are added to the current config's target_nodes list.
+
+                A skiplist is used to process the same combination of source alias and label twice.
                 """
 
             with (
