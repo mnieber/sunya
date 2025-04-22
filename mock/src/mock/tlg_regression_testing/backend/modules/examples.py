@@ -1,18 +1,12 @@
-from mock.default.stack.namespace import Module
 from mock.default.backend.namespace import Action, Model
-from sunya import use_spec
-import sunya.spec as spec
+from mock.default.stack.namespace import Module
 
 
-class IO(Module):
-    @use_spec(spec.backend_model)
+class Examples(Module):
     class Models:
-        class S3Client(Model):
-            bucket_name: str
-
         class ExampleRepository(Model):
             geomodel_name: str
-            examples: list["IO.Models.Example"] = []
+            examples: list["Examples.Models.Example"] = []
 
         class ExampleRepositoryStat(Model):
             nr_of_stored_examples_by_selector_name: dict[str, int]
@@ -24,7 +18,6 @@ class IO(Module):
             input_json: str
             output_json: str
 
-    @use_spec(spec.backend_action)
     class Actions:
         class ClearExamples(Action):
             pass
