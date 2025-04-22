@@ -1,13 +1,8 @@
 targets:
-  generate-specs:
+  instructions:
     files:
       instructions:
         writing_specs:
           "prompts/using_specs/*": true
           "prompts/writing_specs/*": true
-
-  generate-code:
-    files:
-      instructions:
-        writing_code:
           "prompts/writing_code/*": true

@@ -1,19 +1,18 @@
 targets:
-  use-scenarios:
-    spec:
-      roadmaps:
-        ./roadmaps/*: true
-  use-be-scenarios:
-    spec:
-      scenarios:
-        (backend/scenarios/<scenario_name>):
-          "*.py": true
-          "steps.py": false
-      modules:
-        "modules/*.py": true
-
-  generate-be-scenarios:
-    spec:
-      scenarios:
-        (backend/scenarios/<scenario_name>):
-          "steps.py": true
+  copy-spec:
+    files:
+      spec:
+        roadmaps:
+          ./roadmaps/*: true
+        (backend/scenarios):
+          "*": true
+        (backend/modules):
+          "*": true
+        (backend/impl):
+          "*": true
+  copy-code:
+    files:
+      code:
+        (/home/maarten/projects/landler/src/platform/libs/tlg_regression_testing):
+          src/tlg_regression_testing: true
+          tests: true

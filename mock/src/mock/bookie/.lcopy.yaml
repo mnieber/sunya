@@ -1,26 +1,10 @@
 targets:
-  use-specs:
+  instructions:
     files:
       instructions:
         examples:
           bookie:
             spec:
-              scenarios:
-                (scenarios/<scenario_name>):
-                  "*.py": true
-                  "steps.py": false
-              modules:
-                "modules/*.py": true
-
-  generate-specs:
-    files:
-      instructions:
-        examples:
-          bookie:
-            spec:
-              "*.py": true
-              scenarios:
-                (scenarios/<scenario_name>):
-                  "*.py": true
-              modules:
-                "modules/*.py": true
+              scenarios: true
+              modules: true
+              impl: true

@@ -4,20 +4,13 @@ sources:
   ../../../../apps/blogs_be: blogs_be_code
 
 targets:
-  generate-be-specs:
+  instructions:
     include:
-      - app.generate-specs
-      - blogs_be_spec.generate-specs
+      - app.instructions
+      - blogs_be_spec.instructions
+      - blogs_be_code.instructions
     files:
       instructions:
         "prompts/writing_specs": true
-
-  generate-be-code:
-    include:
-      - app.generate-code
-      - blogs_be_spec.generate-code
-      - blogs_be_code.generate-code
-    files:
-      instructions:
         "prompts/using_specs": true
         "prompts/writing_code": true

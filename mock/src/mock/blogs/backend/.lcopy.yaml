@@ -1,28 +1,11 @@
 targets:
-  generate-code:
+  instructions:
     files:
       instructions:
         examples:
           spec:
             blogs:
               backend:
-                scenarios:
-                  (scenarios/<scenario_name>):
-                    "*.py": true
-                    "steps.py": false
-                modules:
-                  "modules/*.py": true
-
-  generate-specs:
-    files:
-      instructions:
-        examples:
-          spec:
-            blogs:
-              backend:
-                "*.py": true
-                scenarios:
-                  (scenarios/<scenario_name>):
-                    "*.py": true
-                modules:
-                  "modules/*.py": true
+                impl: true
+                scenarios: true
+                modules: true

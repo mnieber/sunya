@@ -1,5 +1,5 @@
 targets:
-  generate-code:
+  instructions:
     files:
       instructions:
         examples:

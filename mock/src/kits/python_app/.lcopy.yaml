@@ -1,25 +1,15 @@
 sources:
-  # basic app instructions
   ../app: app
-  # the example spec code
   ../../mock/bookie: bookie_spec
-  # the example source code
-  ../../../../apps/bookie: bookie_src
+  ../../../../apps/bookie: bookie_code
 
 targets:
-  instructions-for-generating-code:
+  instructions:
     include:
-      - app.instructions-for-generating-code
-      - bookie_src.copy-code
+      - app.instructions
+      - bookie_spec.instructions
+      - bookie_code.instructions
     files:
       instructions:
         writing_code:
           "prompts/writing_code/*": true
-  instructions-for-using-specs:
-    include:
-      - app.instructions-for-using-specs
-      - bookie_spec.use-specs
-  instructions-for-generating-specs:
-    include:
-      - app.instructions-for-generating-specs
-      - bookie_spec.generate-specs

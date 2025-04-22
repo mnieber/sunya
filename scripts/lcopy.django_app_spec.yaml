@@ -1,0 +1,14 @@
+sources:
+  ../mock/src/kits/django_app: django_app
+
+targets:
+  default:
+    include:
+      - django_app.instructions
+
+options:
+  destination: ~/projects/sunya/res/claude/django_app
+  conflict: overwrite
+  verbose: false
+  purge: true
+  dry_run: false

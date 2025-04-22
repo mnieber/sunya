@@ -1,5 +1,5 @@
 targets:
-  copy-code:
+  instructions:
     files:
       instructions:
         examples:
