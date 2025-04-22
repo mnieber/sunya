@@ -14,3 +14,5 @@ options:
   verbose: false
   purge: true
   dry_run: false
+  extra_ignore:
+    - impl
