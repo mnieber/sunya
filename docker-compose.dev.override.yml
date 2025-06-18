@@ -22,11 +22,6 @@ services:
   darshana_fe:
     volumes:
       - /opt/projects/sunya/darshana_fe/fish_history:/root/.local/share/fish/fish_history
-      # Map editable packages to the container
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha
   landler_be:
     volumes:
       - $HOME/.config/pudb:/root/.config/pudb
@@ -41,11 +36,6 @@ services:
   landler_fe:
     volumes:
       - /opt/projects/sunya/landler_fe/fish_history:/root/.local/share/fish/fish_history
-      # Map editable packages to the container
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha
   blogs_be:
     volumes:
       - $HOME/.config/pudb:/root/.config/pudb
@@ -60,8 +50,3 @@ services:
   blogs_fe:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
-      # Map editable packages to the container
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha

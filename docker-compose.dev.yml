@@ -9,10 +9,6 @@ services:
     env_file:
       - ./mock/.env/dev.injected.env
     image: sunya_mock_dev
-    volumes:
-      - ./mock:/app/src
-      - ./sunya:/app/src/sunya
-      - mock_venv:/app/env
   blogs_be:
     build:
       context: ./blogs_be
@@ -27,9 +23,6 @@ services:
     image: blogs_be_dev
     ports:
       - 8002:8002
-    volumes:
-      - ./blogs_be:/app/src
-      - blogs_be_venv:/app/env
   blogs_fe:
     build:
       context: ./blogs_fe
@@ -41,8 +34,6 @@ services:
     ports:
       - 3002:3002
       - 6008:6008
-    volumes:
-      - ./blogs_fe:/app/src
   darshana_be:
     build:
       context: ./darshana_be
@@ -57,10 +48,6 @@ services:
     image: darshana_be_dev
     ports:
       - 8000:8000
-    volumes:
-      - ./darshana_be:/app/src
-      - ./mock:/app/mock
-      - darshana_be_venv:/app/env
   darshana_fe:
     build:
       context: ./darshana_fe
@@ -72,8 +59,6 @@ services:
     ports:
       - 3000:3000
       - 6006:6006
-    volumes:
-      - ./darshana_fe:/app/src
   landler_be:
     build:
       context: ./landler_be
@@ -88,9 +73,6 @@ services:
     image: sunya_landler_be_dev
     ports:
       - 8001:8001
-    volumes:
-      - ./landler_be:/app/src
-      - landler_be_venv:/app/env
   landler_fe:
     build:
       context: ./landler_fe
@@ -102,8 +84,6 @@ services:
     ports:
       - 3001:3001
       - 6007:6007
-    volumes:
-      - ./landler_fe:/app/src
   postgres:
     env_file:
       - ./postgres/.env/dev.injected.env
@@ -126,8 +106,4 @@ services:
     volumes:
       - ./preline:/app/src
 volumes:
-  blogs_be_venv: {}
-  darshana_be_venv: {}
-  landler_be_venv: {}
-  mock_venv: {}
   postgres_data: {}

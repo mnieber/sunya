@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  mock:
+    volumes:
+      - mock_venv:/app/env
+  blogs_be:
+    volumes:
+      - blogs_be_venv:/app/env
+  darshana_be:
+    volumes:
+      - darshana_be_venv:/app/env
+  landler_be:
+    volumes:
+      - landler_be_venv:/app/env
+volumes:
+  blogs_be_venv: {}
+  darshana_be_venv: {}
+  landler_be_venv: {}
+  mock_venv: {}

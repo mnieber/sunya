@@ -19,6 +19,8 @@ DOCKER_COMPOSE:
   cwd: ${/ROOT/src_dir}
   files:
     - docker-compose.dev.yml
+    - docker-compose.dev.src-overlays.yml
+    - docker-compose.dev.venv.yml
     - docker-compose.dev.override.yml
 
 MENU:
