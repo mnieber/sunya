@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   mock:
     build:
@@ -86,11 +84,9 @@ services:
       - 6007:6007
   roadplan_ui:
     build:
-      context: ./roadplan_ui
+      context: ${ROOT_DIR}/apps/roadplan_ui
       dockerfile: Dockerfile.dev
     command: sleep infinity
-    env_file:
-      - ./roadplan_ui/.env/dev.injected.env
     image: roadplan_ui_dev
     ports:
       - 3003:3003

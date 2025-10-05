@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   mock:
     volumes:
@@ -50,3 +48,6 @@ services:
   blogs_fe:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
+  roadplan_ui:
+    volumes:
+      - /opt/projects/sunya/roadplan_ui/fish_history:/root/.local/share/fish/fish_history

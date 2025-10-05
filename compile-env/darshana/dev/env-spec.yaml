@@ -1,0 +1,15 @@
+settings:
+  is_strict: True
+
+global_dependencies:
+  - react.env
+  - django.env
+  - postgres.env
+
+outputs:
+  ../../../envs/local/darshana_be/dev.injected.env:
+    targets:
+      - ../../../envs/local/darshana_be/dev.injected.env.in
+  ../../../envs/local/darshana_fe/dev.injected.env:
+    targets:
+      - ../../../envs/local/darshana_fe/dev.injected.env.in

@@ -1,5 +1,3 @@
-version: "3.7"
-
 services:
   mock:
     volumes:
@@ -32,6 +30,13 @@ services:
   landler_fe:
     volumes:
       - ./landler_fe:/app/src
+      - /home/maarten/projects/aspiration/src:/npm/aspiration
+      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
+      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
+      - /home/maarten/projects/skandha/src:/npm/skandha
+  roadplan_ui:
+    volumes:
+      - ./roadplan_ui:/app/src
       - /home/maarten/projects/aspiration/src:/npm/aspiration
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
