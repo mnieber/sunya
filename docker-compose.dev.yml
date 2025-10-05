@@ -84,6 +84,17 @@ services:
     ports:
       - 3001:3001
       - 6007:6007
+  roadplan_ui:
+    build:
+      context: ./roadplan_ui
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    env_file:
+      - ./roadplan_ui/.env/dev.injected.env
+    image: roadplan_ui_dev
+    ports:
+      - 3003:3003
+      - 6003:6003
   postgres:
     env_file:
       - ./postgres/.env/dev.injected.env
