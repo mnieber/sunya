@@ -1,8 +1,10 @@
 import { z } from 'zod';
-import { RoadmapT } from '/src/api/types/RoadmapT';
 import { EntitySchema } from '/src/api/types/EntitySchema';
+import { MilestoneSchema } from '/src/api/types/MilestoneSchema';
 
-export const RoadmapSchema: z.ZodType<RoadmapT> = z.object({
+export const RoadmapSchema = z.object({
   ...EntitySchema.shape,
   name: z.string(),
+  owner: z.string(),
+  milestones: z.array(MilestoneSchema),
 });

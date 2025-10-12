@@ -1,0 +1,10 @@
+.AuthCard {
+  a {
+    @apply text-blue-600 hover:text-blue-700 underline transition-colors;
+  }
+
+  .AuthCard__Inner {
+    @apply rounded-xl bg-white shadow-lg border border-gray-200;
+    @apply text-gray-900;
+  }
+}

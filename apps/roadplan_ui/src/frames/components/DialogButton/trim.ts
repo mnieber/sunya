@@ -22,33 +22,35 @@ export type DialogButtonTrimT = {
 
 export const DialogButtonS = {
   color: {
-    disabled: () => 'text-gray-400 hover:text-gray-400 border-gray-400',
-    blueWithDarkText: () => 'bg-blue-400 text-blue-darkest hover:bg-blue-600',
-    tealWithDarkText: () => 'bg-teal-400 text-teal-darkest hover:bg-teal-600',
-    tealWithWhiteText: () => 'bg-teal-400 text-white hover:bg-teal-300',
-    skyBlueWithWhiteText: () => 'bg-blue-400 text-white hover:bg-blue-300',
-    withSkyBlueText: () => 'text-blue-400 hover:text-blue-600',
-    withWhiteText: () => 'text-gray-900 hover:text-white',
-    withTealText: () => 'text-teal-400 hover:text-teal-600',
-    skyBlueWithDarkText: () =>
-      'bg-blue-400 text-blue-darkest hover:bg-blue-600',
-    redWithWhiteText: () => 'bg-red-400 text-white hover:bg-red-600',
-    grayBackground: () => 'bg-gray-500 hover:bg-gray-500',
+    // Modern colors (design system aligned)
+    solid: () =>
+      'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800',
+    outline: () =>
+      'bg-white text-gray-700 hover:bg-gray-50 active:bg-gray-100',
+    ghostPrimary: () =>
+      'bg-transparent text-blue-600 hover:bg-blue-50 active:bg-blue-100',
+    modernDisabled: () => 'opacity-50 cursor-not-allowed',
   },
   border: {
-    none: () => '',
+    lightGray: () => 'border border-gray-300',
+    transparent: () => 'border border-transparent',
   },
   fontSize: {
     medium: () => 'text-base',
-    big: () => 'text-lg',
   },
   padding: {
     medium: () => 'px-4 py-2',
-    big: () => 'px-6 py-4',
   },
   Icon: {
     margin: {
       medium: () => 'mr-2',
+    },
+    size: {
+      medium: () => IconS.size.s20(),
+    },
+    color: {
+      gray: () => IconS.color.gray(),
+      white: () => IconS.color.white(),
     },
   },
 };
@@ -57,21 +59,21 @@ export const DefaultDialogButtonTrim = {
   base: {
     componentName: 'Default',
     root: {
-      color: DialogButtonS.color.blueWithDarkText(),
-      border: DialogButtonS.border.none(),
+      color: DialogButtonS.color.solid(),
+      border: DialogButtonS.border.transparent(),
       fontSize: DialogButtonS.fontSize.medium(),
       padding: DialogButtonS.padding.medium(),
     },
     Icon: {
       margin: DialogButtonS.Icon.margin.medium(),
-      size: IconS.size.s20(),
-      color: IconS.color.gray(),
+      size: DialogButtonS.Icon.size.medium(),
+      color: DialogButtonS.Icon.color.gray(),
     },
   },
   danger: undefined,
   disabled: {
     root: {
-      color: DialogButtonS.color.disabled(),
+      color: DialogButtonS.color.modernDisabled(),
     },
   },
 };

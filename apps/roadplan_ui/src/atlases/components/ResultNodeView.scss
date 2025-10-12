@@ -1,0 +1,51 @@
+.ResultNodeView {
+  @apply pl-16 pr-4 py-2 select-none;
+  @apply transition-all duration-150;
+  @apply border-b border-gray-50;
+  @apply border-l-4 border-l-transparent;
+
+  &:hover {
+    @apply bg-gray-100;
+  }
+
+  &--selected {
+    @apply bg-blue-50;
+  }
+
+  &--highlighted {
+    @apply bg-blue-100 border-l-blue-600;
+  }
+
+  &--zoomed {
+    @apply bg-purple-100 border-l-purple-600 font-semibold;
+
+    .ResultNodeView__label {
+      @apply text-purple-900;
+    }
+  }
+
+  &__checkbox {
+    @apply w-4 h-4 rounded border-gray-300 text-blue-600;
+    @apply focus:ring-2 focus:ring-blue-500 focus:ring-offset-0;
+    @apply transition-colors cursor-pointer;
+
+    &:hover {
+      @apply border-blue-400;
+    }
+  }
+
+  &__label {
+    @apply text-sm text-gray-700 cursor-pointer;
+    @apply hover:text-gray-900 transition-colors;
+    @apply flex-1;
+  }
+
+  &__owner {
+    @apply text-sm text-gray-600 font-medium;
+    @apply ml-auto;
+
+    &--fallback {
+      @apply text-gray-400 font-normal;
+    }
+  }
+}

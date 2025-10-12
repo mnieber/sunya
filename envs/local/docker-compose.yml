@@ -87,13 +87,31 @@ services:
       context: ${ROOT_DIR}/apps/roadplan_ui
       dockerfile: Dockerfile.dev
     command: sleep infinity
+    depends_on:
+      - roadplan_server
+    env_file:
+      - ./env_files/roadplan_ui.env
     image: roadplan_ui_dev
     ports:
       - 3003:3003
       - 6003:6003
+  roadplan_server:
+    build:
+      context: ${ROOT_DIR}/apps/roadplan_server
+      dockerfile: Dockerfile.dev
+    command: sleep infinity
+    depends_on:
+      - postgres
+    env_file:
+      - ./env_files/roadplan_server.env
+    environment:
+      - DJANGO_SETTINGS_MODULE=app.settings.dev
+    image: roadplan_server_dev
+    ports:
+      - 8003:8003
   postgres:
     env_file:
-      - ./postgres/.env/dev.injected.env
+      - ./env_files/postgres.env
     image: postgres:14.0
     ports:
       - 5432:5432

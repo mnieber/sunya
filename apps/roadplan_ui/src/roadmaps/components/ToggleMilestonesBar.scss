@@ -1,0 +1,18 @@
+.ToggleMilestonesBar {
+  @apply flex items-center gap-2 px-4 py-3;
+  @apply bg-gray-50 border-b border-gray-200;
+  @apply cursor-pointer select-none;
+  @apply transition-colors duration-150;
+
+  &:hover {
+    @apply bg-gray-100;
+  }
+
+  &__icon {
+    @apply text-gray-500 text-xs;
+  }
+
+  &__label {
+    @apply text-sm font-medium text-gray-700;
+  }
+}

@@ -1,0 +1,25 @@
+.AtlasBriefsListView {
+  @apply h-full overflow-y-auto bg-white;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  // Custom scrollbar styling
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-50;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded;
+
+    &:hover {
+      @apply bg-gray-400;
+    }
+  }
+}

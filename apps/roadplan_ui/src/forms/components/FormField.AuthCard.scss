@@ -1,15 +1,20 @@
 .AuthCard .FormField {
   @apply rounded-lg;
-  @apply border border-blue-400;
+  @apply border border-gray-300;
   @apply bg-white;
+  @apply transition-colors;
 
   &:focus-within {
-    @apply border border-blue-700;
+    @apply border-blue-600 ring-2 ring-blue-100;
+  }
+
+  input {
+    @apply text-gray-900;
   }
 
   .FormField__Button {
     @apply px-2;
-    @apply bg-gray-100 text-teal-primary font-bold m-0.5;
-    @apply rounded-lg;
+    @apply bg-gray-100 text-blue-600 hover:text-blue-700 font-bold m-0.5;
+    @apply rounded-lg transition-colors;
   }
 }

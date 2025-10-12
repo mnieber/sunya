@@ -6,13 +6,11 @@ COMMANDS:
       run: [in: docker, cmd: make]
     '~serve':
       run: [in: docker, cmd: make, run-server]
-    '~storybook':
-      run: [in: docker, cmd: make, storybook]
     '~shell':
       run: [in: docker, cmd: fish]
 
 DOCKER:
-  container: sunya-dev-blogs_fe-1
+  container: sunya-dev-roadplan_ui-1
 
 ROOT: {}
 

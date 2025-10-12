@@ -3,70 +3,53 @@ import {
   DialogButtonS,
   type DialogButtonTrimT,
 } from '/src/frames/components/DialogButton';
-import { IconS } from '/src/frames/components/Icon';
 import { createTrim } from '/src/utils/trim';
 
-export const BlueDialogButtonTrim: DialogButtonTrimT = createTrim(
+export const ModernSolidDialogButtonTrim: DialogButtonTrimT = createTrim(
   DefaultDialogButtonTrim,
   {
     base: {
-      componentName: 'Blue-DialogButton',
+      componentName: 'ModernSolid-DialogButton',
       root: {
-        color: DialogButtonS.color.blueWithDarkText(),
+        color: DialogButtonS.color.solid(),
+        border: DialogButtonS.border.transparent(),
+        fontSize: DialogButtonS.fontSize.medium(),
+        padding: DialogButtonS.padding.medium(),
       },
       Icon: {
-        color: IconS.color.blueDarkest(),
+        margin: DialogButtonS.Icon.margin.medium(),
+        size: DialogButtonS.Icon.size.medium(),
+        color: DialogButtonS.Icon.color.white(),
       },
     },
     disabled: {
       root: {
-        color: DialogButtonS.color.disabled(),
+        color: DialogButtonS.color.modernDisabled(),
       },
     },
   }
 );
 
-export const TealDialogButtonTrim: DialogButtonTrimT = createTrim(
+export const ModernOutlineDialogButtonTrim: DialogButtonTrimT = createTrim(
   DefaultDialogButtonTrim,
   {
     base: {
-      componentName: 'Teal-DialogButton',
+      componentName: 'ModernOutline-DialogButton',
       root: {
-        color: DialogButtonS.color.tealWithDarkText(),
+        color: DialogButtonS.color.outline(),
+        border: DialogButtonS.border.lightGray(),
+        fontSize: DialogButtonS.fontSize.medium(),
+        padding: DialogButtonS.padding.medium(),
       },
       Icon: {
-        color: DialogButtonS.color.tealWithDarkText(),
+        margin: DialogButtonS.Icon.margin.medium(),
+        size: DialogButtonS.Icon.size.medium(),
+        color: DialogButtonS.Icon.color.gray(),
       },
     },
-  }
-);
-
-export const TealWithWhiteTextDialogButtonTrim: DialogButtonTrimT = createTrim(
-  DefaultDialogButtonTrim,
-  {
-    base: {
-      componentName: 'TealWithWhiteText-DialogButton',
+    disabled: {
       root: {
-        color: DialogButtonS.color.tealWithWhiteText(),
-      },
-      Icon: {
-        color: DialogButtonS.color.tealWithWhiteText(),
-      },
-    },
-  }
-);
-
-export const SkyBlueWithBorderDialogButtonTrim: DialogButtonTrimT = createTrim(
-  DefaultDialogButtonTrim,
-  {
-    base: {
-      componentName: 'SkyBlueWithBorder-DialogButton',
-      root: {
-        border: 'border-2 border-blue-primary',
-        color: DialogButtonS.color.withSkyBlueText(),
-      },
-      Icon: {
-        color: IconS.color.bluePrimary(),
+        color: DialogButtonS.color.modernDisabled(),
       },
     },
   }

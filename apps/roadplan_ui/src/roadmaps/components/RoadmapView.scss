@@ -1,0 +1,20 @@
+.RoadmapView {
+  @apply bg-white h-full flex flex-col;
+
+  &__header {
+    @apply px-8 py-6 border-b border-gray-200 bg-gradient-to-r from-blue-50 to-indigo-50;
+  }
+
+  &__title {
+    @apply text-2xl font-bold text-gray-900;
+    letter-spacing: -0.01em;
+  }
+
+  &__content {
+    @apply flex-1 overflow-y-auto;
+  }
+
+  &__empty {
+    @apply flex items-center justify-center h-full text-gray-500 text-sm;
+  }
+}

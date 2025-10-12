@@ -1,0 +1,20 @@
+.AtlasHeader {
+  @apply flex items-center gap-4;
+
+  &__title {
+    @apply text-xl font-bold text-gray-900;
+    letter-spacing: -0.01em;
+  }
+
+  &__meta {
+    @apply flex items-center gap-3;
+  }
+
+  &__date {
+    @apply text-sm text-gray-600;
+  }
+
+  &__sync-badge {
+    @apply text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-md;
+  }
+}

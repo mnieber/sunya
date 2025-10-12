@@ -1,27 +1,28 @@
 COMMANDS:
   list:
-    '~build':
+    "~build":
       run: [cmd: dodo, root.docker-compose, build]
-    '~down':
+    "~down":
       run: [cmd: dodo, root.docker-compose, down]
-    '~down-volumes':
+    "~down-volumes":
       run: [cmd: dodo, root.docker-compose, down, ++volumes]
-    '~mk':
+    "~mk":
       run: [cmd: dodo, root.make]
       cwd: ${/SERVER/src_dir}
-    '~mt':
+    "~mt":
       run: [cmd: dodo, root.menu, --tmux]
-    '~up':
-      run: [cmd: dodo, root.docker-compose, up, ++detach]
+    "~up":
+      run: [cmd: dodo, root.docker-compose, up, roadplan_ui, ++detach]
 
 DOCKER_COMPOSE:
   compose_project_name: sunya-dev
-  cwd: ${/ROOT/src_dir}
+  root_dir: ${/ROOT/src_dir}
+  cwd: ${/ROOT/src_dir}/envs/local
   files:
-    - docker-compose.dev.yml
-    - docker-compose.dev.src-overlays.yml
-    - docker-compose.dev.venv.yml
-    - docker-compose.dev.override.yml
+    - docker-compose.yml
+    - docker-compose.src-overlays.yml
+    - docker-compose.venv.yml
+    - docker-compose.override.yml
 
 MENU:
   session_id: sunya
@@ -38,6 +39,9 @@ MENU:
       - dodo blogs_be.serve
       - dodo blogs_fe.serve
       - dodo blogs_fe.storybook
+    serve_roadplan:
+      - dodo roadplan_server.serve
+      - dodo roadplan_ui.serve
 
 ROOT:
   aliases: {}

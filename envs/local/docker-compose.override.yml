@@ -51,3 +51,14 @@ services:
   roadplan_ui:
     volumes:
       - /opt/projects/sunya/roadplan_ui/fish_history:/root/.local/share/fish/fish_history
+  roadplan_server:
+    volumes:
+      - $HOME/.config/pudb:/root/.config/pudb
+      - /opt/projects/sunya/roadplan_server/assets:/app/assets
+      - /opt/projects/sunya/roadplan_server/dumps:/app/dumps
+      - /opt/projects/sunya/roadplan_server/fish_history:/root/.local/share/fish/fish_history
+      - /opt/projects/sunya/roadplan_server/ipython:/root/.ipython
+      - /opt/projects/sunya/roadplan_server/log:/app/log
+      - /opt/projects/sunya/roadplan_server/media:/app/media
+      - /opt/projects/sunya/roadplan_server/pytest_report.html:/app/pytest_report.html
+      - /opt/projects/sunya/roadplan_server/static:/app/static

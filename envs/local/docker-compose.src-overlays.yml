@@ -36,8 +36,12 @@ services:
       - /home/maarten/projects/skandha/src:/npm/skandha
   roadplan_ui:
     volumes:
-      - ./roadplan_ui:/app/src
+      - ${ROOT_DIR}/apps/roadplan_ui:/app/src
       - /home/maarten/projects/aspiration/src:/npm/aspiration
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
       - /home/maarten/projects/skandha/src:/npm/skandha
+  roadplan_server:
+    volumes:
+      - ${ROOT_DIR}/apps/roadplan_server:/app/src
+      - /home/maarten/projects/roadplan/src/roadplan:/app/libs/roadplan

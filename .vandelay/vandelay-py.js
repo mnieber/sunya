@@ -4,7 +4,7 @@
  * https://github.com/ericbiewener/vscode-vandelay#configuration
  */
 
-const baseDir = "/home/maarten/projects/sunya/src/sunya/src";
+const baseDir = "/home/maarten/projects/sunya/src/apps/roadplan_server";
 
 module.exports = {
   // This is the only required property. At least one path must be included.

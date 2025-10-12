@@ -1,38 +1,40 @@
+import { NodesStateProvider } from '/src/treeview/components/NodesStateProvider';
 import { QueryClientProvider } from '@tanstack/react-query';
 import * as R from 'ramda';
 import { queryClient } from '/src/api/queryClient';
-import { flags } from '/src/app/flags';
 import { AuthStateProvider } from '/src/auth/components/AuthStateProvider';
 import { AuthSwitch } from '/src/auth/components/AuthSwitch';
-import { BlogPostsStateProvider } from '/src/blogPosts/components/BlogPostsStateProvider';
-import { BlogsStateProvider } from '/src/blogs/components/BlogsStateProvider';
-import { BlogsSwitch } from '/src/blogs/components/BlogsSwitch';
+import { AtlasStateProvider } from '/src/atlases/components/AtlasStateProvider';
+import { AtlasBriefsStateProvider } from '/src/atlases/components/AtlasBriefsStateProvider';
+import { MainSwitch } from '/src/frames/components/MainSwitch';
 import { DashboardFrame } from '/src/frames/components/DashboardFrame';
 import { MainView } from '/src/frames/components/MainView';
 import { L } from '/src/frames/layout';
-import { MockApp } from '/src/mocks/app/components/MockApp';
 import { NavStateProvider } from '/src/routes/components/NavStateProvider';
 import { cn } from '/src/utils/classnames';
+import { AppStateProvider } from '/src/app/components/AppStateProvider';
 
 export const App = () => {
-  return flags.mockApp ? (
-    <AppBody>
-      <MockApp />
-    </AppBody>
-  ) : (
+  return (
     <QueryClientProvider client={queryClient}>
       <AuthStateProvider>
         <NavStateProvider>
-          <AppBody>
-            <DashboardFrame>
-              <AuthSwitch />
-              <RoadmapsStateProvider >
-                <MainView className="">
-                  <BlogsSwitch />
-                </MainView>
-              </RoadmapsStateProvider>
-            </DashboardFrame>
-          </AppBody>
+          <AppStateProvider>
+            <AppBody>
+              <DashboardFrame>
+                <AuthSwitch />
+                <AtlasBriefsStateProvider>
+                  <AtlasStateProvider>
+                    <NodesStateProvider>
+                      <MainView className="">
+                        <MainSwitch />
+                      </MainView>
+                    </NodesStateProvider>
+                  </AtlasStateProvider>
+                </AtlasBriefsStateProvider>
+              </DashboardFrame>
+            </AppBody>
+          </AppStateProvider>
         </NavStateProvider>
       </AuthStateProvider>
     </QueryClientProvider>
@@ -47,8 +49,7 @@ const AppBody = (props: React.PropsWithChildren<{}>) => {
         R.values({
           root: L.col.banner(),
           // 320px = breakpoints.xs
-          size: `min-width-[320px] h-screen max-w-[1600px]`,
-          pos: `mx-auto`,
+          size: `min-width-[320px] h-screen w-full`,
           scroll: 'overflow-x-hidden',
         }),
       ])}

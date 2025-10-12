@@ -1,0 +1,43 @@
+.AtlasBriefsListViewItem {
+  @apply px-6 py-4 cursor-pointer select-none;
+  @apply border-b border-gray-100;
+  @apply transition-all duration-150;
+  @apply text-gray-700;
+
+  &:hover {
+    @apply bg-gray-50;
+  }
+
+  &--selected {
+    @apply bg-blue-50 border-l-4 border-l-blue-500;
+  }
+
+  &--highlighted {
+    @apply bg-blue-100 border-l-4 border-l-blue-600;
+  }
+
+  &__date {
+    @apply text-sm font-medium text-gray-900;
+  }
+
+  &__age {
+    @apply text-sm text-gray-500;
+  }
+
+  &__icon {
+    @apply text-green-600;
+  }
+}
+
+.animate-delete {
+  animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
