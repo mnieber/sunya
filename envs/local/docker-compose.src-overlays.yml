@@ -44,4 +44,6 @@ services:
   roadplan_server:
     volumes:
       - ${ROOT_DIR}/apps/roadplan_server:/app/src
-      - /home/maarten/projects/roadplan/src/roadplan:/app/libs/roadplan
+      - /home/maarten/projects/roadplan/src/roadplan:/app/libs/roadplan/
+      - ${ROOT_DIR}/apps/roadplan_server/extra/.roadplan-config.yaml:/app/config/.roadplan-config.yaml
+

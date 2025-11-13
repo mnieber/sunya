@@ -5,11 +5,14 @@ import { framesRoutes } from '/src/frames/routes';
 import { ext } from '/src/routes/navHandler';
 import {
   AtlasBriefsListView,
+  AtlasMenu,
   AtlasView,
   SelectAtlasBriefEffect,
 } from '/src/atlases/components';
 import { atlasesRoutes } from '/src/atlases/routes';
 import { atlasCtx } from '/src/atlases/hooks/useAtlasContext';
+import { jiraRoutes } from '/src/jira/routes';
+import { SyncAtlasWithJiraView } from '/src/jira/components';
 
 type PropsT = {};
 
@@ -22,12 +25,16 @@ export const MainSwitch = observer(
     return (
       <Switch>
         <Route path={ext(framesRoutes.dashboard())}>
+          <AtlasMenu />
           <Route path={framesRoutes.dashboard()}>
             <AtlasBriefsListView />
           </Route>
           <Route path={ext(atlasesRoutes.atlas())}>
             <SelectAtlasBriefEffect />
             <AtlasView />
+          </Route>
+          <Route path={jiraRoutes.syncAtlasWithJira()}>
+            <SyncAtlasWithJiraView />
           </Route>
         </Route>
       </Switch>

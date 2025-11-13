@@ -99,11 +99,14 @@ services:
     build:
       context: ${ROOT_DIR}/apps/roadplan_server
       dockerfile: Dockerfile.dev
+      additional_contexts:
+        roadplan: ~/projects/roadplan/src/roadplan
     command: sleep infinity
     depends_on:
       - postgres
     env_file:
       - ./env_files/roadplan_server.env
+      - ./env_files/roadplan_server.local.env
     environment:
       - DJANGO_SETTINGS_MODULE=app.settings.dev
     image: roadplan_server_dev

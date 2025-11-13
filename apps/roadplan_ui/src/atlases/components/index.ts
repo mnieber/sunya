@@ -1,7 +1,9 @@
 export { AtlasBriefsListView } from './AtlasBriefsListView';
 export { AtlasBriefsListViewItem } from './AtlasBriefsListViewItem';
-export { AtlasBriefsStateProvider } from './AtlasBriefsStateProvider';
+export { AtlasesStateProvider } from './AtlasesStateProvider';
+export { AtlasMenu } from './AtlasMenu';
 export { AtlasView } from './AtlasView';
+export { CreateAtlasButton } from './CreateAtlasButton';
 export { SelectAtlasBriefEffect } from './SelectAtlasBriefEffect';
 export { RoadmapNodeView } from './RoadmapNodeView';
 export { MilestoneNodeView } from './MilestoneNodeView';

@@ -21,7 +21,6 @@ export const AtlasHeader = observer(
 
     return (
       <div className="AtlasHeader">
-        <h1 className="AtlasHeader__title">Roadmap Planning</h1>
         <div className="AtlasHeader__meta">
           <span className="AtlasHeader__date">
             {props.atlas.createdAt.toLocaleDateString('en-US', {
@@ -30,7 +29,7 @@ export const AtlasHeader = observer(
               day: 'numeric',
             })}
           </span>
-          {props.atlas.isSyncedToJira && (
+          {props.atlas.isSyncedWithJira && (
             <span className="AtlasHeader__sync-badge">Synced with Jira</span>
           )}
         </div>

@@ -14,7 +14,7 @@ export type PropsT = {
 
 export const RoadmapNodeView = observer((props: PropsT) => {
   const isExpanded = props.expansion.isExpanded(props.nodeId);
-  const toggleIcon = isExpanded ? '▼' : '▶';
+  const toggleIcon = isExpanded ? 'V' : '>';
 
   return (
     <div

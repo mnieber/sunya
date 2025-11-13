@@ -5,7 +5,7 @@ import { queryClient } from '/src/api/queryClient';
 import { AuthStateProvider } from '/src/auth/components/AuthStateProvider';
 import { AuthSwitch } from '/src/auth/components/AuthSwitch';
 import { AtlasStateProvider } from '/src/atlases/components/AtlasStateProvider';
-import { AtlasBriefsStateProvider } from '/src/atlases/components/AtlasBriefsStateProvider';
+import { AtlasesStateProvider } from '/src/atlases/components/AtlasesStateProvider';
 import { MainSwitch } from '/src/frames/components/MainSwitch';
 import { DashboardFrame } from '/src/frames/components/DashboardFrame';
 import { MainView } from '/src/frames/components/MainView';
@@ -23,7 +23,7 @@ export const App = () => {
             <AppBody>
               <DashboardFrame>
                 <AuthSwitch />
-                <AtlasBriefsStateProvider>
+                <AtlasesStateProvider>
                   <AtlasStateProvider>
                     <NodesStateProvider>
                       <MainView className="">
@@ -31,7 +31,7 @@ export const App = () => {
                       </MainView>
                     </NodesStateProvider>
                   </AtlasStateProvider>
-                </AtlasBriefsStateProvider>
+                </AtlasesStateProvider>
               </DashboardFrame>
             </AppBody>
           </AppStateProvider>

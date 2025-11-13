@@ -11,7 +11,7 @@ export const topologicalSort = (
   // Calculate in-degree (number of parents) for each result
   const inDegree = new Map<string, number>();
   results.forEach((result) =>
-    inDegree.set(result.id, result.parentResultIds.length)
+    inDegree.set(result.id, result.parentResultNames.length)
   );
 
   // Start with results that have no parents
@@ -33,7 +33,7 @@ export const topologicalSort = (
 
       // Find all children of this result and decrease their in-degree
       results.forEach((result) => {
-        if (result.parentResultIds.includes(current.id)) {
+        if (result.parentResultNames.includes(current.id)) {
           const newDegree = inDegree.get(result.id)! - 1;
           inDegree.set(result.id, newDegree);
           if (newDegree === 0) {
@@ -49,11 +49,6 @@ export const topologicalSort = (
     }
 
     currentLayer = nextLayer;
-  }
-
-  // Check if all results were processed (cycle detection)
-  if (result.length !== results.length) {
-    throw new Error('Cycle detected in the graph!');
   }
 
   return result;

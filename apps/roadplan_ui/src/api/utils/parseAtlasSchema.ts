@@ -11,15 +11,16 @@ export function parseAtlasSchema(
 ): AtlasT {
   const atlas = createAtlas({
     id: atlasSchema.id,
-    isSyncedToJira: atlasSchema.isSyncedToJira,
+    isSyncedWithJira: atlasSchema.isSyncedWithJira,
     createdAt: atlasSchema.createdAt,
     roadmaps: [],
   });
 
-  for (const roadmapSchema of atlasSchema.roadmaps) {
+  for (const roadmapSchema of atlasSchema.snapshot.roadmaps) {
     const roadmap = createRoadmap({
       id: roadmapSchema.id,
       name: roadmapSchema.name,
+      notionUrl: roadmapSchema.notionUrl,
       owner: roadmapSchema.owner,
       milestones: [],
     });
@@ -44,7 +45,10 @@ export function parseAtlasSchema(
           id: resultSchema.id,
           name: resultSchema.name,
           owner: resultSchema.owner,
-          parentResultIds: resultSchema.parentResultIds ?? [],
+          isDone: resultSchema.isDone,
+          resultType: resultSchema.resultType,
+          parentResultNames: resultSchema.parentResultNames ?? [],
+          jiraTicketUrls: resultSchema.jiraTicketUrls ?? [],
           milestoneId: milestone.id,
         });
         milestone.results.push(result);

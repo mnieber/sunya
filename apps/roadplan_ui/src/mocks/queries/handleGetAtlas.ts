@@ -11,7 +11,7 @@ export const handleGetAtlas = http.get(
     return HttpResponse.json(
       convertDataToSnakeCase(AtlasSchema, {
         id: params.atlasId,
-        isSyncedToJira: false,
+        isSyncedWithJira: false,
         createdAt: '2024-01-15T10:00:00Z',
         roadmaps: [
           {
@@ -43,13 +43,13 @@ export const handleGetAtlas = http.get(
                   {
                     id: 'user_authentication',
                     name: 'user-authentication',
-                    parentResultIds: ['api_endpoints'],
+                    parentResultNames: ['api_endpoints'],
                   },
                   {
                     id: 'data visualization',
                     name: 'Data visualization',
                     owner: 'maarten',
-                    parentResultIds: ['user_authentication'],
+                    parentResultNames: ['user_authentication'],
                   },
                 ],
               },

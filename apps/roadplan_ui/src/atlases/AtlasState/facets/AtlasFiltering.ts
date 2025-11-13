@@ -9,8 +9,8 @@ export class AtlasFiltering {
     toggleShowFutureMilestones: {};
   }>;
 
-  @data showCompletedMilestones: boolean = true;
-  @data showFutureMilestones: boolean = true;
+  @data showCompletedMilestones: boolean = false;
+  @data showFutureMilestones: boolean = false;
 
   @operation toggleShowCompletedMilestones(args: { value?: boolean }) {
     return withCbs(

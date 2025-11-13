@@ -12,14 +12,16 @@ import { atlasCtx } from '/src/atlases/hooks/useAtlasContext';
 export type PropsT = React.PropsWithChildren<{}>;
 
 const ContextProps = {
-  atlas: atlasCtx.filteredAtlas,
+  filteredAtlas: atlasCtx.filteredAtlas,
+  unfilteredAtlas: atlasCtx.atlas,
   resultsSelection: atlasCtx.resultsSelection,
 };
 
 export const NodesStateProvider = observer(
   withContextProps((props: PropsT & typeof ContextProps) => {
     const { nodesState } = useNodesState({
-      getAtlas: () => props.atlas,
+      getFilteredAtlas: () => props.filteredAtlas,
+      getUnfilteredAtlas: () => props.unfilteredAtlas,
       getSelectedResultIds: () => props.resultsSelection.itemIds,
     });
 

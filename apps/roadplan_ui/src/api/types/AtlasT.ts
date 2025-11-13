@@ -6,7 +6,7 @@ import { ObjT } from '/src/utils/types';
 
 export type AtlasT = EntityT & {
   createdAt: Date;
-  isSyncedToJira: boolean;
+  isSyncedWithJira: boolean;
   roadmaps: RoadmapT[];
 };
 
@@ -16,7 +16,7 @@ export const createAtlas = (values: ObjT): AtlasT => {
   return initRS({
     createdAt: values.createdAt ?? new Date(),
     id: values.id ?? createUUID(),
-    isSyncedToJira: values.isSyncedToJira ?? false,
+    isSyncedWithJira: values.isSyncedWithJira ?? false,
     roadmaps: values.roadmaps ?? [],
   } as AtlasT);
 };

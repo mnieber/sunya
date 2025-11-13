@@ -3,6 +3,6 @@ import { EntitySchema } from '/src/api/types/EntitySchema';
 
 export const AtlasBriefSchema = z.object({
   ...EntitySchema.shape,
-  isSyncedToJira: z.boolean(),
+  isSyncedWithJira: z.boolean(),
   createdAt: z.coerce.date(),
 });

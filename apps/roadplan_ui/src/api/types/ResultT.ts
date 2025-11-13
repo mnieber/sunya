@@ -5,8 +5,11 @@ import { ObjT } from '/src/utils/types';
 export type ResultT = EntityT & {
   name: string;
   owner?: string;
+  isDone: boolean;
+  resultType: 'ms' | 'bug' | 'generic' | 'meeting' | 'release';
   milestoneId: string;
-  parentResultIds: string[];
+  parentResultNames: string[];
+  jiraTicketUrls: string[];
 };
 
 export type ResultByIdT = { [id: string]: ResultT };
@@ -18,7 +21,10 @@ export const createResult = (
     id: values.id,
     name: values.name,
     owner: values.owner,
+    isDone: values.isDone,
+    resultType: values.resultType,
     milestoneId: values.milestoneId,
-    parentResultIds: values.parentResultIds ?? [],
+    parentResultNames: values.parentResultNames ?? [],
+    jiraTicketUrls: values.jiraTicketUrls ?? [],
   } as ResultT);
 };

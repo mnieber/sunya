@@ -15,7 +15,7 @@ const mapData = (state: NodesState) => {
       nodes: () =>
         ctr.zoom.isEnabled
           ? getNodesInZoomMode(
-              state.props.getAtlas(),
+              state.props.getUnfilteredAtlas(),
               state.props.getZoomedResultIds()
             )
           : [],

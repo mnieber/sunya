@@ -9,7 +9,7 @@ const mapData = (state: NodesState) => {
 
   mapDataToProps(ctr, {
     data: {
-      nodes: () => buildNodesFromAtlas(state.props.getAtlas()),
+      nodes: () => buildNodesFromAtlas(state.props.getFilteredAtlas()),
     },
     expansion: {
       expandableIds: () => R.map(R.prop('id'), ctr.data.nodes),

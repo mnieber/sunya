@@ -51,15 +51,21 @@ export const AtlasView = observer(
           {props.appState.showRoadmapContents ? (
             <PanelGroup direction="horizontal">
               <Panel defaultSize={35} minSize={25}>
-                <AtlasTreeView />
+                <div className="AtlasView__panel-scroll h-full overflow-y-auto">
+                  <AtlasTreeView />
+                </div>
               </Panel>
               <PanelResizeHandle className="AtlasView__resize-handle" />
               <Panel defaultSize={65} minSize={40}>
-                <RoadmapView />
+                <div className="AtlasView__panel-scroll h-full flex flex-col overflow-hidden">
+                  <RoadmapView />
+                </div>
               </Panel>
             </PanelGroup>
           ) : (
-            <AtlasTreeView />
+            <div className="AtlasView__panel-scroll h-full overflow-y-auto">
+              <AtlasTreeView />
+            </div>
           )}
         </div>
       </div>

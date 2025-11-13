@@ -4,12 +4,13 @@ import { AtlasT, ResultT } from '/src/api/types';
 import { topologicalSort } from '/src/treeview/utils/topologicalSort';
 import { isRelated } from '/src/treeview/utils/isUpstream';
 import { createNode } from '/src/treeview/types';
+import * as R from 'ramda';
 
 /**
  * Get the nodes that should be visible in zoom mode.
  * This includes:
  * - The zoomed results themselves
- * - All upstream results (dependencies via parentResultIds)
+ * - All upstream results (dependencies via parentResultNames)
  * - All downstream results (dependents - results that have zoomed results as parents)
  * - The parent milestones and roadmaps for all these results
  */
@@ -89,7 +90,10 @@ export function getNodesInZoomMode(
 
   for (const result of sortedZoomedResults) {
     const milestone = atlasLut.milestoneById[result.milestoneId];
-    if (roadmapNode?.resource?.id !== milestone.roadmapId) {
+    if (
+      R.isNil(roadmapNode) ||
+      roadmapNode?.resource?.id !== milestone.roadmapId
+    ) {
       const roadmap = atlasLut.roadmapById[milestone.roadmapId];
       const count = bumpCount(roadmap.id, countByRoadmapId);
 
@@ -101,7 +105,10 @@ export function getNodesInZoomMode(
       nodes.push(roadmapNode);
       milestoneNode = null;
     }
-    if (milestoneNode?.resource?.id !== result.milestoneId) {
+    if (
+      R.isNil(milestoneNode) ||
+      milestoneNode?.resource?.id !== result.milestoneId
+    ) {
       const count = bumpCount(milestone.id, countByMilestoneId);
 
       milestoneNode = createNode({

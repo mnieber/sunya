@@ -4,7 +4,7 @@ import React from 'react';
 import { withContextProps } from 'react-props-from-context';
 import { useParams } from 'wouter';
 import { AtlasBriefT } from '/src/api/types';
-import { atlasBriefsCtx } from '/src/atlases/hooks/useAtlasBriefsContext';
+import { atlasesCtx } from '/src/atlases/hooks/useAtlasesContext';
 import { useRefUrl } from '/src/routes/hooks/useRefUrl';
 import { UrlEffectView } from '/src/utils/components';
 import { ObjT } from '/src/utils/types';
@@ -12,9 +12,9 @@ import { ObjT } from '/src/utils/types';
 type PropsT = {};
 
 const ContextProps = {
-  atlasBriefs: atlasBriefsCtx.atlasBriefs,
-  atlasBrief: atlasBriefsCtx.atlasBrief,
-  atlasBriefsSelection: atlasBriefsCtx.atlasBriefsSelection,
+  atlasBriefs: atlasesCtx.atlasBriefs,
+  atlasBrief: atlasesCtx.atlasBrief,
+  atlasBriefsSelection: atlasesCtx.atlasBriefsSelection,
 };
 
 export const SelectAtlasBriefEffect = observer(

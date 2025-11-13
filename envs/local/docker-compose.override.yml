@@ -62,3 +62,4 @@ services:
       - /opt/projects/sunya/roadplan_server/media:/app/media
       - /opt/projects/sunya/roadplan_server/pytest_report.html:/app/pytest_report.html
       - /opt/projects/sunya/roadplan_server/static:/app/static
+      - /opt/projects/roadplan/mock_roadmaps:/app/data/mock_roadmaps

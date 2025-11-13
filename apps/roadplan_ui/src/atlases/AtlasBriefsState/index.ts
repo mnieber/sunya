@@ -1,1 +1,0 @@
-export { AtlasBriefsState } from './AtlasBriefsState';

@@ -5,3 +5,7 @@ APP_DIR = os.path.dirname(
 )
 PROJECT_DIR = os.path.dirname(APP_DIR)
 BASE_DIR = os.path.dirname(os.path.dirname(PROJECT_DIR))
+
+ROADPLAN_SETTINGS_FN = os.environ.get(
+    "ROADPLAN_SETTINGS_FN", "/app/config/.roadplan-config.yaml"
+)

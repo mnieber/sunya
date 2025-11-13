@@ -22,7 +22,9 @@ class GetAtlasBriefsApiView(APIView):
     )
     def get(self, request):
         atlases = apply_filter_set_or_400(
-            Atlas.objects.all(), AtlasFilterSet, request.query_params
+            Atlas.objects.all().order_by("-created_at"),
+            AtlasFilterSet,
+            request.query_params,
         )
         serializer = AtlasBriefSerializer(atlases, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)

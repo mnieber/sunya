@@ -7,6 +7,8 @@ export class AppState {
   portals = {
     atlasHeader: createHtmlPortalNode(),
     zoomButton: createHtmlPortalNode(),
+    createAtlasButton: createHtmlPortalNode(),
+    syncAtlasWithJiraButton: createHtmlPortalNode(),
     showFutureMilestonesButton: createHtmlPortalNode(),
     showCompletedMilestonesButton: createHtmlPortalNode(),
   };

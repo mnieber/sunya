@@ -16,13 +16,17 @@ export type PropsT = {
   className?: any;
   trim?: ToolButtonTrimT;
   disabled?: boolean;
+  isUpdating?: boolean;
   iconName: string;
   label: string;
 } & ButtonPropsT;
 
 export const ToolButton = (props: PropsT) => {
   const trim = props.trim ?? DefaultToolButtonTrim;
-  const mode = getMode(trim, { disabled: props.disabled });
+  const mode = getMode(trim, {
+    disabled: props.disabled,
+    isUpdating: props.isUpdating,
+  });
 
   return (
     <button
@@ -32,7 +36,7 @@ export const ToolButton = (props: PropsT) => {
         { 'ToolButton--disabled': props.disabled },
         [L.row.skewer(), props.className]
       )}
-      disabled={props.disabled}
+      disabled={props.disabled || props.isUpdating}
       onClick={props.onClick}
     >
       <Icon className={getModeCn(mode.Icon)} name={props.iconName} />

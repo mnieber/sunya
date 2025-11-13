@@ -10,7 +10,7 @@ export function parseAtlasBriefSchemas(
   for (const atlasBriefSchema of atlasBriefSchemas) {
     const atlasBrief = createAtlasBrief({
       id: atlasBriefSchema.id,
-      isSyncedToJira: atlasBriefSchema.isSyncedToJira,
+      isSyncedWithJira: atlasBriefSchema.isSyncedWithJira,
       createdAt: atlasBriefSchema.createdAt,
     });
     atlasBriefs.push(atlasBrief);

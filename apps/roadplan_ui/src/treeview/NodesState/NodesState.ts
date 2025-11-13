@@ -7,7 +7,8 @@ import { registerNodesCtr } from '/src/treeview/NodesState/registerNodesCtr';
 import { registerNodesInZoomModeCtr } from '/src/treeview/NodesState/registerNodesInZoomModeCtr';
 
 export type PropsT = {
-  getAtlas: () => AtlasT;
+  getFilteredAtlas: () => AtlasT;
+  getUnfilteredAtlas: () => AtlasT;
   getZoomedResultIds: () => string[];
 };
 

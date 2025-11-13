@@ -1,4 +1,5 @@
 from atlases.views.create_atlas_api_view import CreateAtlasApiView
+from atlases.views.get_atlas_api_view import GetAtlasApiView
 from atlases.views.get_atlas_briefs_api_view import GetAtlasBriefsApiView
 from django.urls import path
 from atlases.views.get_atlas_briefs_api_view import GetAtlasBriefsApiView
@@ -12,24 +13,23 @@ urlpatterns = [
         name="create-atlas",
     ),
     path(
-        "list/",
-        GetAtlasBriefsApiView.as_view(),
-        #
-        name="get-atlases",
-    ),
-    path(
-        "atlases/<str:atlas_key>/update/",
+        "<str:atlas_key>/update/",
         UpdateAtlasApiView.as_view(),
         name="update-atlas",
     ),
     path(
-        "atlases/delete/",
+        "delete/",
         DeleteAtlasesApiView.as_view(),
         name="delete-atlases",
     ),
     path(
-        "atlases/list/",
+        "list/",
         GetAtlasBriefsApiView.as_view(),
         name="get-atlas-briefs",
+    ),
+    path(
+        "<str:atlas_key>/",
+        GetAtlasApiView.as_view(),
+        name="get-atlas",
     ),
 ]

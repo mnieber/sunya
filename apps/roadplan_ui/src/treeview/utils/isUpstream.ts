@@ -16,7 +16,7 @@ export const isUpstream = (
 
   // Check if lhs is a direct or transitive parent of rhs
   const visited = new Set<string>();
-  const queue: string[] = [...rhs.parentResultIds];
+  const queue: string[] = [...rhs.parentResultNames];
 
   while (queue.length > 0) {
     const parentId = queue.shift()!;
@@ -35,7 +35,7 @@ export const isUpstream = (
     // Continue searching up the dependency tree
     const parent = resultById[parentId];
     if (parent) {
-      queue.push(...parent.parentResultIds);
+      queue.push(...parent.parentResultNames);
     }
   }
 

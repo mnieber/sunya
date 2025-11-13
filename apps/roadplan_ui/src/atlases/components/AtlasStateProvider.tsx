@@ -8,12 +8,12 @@ import { AtlasContext } from '/src/atlases/hooks/useAtlasContext';
 import { useAtlasState } from '/src/atlases/hooks/useAtlasState';
 import { createGetProps } from '/src/utils/createGetProps';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
-import { atlasBriefsCtx } from '/src/atlases/hooks/useAtlasBriefsContext';
+import { atlasesCtx } from '/src/atlases/hooks/useAtlasesContext';
 
 export type PropsT = React.PropsWithChildren<{}>;
 
 const ContextProps = {
-  atlasBrief: atlasBriefsCtx.atlasBrief,
+  atlasBrief: atlasesCtx.atlasBrief,
 };
 
 export const AtlasStateProvider = observer(

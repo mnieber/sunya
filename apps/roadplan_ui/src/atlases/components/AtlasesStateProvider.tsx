@@ -3,22 +3,22 @@ import { observer } from 'mobx-react-lite';
 import { updateSources } from 'mobx-resource-states';
 import React from 'react';
 import { isQueryLoading } from '/src/api/lib/ObservableQuery';
-import { AtlasBriefsContext } from '/src/atlases/hooks/useAtlasBriefsContext';
-import { useAtlasBriefsState } from '/src/atlases/hooks/useAtlasBriefsState';
+import { AtlasesContext } from '/src/atlases/hooks/useAtlasesContext';
+import { useAtlasesState } from '/src/atlases/hooks/useAtlasesState';
 import { createGetProps } from '/src/utils/createGetProps';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 
 export type PropsT = React.PropsWithChildren<{}>;
 
-export const AtlasBriefsStateProvider = observer((props: PropsT) => {
-  const { atlasBriefsState, getAtlasBriefs } = useAtlasBriefsState({});
+export const AtlasesStateProvider = observer((props: PropsT) => {
+  const { atlasesState, getAtlasBriefs, createAtlas } = useAtlasesState({});
 
   const cache = useBuilder(() =>
     makeAutoObservable({
       get atlasBrief() {
         return updateSources(
           {
-            resource: atlasBriefsState.atlasBriefsCtr.highlight.item,
+            resource: atlasesState.atlasBriefsCtr.highlight.item,
             resourceName: 'atlasBrief',
           },
           ['loading', () => isQueryLoading(getAtlasBriefs), 'atlasBrief']
@@ -26,26 +26,27 @@ export const AtlasBriefsStateProvider = observer((props: PropsT) => {
       },
       get atlasBriefs() {
         return updateSources(
-          { resource: atlasBriefsState.atlasBriefsCtr.data.atlasBriefs },
+          { resource: atlasesState.atlasBriefsCtr.data.atlasBriefs },
           ['loading', () => isQueryLoading(getAtlasBriefs), 'getAtlasBriefs']
         );
       },
     })
   );
 
-  const getAtlasBriefsContext = () => {
+  const getAtlasesContext = () => {
     return createGetProps({
-      atlasBriefsState: () => atlasBriefsState,
+      atlasesState: () => atlasesState,
       atlasBriefs: () => cache.atlasBriefs,
       atlasBrief: () => cache.atlasBrief,
-      atlasBriefsHighlight: () => atlasBriefsState.atlasBriefsCtr.highlight,
-      atlasBriefsSelection: () => atlasBriefsState.atlasBriefsCtr.selection,
+      atlasBriefsHighlight: () => atlasesState.atlasBriefsCtr.highlight,
+      atlasBriefsSelection: () => atlasesState.atlasBriefsCtr.selection,
+      isCreatingAtlas: () => createAtlas.status === 'loading',
     });
   };
 
   return (
-    <AtlasBriefsContext.Provider value={getAtlasBriefsContext()}>
+    <AtlasesContext.Provider value={getAtlasesContext()}>
       {props.children}
-    </AtlasBriefsContext.Provider>
+    </AtlasesContext.Provider>
   );
 });

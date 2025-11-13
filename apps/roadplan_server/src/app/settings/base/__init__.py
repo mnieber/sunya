@@ -4,10 +4,12 @@ from .sections.auth import *  # noqa
 from .sections.cache import *  # noqa
 from .sections.databases import *  # noqa
 from .sections.installed_apps import *  # noqa
+from .sections.jira import *  # noqa
 from .sections.locale import *  # noqa
 from .sections.logging import *  # noqa
 from .sections.middleware import *  # noqa
 from .sections.models import *  # noqa
+from .sections.notion import *  # noqa
 from .sections.origins import *  # noqa
 from .sections.paths import *  # noqa
 from .sections.rest_framework import *  # noqa

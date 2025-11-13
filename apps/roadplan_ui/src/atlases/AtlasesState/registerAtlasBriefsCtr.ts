@@ -3,9 +3,9 @@ import * as R from 'ramda';
 import { mapDataToProps } from 'skandha';
 import { Selection, handleSelectItem } from 'skandha-facets';
 import { registerCtr } from 'skandha-mobx';
-import { AtlasBriefsState } from '/src/atlases/AtlasBriefsState';
+import { AtlasesState } from '/src/atlases/AtlasesState';
 
-const mapData = (state: AtlasBriefsState) => {
+const mapData = (state: AtlasesState) => {
   const ctr = state.atlasBriefsCtr;
   const getAtlasBriefById = (x: string) => ctr.data.atlasBriefById[x];
 
@@ -27,7 +27,7 @@ const mapData = (state: AtlasBriefsState) => {
   });
 };
 
-const setCallbacks = (state: AtlasBriefsState) => {
+const setCallbacks = (state: AtlasesState) => {
   const ctr = state.atlasBriefsCtr;
 
   ctr.selection.callbackMap = {
@@ -42,10 +42,10 @@ const setCallbacks = (state: AtlasBriefsState) => {
   };
 };
 
-export const registerAtlasBriefsCtr = (state: AtlasBriefsState) => {
+export const registerAtlasBriefsCtr = (state: AtlasesState) => {
   registerCtr({
     ctr: state.atlasBriefsCtr,
-    options: { name: 'AtlasBriefsState.AtlasBriefs' },
+    options: { name: 'AtlasesState.AtlasBriefs' },
     initCtr: () => {
       mapData(state);
       setCallbacks(state);

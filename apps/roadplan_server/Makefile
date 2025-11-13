@@ -15,7 +15,7 @@ pgcli:
 #
 
 pip-compile:
-	uv pip compile --upgrade requirements.in -o requirements.txt
+	uv pip compile --upgrade requirements.in requirements.editable -o requirements.txt
 	sed -i 's/jaraco-classes==/jaraco.classes==/g' requirements.txt
 #
 # Django

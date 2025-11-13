@@ -1,13 +1,14 @@
 import React from 'react';
 import { useObservableQuery } from '/src/api/hooks';
+import { useCreateAtlas } from '/src/api/mutations';
 import { useGetAtlasBriefs } from '/src/api/queries/useGetAtlasBriefs';
-import { AtlasBriefsState } from '/src/atlases/AtlasBriefsState';
+import { AtlasesState } from '/src/atlases/AtlasesState';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 import { useGraftResourceStatesFromMemo } from '/src/utils/hooks/useGraftResourceStatesFromMemo';
 
 export type PropsT = {};
 
-export const useAtlasBriefsState = (props: PropsT) => {
+export const useAtlasesState = (props: PropsT) => {
   const graftResourceStatesFromMemo = useGraftResourceStatesFromMemo({});
 
   // Queries
@@ -16,23 +17,30 @@ export const useAtlasBriefsState = (props: PropsT) => {
     debugLabel: 'getAtlasBriefs',
   });
 
-  const atlasBriefsState = useBuilder(() => {
-    const state = new AtlasBriefsState({
+  // Mutations
+  const createAtlas = useCreateAtlas();
+
+  const atlasesState = useBuilder(() => {
+    const state = new AtlasesState({
       //
       getAtlasBriefs: () => {
         return graftResourceStatesFromMemo({
           resources: getAtlasBriefs.data?.atlasBriefs ?? [],
         });
       },
+      createAtlas: () => {
+        return createAtlas.mutateAsync({});
+      },
     });
 
     return state;
-  }) as AtlasBriefsState;
+  }) as AtlasesState;
 
-  React.useEffect(() => () => atlasBriefsState.destroy(), [atlasBriefsState]);
+  React.useEffect(() => () => atlasesState.destroy(), [atlasesState]);
 
   return {
-    atlasBriefsState,
+    atlasesState,
     getAtlasBriefs,
+    createAtlas,
   };
 };

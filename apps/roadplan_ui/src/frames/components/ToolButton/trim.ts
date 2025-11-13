@@ -7,6 +7,10 @@ export const ToolButtonS = {
     gray: () => cn('text-gray-text'),
     grayDisabled: () => cn('text-gray-300'),
   },
+  effect: {
+    none: () => cn(),
+    pulsing: () => cn('animate-pulse'),
+  },
   Icon: {
     size: {
       medium: () => cn([IconS.size.s32(), 'p-2']),
@@ -26,6 +30,7 @@ export type ToolButtonTrimT = {
     componentName: string;
     root: {
       color: any;
+      effect: any;
     };
     Icon: {
       margin: any;
@@ -34,6 +39,7 @@ export type ToolButtonTrimT = {
     };
   };
   disabled?: ModeOverlayT<ToolButtonTrimT>;
+  isUpdating?: ModeOverlayT<ToolButtonTrimT>;
 };
 
 export const DefaultToolButtonTrim = {
@@ -42,6 +48,7 @@ export const DefaultToolButtonTrim = {
     componentName: 'ToolButton',
     root: {
       color: ToolButtonS.color.gray(),
+      effect: ToolButtonS.effect.none(),
     },
     Icon: {
       size: ToolButtonS.Icon.size.medium(),
@@ -53,5 +60,11 @@ export const DefaultToolButtonTrim = {
   disabled: {
     root: { color: ToolButtonS.color.grayDisabled() },
     Icon: { color: ToolButtonS.Icon.color.grayFillDisabled() },
+  },
+  // These are layered on top if the ToolButton is updating.
+  isUpdating: {
+    root: {
+      effect: ToolButtonS.effect.pulsing(),
+    },
   },
 };

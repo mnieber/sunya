@@ -15,7 +15,7 @@ export function getAtlasBriefsQueryKey(args: QueryKeyT) {
   return createQueryKey<QueryKeyT>('getAtlasBriefs', args);
 }
 
-export const getAtlasBriefsUrl = `/atlas_briefs/list/`;
+export const getAtlasBriefsUrl = `/atlases/list/`;
 
 export const getAtlasBriefs = (args: GetAtlasBriefsArgsT) => {
   return get(getAtlasBriefsUrl).then((response) => {

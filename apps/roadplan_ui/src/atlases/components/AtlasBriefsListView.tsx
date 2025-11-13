@@ -9,7 +9,7 @@ import {
 } from 'skandha-facets';
 import { AtlasBriefT } from '/src/api/types';
 import { AtlasBriefsListViewItem } from '/src/atlases/components';
-import { atlasBriefsCtx } from '/src/atlases/hooks/useAtlasBriefsContext';
+import { atlasesCtx } from '/src/atlases/hooks/useAtlasesContext';
 import { LoaderBar } from '/src/frames/components/LoaderBar';
 import { L } from '/src/frames/layout';
 import { createKeyDownHandler } from '/src/utils';
@@ -23,9 +23,9 @@ export type PropsT = {
 };
 
 const ContextProps = {
-  atlasBriefs: atlasBriefsCtx.atlasBriefs,
-  atlasBriefsSelection: atlasBriefsCtx.atlasBriefsSelection,
-  atlasBriefsHighlight: atlasBriefsCtx.atlasBriefsHighlight,
+  atlasBriefs: atlasesCtx.atlasBriefs,
+  atlasBriefsSelection: atlasesCtx.atlasBriefsSelection,
+  atlasBriefsHighlight: atlasesCtx.atlasBriefsHighlight,
 };
 
 export const AtlasBriefsListView = observer(
@@ -54,13 +54,32 @@ export const AtlasBriefsListView = observer(
       />
     ));
 
+    if (props.atlasBriefs.length === 0) {
+      return (
+        <div
+          className={cn(
+            'AtlasBriefsListView',
+            [L.col.banner()],
+            'p-4 text-gray-500',
+            props.className
+          )}
+        >
+          No atlases found
+        </div>
+      );
+    }
+
     return (
       <KeyboardEventHandler
         handleKeys={R.keys(keyHandlers)}
         onKeyEvent={createKeyDownHandler(keyHandlers)}
       >
         <div
-          className={cn('AtlasBriefsListView', [L.col.banner()], props.className)}
+          className={cn(
+            'AtlasBriefsListView',
+            [L.col.banner()],
+            props.className
+          )}
           tabIndex={1}
         >
           {atlasBriefDivs}

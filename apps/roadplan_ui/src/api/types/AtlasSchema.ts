@@ -4,7 +4,9 @@ import { RoadmapSchema } from '/src/api/types/RoadmapSchema';
 
 export const AtlasSchema = z.object({
   ...EntitySchema.shape,
-  roadmaps: z.array(RoadmapSchema),
-  isSyncedToJira: z.boolean(),
+  snapshot: z.object({
+    roadmaps: z.array(RoadmapSchema),
+  }),
+  isSyncedWithJira: z.boolean(),
   createdAt: z.coerce.date(),
 });

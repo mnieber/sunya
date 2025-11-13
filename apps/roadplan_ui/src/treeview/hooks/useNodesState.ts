@@ -4,14 +4,16 @@ import { NodesState } from '/src/treeview/NodesState/NodesState';
 import { useBuilder } from '/src/utils/hooks/useBuilder';
 
 export type PropsT = {
-  getAtlas: () => AtlasT;
+  getFilteredAtlas: () => AtlasT;
+  getUnfilteredAtlas: () => AtlasT;
   getSelectedResultIds: () => string[];
 };
 
 export const useNodesState = (props: PropsT) => {
   const nodesState = useBuilder(() => {
     const state = new NodesState({
-      getAtlas: () => props.getAtlas(),
+      getFilteredAtlas: () => props.getFilteredAtlas(),
+      getUnfilteredAtlas: () => props.getUnfilteredAtlas(),
       //
       getZoomedResultIds: () => {
         const selectedIds = props.getSelectedResultIds();

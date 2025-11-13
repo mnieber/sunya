@@ -24,7 +24,6 @@ export type PropsT = {
 };
 
 const ContextProps = {
-  atlas: atlasCtx.filteredAtlas,
   nodes: nodesCtx.nodes,
   nodesExpansion: nodesCtx.nodesExpansion,
   nodesInZoomMode: nodesCtx.nodesInZoomMode,

@@ -1,10 +1,9 @@
-from atlases.models import Atlas
 from dataclassy import dataclass
 
 
 @dataclass
 class CreateSyncWithJiraPromptForm:
-    contents: str
+    snapshot: str
 
 
 def create_sync_with_jira_prompt(
@@ -12,10 +11,7 @@ def create_sync_with_jira_prompt(
 ):
     _validate_args(create_sync_with_jira_prompt_form)
 
-    atlas = Atlas(contents=create_sync_with_jira_prompt_form.contents)
-    atlas.save()
-
-    return atlas
+    return ""
 
 
 def _validate_args(create_sync_with_jira_prompt_form: CreateSyncWithJiraPromptForm):

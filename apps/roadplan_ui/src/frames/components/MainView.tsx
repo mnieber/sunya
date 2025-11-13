@@ -6,6 +6,8 @@ export type PropsT = React.PropsWithChildren<{
 
 export const MainView = (props: PropsT) => {
   return (
-    <div className={cn('MainView', props.className)}>{props.children}</div>
+    <div className={cn('MainView', 'min-h-0', props.className)}>
+      {props.children}
+    </div>
   );
 };

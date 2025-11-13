@@ -14,7 +14,7 @@ export type PropsT = {
 
 export const MilestoneNodeView = observer((props: PropsT) => {
   const isExpanded = props.expansion.isExpanded(props.nodeId);
-  const toggleIcon = isExpanded ? '▼' : '▶';
+  const toggleIcon = isExpanded ? 'V' : '>';
 
   return (
     <div
@@ -23,10 +23,12 @@ export const MilestoneNodeView = observer((props: PropsT) => {
     >
       <span className="MilestoneNodeView__icon">{toggleIcon}</span>
       <span className="MilestoneNodeView__label">
-        <span className="MilestoneNodeView__number">
-          MS-{props.milestone.nr}
-        </span>
-        {': '}
+        {false && (
+          <span className="MilestoneNodeView__number">
+            MS-{props.milestone.nr}
+          </span>
+        )}
+        {false && ': '}
         {props.milestone.title}
       </span>
     </div>

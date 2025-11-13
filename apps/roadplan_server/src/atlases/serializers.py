@@ -1,4 +1,3 @@
-from atlases.actions.create_atlas import CreateAtlasForm
 from atlases.models import Atlas
 from atlases.actions.update_atlas import UpdateAtlasForm
 from common.form_serializer import FormSerializer
@@ -8,8 +7,7 @@ from common.form_serializer import FormSerializer
 
 
 class CreateAtlasFormSerializer(FormSerializer):
-    class Meta:
-        form_class = CreateAtlasForm
+    pass
 
 
 class UpdateAtlasFormSerializer(FormSerializer):
@@ -20,13 +18,13 @@ class UpdateAtlasFormSerializer(FormSerializer):
 class AtlasSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = Atlas
-        fields = ["id", "created_at", "contents"]
+        fields = ["id", "created_at", "is_synced_with_jira", "snapshot"]
 
 
 class AtlasBriefSerializer(ReadSerializerMixin, BaseModelSerializer):
     class Meta:
         model = Atlas
-        fields = ["id", "created_at"]
+        fields = ["id", "created_at", "is_synced_with_jira"]
 
 
 class DeleteAtlasesFormSerializer(FormSerializer):

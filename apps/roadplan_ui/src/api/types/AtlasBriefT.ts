@@ -6,7 +6,7 @@ import { createUUID } from '/src/utils/ids';
 
 export type AtlasBriefT = EntityT & {
   atlas?: AtlasT;
-  isSyncedToJira: boolean;
+  isSyncedWithJira: boolean;
   createdAt: Date;
 };
 
@@ -16,6 +16,6 @@ export const createAtlasBrief = (values: ObjT): AtlasBriefT => {
   return initRS({
     createdAt: values.createdAt ?? new Date(),
     id: values.id ?? createUUID(),
-    isSyncedToJira: values.isSyncedToJira ?? false,
+    isSyncedWithJira: values.isSyncedWithJira ?? false,
   } as AtlasBriefT);
 };

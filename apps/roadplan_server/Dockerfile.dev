@@ -23,11 +23,14 @@ RUN apt-get update && apt-get install -y \
     fish \
     nano
 
+# Install the libraries
+COPY --from=roadplan pyproject.toml setup.py README.md justfile /app/libs/roadplan/
+
 # Install the server
-COPY ./pyproject.toml ./setup.py ./README.md ./requirements*.txt /app/src/
+COPY ./pyproject.toml ./setup.py ./README.md ./requirements*.txt ./requirements.editable /app/src/
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv pip install --system -e /app/src -r /app/src/requirements.txt -r /app/src/requirements.dev.txt
+    uv pip install --system -e /app/src -r /app/src/requirements.editable -r /app/src/requirements.txt -r /app/src/requirements.dev.txt
 
 # install dev pip dependencies
 RUN --mount=type=cache,target=/root/.cache/uv \
