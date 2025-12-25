@@ -56,3 +56,35 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+
+from sunya import G as m
+from sunya import G as r
+from sunya import G as goals
+
+diagram = f"""
+```mermaid
+sequenceDiagram
+    participant {m.External.Frontend}
+    participant {m.Organizations.ApiViews.SetActiveOrganizationApiView}
+    participant {m.Organizations.Actions.SetActiveOrganization}
+    participant {m.Projects.ApiViews.CreateProjectApiView}
+    participant {m.Projects.Actions.CreateProject}
+    participant {m.Projects.Actions.AddOrganizationToProject}
+
+    # 🔳 Set Active Organization
+    {goals.note_over(r.Frontend, goal().set_the_active_organization_to_the(r.demo_organization))}
+    {r.Frontend                     >> r.SetActiveOrganizationApiView} : {g.calls()}
+    {r.SetActiveOrganizationApiView >> r.SetActiveOrganization}        : {g.calls(r.demo_organization)}
+    {r.SetActiveOrganization        >> r.self}                         : {g.sets(r.demo_organization).as_the(r.active_organization)}
+
+    # 🔳 Create Project
+    {goals.note_over(r.Frontend, goal().create_a(r.project).in_the(r.demo_organization))}
+    {r.Frontend                 >> r.CreateProjectApiView}     : {g.calls()}
+    {r.CreateProjectApiView     >> r.CreateProject}            : {g.calls(r.create_project_form)}
+    {r.CreateProject            >> r.self}                     : {g.creates(r.project)}
+    {r.CreateProject            >> r.AddOrganizationToProject} : {g.calls(r.project, organization=r.demo_organization, add_organization_to_project_form=r.add_organization_to_project_form)}
+    {r.AddOrganizationToProject >> r.self}                     : {g.creates(r.project_membership)}
+    {r.AddOrganizationToProject >> r.CreateProjectApiView}     : {g.returns(r.project)}
+```
+"""

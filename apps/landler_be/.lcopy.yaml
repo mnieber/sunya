@@ -2,11 +2,6 @@ targets:
   copy-code:
     files:
       code:
-        (checklists):
-          "actions": true
-          "*.py": true
-          (tests):
-            factories.py: true
         (common):
           "utils": true
           "*.py": true

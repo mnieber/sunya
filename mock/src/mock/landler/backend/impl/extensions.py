@@ -7,11 +7,6 @@ class ExtendProjectAnalysis:
     plot_analyses = MemField(lambda: list())
 
 
-@extend(B.Users.Models.User)
-class ExtendUser:
-    checklist = MemField(lambda: None)
-
-
 @extend(B.Projects.Models.Project)
 class ExtendProject:
     plot_lists = MemField(lambda: list())

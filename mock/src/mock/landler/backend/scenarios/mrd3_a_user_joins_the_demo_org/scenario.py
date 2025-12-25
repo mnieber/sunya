@@ -47,14 +47,6 @@ def start():
                             + "@demo-org.com"
                         )
 
-                # update checklist
-                with it().calls_the(g.update_checklist_item_action):
-                    with it().finds_the(r.join_demo_org_checklist_item).for_the(r.user):
-                        assert r.join_demo_org_checklist_item
-
-                    with it().marks_the(r.join_demo_org_checklist_item).as_completed():
-                        assert r.join_demo_org_checklist_item.is_completed
-
     return get_scenario(scenario_name)
 
 
@@ -71,3 +63,33 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+
+from sunya import G as m
+from sunya import G as r
+from sunya import G as goals
+
+diagram = f"""
+```mermaid
+sequenceDiagram
+    participant {m.External.Frontend}
+    participant {m.Organizations.AddUserToDemoOrganizationAPIView}
+    participant {m.Organizations.Actions.AddUserToDemoOrganization}
+    participant {m.Organizations.Rules.CreateRandomDisplayName}
+    participant {m.Organizations.Actions.CreateOrganization}
+    participant {m.Organizations.Actions.AddUserToOrganization}
+
+    # 🔳 Add user to demo org
+    {goals.note_over(r.Frontend, goal().add_the(r.user).to_the(r.demo_organization))}
+    {r.Frontend                         >> r.AddUserToDemoOrganizationAPIView}  : {g.calls(r.current_user)}
+    {r.AddUserToDemoOrganizationAPIView >> r.AddUserToDemoOrganization}         : {g.calls(r.current_user)}
+    {r.AddUserToDemoOrganization        >> r.self}                              : {g.finds_the(r.demo_organization)}
+    alt organization not found
+        {r.AddUserToDemoOrganization >> r.CreateOrganization} : {g.calls(r.create_organization_form)}
+        {r.CreateOrganization        >> r.self}               : {g.creates(r.demo_organization)}
+    end
+    {r.AddUserToDemoOrganization >> r.CreateRandomDisplayName} : {g.calls()}
+    {r.AddUserToDemoOrganization >> r.AddUserToOrganization}   : {g.calls(r.demo_organization, r.current_user, r.add_user_to_organization_form)}
+    {r.AddUserToOrganization     >> r.self}                    : {g.creates(r.demo_organization_membership)}
+
+```

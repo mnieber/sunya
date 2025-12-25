@@ -4,8 +4,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.utils.extend_schema import extend_schema
-from checklists.actions.update_checklist_item import update_checklist_item
-from checklists.enums import ChecklistItemNames
 from common.form_serializer import FormSerializer
 from common.permissions import user_is_authenticated
 from organizations.actions.add_user_to_organization import (
@@ -48,12 +46,6 @@ class CreateOrganizationApiView(APIView):
             organization = create_organization(request_data.create_organization_form)
         except OrganizationWithNameAlreadyExistsError:
             raise ValidationError(code="ORGANIZATION_NAME_ALREADY_EXISTS")
-
-        update_checklist_item(
-            user=request.user,
-            checklist_item_name=ChecklistItemNames.ADD_ORGANIZATION,
-            is_completed=True,
-        )
 
         try:
             add_user_to_organization(

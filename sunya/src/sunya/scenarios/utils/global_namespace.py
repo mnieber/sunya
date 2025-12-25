@@ -1,5 +1,4 @@
 import typing as T
-from sunya.scenarios.models.scenario_context import get_scenario_context
 
 
 class GlobalNamespace:
@@ -19,18 +18,7 @@ class GlobalNamespace:
 
     def __getattr__(self, name):
         if name not in self._attributes:
-            entity = None
-            for (
-                resolver_fn
-            ) in get_scenario_context().resolve_entity_in_global_namespace:
-                entity = resolver_fn(name)
-                if entity:
-                    break
-
-            if not entity:
-                raise GlobalNamespaceEntityNotFound(name)
-
-            self._attributes[name] = entity
+            raise GlobalNamespaceEntityNotFound(name)
 
         return T.cast(T.Any, self._attributes[name])
 

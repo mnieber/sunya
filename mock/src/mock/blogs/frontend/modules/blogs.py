@@ -1,4 +1,4 @@
-from kits.react_app.namespace import (
+from kits.react_app.impl.namespace import (
     Component,
     Facet,
     Mutation,

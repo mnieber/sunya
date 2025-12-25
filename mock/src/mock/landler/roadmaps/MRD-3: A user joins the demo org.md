@@ -16,7 +16,7 @@
 
 ## MS2: The user joins the demo organization
 
-1. The user clicks on the checklist item to join the demo organization.
+1. The user clicks on the call-to-action to join the demo organization.
    1. This takes the user to the organizations section where invites to organizations are shown
    2. When the user clicks to accept the invitation, we show a form with the following fields:
       1. Display-name
@@ -25,6 +25,3 @@
       2. Member-email address
          1. The member-email for the demo organization will be based on the display name, e.g. busybluehorse@demo-org.com.
          2. Since the member-email for the demo-organization is fake, the backend will instead send email to the users main email account.
-2. Joining the demo organization completes the demo organization checklist item.
-3. The checklist card updates to show the link to navigate to the url of the demo-organization.
-4. The checklist card also shows a link to the user’s organization settings where the user can leave the demo organization.

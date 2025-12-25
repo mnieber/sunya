@@ -1,5 +1,5 @@
-from kits.django_app.namespace import Action, ApiView, Rule, DjangoModule
-from kits.python_app.namespace import Enum, Form
+from kits.django_app.impl.namespace import DjangoModule
+from kits.python_app.impl.namespace import Enum
 from mock.landler.backend.modules.users import Users
 from sunya import Entity, RelatedSet, FK
 from sunya.utils.any_dict import any_dict
@@ -27,44 +27,16 @@ class Organizations(DjangoModule):
             is_demo_org: bool
             organization: FK["Organizations.Models.Organization"]
 
-    class Actions:
-        class CreateOrganization(Action):
-            class Args:
-                create_organization_form: Form
-
-        class AddUserToDemoOrganization(Action):
-            class Args:
-                user: Users.Models.User
-
-        class AddUserToOrganization(Action):
-            class Args:
-                organization: "Organizations.Models.Organization"
-                user: Users.Models.User
-                role: "Organizations.Enums.UserInOrganizationRoles"
-
-        class SetActiveOrganization(Action):
-            class Args:
-                organization: "Organizations.Models.Organization"
-                user: Users.Models.User
-
-    class Rules:
-        class GenerateRandomDisplayName(Rule):
-            pass
+    class Forms:
+        class AddUserToOrganizationForm:
+            display_name: str
+            member_email: str
+            role: "Organizations.Enums.UserInOrganizationRoles"
 
     class Enums:
         class UserInOrganizationRoles(Enum):
             ADMIN = "admin"
             EDITOR = "editor"
-
-    class Api:
-        class CreateOrganizationApiView(ApiView):
-            pass
-
-        class AddUserToDemoOrganizationApiView(ApiView):
-            pass
-
-        class SetActiveOrganizationApiView(ApiView):
-            pass
 
     class DomainEvents:
         class OrganizationCreated:

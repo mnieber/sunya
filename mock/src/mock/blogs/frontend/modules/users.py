@@ -1,5 +1,5 @@
 from sunya import Entity
-from kits.react_app.namespace import ReactModule
+from kits.react_app.impl.namespace import ReactModule
 
 
 class Users(ReactModule):

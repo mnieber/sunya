@@ -1,4 +1,4 @@
-from kits.python_app.namespace import Action, PythonModule
+from kits.python_app.impl.namespace import Action, PythonModule
 import typing as T
 
 from sunya import Entity

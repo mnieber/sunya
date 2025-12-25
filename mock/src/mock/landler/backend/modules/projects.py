@@ -4,8 +4,8 @@ if T.TYPE_CHECKING:
     from mock.landler.backend.modules.plots import Plots
 
 from mock.landler.backend.modules.organizations import Organizations
-from kits.python_app.namespace import Enum, Form
-from kits.django_app.namespace import Action, ApiView, DjangoModule
+from kits.python_app.impl.namespace import Enum
+from kits.django_app.impl.namespace import Action, DjangoModule
 
 from sunya import NowMixin, Entity, FK, RelatedSet
 
@@ -21,26 +21,16 @@ class Projects(DjangoModule):
             project: FK["Projects.Models.Project"]
             organization: FK[Organizations.Models.Organization]
 
+    class Forms:
+        class AddOrganizationToProjectForm:
+            role: "Projects.Enums.OrganizationInProjectRoles"
+
     class Actions:
-        class CreateProject(Action):
-            class Args:
-                create_project_form: Form
-
-        class AddOrganizationToProject(Action):
-            class Args:
-                project: "Projects.Models.Project"
-                organization: Organizations.Models.Organization
-                role: "Projects.Enums.OrganizationInProjectRoles"
-
         class AddPlotToProject(Action):
             class Args:
                 project: "Projects.Models.Project"
                 plot: "Plots.Models.Plot"
                 plot_list_name: T.Optional[str] = None
-
-    class Api:
-        class CreateProjectApiView(ApiView):
-            pass
 
     class Enums:
         class OrganizationInProjectRoles(Enum):

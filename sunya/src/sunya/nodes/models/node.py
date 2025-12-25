@@ -1,17 +1,22 @@
 import typing as T
-
 from dataclassy import dataclass
-from sunya.nodes.models.fact import Fact
-
-if T.TYPE_CHECKING:
-    from sunya.scenarios.models.scenario import Scenario
+from sunya.scenarios.models.goal import Goal
 
 
 @dataclass(kw_only=True)
 class Node:
-    scenario: "Scenario"
-    name = "root"
-    fact: Fact
-    nodes: T.List["Node"] = []
-    parent: T.Optional["Node"] = None
-    level: int = 0
+    goals: T.List[Goal] = []
+
+    def get_goal(self) -> Goal:
+        if not self.goals:
+            raise NoGoalError("No goals in the current scenario.")
+        return self.goals[-1]
+
+    def get_goal_or_none(self) -> Goal | None:
+        if not self.goals:
+            return None
+        return self.get_goal()
+
+
+class NoGoalError(Exception):
+    pass

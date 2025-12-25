@@ -4,8 +4,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from api.utils.extend_schema import extend_schema
-from checklists.actions.update_checklist_item import update_checklist_item
-from checklists.enums import ChecklistItemNames
 from common.form_serializer import FormSerializer
 from common.permissions import user_is_authenticated
 from common.serializers import EmptySerializer
@@ -36,12 +34,6 @@ class AddUserToDemoOrganizationApiView(APIView):
         try:
             add_user_to_demo_organization(
                 request_data.add_user_to_demo_organization_form
-            )
-
-            update_checklist_item(
-                user=user,
-                checklist_item_name=ChecklistItemNames.JOIN_DEMO_ORG,
-                is_completed=True,
             )
 
             return Response(

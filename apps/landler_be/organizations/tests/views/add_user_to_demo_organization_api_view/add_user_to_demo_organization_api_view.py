@@ -4,9 +4,6 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from api.utils.extend_schema.permissions import checks_permission
-from checklists.actions.get_or_create_checklist import get_or_create_checklist
-from checklists.enums import ChecklistItemNames
-from checklists.models import ChecklistItem
 from organizations.actions.get_or_create_demo_organization import (
     get_or_create_demo_organization,
 )
@@ -37,7 +34,6 @@ class TestAddUserToDemoOrganizationApiView:
         self, authenticated_client, url, user
     ):
         # Given
-        get_or_create_checklist(user)
         data = {
             "add_user_to_demo_organization_form": {"display_name": "Busy Blue Horse"}
         }
@@ -55,12 +51,6 @@ class TestAddUserToDemoOrganizationApiView:
         assert membership is not None
         assert membership.display_name == "Busy Blue Horse"
         assert membership.member_email == "busybluehorse@demo-org.com"
-
-        # Check if checklist item is marked as completed
-        checklist_item = ChecklistItem.objects.get(
-            checklist__owner=user, name=ChecklistItemNames.JOIN_DEMO_ORG
-        )
-        assert checklist_item.is_completed is True
 
     @pytest.mark.django_db
     def test_add_user_to_demo_organization_unauthenticated(self, api_client, url):

@@ -30,15 +30,6 @@ def start():
                         with it().creates_the(r.organization_membership):
                             assert r.organization_membership
 
-                # find checklist item
-                with it().finds_the(r.create_org_checklist_item).for_the(r.user):
-                    pass
-
-                # update checklist item
-                with it().calls_the(g.update_checklist_item_action):
-                    with it().marks_the(r.create_org_checklist_item).as_completed():
-                        pass
-
         # set organization as the active organization
         with (
             the(r.user)
@@ -64,7 +55,7 @@ def start():
 
 
 def run():
-    from ..mrd1_a_user_signs_up_and_sees_a_checklist import scenario as mrd1_scenario
+    from ..mrd1_a_user_signs_up import scenario as mrd1_scenario
 
     run_scenario(mrd1_scenario)
     assert g.user_session.user == r.user
@@ -74,3 +65,35 @@ def run():
 
 if __name__ == "__main__":
     run()
+
+
+from sunya import G as m
+from sunya import G as r
+from sunya import G as goals
+
+diagram = f"""
+```mermaid
+sequenceDiagram
+    participant {m.External.Frontend}
+    participant {m.Organizations.ApiViews.CreateOrganizationApiView}
+    participant {m.Organizations.CreateOrganizationAction}
+    participant {m.Organizations.Actions.AddUserToOrganization}
+    participant {m.Organizations.ApiViews.SetActiveOrganizationApiView}
+    participant {m.Organizations.Actions.SetActiveOrganization}
+
+    # 🔳 Create Organization
+    {goals.note_over(r.Frontend, goal().create_an(r.organization).for_the(r.user))}
+    {r.Frontend                    >> r.CreateOrganizationApiView}   : {g.calls()}
+    {r.CreateOrganizationApiView   >> r.CreateOrganization}          : {g.calls(r.create_organization_form)}
+    {r.CreateOrganization          >> r.self}                        : {g.creates(r.organization)}
+    {r.CreateOrganization          >> r.AddUserToOrganization}       : {g.calls(r.organization, r.user, r.admin_role)}
+    {r.AddUserToOrganization       >> r.self}                        : {g.creates(r.organization_membership)}
+    {r.AddUserToOrganization       >> r.CreateOrganizationApiView}   : {g.returns(r.organization)}
+
+    # 🔳 Set Active Organization
+    {goals.note_over(r.Frontend, goal().the(r.user).sets(r.organization).as_the_active_organization())}
+    {r.Frontend                     >> r.SetActiveOrganizationApiView} : {g.calls()}
+    {r.SetActiveOrganizationApiView >> r.SetActiveOrganization}        : {g.calls(r.organization, r.user)}
+    {r.SetActiveOrganization        >> r.self}                         : {g.sets(r.organization).as_the_active_organization_in_the(g.user_session)}
+```
+"""

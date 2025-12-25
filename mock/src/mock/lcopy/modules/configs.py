@@ -1,6 +1,6 @@
 import typing as T
 
-from kits.python_app.namespace import Action, PythonModule, Rule
+from kits.python_app.impl.namespace import Action, PythonModule, Rule
 from sunya import Entity
 
 

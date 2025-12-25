@@ -1,5 +1,4 @@
-from kits.django_app.namespace import Action, ApiView, DjangoModule
-from kits.python_app.namespace import Form
+from kits.django_app.impl.namespace import DjangoModule
 from sunya import Entity
 import typing as T
 
@@ -15,25 +14,15 @@ class Users(DjangoModule):
             is_authenticated: bool = False
             is_active: bool = False
 
-    class Actions:
-        class CreateUser(Action):
-            class Args:
-                create_user_form: Form
+    class Forms:
+        class CreateUserForm:
+            email: str
+            password: str
+            password_confirmation: str
 
-        class SignInUser(Action):
-            class Args:
-                sign_in_user_form: Form
-
-        class ActivateUserAccount(Action):
-            class Args:
-                user: "Users.Models.User"
-
-    class Api:
-        class SignUpUserApiView(ApiView):
-            pass
-
-        class SignInUserApiView(ApiView):
-            pass
+        class SignInUserForm:
+            email: str
+            password: str
 
     class DomainEvents:
         class UserCreated:

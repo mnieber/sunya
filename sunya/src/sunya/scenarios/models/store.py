@@ -9,16 +9,10 @@ if T.TYPE_CHECKING:
 @dataclass(kw_only=True)
 class Store:
     scenarios: T.List["Scenario"] = []
-    stack: T.List = []
-    roles: T.List = []
 
     @property
     def scenario(self):
         return self.scenarios[-1]
-
-    @property
-    def node(self):
-        return self.stack[-1]
 
 
 store = Store()

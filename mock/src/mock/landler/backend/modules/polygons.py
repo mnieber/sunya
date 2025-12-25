@@ -1,6 +1,6 @@
-from kits.python_app.namespace import JSON, Form
+from kits.python_app.impl.namespace import JSON, Form
 from sunya import Entity
-from kits.django_app.namespace import DjangoModule
+from kits.django_app.impl.namespace import DjangoModule
 
 
 class Polygons(DjangoModule):

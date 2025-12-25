@@ -1,8 +1,7 @@
 from mock.landler.backend.modules.plots import Plots
 from mock.landler.backend.modules.projects import Projects
-from kits.python_app.namespace import Form
-from kits.django_app.namespace import Action, ApiView
-
+from kits.python_app.impl.namespace import Form
+from kits.django_app.impl.namespace import DjangoModule, Action, ApiView
 
 from sunya import Entity, MemField, extend, RelatedSet, FK
 

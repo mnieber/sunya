@@ -1,8 +1,8 @@
 from datetime import datetime
 
 from sunya import Entity
-from kits.django_app.namespace import DjangoModule
-from kits.python_app.namespace import Form
+from kits.django_app.impl.namespace import DjangoModule
+from kits.python_app.impl.namespace import Form
 
 
 class Database(DjangoModule):

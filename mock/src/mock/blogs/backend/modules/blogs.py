@@ -1,5 +1,5 @@
-from kits.django_app.namespace import DjangoModule, Action, ApiView, Rule
-from kits.python_app.namespace import Form
+from kits.django_app.impl.namespace import DjangoModule, Action, ApiView, Rule
+from kits.python_app.impl.namespace import Form
 import typing as T
 
 from sunya import RelatedSet, Entity, FK

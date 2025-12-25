@@ -1,7 +1,7 @@
 import typing as T
 
-from kits.python_app.namespace import Form, JSON, Schema
-from kits.django_app.namespace import Action, DjangoModule
+from kits.python_app.impl.namespace import Form, JSON, Schema
+from kits.django_app.impl.namespace import Action, DjangoModule
 from sunya import Entity
 
 

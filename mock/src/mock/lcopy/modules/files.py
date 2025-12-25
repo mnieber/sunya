@@ -1,6 +1,6 @@
 import typing as T
 
-from kits.python_app.namespace import Action, Function, PythonModule, Rule
+from kits.python_app.impl.namespace import Action, Function, PythonModule, Rule
 
 if T.TYPE_CHECKING:
     from .configs import Configs
