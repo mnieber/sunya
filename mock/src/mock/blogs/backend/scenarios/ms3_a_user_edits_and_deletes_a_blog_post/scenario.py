@@ -1,49 +1,45 @@
+import sunya
 from sunya import (
-    G as g,
     R as r,
-    I as i,
+    M as m,
+    Rel as rel,
     goal,
-    add_scenario,
-    run_scenario,
-    get_scenario,
-    the,
-    it,
+    actions as a,
+    participant,
+    note_over,
+    self,
 )
 
 
-scenario_name = f"backend/ms3_a_user_edits_and_deletes_a_blog_post"
+scenario = sunya.add_scenario("ms3_a_user_edits_and_deletes_a_blog_post")
+markdown_node = sunya.add_markdown_node(
+    scenario, "A user edits and deletes a blog post"
+)
 
+markdown_node.markdown = f"""
+```mermaid
+sequenceDiagram
+    {participant(m.External.Actors.Frontend, role=r.Frontend)}
+    {participant(m.Blogs.ApiViews.UpdateBlogPostApiView, role=r.UpdateBlogPostApiView)}
+    {participant(m.Blogs.Actions.UpdateBlogPost, role=r.UpdateBlogPostAction)}
+    {participant(m.Blogs.Rules.HasForbiddenWords, role=r.HasForbiddenWordsRule)}
+    {participant(m.Blogs.ApiViews.DeleteBlogPostsApiView, role=r.DeleteBlogPostsApiView)}
+    {participant(m.Blogs.Actions.DeleteBlogPosts, role=r.DeleteBlogPostsAction)}
 
-def start():
-    with add_scenario(scenario_name):
-        with goal(i.edit_a(r.blog_post).in_the(r.blog)):
-            with the(g.update_blog_post_api_view).calls_the(g.update_blog_post_action):
-                with it().runs_the(g.has_forbidden_words_rule):
-                    pass
+    # 🔳 Edit Blog Post
+    {note_over(r.Frontend, goal(rel().edit_a(r.blog_post).in_the(r.blog)))}
+    {r.Frontend               >> r.UpdateBlogPostApiView}    : {a.calls()}
+    {r.UpdateBlogPostApiView  >> r.UpdateBlogPostAction}     : {a.calls(r.update_blog_post_form)}
+    {r.UpdateBlogPostAction   >> r.HasForbiddenWordsRule}    : {a.it(rel().runs(r.blog_post))}
+    {r.HasForbiddenWordsRule  >> r.UpdateBlogPostAction}     : {a.returns()}
+    {r.UpdateBlogPostAction   >> self()}                     : {a.it(rel().updates(r.blog_post))}
+    {r.UpdateBlogPostAction   >> r.UpdateBlogPostApiView}    : {a.returns(r.blog_post)}
 
-        with goal(i.delete_some(r.blog_posts).in_the(r.blog)):
-            with the(g.delete_blog_posts_api_view).calls_the(
-                g.delete_blog_posts_action
-            ):
-                pass
-
-    return get_scenario(scenario_name)
-
-
-def run():
-    from ..ms2_a_user_creates_a_blog_post import scenario as ms2_scenario
-
-    run_scenario(ms2_scenario)
-
-    assert r.user
-    assert r.blog
-    assert r.blog_post
-
-    # Create a list of blog posts for the delete operation
-    r.blog_posts = [r.blog_post]
-
-    return start()
-
-
-if __name__ == "__main__":
-    run()
+    # 🔳 Delete Blog Posts
+    {note_over(r.Frontend, goal(rel().delete_some(r.blog_posts).in_the(r.blog)))}
+    {r.Frontend                >> r.DeleteBlogPostsApiView}   : {a.calls()}
+    {r.DeleteBlogPostsApiView  >> r.DeleteBlogPostsAction}    : {a.calls(r.blog_posts)}
+    {r.DeleteBlogPostsAction   >> self()}                     : {a.it(rel().deletes(r.blog_posts))}
+    {r.DeleteBlogPostsAction   >> r.DeleteBlogPostsApiView}   : {a.returns()}
+```
+"""

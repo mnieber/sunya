@@ -6,10 +6,13 @@ class FileWriter:
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(exist_ok=True, parents=True)
 
-    def write_scenario(self, scenario, scenario_md):
-        parts = scenario.name.split("/")
-        fn = self._get_fn(parts[:-1], parts[-1] + ".md")
+    def write_scenario(self, package, scenario, scenario_md):
+        fn = self._get_fn([package, "scenarios"], scenario.name + ".md")
         self._write_file(fn, scenario_md)
+
+    def write_module(self, package, module_name, module_md):
+        fn = self._get_fn([package, "modules"], module_name + ".md")
+        self._write_file(fn, module_md)
 
     def _get_fn(self, dir_names, name):
         result = Path(self.output_dir)

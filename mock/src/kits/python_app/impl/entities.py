@@ -1,9 +1,9 @@
-from sunya import Entity
+from sunya import Module, Entity
 from sunya.utils import type_name_to_kebab
 from dataclassy import dataclass
 
 
-class PythonModule(Entity):
+class PythonModule(Module):
     pass
 
 

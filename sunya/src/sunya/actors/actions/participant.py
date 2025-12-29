@@ -1,5 +1,5 @@
 from sunya.actors.models.role import Role
-from sunya.scenarios.utils.module_namespace import ActorSpec
+from sunya.modules.utils.module_namespace import ActorSpec
 from sunya.scenarios.models.scenario import get_scenario
 
 

@@ -1,39 +1,34 @@
+import sunya
 from sunya import (
-    G as g,
     R as r,
-    I as i,
+    M as m,
+    Rel as rel,
     goal,
-    add_scenario,
-    run_scenario,
-    get_scenario,
-    the,
+    actions as a,
+    participant,
+    note_over,
+    self,
 )
 
 
-scenario_name = f"backend/ms2_a_user_creates_a_blog_post"
+scenario = sunya.add_scenario("ms2_a_user_creates_a_blog_post")
+markdown_node = sunya.add_markdown_node(scenario, "A user creates a blog post")
 
+markdown_node.markdown = f"""
+```mermaid
+sequenceDiagram
+    {participant(m.External.Actors.Frontend, role=r.Frontend)}
+    {participant(m.Blogs.ApiViews.CreateBlogPostApiView, role=r.CreateBlogPostApiView)}
+    {participant(m.Blogs.Actions.CreateBlogPost, role=r.CreateBlogPostAction)}
+    {participant(m.Blogs.Rules.HasForbiddenWords, role=r.HasForbiddenWordsRule)}
 
-def start():
-    with add_scenario(scenario_name):
-        with goal(i.create_a(r.blog_post).in_the(r.blog)):
-            with the(g.create_blog_post_api_view).calls_the(g.create_blog_post_action):
-                with the(g.create_blog_post_action).runs_the(
-                    g.has_forbidden_words_rule
-                ):
-                    pass
-
-    return get_scenario(scenario_name)
-
-
-def run():
-    from ..ms1_a_user_creates_a_blog import scenario as ms1_scenario
-
-    run_scenario(ms1_scenario)
-    assert r.user
-    assert r.blog
-
-    return start()
-
-
-if __name__ == "__main__":
-    run()
+    # 🔳 Create Blog Post
+    {note_over(r.Frontend, goal(rel().create_a(r.blog_post).in_the(r.blog)))}
+    {r.Frontend               >> r.CreateBlogPostApiView}    : {a.calls()}
+    {r.CreateBlogPostApiView  >> r.CreateBlogPostAction}     : {a.calls(r.create_blog_post_form)}
+    {r.CreateBlogPostAction   >> r.HasForbiddenWordsRule}    : {a.it(rel().runs(r.blog_post))}
+    {r.HasForbiddenWordsRule  >> r.CreateBlogPostAction}     : {a.returns()}
+    {r.CreateBlogPostAction   >> self()}                     : {a.creates(r.blog_post)}
+    {r.CreateBlogPostAction   >> r.CreateBlogPostApiView}    : {a.returns(r.blog_post)}
+```
+"""

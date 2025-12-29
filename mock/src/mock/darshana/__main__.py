@@ -1,30 +1,27 @@
+from pathlib import Path
 from sunya import FileWriter
-from sunya.entrypoint import (
-    wipe_spec_files,
-    write_scenarios,
-    parse_args,
-    get_scenario_module_paths,
-)
+from sunya.runtime import wipe_spec_files, parse_args, write_specs
 
 config = dict(
-    prompt_writer_path_tpl="default.{layer}.prompt_writer",
-    scenario_path_tpl="mock.darshana.{layer}.scenarios.{scenario_fn}",
-    scenario_path_by_name={},
-    all_scenario_paths=[
-        "frontend/ms1_a_user_creates_a_project.scenario",
-        "frontend/ms2_a_user_uploads_files_to_a_project.scenario",
-        "frontend/ms3_a_user_views_a_scenario.scenario",
-        "backend/ms1_a_user_creates_a_project.scenario",
-    ],
+    spec_paths_by_package=dict(
+        backend=dict(
+            scenario_paths=["backend/scenarios/**/scenario.py"],
+            module_paths=["backend/modules/*.py"],
+        ),
+        frontend=dict(
+            scenario_paths=["frontend/scenarios/**/scenario.py"],
+            module_paths=["frontend/modules/*.py"],
+        ),
+    ),
 )
 
 
 def run(args):
-    scenario_module_paths = get_scenario_module_paths(config, args)
-
-    file_writer = FileWriter("darshana/spec")
+    file_writer = FileWriter("darshana/md_specs")
     wipe_spec_files(file_writer)
-    write_scenarios(config, scenario_module_paths, file_writer)
+    root_dirname = Path(__file__).parent
+    for package, spec_paths in config["spec_paths_by_package"].items():
+        write_specs(root_dirname, package, spec_paths, file_writer)
 
 
 if __name__ == "__main__":

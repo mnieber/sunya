@@ -5,6 +5,10 @@ class GlobalNamespace:
     def __init__(self):
         self._attributes = {}
 
+    def clear(self):
+        """Clear all global namespace attributes."""
+        self._attributes = {}
+
     def set(self, name, value, force=False):
         if name in self._attributes and not force:
             raise AttributeError(f"Attribute '{name}' already exists")

@@ -1,4 +1,5 @@
 from .actors.models.entity import NowMixin, Entity  # noqa
+from .actors.models.module import Module  # noqa
 from .extension.extend import extend  # noqa
 from .extension.mem_field import MemField  # noqa
 from .extension.memfun import MemFun  # noqa
@@ -14,7 +15,7 @@ from .steps.rules.self import self, Self  # noqa
 from .scenarios.utils.global_namespace import G  # noqa
 from .nodes.actions.add_markdown_node import add_markdown_node  # noqa
 from .scenarios.utils.tuple_namespace import I  # noqa
-from .scenarios.utils.module_namespace import M  # noqa
+from .modules.utils.module_namespace import M  # noqa
 from .utils import str_to_uuid, any_dict, type_name_to_kebab  # noqa
 from .scenarios.utils.role_namespace import add_role, R  # noqa
 from .scenarios.utils.goal import goal  # noqa

@@ -12,7 +12,7 @@ from sunya import (
     note_over,
 )
 
-scenario = sunya.add_scenario(f"backend/mrd1_a_user_signs_up")
+scenario = sunya.add_scenario(f"mrd1_a_user_signs_up")
 markdown_node = sunya.add_markdown_node(scenario, "A user signs up")
 
 markdown_node.markdown = f"""

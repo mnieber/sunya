@@ -1,5 +1,4 @@
-from kits.django_app.impl.namespace import DjangoModule, Action, ApiView, Rule
-from kits.python_app.impl.namespace import Form
+from kits.django_app.impl.namespace import DjangoModule
 import typing as T
 
 from sunya import RelatedSet, Entity, FK
@@ -17,52 +16,6 @@ class Blogs(DjangoModule):
             title: str
             content: T.Optional[str]
             blog: FK["Blogs.Models.Blog"]
-
-    class Actions:
-        class CreateBlog(Action):
-            class Args:
-                create_blog_form: Form
-
-        class CreateBlogPost(Action):
-            class Args:
-                create_blog_post_form: Form
-                blog: "Blogs.Models.Blog"
-
-        class UpdateBlog(Action):
-            class Args:
-                update_blog_form: Form
-                blog: "Blogs.Models.Blog"
-
-        class UpdateBlogPost(Action):
-            class Args:
-                update_blog_post_form: Form
-                blog_post: "Blogs.Models.BlogPost"
-
-        class DeleteBlogPosts(Action):
-            class Args:
-                delete_blog_posts_form: Form
-                blog_posts: T.List["Blogs.Models.BlogPost"]
-
-    class Rules:
-        class HasForbiddenWords(Rule):
-            class Args:
-                text: str
-
-    class Api:
-        class CreateBlogApiView(ApiView):
-            pass
-
-        class CreateBlogPostApiView(ApiView):
-            pass
-
-        class UpdateBlogApiView(ApiView):
-            pass
-
-        class UpdateBlogPostApiView(ApiView):
-            pass
-
-        class DeleteBlogPostsApiView(ApiView):
-            pass
 
     class DomainEvents:
         class BlogCreated:

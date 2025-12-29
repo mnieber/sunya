@@ -1,33 +1,36 @@
+import sunya
 from sunya import (
-    the,
     goal,
-    add_scenario,
-    get_scenario,
-    G as g,
+    M as m,
     R as r,
-    I as i,
-    it,
+    Rel as rel,
+    actions as a,
+    participant,
+    note_over,
+    self,
 )
 
-scenario_name = f"backend/ms1_a_user_creates_a_blog"
+scenario = sunya.add_scenario("ms1_a_user_creates_a_blog")
+markdown_node = sunya.add_markdown_node(scenario, "A user creates a blog")
 
+markdown_node.markdown = f"""
+```mermaid
+sequenceDiagram
+    {participant(m.External.Actors.Frontend, role=r.Frontend)}
+    {participant(m.Blogs.ApiViews.CreateBlogApiView, role=r.CreateBlogApiView)}
+    {participant(m.Blogs.Actions.CreateBlog, role=r.CreateBlogAction)}
+    {participant(m.Blogs.Rules.HasForbiddenWords, role=r.HasForbiddenWordsRule)}
 
-def start():
-    with add_scenario(scenario_name):
-        with goal(i.create_a(r.blog).for_the(r.user)):
-            with the(g.create_blog_api_view).calls_the(g.create_blog_action):
-                with it().runs_the(g.has_forbidden_words_rule):
-                    pass
+    # 🔳 Create Blog
+    {note_over(r.Frontend, goal(rel().create_a(r.blog).for_the(r.user)))}
+    {r.Frontend          >> r.CreateBlogApiView}     : {a.calls()}
+    {r.CreateBlogApiView >> r.CreateBlogAction}      : {a.calls(r.create_blog_form)}
+    {r.CreateBlogAction  >> r.HasForbiddenWordsRule} : {a.calls()}
+    {r.HasForbiddenWordsRule >> r.CreateBlogAction}  : {a.returns()}
+    opt No forbidden words found
+    {r.CreateBlogAction  >> self()}                  : {a.creates(r.blog)}
+    end
+    {r.CreateBlogAction  >> r.CreateBlogApiView}     : {a.returns(r.blog)}
 
-                with it().creates_the(r.blog):
-                    assert r.blog
-
-    return get_scenario(scenario_name)
-
-
-def run():
-    return start()
-
-
-if __name__ == "__main__":
-    run()
+```
+"""
