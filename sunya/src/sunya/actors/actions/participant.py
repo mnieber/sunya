@@ -1,3 +1,5 @@
+import re
+
 from sunya.actors.models.role import Role
 from sunya.modules.utils.module_namespace import ActorSpec
 from sunya.scenarios.models.scenario import get_scenario
@@ -16,12 +18,32 @@ def participant(actor: any, role: Role | None = None):
     else:
         name = actor.__class__.__name__
 
-    actor_name = name
-
-    postfixes = ["ApiView", "Action", "Rule"]
-    for postfix in postfixes:
-        if actor_name.endswith(postfix):
-            actor_name = actor_name[: -len(postfix)] + "<br/>" + postfix
-            break
+    actor_name = _create_actor_name(name)
 
     return f"participant {name} as {actor_name}"
+
+
+def _create_actor_name(name):
+    # Split the name into camel-case parts
+    parts = re.findall(r"[A-Z]+(?=[A-Z][a-z]|\b)|[A-Z][a-z]+|[a-z]+|[0-9]+", name)
+    if not parts:
+        return name
+
+    # Group parts into lines that fit within the length limit
+    MAX_LINE_LENGTH = 15
+    lines = []
+    current_line = ""
+
+    for part in parts:
+        if not current_line:
+            current_line = part
+        elif len(current_line) + len(part) <= MAX_LINE_LENGTH:
+            current_line += part
+        else:
+            lines.append(current_line)
+            current_line = part
+
+    if current_line:
+        lines.append(current_line)
+
+    return "<br/>".join(lines)
