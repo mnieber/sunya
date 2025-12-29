@@ -33,3 +33,12 @@ sequenceDiagram
     SignInUserAction -->> SignInUserApiView: returns()
 ```
 
+**Legend:**
+
+- Frontend → External.Actors.Frontend
+- SignUpUserApiView → Users.ApiViews.SignUpUserApiView
+- CreateUserAction → Users.Actions.CreateUser
+- ActivateUserAccountAction → Users.Actions.ActivateUserAccount
+- SignInUserApiView → Users.ApiViews.SignInUserApiView
+- SignInUserAction → Users.Actions.SignInUser
+

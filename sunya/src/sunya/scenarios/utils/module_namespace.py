@@ -75,8 +75,13 @@ class ActorSpec:
         self._section_name = section_name
         self._actor_name = actor_name
 
-    def __repr__(self):
+    @property
+    def full_path(self) -> str:
+        """Returns the full module spec path (e.g., 'External.Actors.UserSession')."""
         return f"{self._module_name}.{self._section_name}.{self._actor_name}"
+
+    def __repr__(self):
+        return self.full_path
 
 
 M = ModuleNamespace()

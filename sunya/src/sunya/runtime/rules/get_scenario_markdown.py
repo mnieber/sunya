@@ -21,4 +21,11 @@ def get_scenario_markdown(scenario):
         markdown_delta = "\n".join(markdown_lines)
         markdown += f"## {node.title}\n\n{markdown_delta}\n\n"
 
+        # Add legend if it exists and is not empty
+        if hasattr(node, "legend") and node.legend:
+            markdown += "**Legend:**\n\n"
+            for role_name, module_path in node.legend.items():
+                markdown += f"- {role_name} → {module_path}\n"
+            markdown += "\n"
+
     return markdown

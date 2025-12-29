@@ -1,6 +1,6 @@
 # Sunya roadmap
 
-# Milestones
+# Completed milestones
 
 ## MS1: a scenario can declare actors in the global namespace (`g`)
 
@@ -42,13 +42,25 @@
       1. This creates an action-relation of (r.ApiHandler, "calls", r.Action, "with", r.Form)
       2. Action-relations have a reference to their related goal
 
+# Milestones
+
+## MS: documentation for several libs can be organized in a single config file
+
+1. Hierarchy is book -> lib -> module
+
+## Claude can generate scenarios from a roadmap
+
+1. We update the instructions for generating scenarios from a roadmap
+2. We turn the scenario specs into separate markdown instructions for Claude
+   1. These instructions include a lut from roles such as ActivateUserAccountAction to Users.Actions.ActivateUserAccount
+
 ## MS: user-supplied module specifications can be added to the module namespace
 
 1. The scenario config can refer to module spec files that are supplied by the user.
 2. These module spec files are automatically added to the module namespace...
    1. ...so that they can be used in scenarios.
 
-## MS: A user reads the markdown in dashana
+## MS: A user inspects the markdown in dashana
 
 1. Every step in the sequence diagram can...
    1. ...have an associated help-text and...
