@@ -8,6 +8,9 @@ dependencies = ["dataclassy", "multimethods.py", "PyYAML"]
 [project.optional-dependencies]
 dev = ["pytest", "faker", "pytest-html"]
 
+[project.scripts]
+sunya = "sunya.runtime.entrypoints.sunya:main"
+
 [tool.setuptools]
 package-dir = { "" = "src" }
 

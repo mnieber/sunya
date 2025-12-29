@@ -14,21 +14,24 @@ def _term_to_str(term: any) -> str:
     from sunya.steps.rules.it import It
 
     if isinstance(term, str):
-        return term.replace("_", " ")
+        term_str = term.replace("_", " ")
 
-    if isinstance(term, Role):
-        return term.name
+    elif isinstance(term, Role):
+        term_str = term.name
 
-    if isinstance(term, The):
-        return "the " + _term_to_str(term.entity)
+    elif isinstance(term, The):
+        term_str = "the " + _term_to_str(term.entity)
 
-    if isinstance(term, Rel):
-        return " ".join([_term_to_str(x) for x in term.fact_bits])
+    elif isinstance(term, Rel):
+        term_str = " ".join([_term_to_str(x) for x in term.fact_bits])
 
-    if isinstance(term, It):
-        return "it"
+    elif isinstance(term, It):
+        term_str = "it"
 
-    if isinstance(term, Entity):
-        return term.__class__.__name__
+    elif isinstance(term, Entity):
+        term_str = term.__class__.__name__
 
-    raise ValueError(f"Cannot convert term of type {type(term)} to string.")
+    else:
+        raise ValueError(f"Cannot convert term of type {type(term)} to string.")
+
+    return term_str.strip("_")

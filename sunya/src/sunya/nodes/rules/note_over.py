@@ -1,2 +1,4 @@
 def note_over(actor: any, note: any):
-    return f"note over {actor.name}: {note}"
+    actors = actor if isinstance(actor, list) else [actor]
+    actor_names = ", ".join(a.name for a in actors)
+    return f"note over {actor_names}: {note}"

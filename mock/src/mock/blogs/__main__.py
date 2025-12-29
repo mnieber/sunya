@@ -9,6 +9,7 @@ from sunya.runtime import (
 
 
 config = dict(
+    output_dir="md_specs",
     spec_paths_by_package=dict(
         backend=dict(
             scenario_paths=["backend/scenarios/**/scenario.py"],
@@ -18,13 +19,13 @@ config = dict(
             scenario_paths=["frontend/scenarios/**/scenario.py"],
             module_paths=["frontend/modules/*.py"],
         ),
-    )
+    ),
 )
 
 
 def run(args):
     root_dirname = Path(__file__).parent
-    file_writer = FileWriter(os.path.join(root_dirname, "md_specs"))
+    file_writer = FileWriter(os.path.join(root_dirname, config["output_dir"]))
     for package, spec_paths in config["spec_paths_by_package"].items():
         wipe_spec_files(file_writer, package)
         write_specs(root_dirname, package, spec_paths, file_writer)
