@@ -1,59 +1,49 @@
+import sunya
 from sunya import (
     goal,
-    add_scenario,
-    get_scenario,
-    the,
-    G as g,
+    M as m,
     R as r,
-    I as i,
-    it,
+    Rel as rel,
+    actions as a,
+    self,
+    participant,
+    actor,
+    note_over,
 )
 
-scenario_name = f"bookie/a_user_creates_a_book_with_lorem_ipsum"
+scenario = sunya.add_scenario(f"ms1_a_user_creates_a_book")
+markdown_node = sunya.add_markdown_node(scenario, "A user creates a book")
 
+markdown_node.markdown = f"""
+```mermaid
+sequenceDiagram
+    {actor(m.External.Actors.User                    , role=r.User)}
+    {participant(m.Books.Actions.CreateBook          , role=r.CreateBookAction)}
+    {participant(m.Chapters.Actions.CreateChapter    , role=r.CreateChapterAction)}
+    {participant(m.Chapters.Actions.CreateParagraph  , role=r.CreateParagraphAction)}
 
-def start():
-    with add_scenario(scenario_name):
-        with goal(i.create_a(r.book).with_random_lorem_ipsum_text()):
-            # Run the command line tool
-            with the(r.user).runs_the(g.bookie_cli).with_args(
-                "create-book", "--title", "My Book", "--chapters", "3"
-            ):
-                # Create the book
-                with the(g.bookie_cli).calls_the(g.create_book_action):
-                    with it().creates_the(r.book):
-                        assert r.book.title == "My Book"
+    # 🔳 Create book
+    {note_over(r.User, goal(rel().create_a(r.book).with_lorem_ipsum_text()))}
+    {r.User                   >  r.CreateBookAction}       : {a.calls(title="My Book", num_chapters=3)}
+    {r.CreateBookAction       >> self()}                   : {a.creates(r.book)}
 
-                    # Create chapters
-                    for chapter_idx in range(3):
+    # 🔳 Create chapters
+    loop for each chapter (3 times)
+        {r.CreateBookAction   >> r.CreateChapterAction}    : {a.calls()}
+        {r.CreateChapterAction >> self()}                  : {a.creates(r.chapter)}
 
-                        # Create chapter
-                        with (
-                            it()
-                            .calls_the(g.create_chapter_action)
-                            .to_create_the(r.current_chapter)
-                        ):
-                            # For each paragraph to be created in this chapter
-                            for para_idx in range(5):
-                                with (
-                                    it()
-                                    .calls_the(g.create_paragraph_action)
-                                    .to_create_a_paragraph_for_the(r.current_chapter)
-                                ):
-                                    pass
+        # 🔳 Create paragraphs
+        loop for each paragraph (5 times)
+            {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls(length="medium")}
+            {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph)}
+            {r.CreateParagraphAction >> self()}                : {a.it(rel().adds(r.paragraph).to(r.chapter))}
+            {r.CreateParagraphAction >> r.CreateChapterAction} : {a.returns(r.paragraph)}
+        end
 
-                            assert len(r.current_chapter.paragraphs) == 5
+        {r.CreateChapterAction >> self()}                  : {a.it(rel().adds(r.chapter).to(r.book))}
+        {r.CreateChapterAction >> r.CreateBookAction}      : {a.returns(r.chapter)}
+    end
 
-                    # Finally, the CLI outputs the information about what was created
-                    with the(g.bookie_cli).outputs_book_creation_summary(r.book):
-                        pass
-
-    return get_scenario(scenario_name)
-
-
-def run():
-    return start()
-
-
-if __name__ == "__main__":
-    run()
+    {r.CreateBookAction       >> r.User}                   : {a.returns(r.book)}
+```
+"""

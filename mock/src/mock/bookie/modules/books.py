@@ -1,4 +1,4 @@
-from kits.python_app.impl.namespace import Action, PythonModule
+from kits.python_app.impl.namespace import PythonModule
 import typing as T
 
 from sunya import Entity
@@ -12,10 +12,3 @@ class Books(PythonModule):
         class Book(Entity):
             title: str
             chapters: T.List["Chapters.Models.Chapter"] = []
-
-    class Actions:
-        class CreateBook(Action):
-            class Args:
-                title: str
-                num_chapters: int = 3
-                paragraphs_per_chapter: int = 5
