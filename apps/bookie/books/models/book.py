@@ -1,7 +1,3 @@
-"""
-Book model for the bookie application.
-"""
-
 from dataclassy import dataclass
 import typing as T
 

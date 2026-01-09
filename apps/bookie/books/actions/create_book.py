@@ -1,5 +1,6 @@
 import logging
 import lorem
+
 from bookie.books.models.book import Book
 from bookie.chapters.actions.create_chapter import create_chapter
 

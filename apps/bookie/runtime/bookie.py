@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Bookie - A tool for creating books with lorem ipsum text
-"""
-
 import argparse
 import logging
 import sys

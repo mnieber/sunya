@@ -1,6 +1,6 @@
 # Instructions for writing entrypoints
 
-When writing an action file, please follow the example in `bookie/__main__.py`.
+When writing an entrypoint file, please follow the example in `bookie/runtime/bookie.py`. When a pyproject file exists, then entrypoints should be added to its `[project.scripts]` section.
 
 ## Parsing args
 

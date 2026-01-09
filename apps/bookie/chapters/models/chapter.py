@@ -1,7 +1,3 @@
-"""
-Chapter model for the bookie application.
-"""
-
 from dataclassy import dataclass
 from typing import List
 
