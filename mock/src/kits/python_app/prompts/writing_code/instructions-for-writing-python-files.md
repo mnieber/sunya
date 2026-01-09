@@ -1,28 +1,5 @@
 # Instructions for writing Python files
 
-## Code is written step by step
-
-The process of generating code together should be stepwise. When writing backend code, the steps are as follows:
-
-1. First you will review the instructions and tell me if they are clear. If something is underspecified, please ask me about it.
-2. Next, if there is an entrypoint to be generated, we will generate that entrypoint
-   - This entrypoint will depend on models and actions that do not yet exist, so the imports will fail. However, that's okay for now.
-3. Next, we will write the first `models` files, up to the point where we are able to implement the first action.
-4. Next, we implement the first `action` file.
-5. We repeat this process until all code has been generated.
-
-## Generate just one file at a time!
-
-RULE: Always generate just one file at a time.
-
-This is very important! It allows me to check each file and iterate on it before we move on.
-In the rare cases that I would like you to generate multiple files at once, then I will explicitly ask you to do so.
-
-## Ignore broken imports
-
-If the generated file contains imports to symbols that do not yet exist, then don't worry about it, as we will generate these
-related files later.
-
 ## Use of comments
 
 RULE: Functions, classes and files should not have a "header" comment at the top, nor should they have a docstring.
@@ -42,4 +19,4 @@ I might add `logger.debug` manually myself, but don't put `logger.debug` in the 
 
 ## Use of dataclassy
 
-Although the standard Python library has a dataclasses package, I prefer the one from the dataclassy pypi package. Therefore, whenever I mention dataclasses, I mean the ones from dataclassy.
+Although the standard Python library has a dataclasses package, I prefer the one from the dataclassy pypi package. Therefore, whenever I mention dataclasses, I mean the ones from dataclassy. Remember that in dataclassy it's allowed to initialize a dict field using `= {}` and a list field using `= []`.

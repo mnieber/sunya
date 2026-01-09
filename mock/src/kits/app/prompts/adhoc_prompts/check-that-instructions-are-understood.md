@@ -1,1 +1,0 @@
-As mentioned in the project description, I need your help with writing technical specification files. In your reference data, you will find specific instructions for each type of specification file. Can you read both the general instructions and the specific instructions and tell me if they are clear?
