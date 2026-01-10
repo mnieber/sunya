@@ -32,26 +32,6 @@ The different sections within a module spec correspond to sub-directories and fi
 4. For Enums: group related enums in a single `enums.py` file
 5. For Actions/Rules/EntryPoints: one file per function
 
-## Scenario interactions to function signatures
-
-Scenario diagrams show interactions between components and may specify some of the arguments that functions must accept.
-Note that the scenario may refer to a `form` argument. This typically means that the actors (e.g. the target `book` instance) are passed as separate arguments, but the action values (e.g. the new book title and book status) are passed in a single object.
-
-**Example from scenario:**
-
-```
-{r.CreateBookAction >> r.CreateChapterAction} : {a.calls(title="Chapter 1", num_paragraphs=5)}
-```
-
-This indicates that `create_chapter` should have parameters `title` and `num_paragraphs`, but you should add additional parameters if needed based on the implementation requirements (e.g., a `book` parameter to associate the chapter with a book).
-
-**Guidelines:**
-
-- The scenario specifies **some** required arguments
-- You may add additional arguments that are necessary for the implementation
-- Use type hints to make parameter types clear
-- Consider what data the function needs to accomplish its goal
-
 ## Action return values and error handling
 
 **Return values:**
