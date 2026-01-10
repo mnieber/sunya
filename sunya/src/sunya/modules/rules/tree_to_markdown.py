@@ -50,7 +50,9 @@ def _render_class(class_name, base_class, tree, indent=0):
     has_content = False
 
     # Process children (skip metadata keys starting with _)
-    children = [(k, v) for k, v in tree.items() if not k.startswith("_")]
+    children = [
+        (k, v) for k, v in tree.items() if k == "__doc__" or not k.startswith("_")
+    ]
 
     # Sort children: sections first, then fields
     sections = [
