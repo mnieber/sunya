@@ -1,3 +1,6 @@
+import re
+
+
 def tree_to_markdown(module_name, tree):
     """
     Convert a tree structure to markdown with Python code blocks.
@@ -50,9 +53,14 @@ def _render_class(class_name, base_class, tree, indent=0):
     has_content = False
 
     # Process children (skip metadata keys starting with _)
-    children = [
-        (k, v) for k, v in tree.items() if k == "__doc__" or not k.startswith("_")
-    ]
+    children = []
+    for k, v in tree.items():
+        if k == "__doc__":
+            if "_default" in v:
+                v["_default"] = re.sub(r"[ ]*(\\n)+[ ]*", " ", v["_default"])
+        elif k.startswith("_"):
+            continue
+        children.append((k, v))
 
     # Sort children: sections first, then fields
     sections = [
