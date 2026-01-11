@@ -65,27 +65,23 @@ def _process_packages(root_dirname, config, file_writer, verbose=False):
 
     Returns a set of directories that contain spec files (for watching).
     """
-    watch_dirs = set()
+    watch_paths = set()
 
-    for package, spec_paths in config["spec_paths_by_package"].items():
+    for package, spec_config in config["spec_paths_by_package"].items():
         if verbose:
             logger.debug(f"Processing package: {package}")
 
-        wipe_spec_files(file_writer, package)
-        write_specs(root_dirname, package, spec_paths, file_writer)
+        # Determine the output path for this package
+        # Default to package name, but allow override via output_dir
+        package_output_path = spec_config.get("output_dir", package)
 
-        # Collect directories containing spec files
-        for spec_path in spec_paths:
-            # Convert spec path to absolute path
-            if not Path(spec_path).is_absolute():
-                spec_path = root_dirname / spec_path
-            else:
-                spec_path = Path(spec_path)
+        wipe_spec_files(file_writer, package_output_path)
+        more_watch_paths = write_specs(
+            root_dirname, package, spec_config, file_writer, package_output_path
+        )
+        watch_paths.update(more_watch_paths)
 
-            # Add the directory containing the spec file
-            watch_dirs.add(spec_path.parent)
-
-    return watch_dirs
+    return watch_paths
 
 
 class SpecFileChangeHandler(FileSystemEventHandler):
@@ -105,7 +101,7 @@ class SpecFileChangeHandler(FileSystemEventHandler):
             return False
 
         # Check if the changed file is a Python file
-        if not event.src_path.endswith('.py'):
+        if not event.src_path.endswith(".py"):
             return False
 
         # Debounce: avoid processing events that are too close together
@@ -135,7 +131,9 @@ class SpecFileChangeHandler(FileSystemEventHandler):
         logger.info("Change detected, re-rendering specs...")
 
         try:
-            _process_packages(self.root_dirname, self.config, self.file_writer, self.verbose)
+            _process_packages(
+                self.root_dirname, self.config, self.file_writer, self.verbose
+            )
             logger.info("✓ Documentation re-rendered successfully")
         except Exception as e:
             logger.error(f"Error during re-rendering: {e}")
@@ -177,7 +175,7 @@ def render_command(args):
         sys.path.insert(0, str(root_dirname))
 
     # Determine output directory
-    output_dir = config.get("output_dir", "md_specs")
+    output_dir = config.get("output_dir", "specs")
     if not Path(output_dir).is_absolute():
         output_dir = root_dirname / output_dir
 
@@ -185,7 +183,9 @@ def render_command(args):
     file_writer = FileWriter(output_dir)
 
     # Process each package and get directories to watch
-    watch_dirs = _process_packages(root_dirname, config, file_writer, verbose=args.verbose)
+    watch_paths = _process_packages(
+        root_dirname, config, file_writer, verbose=args.verbose
+    )
 
     logger.info(f"✓ Documentation rendered to: {output_dir}")
 
@@ -201,9 +201,9 @@ def render_command(args):
         observer = Observer()
 
         # Watch each directory
-        for watch_dir in watch_dirs:
-            logger.info(f"Watching directory: {watch_dir}")
-            observer.schedule(event_handler, str(watch_dir), recursive=True)
+        for watch_path in watch_paths:
+            logger.info(f"Watching file: {watch_path}")
+            observer.schedule(event_handler, str(watch_path))
 
         # Start watching
         observer.start()

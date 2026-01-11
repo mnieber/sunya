@@ -14,23 +14,30 @@ from sunya.scenarios.utils.global_namespace import G  # noqa
 from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
 
 
-def write_specs(root_dirname, package, spec_paths, file_writer: FileWriter):
+def write_specs(
+    root_dirname, package, spec_paths, file_writer: FileWriter, package_output_path=None
+):
     M.clear()
     G.clear()
 
+    # Default to package name if no custom output path provided
+    if package_output_path is None:
+        package_output_path = package
+
     # Write scenarios
-    _write_scenarios(
-        package,
-        get_scenario_spec_paths(root_dirname, spec_paths["scenario_paths"]),
-        file_writer,
+    scenario_spec_paths = get_scenario_spec_paths(
+        root_dirname, spec_paths["scenario_paths"]
     )
+    _write_scenarios(package_output_path, scenario_spec_paths, file_writer)
 
     # Write modules
-    _write_modules(
-        package,
-        get_module_spec_paths(root_dirname, spec_paths["module_paths"]),
-        file_writer,
-    )
+    module_spec_paths = get_module_spec_paths(root_dirname, spec_paths["module_paths"])
+    _write_modules(package_output_path, module_spec_paths, file_writer)
+
+    watch_paths = set()
+    watch_paths.update(Path(root_dirname) / Path(path) for path in scenario_spec_paths)
+    watch_paths.update(Path(root_dirname) / Path(path) for path in module_spec_paths)
+    return watch_paths
 
 
 def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
