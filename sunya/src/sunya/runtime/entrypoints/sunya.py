@@ -4,9 +4,12 @@ Sunya CLI entrypoint for rendering markdown documentation from spec files.
 
 import argparse
 import sys
+import time
 from pathlib import Path
 
 import yaml
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
 
 from sunya import FileWriter
 from sunya.runtime import wipe_spec_files, write_specs
@@ -54,6 +57,65 @@ def find_default_config():
             return candidate
 
     return None
+
+
+class SpecFileChangeHandler(FileSystemEventHandler):
+    """Handler for spec file changes that triggers re-rendering."""
+
+    def __init__(self, root_dirname, config, file_writer, verbose=False):
+        self.root_dirname = root_dirname
+        self.config = config
+        self.file_writer = file_writer
+        self.verbose = verbose
+        self.last_render_time = 0
+        self.debounce_seconds = 1  # Debounce to avoid multiple rapid re-renders
+
+    def should_process_event(self, event):
+        """Check if the event should trigger a re-render."""
+        if event.is_directory:
+            return False
+
+        # Check if the changed file is a Python file
+        if not event.src_path.endswith('.py'):
+            return False
+
+        # Debounce: avoid processing events that are too close together
+        current_time = time.time()
+        if current_time - self.last_render_time < self.debounce_seconds:
+            return False
+
+        return True
+
+    def on_modified(self, event):
+        """Handle file modification events."""
+        if not self.should_process_event(event):
+            return
+
+        self.render_specs()
+
+    def on_created(self, event):
+        """Handle file creation events."""
+        if not self.should_process_event(event):
+            return
+
+        self.render_specs()
+
+    def render_specs(self):
+        """Re-render all specs."""
+        self.last_render_time = time.time()
+        logger.info("Change detected, re-rendering specs...")
+
+        try:
+            for package, spec_paths in self.config["spec_paths_by_package"].items():
+                if self.verbose:
+                    logger.debug(f"Processing package: {package}")
+
+                wipe_spec_files(self.file_writer, package)
+                write_specs(self.root_dirname, package, spec_paths, self.file_writer)
+
+            logger.info("✓ Documentation re-rendered successfully")
+        except Exception as e:
+            logger.error(f"Error during re-rendering: {e}")
 
 
 def render_command(args):
@@ -109,6 +171,45 @@ def render_command(args):
 
     logger.info(f"✓ Documentation rendered to: {output_dir}")
 
+    # If watch mode is enabled, set up file watching
+    if args.watch:
+        logger.info("Watch mode enabled. Monitoring spec files for changes...")
+        logger.info("Press Ctrl+C to stop watching.")
+
+        # Collect all directories to watch based on spec_paths_by_package
+        watch_dirs = set()
+        for package, spec_paths in config["spec_paths_by_package"].items():
+            for spec_path in spec_paths:
+                # Convert spec path to absolute path
+                if not Path(spec_path).is_absolute():
+                    spec_path = root_dirname / spec_path
+                else:
+                    spec_path = Path(spec_path)
+
+                # Add the directory containing the spec file
+                watch_dirs.add(spec_path.parent)
+
+        # Create event handler and observer
+        event_handler = SpecFileChangeHandler(
+            root_dirname, config, file_writer, verbose=args.verbose
+        )
+        observer = Observer()
+
+        # Watch each directory
+        for watch_dir in watch_dirs:
+            logger.info(f"Watching directory: {watch_dir}")
+            observer.schedule(event_handler, str(watch_dir), recursive=True)
+
+        # Start watching
+        observer.start()
+        try:
+            while True:
+                time.sleep(1)
+        except KeyboardInterrupt:
+            logger.info("\nStopping watch mode...")
+            observer.stop()
+        observer.join()
+
 
 def main():
     """Main CLI entrypoint."""
@@ -134,6 +235,12 @@ def main():
         "-v",
         action="store_true",
         help="Enable verbose output",
+    )
+    render_parser.add_argument(
+        "--watch",
+        "-w",
+        action="store_true",
+        help="Watch spec files for changes and automatically re-render",
     )
 
     args = parser.parse_args()

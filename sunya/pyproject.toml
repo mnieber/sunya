@@ -6,7 +6,7 @@ readme = "README.md"
 dependencies = ["dataclassy", "multimethods.py", "PyYAML"]
 
 [project.optional-dependencies]
-dev = ["pytest", "faker", "pytest-html"]
+dev = ["pytest", "faker", "pytest-html", "watchdog"]
 
 [project.scripts]
 sunya = "sunya.runtime.entrypoints.sunya:main"
