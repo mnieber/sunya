@@ -59,6 +59,35 @@ def find_default_config():
     return None
 
 
+def _process_packages(root_dirname, config, file_writer, verbose=False):
+    """
+    Process all packages and render their specs.
+
+    Returns a set of directories that contain spec files (for watching).
+    """
+    watch_dirs = set()
+
+    for package, spec_paths in config["spec_paths_by_package"].items():
+        if verbose:
+            logger.debug(f"Processing package: {package}")
+
+        wipe_spec_files(file_writer, package)
+        write_specs(root_dirname, package, spec_paths, file_writer)
+
+        # Collect directories containing spec files
+        for spec_path in spec_paths:
+            # Convert spec path to absolute path
+            if not Path(spec_path).is_absolute():
+                spec_path = root_dirname / spec_path
+            else:
+                spec_path = Path(spec_path)
+
+            # Add the directory containing the spec file
+            watch_dirs.add(spec_path.parent)
+
+    return watch_dirs
+
+
 class SpecFileChangeHandler(FileSystemEventHandler):
     """Handler for spec file changes that triggers re-rendering."""
 
@@ -106,13 +135,7 @@ class SpecFileChangeHandler(FileSystemEventHandler):
         logger.info("Change detected, re-rendering specs...")
 
         try:
-            for package, spec_paths in self.config["spec_paths_by_package"].items():
-                if self.verbose:
-                    logger.debug(f"Processing package: {package}")
-
-                wipe_spec_files(self.file_writer, package)
-                write_specs(self.root_dirname, package, spec_paths, self.file_writer)
-
+            _process_packages(self.root_dirname, self.config, self.file_writer, self.verbose)
             logger.info("✓ Documentation re-rendered successfully")
         except Exception as e:
             logger.error(f"Error during re-rendering: {e}")
@@ -161,13 +184,8 @@ def render_command(args):
     # Create file writer
     file_writer = FileWriter(output_dir)
 
-    # Process each package
-    for package, spec_paths in config["spec_paths_by_package"].items():
-        if args.verbose:
-            logger.debug(f"Processing package: {package}")
-
-        wipe_spec_files(file_writer, package)
-        write_specs(root_dirname, package, spec_paths, file_writer)
+    # Process each package and get directories to watch
+    watch_dirs = _process_packages(root_dirname, config, file_writer, verbose=args.verbose)
 
     logger.info(f"✓ Documentation rendered to: {output_dir}")
 
@@ -175,19 +193,6 @@ def render_command(args):
     if args.watch:
         logger.info("Watch mode enabled. Monitoring spec files for changes...")
         logger.info("Press Ctrl+C to stop watching.")
-
-        # Collect all directories to watch based on spec_paths_by_package
-        watch_dirs = set()
-        for package, spec_paths in config["spec_paths_by_package"].items():
-            for spec_path in spec_paths:
-                # Convert spec path to absolute path
-                if not Path(spec_path).is_absolute():
-                    spec_path = root_dirname / spec_path
-                else:
-                    spec_path = Path(spec_path)
-
-                # Add the directory containing the spec file
-                watch_dirs.add(spec_path.parent)
 
         # Create event handler and observer
         event_handler = SpecFileChangeHandler(

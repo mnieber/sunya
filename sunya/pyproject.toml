@@ -3,10 +3,10 @@ name = "sunya"
 description = ""
 version = "1.0.0"
 readme = "README.md"
-dependencies = ["dataclassy", "multimethods.py", "PyYAML"]
+dependencies = ["dataclassy", "multimethods.py", "PyYAML", "watchdog"]
 
 [project.optional-dependencies]
-dev = ["pytest", "faker", "pytest-html", "watchdog"]
+dev = ["pytest", "faker", "pytest-html"]
 
 [project.scripts]
 sunya = "sunya.runtime.entrypoints.sunya:main"
