@@ -4,7 +4,7 @@
 
 Each module specification implies a corresponding "feature package" (sub-package directory) in the application.
 
-**Example:** The `modules/books.py` module spec implies that the Python application has a `books/` feature package directory.
+**Example:** The `modules/books.md` module spec implies that the Python application has a `books/` feature package directory.
 
 If the application is called `bookie`, then:
 
