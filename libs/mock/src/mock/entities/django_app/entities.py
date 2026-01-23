@@ -1,6 +1,6 @@
 from sunya import Entity
 from mock.entities.python_app.namespace import Function
-from mock.entities.python_app.namespace import PythonModule
+from mock.entities.python_app.namespace import PythonPackage
 
 
 class Action(Function):
@@ -11,7 +11,7 @@ class Model(Entity):
     pass
 
 
-class DjangoModule(PythonModule):
+class DjangoModule(PythonPackage):
     pass
 
 

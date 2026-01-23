@@ -6,7 +6,7 @@ from mock.entities.python_app.entities import (  # noqa
     Function,
     Guid,
     List,
-    PythonModule,
+    PythonPackage,
     Rule,
     Schema,
     Value,

@@ -3,6 +3,10 @@ from sunya.utils import type_name_to_kebab
 from dataclassy import dataclass
 
 
+class PythonPackage(Module):
+    pass
+
+
 class PythonModule(Module):
     pass
 
