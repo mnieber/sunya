@@ -11,7 +11,7 @@ It commonly happens that in such cases the Users module doesn't explicitly decla
 
 ### The external.py module
 
-This module is special case. It doesn't refer to an actual module to is used as a namespace for any external actor.
+This module is special case. It doesn't exist in the spec_src as it is only used as a "virtual" namespace for any external actors.
 
 ### The settings section
 
