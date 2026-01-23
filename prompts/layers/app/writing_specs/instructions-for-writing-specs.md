@@ -13,6 +13,10 @@ It commonly happens that in such cases the Users module doesn't explicitly decla
 
 This module is special case. It doesn't refer to an actual module to is used as a namespace for any external actor.
 
+### The settings section
+
+The settings section is special because its contents should be used not in the module directly but in the global settings file that exists at the root of the Python application package that is being specced.
+
 ## The scenarios
 
 The scenarios describe sequence diagrams that reference the module spec. The blogs/backend/scenarios/ms1_a_user_creates_a_blog/scenario.py gives an example of a backend scenario file for the first milestone in the example roadmap.
