@@ -15,6 +15,7 @@ sequenceDiagram
     {participant(m.Books.Actions.CreateBook          , role=r.CreateBookAction)}
     {participant(m.Chapters.Actions.CreateChapter    , role=r.CreateChapterAction)}
     {participant(m.Chapters.Actions.CreateParagraph  , role=r.CreateParagraphAction)}
+    {participant(m.Chapters.Rules.IsBadWord          , role=r.IsBadWordRule)}
 
     # 🔳 Create book
     {note_over(r.User, goal(rel().create_a(r.book).with_lorem_ipsum_text()))}
@@ -32,10 +33,9 @@ sequenceDiagram
         loop for each paragraph that must be created
             {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls()}
             {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph).with_lorem_ipsum_text()}
-            {r.CreateParagraphAction >> m.Chapters.Rules.CountBadWords} : {a.calls(paragraph=r.paragraph)}
-            {note_over(m.Chapters.Rules.CountBadWords, "Counts bad words (words containing 'a' or 'b')")}
-            {m.Chapters.Rules.CountBadWords >> r.CreateParagraphAction} : {a.returns(r.bad_word_count)}
-            {r.CreateParagraphAction >> self()}                : {a.it(rel().filters(r.paragraph).to_have_at_most(m.Books.Settings.MAX_BAD_WORDS_PER_PARAGRAPH).bad_words())}
+            {note_over(r.CreateParagraphAction, "Counts bad words (words containing 'a' or 'b')")}
+            {r.CreateParagraphAction >> self()}                : {a.it(rel().filters(r.paragraph).to_have_at_most_N(r.bad_words))}
+            {r.CreateParagraphAction >> r.IsBadWordRule}       : {a.calls()}
             {r.CreateParagraphAction >> self()}                : {a.it(rel().adds(r.paragraph).to(r.chapter))}
             {r.CreateParagraphAction >> r.CreateChapterAction} : {a.returns(r.paragraph)}
         end

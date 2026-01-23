@@ -1,6 +1,6 @@
 # Instructions for writing action files
 
-When writing an action file, please follow the example in `bookie/books/actions/create_book.py`.
+When writing an action file, please follow the examples in `bookie/books/actions/create_book.py` and `bookie/chapters/actions/create_chapter.py`.
 
 RULE: Each action function should be in its own file.
 
@@ -20,3 +20,7 @@ RULE: This form argument will only contain simple values, not other entities. Th
 ## RULE: Avoid comment header blocks
 
 The CreateChapterForm class and create_chapter action are perfectly self-explanatory, therefore they have no header comment. The create_book action only has a comment to point out that it checks on the MAX_CHAPTERS_PER_BOOK settings, as this is not obvious from the outside.
+
+## RULE: Start helper functions with an underscore
+
+As shown in `bookie/chapters/actions/create_chapter.py`, the \_filter_paragraph helper function starts with an underscore.

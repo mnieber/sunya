@@ -11,11 +11,10 @@ class Chapters(PythonPackage):
             paragraphs: T.List[str]
 
     class Rules:
-        class CountBadWords:
+        class IsBadWord:
             """
-            Counts and filters bad words in a paragraph.
-
-            A bad word is defined as any word that contains the letter 'a' or 'b'.
+            Returns True for a word that - after stripping the prefix of "aaa" -
+            contains the letter 'a' or 'b'.
             """
 
     class Enums:
@@ -28,3 +27,7 @@ class Chapters(PythonPackage):
             title: str
             nr_of_paragraphs: int
             title_style: "Chapters.Enums.TitleStyles"
+
+    class Utils:
+        class StripPrefix:
+            pass

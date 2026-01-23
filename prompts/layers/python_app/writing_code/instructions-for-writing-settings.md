@@ -5,6 +5,6 @@ Usually, each setting is derived from an environment variable. The application s
 environment variables outside of the settings.py file, so that it's easy to inspect the environment
 variables that the application depends on.
 
-Note that each module spec may have an Settings section that describes the settings and environment
-variables that the module depends on. However, the settings.py file is not located at the module level
-but at the root level of the application.
+## RULE: Settings are collected into the settings.py at the application package root
+
+Note that each module spec, such as `bookie/modules/books.py` in spec_src, may have an Settings section that describes the settings and environment variables that the module depends on. However, as shown in `bookie/settings.py`, the settings.py file is not located at the module level but at the root level of the application.

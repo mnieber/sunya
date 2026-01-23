@@ -17,7 +17,7 @@ Paragraph: a block of text content within a chapter
     2. For each paragraph in the chapter (default 5 paragraphs):
        1. The system generates a paragraph with lorem ipsum text.
           1. It uses a rule to count the number of bad words.
-          2. The rule for a bad word is: any word that contains the letter a or b.
+          2. The rule for a bad word is: any word that - after stripping the prefix of "aaa" - contains the letter a or b.
           3. It drops words from the paragraph so that there are not more than N bad words.
              1. The value from N comes from the settings.py file.
        2. The system adds the paragraph to the chapter.
