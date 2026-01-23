@@ -5,6 +5,9 @@ version = "0.1.0"
 readme = "README.md"
 dependencies = []
 
+[project.scripts]
+bookie = "bookie.runtime.entrypoints.bookie:main"
+
 [tool.setuptools]
 package-dir = { "" = "src" }
 

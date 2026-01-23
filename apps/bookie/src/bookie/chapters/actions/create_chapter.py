@@ -19,16 +19,6 @@ class CreateChapterForm:
 
 
 def create_chapter(book: Book, create_chapter_form: CreateChapterForm) -> Chapter:
-    """
-    Create a chapter with the specified parameters.
-
-    Args:
-        book: The book to which this chapter belongs
-        create_chapter_form: Form containing chapter creation parameters
-
-    Returns:
-        The created Chapter instance
-    """
     suffix = "!" if create_chapter_form.content_mode == TitleStyles.EXCLAMATIONS else ""
     chapter = Chapter(title=create_chapter_form.title + suffix)
 

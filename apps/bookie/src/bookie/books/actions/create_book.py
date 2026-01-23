@@ -11,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CreateBookForm:
-    """Form for creating a book."""
     title: str
     num_chapters: int
 
@@ -21,14 +20,7 @@ def create_book(
     paragraphs_per_chapter: int = 5,
 ) -> Book:
     """
-    Create a book with the specified parameters.
-
-    Args:
-        create_book_form: Form containing book creation parameters
-        paragraphs_per_chapter: Number of paragraphs per chapter
-
-    Returns:
-        The created Book instance
+    Raises an exception if the number of chapters exceeds the maximum allowed.
     """
     book = Book(title=create_book_form.title)
 
