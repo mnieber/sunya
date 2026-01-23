@@ -14,7 +14,8 @@ RULE: Prefer to define the exception class in the action file itself (very gener
 
 ## Forms
 
-RULE: If the action takes a form argument, then the related form is define in the action file that uses it.
+RULE: If the action takes a form argument, then the related form is define in the action file that uses it (there is no forms sub-directory or forms.py file).
+
 RULE: This form argument will only contain simple values, not other entities. Therefore, in chapters/actions/create_chapter.py we see that the form does not contain the Book entity.
 
 ## RULE: Avoid comment header blocks

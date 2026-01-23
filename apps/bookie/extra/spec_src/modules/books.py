@@ -19,5 +19,4 @@ class Books(PythonPackage):
             num_chapters: int
 
     class Settings:
-        MAX_BAD_WORDS_PER_PARAGRAPH: int = 5
         MAX_CHAPTERS_PER_BOOK: int = 10

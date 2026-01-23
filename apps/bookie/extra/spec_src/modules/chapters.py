@@ -31,3 +31,6 @@ class Chapters(PythonPackage):
     class Utils:
         class StripPrefix:
             pass
+
+    class Settings:
+        MAX_BAD_WORDS_PER_PARAGRAPH: int = 5
