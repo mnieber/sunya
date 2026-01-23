@@ -1,0 +1,7 @@
+output_dir: md_specs
+spec_paths_by_package:
+  blogs_fe:
+    scenario_paths:
+      - ./scenarios/**/scenario.py
+    module_paths:
+      - ./modules/*.py

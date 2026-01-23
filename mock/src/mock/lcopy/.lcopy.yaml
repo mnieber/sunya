@@ -1,7 +1,0 @@
-targets:
-  copy-spec:
-    files:
-      spec:
-        scenarios: true
-        modules: true
-        impl: true
