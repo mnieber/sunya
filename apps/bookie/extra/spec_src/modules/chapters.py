@@ -1,6 +1,6 @@
-from mock.entities.python_app.namespace import PythonPackage
 import typing as T
 
+from mock.entities.python_app.namespace import PythonPackage
 from sunya import Entity
 
 
@@ -17,4 +17,9 @@ class Chapters(PythonPackage):
 
             A bad word is defined as any word that contains the letter 'a' or 'b'.
             """
-            pass
+
+
+    class Forms:
+        class CreateChapterForm:
+            title: str
+            nr_of_paragraphs: int

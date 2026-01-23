@@ -1,15 +1,9 @@
 import sunya
-from sunya import (
-    goal,
-    M as m,
-    R as r,
-    Rel as rel,
-    actions as a,
-    self,
-    participant,
-    actor,
-    note_over,
-)
+from sunya import M as m
+from sunya import R as r
+from sunya import Rel as rel
+from sunya import actions as a
+from sunya import actor, goal, note_over, participant, self
 
 scenario = sunya.add_scenario(f"ms1_a_user_creates_a_book")
 markdown_node = sunya.add_markdown_node(scenario, "A user creates a book")
@@ -29,11 +23,12 @@ sequenceDiagram
 
     # 🔳 Create chapters
     loop for each chapter (3 times)
-        {r.CreateBookAction   >> r.CreateChapterAction}    : {a.calls()}
+        {r.CreateBookAction   >> r.CreateBookAction}       : {a.it(rel().prepares_a(r.create_chapter_form))}
+        {r.CreateBookAction   >> r.CreateChapterAction}    : {a.calls(book=r.book, create_chapter_form=r.create_chapter_form)}
         {r.CreateChapterAction >> self()}                  : {a.creates(r.chapter)}
 
         # 🔳 Create paragraphs
-        loop for each paragraph (5 times)
+        loop for each paragraph that must be created
             {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls()}
             {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph).with_lorem_ipsum_text()}
             {r.CreateParagraphAction >> m.Chapters.Rules.CountBadWords} : {a.calls(paragraph=r.paragraph)}
