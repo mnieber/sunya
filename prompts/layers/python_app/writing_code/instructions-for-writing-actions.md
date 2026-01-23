@@ -2,6 +2,10 @@
 
 When writing an action file, please follow the example in `bookie/books/actions/create_book.py`.
 
-Each action function should be in its own file.
+RULE: Each action function should be in its own file.
 
-Action files live in the actions sub-directory. An action is a function that changes the application state as required by a particular "role". Here "role" is meant in the context of SRP, for example: the "books manager" could conceptually be a role in our system, and the create_book action is responsible to that role.
+Action files live in the actions sub-directory. An action is a function that changes the application state. This contrasts actions from rules, which do not change the application state.
+
+## Exceptions
+
+An action should raise an exception if it cannot reach its goal. It doesn't return a success state (though it may return other types of results). Therefore, create_book raises an exception if num_chapters is too high.

@@ -3,7 +3,7 @@
 ## Please follow the rules very closely
 
 In the instructions in the reference data, I will indicate the rules using a `RULE:` prefix.
-It's extremely important to follow the rules as closely as possible. If the rules are not followed closely then I will have to manually edit the generated source files and upload them again, which will result in a very tedious process. This should be avoided at all cost.
+It's extremely important to follow the rules as closely as possible. If the rules are not followed closely then I will have to manually edit the generated source files, which will result in a very tedious process. This should be avoided at all cost.
 
 ## Use of specific code generation instructions relevant to the code unit
 
@@ -13,4 +13,4 @@ When I ask you to write the source code for a code unit (such as an api view), t
 
 The project instructions will always contain references to example code. It's important that this example code is followed closely when generating the requested code. If you cannot find the referenced example code, please let me know.
 
-The example code is always based on the module specs and scenarios specs in the examples directory. By studying the example code and these example spec files, you will be able to see how the information in the spec files is used for generating a specific source file.
+Each example has an extra/spec_src directory with module specs and scenario specs, as well as a src directory with source code that is based on these module specs and scenario specs. By studying the example src code and the example spec files, you will be able to see how the information in the spec files is used for generating a specific source file.
