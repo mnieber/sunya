@@ -14,4 +14,4 @@ class Books(PythonPackage):
             chapters: T.List["Chapters.Models.Chapter"] = []
 
     class Settings:
-        FOO: int = 123
+        MAX_BAD_WORDS_PER_PARAGRAPH: int = 5

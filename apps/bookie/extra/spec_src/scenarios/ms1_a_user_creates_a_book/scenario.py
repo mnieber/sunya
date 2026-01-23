@@ -35,7 +35,11 @@ sequenceDiagram
         # 🔳 Create paragraphs
         loop for each paragraph (5 times)
             {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls()}
-            {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph)}
+            {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph).with_lorem_ipsum_text()}
+            {r.CreateParagraphAction >> m.Chapters.Rules.CountBadWords} : {a.calls(paragraph=r.paragraph)}
+            {note_over(m.Chapters.Rules.CountBadWords, "Counts bad words (words containing 'a' or 'b')")}
+            {m.Chapters.Rules.CountBadWords >> r.CreateParagraphAction} : {a.returns(r.bad_word_count)}
+            {r.CreateParagraphAction >> self()}                : {a.it(rel().filters(r.paragraph).to_have_at_most(m.Books.Settings.MAX_BAD_WORDS_PER_PARAGRAPH).bad_words())}
             {r.CreateParagraphAction >> self()}                : {a.it(rel().adds(r.paragraph).to(r.chapter))}
             {r.CreateParagraphAction >> r.CreateChapterAction} : {a.returns(r.paragraph)}
         end
