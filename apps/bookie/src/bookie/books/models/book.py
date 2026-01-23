@@ -2,7 +2,7 @@ from dataclassy import dataclass
 import typing as T
 
 if T.TYPE_CHECKING:
-    from apps.bookie.chapters.models.chapter import Chapter
+    from bookie.chapters.models.chapter import Chapter
 
 
 @dataclass

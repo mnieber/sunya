@@ -34,7 +34,7 @@ sequenceDiagram
 
         # 🔳 Create paragraphs
         loop for each paragraph (5 times)
-            {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls(length="medium")}
+            {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls()}
             {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph)}
             {r.CreateParagraphAction >> self()}                : {a.it(rel().adds(r.paragraph).to(r.chapter))}
             {r.CreateParagraphAction >> r.CreateChapterAction} : {a.returns(r.paragraph)}
