@@ -1,4 +1,4 @@
-from kits.python_app.impl.namespace import PythonModule
+from mock.entities.python_app.namespace import PythonModule
 import typing as T
 
 from sunya import Entity

@@ -1,4 +1,4 @@
-from kits.react_app.impl.namespace import (
+from mock.entities.react_app.namespace import (
     Component,
     Facet,
     Mutation,

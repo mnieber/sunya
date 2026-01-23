@@ -2,8 +2,8 @@ import typing as T
 
 from mock.landler.backend.modules.organizations import Organizations
 from mock.landler.backend.modules.polygons import Polygons
-from kits.python_app.impl.namespace import Form
-from kits.django_app.impl.namespace import Action, ApiView, DjangoModule
+from mock.entities.python_app.namespace import Form
+from mock.entities.django_app.namespace import Action, ApiView, DjangoModule
 from sunya import NowMixin, Entity, FK, RelatedSet
 
 if T.TYPE_CHECKING:

@@ -1,6 +1,6 @@
 import typing as T
 
-from kits.python_app.impl.namespace import PythonModule, Rule
+from mock.entities.python_app.namespace import PythonModule, Rule
 
 
 class Runtime(PythonModule):

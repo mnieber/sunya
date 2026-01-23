@@ -1,5 +1,5 @@
-from kits.django_app.impl.namespace import DjangoModule
-from kits.python_app.impl.namespace import Enum
+from mock.entities.django_app.namespace import DjangoModule
+from mock.entities.python_app.namespace import Enum
 from mock.landler.backend.modules.users import Users
 from sunya import Entity, RelatedSet, FK
 from sunya.utils.any_dict import any_dict

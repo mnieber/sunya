@@ -1,6 +1,6 @@
-from kits.python_app.impl.namespace import Enum
+from mock.entities.python_app.namespace import Enum
 from sunya import Entity
-from kits.django_app.impl.namespace import DjangoModule
+from mock.entities.django_app.namespace import DjangoModule
 
 
 class Calculations(DjangoModule):

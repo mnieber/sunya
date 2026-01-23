@@ -1,1 +1,1 @@
-from kits.react_app.impl.entities import *  # noqa
+from mock.entities.react_app.entities import *  # noqa

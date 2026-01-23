@@ -1,4 +1,4 @@
-from kits.react_app.impl.namespace import Route, Component, ReactModule
+from mock.entities.react_app.namespace import Route, Component, ReactModule
 
 
 class UserSettings(ReactModule):

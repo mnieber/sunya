@@ -1,4 +1,4 @@
-from kits.django_app.impl.namespace import DjangoModule
+from mock.entities.django_app.namespace import DjangoModule
 from sunya import Entity
 import typing as T
 

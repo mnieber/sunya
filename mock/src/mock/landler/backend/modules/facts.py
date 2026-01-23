@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from kits.python_app.impl.namespace import JSON, Enum
+from mock.entities.python_app.namespace import JSON, Enum
 from sunya import Entity
-from kits.django_app.impl.namespace import DjangoModule
+from mock.entities.django_app.namespace import DjangoModule
 
 
 class Facts(DjangoModule):

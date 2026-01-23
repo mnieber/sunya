@@ -2,7 +2,7 @@ import typing as T
 
 from sunya import Entity
 
-from kits.react_app.impl.entities import Component, ReactModule, Route
+from mock.entities.react_app.entities import Component, ReactModule, Route
 
 
 class Actors(ReactModule):

@@ -1,5 +1,5 @@
-from kits.django_app.impl.namespace import Action, DjangoModule, Rule
-from kits.python_app.impl.namespace import Form, Guid, Function
+from mock.entities.django_app.namespace import Action, DjangoModule, Rule
+from mock.entities.python_app.namespace import Form, Guid, Function
 from sunya import Entity
 import typing as T
 

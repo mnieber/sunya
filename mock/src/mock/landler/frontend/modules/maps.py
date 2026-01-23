@@ -1,4 +1,4 @@
-from kits.react_app.impl.namespace import ReactModule
+from mock.entities.react_app.namespace import ReactModule
 from sunya import Entity
 
 

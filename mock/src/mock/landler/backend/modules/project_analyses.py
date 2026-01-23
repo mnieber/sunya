@@ -6,8 +6,8 @@ if T.TYPE_CHECKING:
 
 from mock.landler.backend.modules.project_analysis_jobs import ProjectAnalysisJobs
 from mock.landler.backend.modules.projects import Projects
-from kits.python_app.impl.namespace import Enum
-from kits.django_app.impl.namespace import Action, DjangoModule
+from mock.entities.python_app.namespace import Enum
+from mock.entities.django_app.namespace import Action, DjangoModule
 
 from sunya import Entity, FK
 
