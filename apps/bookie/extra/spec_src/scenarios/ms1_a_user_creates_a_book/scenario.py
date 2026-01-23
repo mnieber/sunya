@@ -18,7 +18,8 @@ sequenceDiagram
 
     # 🔳 Create book
     {note_over(r.User, goal(rel().create_a(r.book).with_lorem_ipsum_text()))}
-    {r.User                   >  r.CreateBookAction}       : {a.calls(title="My Book", num_chapters=3)}
+    {r.User                   >  r.User}                   : {a.it(rel().prepares_a(r.create_book_form))}
+    {r.User                   >  r.CreateBookAction}       : {a.calls(create_book_form=r.create_book_form)}
     {r.CreateBookAction       >> self()}                   : {a.creates(r.book)}
 
     # 🔳 Create chapters

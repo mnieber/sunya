@@ -4,36 +4,42 @@ import bookie.settings as settings
 import lorem
 from bookie.books.models.book import Book
 from bookie.chapters.actions.create_chapter import CreateChapterForm, create_chapter
+from dataclassy import dataclass
 
 logger = logging.getLogger(__name__)
 
 
+@dataclass
+class CreateBookForm:
+    """Form for creating a book."""
+    title: str
+    num_chapters: int
+
+
 def create_book(
-    title: str,
-    num_chapters: int = 3,
+    create_book_form: CreateBookForm,
     paragraphs_per_chapter: int = 5,
 ) -> Book:
     """
     Create a book with the specified parameters.
 
     Args:
-        title: The book title
-        num_chapters: Number of chapters to create
+        create_book_form: Form containing book creation parameters
         paragraphs_per_chapter: Number of paragraphs per chapter
 
     Returns:
         The created Book instance
     """
-    book = Book(title=title)
+    book = Book(title=create_book_form.title)
 
-    if num_chapters > settings.MAX_CHAPTERS_PER_BOOK:
+    if create_book_form.num_chapters > settings.MAX_CHAPTERS_PER_BOOK:
         raise TooManyChaptersError(
-            f"Cannot create book with {num_chapters} chapters. "
+            f"Cannot create book with {create_book_form.num_chapters} chapters. "
             f"Maximum allowed is {settings.MAX_CHAPTERS_PER_BOOK}."
         )
 
     # Create the specified number of chapters
-    for i in range(num_chapters):
+    for i in range(create_book_form.num_chapters):
         # Prepare the create_chapter_form
         create_chapter_form = CreateChapterForm(
             title=f"Chapter {i+1}: {lorem.sentence()}",

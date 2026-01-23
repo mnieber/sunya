@@ -13,5 +13,11 @@ class Books(PythonPackage):
             title: str
             chapters: T.List["Chapters.Models.Chapter"] = []
 
+    class Forms:
+        class CreateBookForm:
+            title: str
+            num_chapters: int
+
     class Settings:
         MAX_BAD_WORDS_PER_PARAGRAPH: int = 5
+        MAX_CHAPTERS_PER_BOOK: int = 10

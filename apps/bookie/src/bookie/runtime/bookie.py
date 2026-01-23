@@ -2,7 +2,7 @@ import argparse
 import logging
 import sys
 
-from bookie.books.actions.create_book import create_book
+from bookie.books.actions.create_book import create_book, CreateBookForm
 
 logger = logging.getLogger(__name__)
 
@@ -48,9 +48,14 @@ def main():
     if args.command == "create-book":
         logger.info(f"Creating book with title: {args.title}")
 
-        book = create_book(
+        # Prepare the create_book_form
+        create_book_form = CreateBookForm(
             title=args.title,
-            num_chapters=args.chapters,
+            num_chapters=args.chapters
+        )
+
+        book = create_book(
+            create_book_form=create_book_form,
             paragraphs_per_chapter=args.paragraphs,
         )
 
