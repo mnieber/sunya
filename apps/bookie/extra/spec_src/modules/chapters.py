@@ -18,8 +18,13 @@ class Chapters(PythonPackage):
             A bad word is defined as any word that contains the letter 'a' or 'b'.
             """
 
+    class Enums:
+        class TitleStyles:
+            NORMAL: str = "normal"
+            EXCLAMATIONS: str = "exclamations"
 
     class Forms:
         class CreateChapterForm:
             title: str
             nr_of_paragraphs: int
+            title_style: "Chapters.Enums.TitleStyles"
