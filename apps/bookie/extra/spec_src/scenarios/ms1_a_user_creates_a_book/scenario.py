@@ -2,6 +2,7 @@ import sunya
 from sunya import M as m
 from sunya import R as r
 from sunya import Rel as rel
+from sunya import it
 from sunya import actions as a
 from sunya import actor, goal, note_over, participant, self
 
@@ -19,31 +20,31 @@ sequenceDiagram
 
     # 🔳 Create book
     {note_over(r.User, goal(rel().create_a(r.book).with_lorem_ipsum_text()))}
-    {r.User                   >  r.User}                   : {a.it(rel().prepares_a(r.create_book_form))}
-    {r.User                   >  r.CreateBookAction}       : {a.calls(create_book_form=r.create_book_form)}
-    {r.CreateBookAction       >> self()}                   : {a.creates(r.book)}
+    {(r.User                          >  r.User)                  - it().prepares_a(r.create_book_form)}
+    {(r.User                          >  r.CreateBookAction)      - a.calls(create_book_form=r.create_book_form)}
+    {(r.CreateBookAction              >> self())                  - a.creates(r.book)}
 
     # 🔳 Create chapters
     loop for each chapter (3 times)
-        {r.CreateBookAction   >> r.CreateBookAction}       : {a.it(rel().prepares_a(r.create_chapter_form))}
-        {r.CreateBookAction   >> r.CreateChapterAction}    : {a.calls(book=r.book, create_chapter_form=r.create_chapter_form)}
-        {r.CreateChapterAction >> self()}                  : {a.creates(r.chapter)}
+        {(r.CreateBookAction          >> r.CreateBookAction)      - it().prepares_a(r.create_chapter_form)}
+        {(r.CreateBookAction          >> r.CreateChapterAction)   - a.calls(book=r.book, create_chapter_form=r.create_chapter_form)}
+        {(r.CreateChapterAction       >> self())                  - a.creates(r.chapter)}
 
         # 🔳 Create paragraphs
         loop for each paragraph that must be created
-            {r.CreateChapterAction >> r.CreateParagraphAction} : {a.calls()}
-            {r.CreateParagraphAction >> self()}                : {a.creates(r.paragraph).with_lorem_ipsum_text()}
+            {(r.CreateChapterAction   >> r.CreateParagraphAction) - a.calls()}
+            {(r.CreateParagraphAction >> self())                  - a.creates(r.paragraph).with_lorem_ipsum_text()}
             {note_over(r.CreateParagraphAction, "Counts bad words (words containing 'a' or 'b')")}
-            {r.CreateParagraphAction >> self()}                : {a.it(rel().filters(r.paragraph).to_have_at_most_N(r.bad_words))}
-            {r.CreateParagraphAction >> r.IsBadWordRule}       : {a.calls()}
-            {r.CreateParagraphAction >> self()}                : {a.it(rel().adds(r.paragraph).to(r.chapter))}
-            {r.CreateParagraphAction >> r.CreateChapterAction} : {a.returns(r.paragraph)}
+            {(r.CreateParagraphAction >> self())                  - it().filters(r.paragraph).to_have_at_most_N(r.bad_words)}
+            {(r.CreateParagraphAction >> r.IsBadWordRule)         - a.calls()}
+            {(r.CreateParagraphAction >> self())                  - it().adds(r.paragraph).to(r.chapter)}
+            {(r.CreateParagraphAction >> r.CreateChapterAction)   - a.returns(r.paragraph)}
         end
 
-        {r.CreateChapterAction >> self()}                  : {a.it(rel().adds(r.chapter).to(r.book))}
-        {r.CreateChapterAction >> r.CreateBookAction}      : {a.returns(r.chapter)}
+        {(r.CreateChapterAction       >> self())                  - it().adds(r.chapter).to(r.book)}
+        {(r.CreateChapterAction       >> r.CreateBookAction)      - a.returns(r.chapter)}
     end
 
-    {r.CreateBookAction       >> r.User}                   : {a.returns(r.book)}
+    {(r.CreateBookAction              >> r.User)                  - a.returns(r.book)}
 ```
 """
