@@ -5,6 +5,7 @@ from sunya import (
     Rel as rel,
     goal,
     actions as a,
+    it,
     participant,
     note_over,
     self,
@@ -24,11 +25,11 @@ sequenceDiagram
 
     # 🔳 Create Blog Post
     {note_over(r.Frontend, goal(rel().create_a(r.blog_post).in_the(r.blog)))}
-    {r.Frontend               >> r.CreateBlogPostApiView}    : {a.calls()}
-    {r.CreateBlogPostApiView  >> r.CreateBlogPostAction}     : {a.calls(r.create_blog_post_form)}
-    {r.CreateBlogPostAction   >> r.HasForbiddenWordsRule}    : {a.it(rel().runs(r.blog_post))}
-    {r.HasForbiddenWordsRule  >> r.CreateBlogPostAction}     : {a.returns()}
-    {r.CreateBlogPostAction   >> self()}                     : {a.creates(r.blog_post)}
-    {r.CreateBlogPostAction   >> r.CreateBlogPostApiView}    : {a.returns(r.blog_post)}
+    {(r.Frontend               >> r.CreateBlogPostApiView)   - a.calls()}
+    {(r.CreateBlogPostApiView  >> r.CreateBlogPostAction)    - a.calls(r.create_blog_post_form)}
+    {(r.CreateBlogPostAction   >> r.HasForbiddenWordsRule)   - it().runs(r.blog_post)}
+    {(r.HasForbiddenWordsRule  >> r.CreateBlogPostAction)    - a.returns()}
+    {(r.CreateBlogPostAction   >> self())                    - a.creates(r.blog_post)}
+    {(r.CreateBlogPostAction   >> r.CreateBlogPostApiView)   - a.returns(r.blog_post)}
 ```
 """

@@ -5,6 +5,7 @@ from sunya import (
     Rel as rel,
     goal,
     actions as a,
+    it,
     participant,
     note_over,
     self,
@@ -28,18 +29,18 @@ sequenceDiagram
 
     # 🔳 Edit Blog Post
     {note_over(r.Frontend, goal(rel().edit_a(r.blog_post).in_the(r.blog)))}
-    {r.Frontend               >> r.UpdateBlogPostApiView}    : {a.calls()}
-    {r.UpdateBlogPostApiView  >> r.UpdateBlogPostAction}     : {a.calls(r.update_blog_post_form)}
-    {r.UpdateBlogPostAction   >> r.HasForbiddenWordsRule}    : {a.it(rel().runs(r.blog_post))}
-    {r.HasForbiddenWordsRule  >> r.UpdateBlogPostAction}     : {a.returns()}
-    {r.UpdateBlogPostAction   >> self()}                     : {a.it(rel().updates(r.blog_post))}
-    {r.UpdateBlogPostAction   >> r.UpdateBlogPostApiView}    : {a.returns(r.blog_post)}
+    {(r.Frontend               >> r.UpdateBlogPostApiView)   - a.calls()}
+    {(r.UpdateBlogPostApiView  >> r.UpdateBlogPostAction)    - a.calls(r.update_blog_post_form)}
+    {(r.UpdateBlogPostAction   >> r.HasForbiddenWordsRule)   - it().runs(r.blog_post)}
+    {(r.HasForbiddenWordsRule  >> r.UpdateBlogPostAction)    - a.returns()}
+    {(r.UpdateBlogPostAction   >> self())                    - it().updates(r.blog_post)}
+    {(r.UpdateBlogPostAction   >> r.UpdateBlogPostApiView)   - a.returns(r.blog_post)}
 
     # 🔳 Delete Blog Posts
     {note_over(r.Frontend, goal(rel().delete_some(r.blog_posts).in_the(r.blog)))}
-    {r.Frontend                >> r.DeleteBlogPostsApiView}   : {a.calls()}
-    {r.DeleteBlogPostsApiView  >> r.DeleteBlogPostsAction}    : {a.calls(r.blog_posts)}
-    {r.DeleteBlogPostsAction   >> self()}                     : {a.it(rel().deletes(r.blog_posts))}
-    {r.DeleteBlogPostsAction   >> r.DeleteBlogPostsApiView}   : {a.returns()}
+    {(r.Frontend                >> r.DeleteBlogPostsApiView)  - a.calls()}
+    {(r.DeleteBlogPostsApiView  >> r.DeleteBlogPostsAction)   - a.calls(r.blog_posts)}
+    {(r.DeleteBlogPostsAction   >> self())                    - it().deletes(r.blog_posts)}
+    {(r.DeleteBlogPostsAction   >> r.DeleteBlogPostsApiView)  - a.returns()}
 ```
 """

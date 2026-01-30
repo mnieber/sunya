@@ -5,6 +5,7 @@ from sunya import (
     R as r,
     Rel as rel,
     actions as a,
+    it,
     participant,
     note_over,
     self,
@@ -23,14 +24,14 @@ sequenceDiagram
 
     # 🔳 Create Blog
     {note_over(r.Frontend, goal(rel().create_a(r.blog).for_the(r.user)))}
-    {r.Frontend          >> r.CreateBlogApiView}     : {a.calls()}
-    {r.CreateBlogApiView >> r.CreateBlogAction}      : {a.calls(r.create_blog_form)}
-    {r.CreateBlogAction  >> r.HasForbiddenWordsRule} : {a.calls()}
-    {r.HasForbiddenWordsRule >> r.CreateBlogAction}  : {a.returns()}
+    {(r.Frontend              >> r.CreateBlogApiView)      - a.calls()}
+    {(r.CreateBlogApiView     >> r.CreateBlogAction)       - a.calls(r.create_blog_form)}
+    {(r.CreateBlogAction      >> r.HasForbiddenWordsRule)  - a.calls()}
+    {(r.HasForbiddenWordsRule  >> r.CreateBlogAction)      - a.returns()}
     opt No forbidden words found
-    {r.CreateBlogAction  >> self()}                  : {a.creates(r.blog)}
+    {(r.CreateBlogAction      >> self())                   - a.creates(r.blog)}
     end
-    {r.CreateBlogAction  >> r.CreateBlogApiView}     : {a.returns(r.blog)}
+    {(r.CreateBlogAction      >> r.CreateBlogApiView)      - a.returns(r.blog)}
 
 ```
 """
