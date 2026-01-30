@@ -1,6 +1,6 @@
 # Instructions for writing tests
 
-When writing tests for an action, please follow the example in blogs/tests/actions/create_blog_post/test_create_blog_post_action.py.
+When writing tests for an action, please follow blogs/tests/actions/create_blog_post/test_create_blog_post_action.py of the blogs_be example.
 
 When writing tests for an api-view, please follow the example in blogs/tests/views/create_blog_post_api_view/test_create_blog_post_api_view.py. As shown in the example, the test should use the checks_permission function to verify that the api-view is configured with the correct permission checks.
 

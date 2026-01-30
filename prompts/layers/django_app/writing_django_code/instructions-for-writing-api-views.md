@@ -1,10 +1,10 @@
 # Instructions for writing api-view files
 
-When writing an view file, please follow the example in blogs/views/create_blog_post_api_view.py.
+When writing an view file, please follow blogs/views/create_blog_post_api_view.py of the blogs_be example.
 
 ## Code structure
 
-View files live in the views sub-directory. An view file implements a REST api view. It contains an ApiView class that has either a get or a post function.
+View files live in the views sub-directory. A view file implements a REST api view. It contains an ApiView class that has either a get or a post function.
 
 ## Permissions
 
