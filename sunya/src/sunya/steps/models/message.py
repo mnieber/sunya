@@ -11,7 +11,6 @@ class Message:
     def __sub__(self, rel: Rel):
         from sunya.scenarios.models.scenario import get_scenario
 
-        rel.fact_bits = (self.from_actor, *rel.fact_bits, self.to_actor)
         step = Step(rel=rel)
         goal = get_scenario().get_node().get_goal()
         goal.steps.append(step)
