@@ -9,6 +9,7 @@ class FileWriter:
     def write_scenario(self, package, scenario, scenario_md):
         fn = self._get_fn([package, "scenarios"], scenario.name + ".md")
         self._write_file(fn, scenario_md)
+        return fn
 
     def write_module(self, package, module_name, module_md):
         fn = self._get_fn([package, "modules"], module_name + ".md")

@@ -45,7 +45,7 @@ def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
         importlib.import_module(filepath_to_import_path(scenario_module_path))
         scenario = get_scenario()
         scenario_markdown = get_scenario_markdown(scenario)
-        file_writer.write_scenario(
+        scenario.markdown_fn = file_writer.write_scenario(
             package, scenario, get_markdown_signature() + scenario_markdown
         )
 

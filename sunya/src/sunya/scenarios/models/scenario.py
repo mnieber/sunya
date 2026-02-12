@@ -10,6 +10,7 @@ class Scenario:
     name: str
     nodes: T.List[Node] = []
     roles: T.List = []
+    markdown_fn: str | None = None
 
     def get_node(self) -> Node:
         if not self.nodes:
