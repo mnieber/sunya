@@ -75,6 +75,7 @@ def collect_all_configs(root_config_path: Path) -> List[Tuple[Path, dict]]:
                 )
 
     _collect_recursive(root_config_path)
+
     return result
 
 

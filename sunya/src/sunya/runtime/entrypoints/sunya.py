@@ -8,93 +8,16 @@ import time
 from pathlib import Path
 
 from watchdog.observers import Observer
-from watchdog.events import FileSystemEventHandler
+from sunya.runtime.actions.process_packages import process_packages
 
 from sunya.runtime.actions.create_config_context import create_config_context
 from sunya.runtime.actions.process_packages import process_packages
 from sunya.runtime.rules.collect_all_configs import collect_all_configs
+from sunya.runtime.rules.find_default_config import find_default_config
 import logging
+from sunya.runtime.utils.spec_file_change_handler import SpecFileChangeHandler
 
 logger = logging.getLogger(__name__)
-
-
-class SpecFileChangeHandler(FileSystemEventHandler):
-    """Handler for spec file changes that triggers re-rendering."""
-
-    def __init__(self, config_contexts, verbose=False):
-        """
-        Initialize handler for multiple configs.
-
-        Args:
-            config_contexts: List of ConfigContext objects to re-render
-            verbose: Whether to enable verbose logging
-        """
-        self.config_contexts = config_contexts
-        self.verbose = verbose
-        self.last_render_time = 0
-        self.debounce_seconds = 1  # Debounce to avoid multiple rapid re-renders
-
-    def should_process_event(self, event):
-        """Check if the event should trigger a re-render."""
-        if event.is_directory:
-            return False
-
-        # Check if the changed file is a Python file
-        if not event.src_path.endswith(".py"):
-            return False
-
-        # Debounce: avoid processing events that are too close together
-        current_time = time.time()
-        if current_time - self.last_render_time < self.debounce_seconds:
-            return False
-
-        return True
-
-    def on_modified(self, event):
-        """Handle file modification events."""
-        if not self.should_process_event(event):
-            return
-
-        self.render_specs()
-
-    def on_created(self, event):
-        """Handle file creation events."""
-        if not self.should_process_event(event):
-            return
-
-        self.render_specs()
-
-    def render_specs(self):
-        """Re-render all specs from all configs."""
-        self.last_render_time = time.time()
-        logger.info("Change detected, re-rendering all configs...")
-
-        # Track which configs we're re-rendering
-        config_paths = [str(ctx.config_path) for ctx in self.config_contexts]
-        logger.info(f"Re-rendering {len(config_paths)} config(s):")
-        for config_path in config_paths:
-            logger.info(f"  - {config_path}")
-
-        success_count = 0
-        error_count = 0
-
-        for ctx in self.config_contexts:
-            try:
-                if "spec_paths_by_package" in ctx.config_dict:
-                    process_packages(
-                        ctx.root_dir, ctx.config_dict, ctx.file_writer, self.verbose
-                    )
-                    success_count += 1
-            except Exception as e:
-                logger.error(f"Error re-rendering {ctx.config_path}: {e}")
-                error_count += 1
-
-        if error_count == 0:
-            logger.info(f"✓ Successfully re-rendered {success_count} config(s)")
-        else:
-            logger.info(
-                f"Re-rendering completed with {success_count} success(es) and {error_count} error(s)"
-            )
 
 
 def render_command(args):
@@ -103,7 +26,7 @@ def render_command(args):
     if args.config:
         config_path = Path(args.config).resolve()
     else:
-        config_path = _find_default_config()
+        config_path = find_default_config()
         if config_path is None:
             logger.error(
                 "Error: No config file specified and no default config found.\n"
@@ -120,8 +43,11 @@ def render_command(args):
     # Create ConfigContext for each config
     config_contexts = []
     for cfg_path, cfg_dict in all_configs:
-        ctx = create_config_context(cfg_path, cfg_dict, verbose=args.verbose)
+        ctx = create_config_context(cfg_path, cfg_dict)
         config_contexts.append(ctx)
+
+    # Render specs for all configs
+    _render_configs(args, config_path, config_contexts)
 
     # Count total packages processed
     total_packages = sum(
@@ -160,8 +86,31 @@ def render_command(args):
         observer.join()
 
 
+def _render_configs(args, config_path, config_contexts):
+    for config_context in config_contexts:
+        if "spec_paths_by_package" in config_context.config_dict:
+            logger.info(f"Processing config: {config_path}")
+            config_context.watch_paths = process_packages(
+                config_context, verbose=args.verbose
+            )
+            logger.info(f"✓ Documentation rendered to: {config_context.output_dir}")
+
+
 def main():
     """Main CLI entrypoint."""
+    parser, args = _parse_args()
+
+    if args.command == "render":
+        render_command(args)
+    elif args.command is None:
+        parser.print_help()
+        sys.exit(1)
+    else:
+        logger.error(f"Error: Unknown command '{args.command}'", file=sys.stderr)
+        sys.exit(1)
+
+
+def _parse_args():
     parser = argparse.ArgumentParser(
         description="Sunya - Generate markdown documentation from spec files",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -193,40 +142,7 @@ def main():
     )
 
     args = parser.parse_args()
-
-    if args.command == "render":
-        render_command(args)
-    elif args.command is None:
-        parser.print_help()
-        sys.exit(1)
-    else:
-        logger.error(f"Error: Unknown command '{args.command}'", file=sys.stderr)
-        sys.exit(1)
-
-
-def _find_default_config():
-    """
-    Search for default config file in current directory.
-
-    Looks for (in order):
-    - sunya.config.yaml
-    - sunya.config.yml
-    - .sunya.yaml
-    - .sunya.yml
-    """
-    cwd = Path.cwd()
-    candidates = [
-        cwd / "sunya.config.yaml",
-        cwd / "sunya.config.yml",
-        cwd / ".sunya.yaml",
-        cwd / ".sunya.yml",
-    ]
-
-    for candidate in candidates:
-        if candidate.exists():
-            return candidate
-
-    return None
+    return parser, args
 
 
 if __name__ == "__main__":

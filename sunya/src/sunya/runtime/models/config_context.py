@@ -22,11 +22,12 @@ class ConfigContext:
         file_writer: FileWriter instance for this config
         watch_paths: Set of file paths to watch for changes
     """
+
     config_path: Path
     config_dict: dict
     root_dir: Path
-    output_dir: Path
-    file_writer: FileWriter
+    output_dir: Path | None
+    file_writer: FileWriter | None
     watch_paths: Set[Path]
 
     def __repr__(self):

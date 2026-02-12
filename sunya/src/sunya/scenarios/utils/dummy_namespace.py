@@ -1,0 +1,6 @@
+class DummyNamespace:
+    def __getattr__(self, name):
+        return self
+
+
+D = DummyNamespace()

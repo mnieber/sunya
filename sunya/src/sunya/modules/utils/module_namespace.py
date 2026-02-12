@@ -1,3 +1,6 @@
+from sunya.scenarios.utils.dummy_namespace import D
+
+
 class ModuleNamespace:
     """
     The module namespace (m) stores dynamically created module specs.
@@ -43,6 +46,10 @@ class ModuleSpec:
                 f"'{type(self).__name__}' object has no attribute '{name}'"
             )
 
+        # Handle "External" as a special case
+        if self._module_name == "External":
+            return D
+
         if name not in self._sections:
             self._sections[name] = SectionSpec(self._module_name, name)
 
@@ -81,7 +88,7 @@ class ActorSpec:
 
     @property
     def full_path(self) -> str:
-        """Returns the full module spec path (e.g., 'External.Actors.UserSession')."""
+        """Returns the full module spec path (e.g., 'Jobs.Actors.Scheduler')."""
         return f"{self._module_name}.{self._section_name}.{self._actor_name}"
 
     def __repr__(self):

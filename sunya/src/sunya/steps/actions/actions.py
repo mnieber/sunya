@@ -5,11 +5,11 @@ class Actions:
     def calls(self, *args, **kwargs):
         return Rel(verb="calls", args=args, kwargs=kwargs)
 
-    def returns(self, *args):
-        return Rel(verb="returns", args=args)
+    def returns(self, *args, **kwargs):
+        return Rel(verb="returns", args=args, kwargs=kwargs)
 
-    def creates(self, *args):
-        return Rel(verb="creates", args=args)
+    def creates(self, *args, **kwargs):
+        return Rel(verb="creates", args=args, kwargs=kwargs)
 
     def it(self, rel: Rel):
         return rel
