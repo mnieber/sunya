@@ -1,3 +1,3 @@
-ROOT_URLCONF = "app.urls"
+ROOT_URLCONF = "darshana_be.app.urls"
 
 APPEND_SLASH = True

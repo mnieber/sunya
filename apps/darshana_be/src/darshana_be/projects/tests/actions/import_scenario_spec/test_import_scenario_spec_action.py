@@ -1,13 +1,13 @@
 import pytest
-from projects.actions.import_scenario_spec import (
+from darshana_be.projects.actions.import_scenario_spec import (
     import_scenario_spec,
     ImportScenarioSpecForm,
     NotExactlyOneRootNodeError,
 )
-from projects.tests.factories import ProjectFactory
-from scenarios.models import Scenario
-from steps.models import Step
-from actors.models import Actor, Role
+from darshana_be.projects.tests.factories import ProjectFactory
+from darshana_be.scenarios.models import Scenario
+from darshana_be.steps.models import Step
+from darshana_be.actors.models import Actor, Role
 
 
 @pytest.mark.django_db

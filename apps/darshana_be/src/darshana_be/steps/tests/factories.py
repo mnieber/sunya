@@ -1,10 +1,10 @@
 from dataclassy import asdict
 import factory
-from steps.models import Step, FactBit
+from darshana_be.steps.models import Step, FactBit
 from factory.django import DjangoModelFactory
-from scenarios.tests.factories import ScenarioFactory
-from steps.enums import FactBitTypeNames
-from common.utils.test_utils import fake
+from darshana_be.scenarios.tests.factories import ScenarioFactory
+from darshana_be.steps.enums import FactBitTypeNames
+from darshana_be.common.utils.test_utils import fake
 
 
 def generate_factbit_value(factbit):

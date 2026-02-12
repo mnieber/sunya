@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
-from projects.tests.factories import ProjectFactory
-from users.tests.factories import UserFactory
+from darshana_be.projects.tests.factories import ProjectFactory
+from darshana_be.users.tests.factories import UserFactory
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 

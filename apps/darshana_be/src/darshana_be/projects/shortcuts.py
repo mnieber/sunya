@@ -1,4 +1,4 @@
-from projects.models import Project
+from darshana_be.projects.models import Project
 from rest_framework.exceptions import ValidationError
 
 

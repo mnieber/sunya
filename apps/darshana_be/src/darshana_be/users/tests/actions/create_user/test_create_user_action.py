@@ -1,13 +1,13 @@
 import pytest
 from django.contrib.auth import get_user_model
 
-from users.actions.create_user import (
+from darshana_be.users.actions.create_user import (
     CreateUserForm,
     PasswordsDoNotMatchError,
     UserWithEmailAlreadyExistsError,
     create_user,
 )
-from users.tests.factories import UserFactory
+from darshana_be.users.tests.factories import UserFactory
 
 User = get_user_model()
 

@@ -1,6 +1,6 @@
 
-from common.fields import SingleLineTextField
-from common.models import BaseModel
+from darshana_be.common.fields import SingleLineTextField
+from darshana_be.common.models import BaseModel
 
 
 class Actor(BaseModel):

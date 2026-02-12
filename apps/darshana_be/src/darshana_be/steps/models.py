@@ -1,8 +1,8 @@
-from common.fields import SingleLineTextField
+from darshana_be.common.fields import SingleLineTextField
 from django.db import models
-from common.models import BaseModel
+from darshana_be.common.models import BaseModel
 from dataclassy import dataclass
-from steps.enums import StepTypeNames
+from darshana_be.steps.enums import StepTypeNames
 
 
 @dataclass
@@ -25,7 +25,7 @@ class Step(BaseModel):
     pre_actor_key_by_role_name = models.JSONField(default=dict)
     post_actor_key_by_role_name = models.JSONField(default=dict)
     scenario = models.ForeignKey(
-        "scenarios.Scenario", on_delete=models.CASCADE, related_name="steps"
+        "darshana_be.scenarios.Scenario", on_delete=models.CASCADE, related_name="steps"
     )
 
     def __str__(self):

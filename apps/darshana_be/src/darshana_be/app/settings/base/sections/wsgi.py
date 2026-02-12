@@ -1,1 +1,1 @@
-WSGI_APPLICATION = "app.wsgi.application"
+WSGI_APPLICATION = "darshana_be.app.wsgi.application"

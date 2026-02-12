@@ -1,14 +1,14 @@
-from api.utils.extend_schema import extend_schema
+from darshana_be.api.utils.extend_schema import extend_schema
 import logging
 
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from common.permissions import user_is_authenticated
-from users.actions.block_token import block_token
-from users.utils.parse_access_token_or_401 import parse_access_token_or_401
-from users.utils.parse_refresh_token_or_401 import parse_refresh_token_or_401
+from darshana_be.common.permissions import user_is_authenticated
+from darshana_be.users.actions.block_token import block_token
+from darshana_be.users.utils.parse_access_token_or_401 import parse_access_token_or_401
+from darshana_be.users.utils.parse_refresh_token_or_401 import parse_refresh_token_or_401
 
 logger = logging.getLogger(__name__)
 

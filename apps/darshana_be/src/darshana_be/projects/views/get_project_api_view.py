@@ -1,10 +1,10 @@
-from common.permissions import user_is_authenticated
+from darshana_be.common.permissions import user_is_authenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from projects.serializers import ProjectSerializer
-from projects.shortcuts import get_project_or_400
-from api.utils.extend_schema import extend_schema
+from darshana_be.projects.serializers import ProjectSerializer
+from darshana_be.projects.shortcuts import get_project_or_400
+from darshana_be.api.utils.extend_schema import extend_schema
 
 
 class GetProjectApiView(APIView):

@@ -1,6 +1,6 @@
-from scenarios.models import Scenario
+from darshana_be.scenarios.models import Scenario
 from dataclassy import dataclass
-from projects.models import Project
+from darshana_be.projects.models import Project
 
 
 @dataclass

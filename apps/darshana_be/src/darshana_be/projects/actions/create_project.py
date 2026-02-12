@@ -1,10 +1,10 @@
 import typing as T
 
-from projects.models import Project
+from darshana_be.projects.models import Project
 from dataclassy import dataclass
 from django.contrib.auth import get_user_model
 
-from common.utils.arg_utils import optional_args
+from darshana_be.common.utils.arg_utils import optional_args
 
 User = get_user_model()
 

@@ -1,8 +1,8 @@
 from drf_spectacular.utils import extend_schema as drf_extend_schema
 from rest_framework.response import Response
 
-from api.utils.extend_schema.data_spec import get_data_kwargs, resolve_data_spec
-from api.utils.extend_schema.permissions import (  # noqa: F401
+from darshana_be.api.utils.extend_schema.data_spec import get_data_kwargs, resolve_data_spec
+from darshana_be.api.utils.extend_schema.permissions import (  # noqa: F401
     PermissionResult,
     allow,
     check_permission_spec,
@@ -10,7 +10,7 @@ from api.utils.extend_schema.permissions import (  # noqa: F401
     get_permissions_description,
     parse_permission_spec,
 )
-from common.utils.inspect import get_argument_names
+from darshana_be.common.utils.inspect import get_argument_names
 
 
 def extend_schema(

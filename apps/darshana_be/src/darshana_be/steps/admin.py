@@ -1,5 +1,5 @@
 from django.contrib import admin
-from steps.models import Step
+from darshana_be.steps.models import Step
 
 
 class StepInline(admin.TabularInline):

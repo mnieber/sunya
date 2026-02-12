@@ -1,7 +1,7 @@
 import factory
-from scenarios.models import Scenario
+from darshana_be.scenarios.models import Scenario
 from factory.django import DjangoModelFactory
-from projects.tests.factories import ProjectFactory
+from darshana_be.projects.tests.factories import ProjectFactory
 
 
 class ScenarioFactory(DjangoModelFactory):

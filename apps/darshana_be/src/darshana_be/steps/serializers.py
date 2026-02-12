@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from steps.models import Step
-from common.serializers import BaseModelSerializer, ReadSerializerMixin
+from darshana_be.steps.models import Step
+from darshana_be.common.serializers import BaseModelSerializer, ReadSerializerMixin
 from dataclassy import asdict
 
 

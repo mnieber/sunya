@@ -1,12 +1,12 @@
-from projects.actions.create_project import CreateProjectForm
-from projects.actions.update_project import UpdateProjectForm
-from projects.actions.import_scenario_spec import ImportScenarioSpecForm
-from projects.actions.import_spec_files import ImportSpecFilesForm
-from projects.models import Project
-from common.form_serializer import FormSerializer
-from common.serializers import BaseModelSerializer, ReadSerializerMixin
-from projects.actions.delete_projects import DeleteProjectsForm
-from scenarios.serializers import ScenarioSerializer
+from darshana_be.projects.actions.create_project import CreateProjectForm
+from darshana_be.projects.actions.update_project import UpdateProjectForm
+from darshana_be.projects.actions.import_scenario_spec import ImportScenarioSpecForm
+from darshana_be.projects.actions.import_spec_files import ImportSpecFilesForm
+from darshana_be.projects.models import Project
+from darshana_be.common.form_serializer import FormSerializer
+from darshana_be.common.serializers import BaseModelSerializer, ReadSerializerMixin
+from darshana_be.projects.actions.delete_projects import DeleteProjectsForm
+from darshana_be.scenarios.serializers import ScenarioSerializer
 
 
 class CreateProjectFormSerializer(FormSerializer):

@@ -1,5 +1,5 @@
-from app.settings.dev.inherit import MIDDLEWARE
+from darshana_be.app.settings.dev.inherit import MIDDLEWARE
 
 MIDDLEWARE += [
-    "app.middleware.request_logging.request_logging_middleware",
+    "darshana_be.app.middleware.request_logging.request_logging_middleware",
 ]

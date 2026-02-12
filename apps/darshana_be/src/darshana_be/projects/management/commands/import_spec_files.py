@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
-from projects.models import Project
-from projects.actions.import_spec_files import (
+from darshana_be.projects.models import Project
+from darshana_be.projects.actions.import_spec_files import (
     import_spec_files,
     ImportSpecFilesForm,
     UnknownSpecFileTypeError,

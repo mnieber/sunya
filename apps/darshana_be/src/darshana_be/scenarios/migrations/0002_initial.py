@@ -9,14 +9,14 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('scenarios', '0001_initial'),
-        ('steps', '0001_initial'),
+        ('darshana_be.scenarios', '0001_initial'),
+        ('darshana_be.steps', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
             model_name='scenario',
             name='root_step',
-            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='root_scenario', to='steps.step'),
+            field=models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='root_scenario', to='darshana_be.steps.step'),
         ),
     ]

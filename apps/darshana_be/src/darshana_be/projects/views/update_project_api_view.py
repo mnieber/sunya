@@ -2,15 +2,15 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from api.utils.extend_schema import extend_schema
-from projects.actions.update_project import (
+from darshana_be.api.utils.extend_schema import extend_schema
+from darshana_be.projects.actions.update_project import (
     update_project,
     ProjectWithNameAlreadyExistsError,
 )
-from projects.serializers import UpdateProjectFormSerializer, ProjectLeadSerializer
-from projects.shortcuts import get_project_or_400
-from common.permissions import user_is_authenticated
-from common.form_serializer import FormSerializer
+from darshana_be.projects.serializers import UpdateProjectFormSerializer, ProjectLeadSerializer
+from darshana_be.projects.shortcuts import get_project_or_400
+from darshana_be.common.permissions import user_is_authenticated
+from darshana_be.common.form_serializer import FormSerializer
 
 
 class UpdateProjectRequestSerializer(FormSerializer):

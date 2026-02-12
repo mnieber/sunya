@@ -1,4 +1,4 @@
-from api.utils.extend_schema import allow, deny
+from darshana_be.api.utils.extend_schema import allow, deny
 
 
 def user_is_authenticated(user):

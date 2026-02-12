@@ -1,5 +1,5 @@
 import factory
-from actors.models import Actor, Role
+from darshana_be.actors.models import Actor, Role
 from factory.django import DjangoModelFactory
 
 

@@ -1,13 +1,13 @@
 import pytest
 from django.contrib.auth import get_user_model
 
-from users.actions.sign_in_user import (
+from darshana_be.users.actions.sign_in_user import (
     InvalidCredentialsError,
     SignInUserForm,
     sign_in_user,
 )
-from users.tests.factories import InactiveUserFactory, UserFactory
-from users.actions.sign_in_user import AccountIsNotActiveError
+from darshana_be.users.tests.factories import InactiveUserFactory, UserFactory
+from darshana_be.users.actions.sign_in_user import AccountIsNotActiveError
 
 User = get_user_model()
 

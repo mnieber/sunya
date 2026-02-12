@@ -1,4 +1,4 @@
-from actors.models import Role
+from darshana_be.actors.models import Role
 from dataclassy import dataclass
 
 

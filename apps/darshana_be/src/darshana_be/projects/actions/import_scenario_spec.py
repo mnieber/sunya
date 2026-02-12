@@ -3,15 +3,15 @@ from dataclassy import dataclass
 
 
 from django.db import transaction
-from projects.models import Project
-from scenarios.models import Scenario
-from scenarios.actions.create_scenario import create_scenario, CreateScenarioForm
-from steps.models import Step, FactBit
-from steps.actions.create_step import create_step, CreateStepForm
-from actors.models import Actor, Role
-from actors.actions.create_actor import create_actor, CreateActorForm
-from steps.enums import FactBitTypeNames, StepTypeNames
-from actors.actions.create_role import create_role, CreateRoleForm
+from darshana_be.projects.models import Project
+from darshana_be.scenarios.models import Scenario
+from darshana_be.scenarios.actions.create_scenario import create_scenario, CreateScenarioForm
+from darshana_be.steps.models import Step, FactBit
+from darshana_be.steps.actions.create_step import create_step, CreateStepForm
+from darshana_be.actors.models import Actor, Role
+from darshana_be.actors.actions.create_actor import create_actor, CreateActorForm
+from darshana_be.steps.enums import FactBitTypeNames, StepTypeNames
+from darshana_be.actors.actions.create_role import create_role, CreateRoleForm
 
 
 @dataclass

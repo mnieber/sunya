@@ -1,8 +1,8 @@
 import typing as T
 from dataclassy import dataclass, asdict
-from steps.models import Step, FactBit
-from scenarios.models import Scenario
-from steps.enums import StepTypeNames
+from darshana_be.steps.models import Step, FactBit
+from darshana_be.scenarios.models import Scenario
+from darshana_be.steps.enums import StepTypeNames
 
 
 @dataclass

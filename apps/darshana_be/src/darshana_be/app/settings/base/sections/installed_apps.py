@@ -24,13 +24,13 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "actors.apps.ActorsConfig",
-    "api.apps.ApiConfig",
-    "app.apps.AppConfig",
-    "steps.apps.StepsConfig",
-    "projects.apps.ProjectsConfig",
-    "scenarios.apps.ScenariosConfig",
-    "users.apps.UsersConfig",
+    "darshana_be.actors.apps.ActorsConfig",
+    "darshana_be.api.apps.ApiConfig",
+    "darshana_be.app.apps.AppConfig",
+    "darshana_be.steps.apps.StepsConfig",
+    "darshana_be.projects.apps.ProjectsConfig",
+    "darshana_be.scenarios.apps.ScenariosConfig",
+    "darshana_be.users.apps.UsersConfig",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

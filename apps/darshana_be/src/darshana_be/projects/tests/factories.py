@@ -1,5 +1,5 @@
 import factory
-from projects.models import Project
+from darshana_be.projects.models import Project
 from factory.django import DjangoModelFactory
 
 

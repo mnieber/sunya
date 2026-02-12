@@ -1,7 +1,7 @@
 import pytest
-from projects.actions.delete_projects import delete_projects, DeleteProjectsForm
-from projects.tests.factories import ProjectFactory
-from projects.models import Project
+from darshana_be.projects.actions.delete_projects import delete_projects, DeleteProjectsForm
+from darshana_be.projects.tests.factories import ProjectFactory
+from darshana_be.projects.models import Project
 
 
 class TestDeleteProjectsAction:

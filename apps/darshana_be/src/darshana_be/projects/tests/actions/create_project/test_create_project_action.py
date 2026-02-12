@@ -1,10 +1,10 @@
 import pytest
-from projects.actions.create_project import (
+from darshana_be.projects.actions.create_project import (
     CreateProjectForm,
     create_project,
     ProjectWithNameAlreadyExistsError,
 )
-from projects.tests.factories import ProjectFactory
+from darshana_be.projects.tests.factories import ProjectFactory
 
 
 class TestCreateProjectAction:

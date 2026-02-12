@@ -3,8 +3,8 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from users.tests.factories import InactiveUserFactory, UserFactory
-from common.utils.test_utils import has_error_code
+from darshana_be.users.tests.factories import InactiveUserFactory, UserFactory
+from darshana_be.common.utils.test_utils import has_error_code
 
 
 class TestSignInUserApiView:

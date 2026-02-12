@@ -1,9 +1,9 @@
 import pytest
 from unittest.mock import patch
 from django.core.files.uploadedfile import SimpleUploadedFile
-from projects.actions.import_spec_files import import_spec_files, ImportSpecFilesForm
-from projects.tests.factories import ProjectFactory
-from scenarios.models import Scenario
+from darshana_be.projects.actions.import_spec_files import import_spec_files, ImportSpecFilesForm
+from darshana_be.projects.tests.factories import ProjectFactory
+from darshana_be.scenarios.models import Scenario
 
 
 @pytest.mark.django_db
@@ -40,7 +40,7 @@ class TestImportSpecFilesAction:
         """
         return SimpleUploadedFile("module.yaml", content.encode("utf-8"))
 
-    @patch("projects.actions.import_spec_files.import_scenario_spec")
+    @patch("darshana_be.projects.actions.import_spec_files.import_scenario_spec")
     def test_import_spec_files_success(
         self, mock_import_scenario_spec, project, scenario_spec_file, module_spec_file
     ):
@@ -65,7 +65,7 @@ class TestImportSpecFilesAction:
         form = ImportSpecFilesForm(files=[scenario_spec_file])
 
         # When
-        with patch("projects.actions.import_spec_files.import_scenario_spec"):
+        with patch("darshana_be.projects.actions.import_spec_files.import_scenario_spec"):
             import_spec_files(form, project)
 
         # Then

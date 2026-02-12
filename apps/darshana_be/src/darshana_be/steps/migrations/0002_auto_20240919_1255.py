@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('steps', '0001_initial'),
+        ('darshana_be.steps', '0001_initial'),
     ]
 
     operations = [

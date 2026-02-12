@@ -1,10 +1,10 @@
 from django.urls import path
-from projects.views.delete_projects_api_view import DeleteProjectsApiView
-from projects.views.create_project_api_view import CreateProjectApiView
-from projects.views.update_project_api_view import UpdateProjectApiView
-from projects.views.import_spec_files_api_view import ImportSpecFilesApiView
-from projects.views.get_project_api_view import GetProjectApiView
-from projects.views.get_project_leads_api_view import GetProjectLeadsApiView
+from darshana_be.projects.views.delete_projects_api_view import DeleteProjectsApiView
+from darshana_be.projects.views.create_project_api_view import CreateProjectApiView
+from darshana_be.projects.views.update_project_api_view import UpdateProjectApiView
+from darshana_be.projects.views.import_spec_files_api_view import ImportSpecFilesApiView
+from darshana_be.projects.views.get_project_api_view import GetProjectApiView
+from darshana_be.projects.views.get_project_leads_api_view import GetProjectLeadsApiView
 
 urlpatterns = [
     path(

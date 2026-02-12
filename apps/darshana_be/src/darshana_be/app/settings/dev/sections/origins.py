@@ -1,4 +1,4 @@
-from app.utils.get_internal_ips import get_internal_ips
+from darshana_be.app.utils.get_internal_ips import get_internal_ips
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3001",

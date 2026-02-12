@@ -1,8 +1,8 @@
 from django.db import models
-from common.models import BaseModel
-from common.fields import SingleLineTextField
-from steps.models import Step
-from projects.models import Project
+from darshana_be.common.models import BaseModel
+from darshana_be.common.fields import SingleLineTextField
+from darshana_be.steps.models import Step
+from darshana_be.projects.models import Project
 
 
 class Scenario(BaseModel):

@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from app.utils.env import env
+from darshana_be.app.utils.env import env
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
@@ -11,7 +11,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(hours=int(env("REFRESH_TOKEN_LIFETIME", "36"))),
 }
 
-AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "darshana_be.users.User"
 
 TERMS_VERSION = "15-08-2021"
 

@@ -1,11 +1,11 @@
 import pytest
-from scenarios.actions.create_scenario import (
+from darshana_be.scenarios.actions.create_scenario import (
     ScenarioWithNameAlreadyExistsError,
     CreateScenarioForm,
     create_scenario,
 )
-from scenarios.tests.factories import ScenarioFactory
-from projects.tests.factories import ProjectFactory
+from darshana_be.scenarios.tests.factories import ScenarioFactory
+from darshana_be.projects.tests.factories import ProjectFactory
 
 
 class TestCreateScenarioAction:

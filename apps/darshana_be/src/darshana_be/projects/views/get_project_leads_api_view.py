@@ -1,10 +1,10 @@
-from common.permissions import user_is_authenticated
+from darshana_be.common.permissions import user_is_authenticated
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from projects.models import Project
-from projects.serializers import ProjectLeadSerializer
-from api.utils.extend_schema import extend_schema
+from darshana_be.projects.models import Project
+from darshana_be.projects.serializers import ProjectLeadSerializer
+from darshana_be.api.utils.extend_schema import extend_schema
 
 
 class ProjectLeadsPagination(PageNumberPagination):

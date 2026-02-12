@@ -1,4 +1,4 @@
-from app.settings.dev.inherit import DJANGO_APPS, LOCAL_APPS, THIRD_PARTY_APPS
+from darshana_be.app.settings.dev.inherit import DJANGO_APPS, LOCAL_APPS, THIRD_PARTY_APPS
 
 THIRD_PARTY_APPS += []
 

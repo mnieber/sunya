@@ -2,10 +2,10 @@ import pytest
 import deepdiff
 from django.urls import reverse
 from rest_framework.test import APIClient
-from projects.tests.factories import ProjectFactory
-from users.tests.factories import UserFactory
-from scenarios.tests.factories import ScenarioFactory
-from common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
+from darshana_be.projects.tests.factories import ProjectFactory
+from darshana_be.users.tests.factories import UserFactory
+from darshana_be.scenarios.tests.factories import ScenarioFactory
+from darshana_be.common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
 
 
 class TestGetProjectApiView:

@@ -1,8 +1,8 @@
-from actors.actions.create_actor import CreateActorForm
-from actors.models import Actor, Role
-from common.form_serializer import FormSerializer
-from common.serializers import BaseModelSerializer, ReadSerializerMixin
-from actors.actions.create_role import CreateRoleForm
+from darshana_be.actors.actions.create_actor import CreateActorForm
+from darshana_be.actors.models import Actor, Role
+from darshana_be.common.form_serializer import FormSerializer
+from darshana_be.common.serializers import BaseModelSerializer, ReadSerializerMixin
+from darshana_be.actors.actions.create_role import CreateRoleForm
 
 
 class ActorSerializer(ReadSerializerMixin, BaseModelSerializer):

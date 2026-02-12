@@ -1,7 +1,7 @@
 import pytest
-from actors.tests.factories import ActorFactory
+from darshana_be.actors.tests.factories import ActorFactory
 
-from actors.actions.create_actor import (
+from darshana_be.actors.actions.create_actor import (
     ActorWithKeyAlreadyExistsError,
     CreateActorForm,
     create_actor,

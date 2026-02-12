@@ -1,10 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from api.utils.extend_schema import extend_schema
-from projects.actions.delete_projects import delete_projects, DeleteProjectsForm
-from projects.serializers import DeleteProjectsFormSerializer
-from common.permissions import user_is_authenticated
+from darshana_be.api.utils.extend_schema import extend_schema
+from darshana_be.projects.actions.delete_projects import delete_projects, DeleteProjectsForm
+from darshana_be.projects.serializers import DeleteProjectsFormSerializer
+from darshana_be.common.permissions import user_is_authenticated
 
 
 class DeleteProjectsApiView(APIView):

@@ -1,14 +1,14 @@
-from api.utils.extend_schema import extend_schema
+from darshana_be.api.utils.extend_schema import extend_schema
 import logging
 
 from rest_framework import serializers
 from rest_framework_simplejwt.settings import api_settings as jwt_api_settings
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from users.actions.block_token import block_token
-from users.utils.parse_access_token_or_401 import parse_access_token_or_401
-from users.utils.parse_refresh_token_or_401 import parse_refresh_token_or_401
-from users.models import User
+from darshana_be.users.actions.block_token import block_token
+from darshana_be.users.utils.parse_access_token_or_401 import parse_access_token_or_401
+from darshana_be.users.utils.parse_refresh_token_or_401 import parse_refresh_token_or_401
+from darshana_be.users.models import User
 
 logger = logging.getLogger(__name__)
 

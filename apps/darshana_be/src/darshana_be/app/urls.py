@@ -4,16 +4,16 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-import api.urls
-import users.urls
-import projects.urls
-from app.utils.serve_static import serve_static
+import darshana_be.api.urls
+import darshana_be.users.urls
+import darshana_be.projects.urls
+from darshana_be.app.utils.serve_static import serve_static
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
-    path(r"", include(api.urls)),
-    path(r"api/projects/", include(projects.urls)),
-    path(r"api/users/", include(users.urls)),
+    path(r"", include(darshana_be.api.urls)),
+    path(r"api/projects/", include(darshana_be.projects.urls)),
+    path(r"api/users/", include(darshana_be.users.urls)),
     path(
         "api/v1/schema/",
         staff_member_required(SpectacularAPIView.as_view()),

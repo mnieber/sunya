@@ -1,9 +1,9 @@
-from common.serializers import EmptySerializer
+from darshana_be.common.serializers import EmptySerializer
 from rest_framework import serializers, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.utils.extend_schema import extend_schema
+from darshana_be.api.utils.extend_schema import extend_schema
 
 
 class UserIdResponseSerializer(serializers.Serializer):

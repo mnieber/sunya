@@ -1,7 +1,7 @@
 import pytest
-from actors.tests.factories import RoleFactory
+from darshana_be.actors.tests.factories import RoleFactory
 
-from actors.actions.create_role import (
+from darshana_be.actors.actions.create_role import (
     RoleWithNameAlreadyExistsError,
     CreateRoleForm,
     create_role,

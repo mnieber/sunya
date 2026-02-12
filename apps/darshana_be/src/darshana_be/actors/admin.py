@@ -1,5 +1,5 @@
 from django.contrib import admin
-from actors.models import Actor, Role
+from darshana_be.actors.models import Actor, Role
 
 
 @admin.register(Actor)

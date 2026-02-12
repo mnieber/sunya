@@ -6,8 +6,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from common.models import BaseModel
-from users.actions.create_user import CreateUserForm
+from darshana_be.common.models import BaseModel
+from darshana_be.users.actions.create_user import CreateUserForm
 from django.db import models
 
 

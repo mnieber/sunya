@@ -1,17 +1,17 @@
-from common.form_serializer import FormSerializer
-from common.permissions import user_is_authenticated
-from common.serializers import EmptySerializer
+from darshana_be.common.form_serializer import FormSerializer
+from darshana_be.common.permissions import user_is_authenticated
+from darshana_be.common.serializers import EmptySerializer
 from rest_framework.exceptions import ValidationError
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from projects.actions.import_spec_files import (
+from darshana_be.projects.actions.import_spec_files import (
     import_spec_files,
     ImportSpecFilesForm,
     UnknownSpecFileTypeError,
 )
-from projects.shortcuts import get_project_or_400
-from api.utils.extend_schema import extend_schema
+from darshana_be.projects.shortcuts import get_project_or_400
+from darshana_be.api.utils.extend_schema import extend_schema
 from rest_framework import serializers
 from rest_framework.parsers import MultiPartParser
 

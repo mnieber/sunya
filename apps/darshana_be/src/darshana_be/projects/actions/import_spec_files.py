@@ -3,9 +3,9 @@ import typing as T
 from dataclassy import dataclass
 
 from django.db import transaction
-from projects.models import Project
-from scenarios.models import Scenario
-from projects.actions.import_scenario_spec import (
+from darshana_be.projects.models import Project
+from darshana_be.scenarios.models import Scenario
+from darshana_be.projects.actions.import_scenario_spec import (
     import_scenario_spec,
     ImportScenarioSpecForm,
 )

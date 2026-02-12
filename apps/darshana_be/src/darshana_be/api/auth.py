@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import (
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken
 
-from users.models import BlockedToken
+from darshana_be.users.models import BlockedToken
 
 
 class JWTAuthentication(OriginalJWTAuthentication):
@@ -31,4 +31,4 @@ class JWTAuthentication(OriginalJWTAuthentication):
 
 
 class JWTAuthenticationScheme(SimpleJWTScheme):
-    target_class = "api.auth.JWTAuthentication"
+    target_class = "darshana_be.api.auth.JWTAuthentication"

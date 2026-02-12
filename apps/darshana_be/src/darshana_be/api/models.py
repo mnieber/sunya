@@ -1,6 +1,6 @@
 from django.db import models
 
-from common.models import BaseModel
+from darshana_be.common.models import BaseModel
 
 
 class BlockedToken(BaseModel):

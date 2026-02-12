@@ -3,15 +3,15 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.utils.extend_schema import extend_schema
-from common.form_serializer import FormSerializer
-from users.actions.sign_in_user import (
+from darshana_be.api.utils.extend_schema import extend_schema
+from darshana_be.common.form_serializer import FormSerializer
+from darshana_be.users.actions.sign_in_user import (
     AccountIsNotActiveError,
     InvalidCredentialsError,
     sign_in_user,
 )
-from users.serializers import SignInUserFormSerializer
-from common.serializers import WriteSerializerMixin
+from darshana_be.users.serializers import SignInUserFormSerializer
+from darshana_be.common.serializers import WriteSerializerMixin
 
 
 class SignInUserRequestSerializer(FormSerializer):

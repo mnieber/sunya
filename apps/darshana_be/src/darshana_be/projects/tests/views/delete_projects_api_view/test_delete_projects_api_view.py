@@ -1,11 +1,11 @@
-from common.permissions import user_is_authenticated
+from darshana_be.common.permissions import user_is_authenticated
 import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
-from projects.tests.factories import ProjectFactory
-from users.tests.factories import UserFactory
-from api.utils.extend_schema.permissions import checks_permission
-from projects.views.delete_projects_api_view import DeleteProjectsApiView
+from darshana_be.projects.tests.factories import ProjectFactory
+from darshana_be.users.tests.factories import UserFactory
+from darshana_be.api.utils.extend_schema.permissions import checks_permission
+from darshana_be.projects.views.delete_projects_api_view import DeleteProjectsApiView
 
 
 class TestDeleteProjectsApiView:
