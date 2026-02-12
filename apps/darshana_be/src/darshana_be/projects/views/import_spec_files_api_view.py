@@ -6,8 +6,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from darshana_be.projects.actions.import_spec_files import (
-    import_spec_files,
-    ImportSpecFilesForm,
     UnknownSpecFileTypeError,
 )
 from darshana_be.projects.shortcuts import get_project_or_400
@@ -17,10 +15,7 @@ from rest_framework.parsers import MultiPartParser
 
 
 class ImportSpecFilesSerializer(FormSerializer):
-    files = serializers.ListField(
-        child=serializers.FileField(allow_empty_file=False, use_url=False),
-        write_only=True,
-    )
+    sunya_config_fn = serializers.StringField(required=True)
 
 
 class ImportSpecFilesApiView(APIView):
@@ -40,10 +35,12 @@ class ImportSpecFilesApiView(APIView):
     )
     def post(self, request, request_data, project):
         try:
-            import_spec_files(
-                import_spec_files_form=ImportSpecFilesForm(files=request_data.files),
-                project=project,
-            )
+            # TODO: convert this into a command line entrypoint
+            # TODO: import the sunya_config_fn file so that all actors and relations
+            # existing in memory
+            # TODO: write actors and relations to the database
+            # project = create_project(request_data.create_project_form)
+
             return Response(EmptySerializer().data, status=status.HTTP_200_OK)
         except UnknownSpecFileTypeError as e:
             raise ValidationError(code="UNKNOWN_SPEC_FILE_TYPE", detail=str(e))
