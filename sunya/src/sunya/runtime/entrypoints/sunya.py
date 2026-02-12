@@ -10,7 +10,9 @@ from pathlib import Path
 from watchdog.observers import Observer
 
 from sunya.runtime.actions.create_config_context import create_config_context
-from sunya.runtime.actions.create_simple_scenarios_dir import create_simple_scenarios_dir
+from sunya.runtime.actions.create_simple_scenarios_dir import (
+    create_simple_scenarios_dir,
+)
 from sunya.runtime.actions.process_config_contexts import process_config_contexts
 from sunya.runtime.rules.collect_all_configs import collect_all_configs
 from sunya.runtime.rules.find_default_config import find_default_config
@@ -47,7 +49,6 @@ def render_command(args):
         config_contexts.append(ctx)
 
     # Render specs for all configs
-    __import__("pudb").set_trace()  # zz
     count = process_config_contexts(config_contexts, verbose=args.verbose)
 
     # Count total packages processed
@@ -133,6 +134,10 @@ def serve_command(args):
     os.chdir(store_dir)
 
     handler = http.server.SimpleHTTPRequestHandler
+
+    # Allow socket reuse to prevent "Address already in use" errors
+    socketserver.TCPServer.allow_reuse_address = True
+
     with socketserver.TCPServer(("", port), handler) as httpd:
         logger.info(f"Serving scenarios at http://localhost:{port}")
         logger.info(f"Serving from directory: {store_dir}")
