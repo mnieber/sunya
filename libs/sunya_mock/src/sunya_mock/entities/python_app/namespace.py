@@ -1,4 +1,4 @@
-from mock.entities.python_app.entities import (  # noqa
+from sunya_mock.entities.python_app.entities import (  # noqa
     JSON,
     Action,
     Enum,

@@ -1,6 +1,6 @@
 from sunya import Entity
-from mock.entities.python_app.namespace import Function
-from mock.entities.python_app.namespace import PythonPackage
+from sunya_mock.entities.python_app.namespace import Function
+from sunya_mock.entities.python_app.namespace import PythonPackage
 
 
 class Action(Function):
