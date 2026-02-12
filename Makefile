@@ -4,9 +4,9 @@ init-dev:
 	pip install compile-env==0.4.1
 
 compile-env:
-	cd ${ROOT_DIR}/env/blogs/dev && compile-env env-spec.yaml
-	cd ${ROOT_DIR}/env/darshana/dev && compile-env env-spec.yaml
-	cd ${ROOT_DIR}/env/landler/dev && compile-env env-spec.yaml
+	cd ${ROOT_DIR}/envs/local/compile-env/blogs && compile-env ./env-spec.yaml
+	cd ${ROOT_DIR}/envs/local/compile-env/darshana && compile-env ./env-spec.yaml
+	cd ${ROOT_DIR}/envs/local/compile-env/landler && compile-env ./env-spec.yaml
 
 create-opt-paths:
 	sudo mkdir -p /opt/projects/sunya/mock

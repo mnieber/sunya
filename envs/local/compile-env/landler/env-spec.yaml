@@ -1,0 +1,15 @@
+settings:
+  is_strict: True
+
+global_dependencies:
+  - react.env
+  - django.env
+  - postgres.env
+
+outputs:
+  ../../env_files/landler_be.env:
+    targets:
+      - ../../env_files/landler_be.env.in
+  ../../env_files/landler_fe.env:
+    targets:
+      - ../../env_files/landler_fe.env.in
