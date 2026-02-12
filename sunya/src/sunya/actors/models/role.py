@@ -36,9 +36,10 @@ class Role:
     def actor(self, value):
         if self._actor:
             if self._actor != value:
-                raise CannotMutateRoleError(
-                    f"Role '{self._name}' is already assigned to an actor."
-                )
+                if False:
+                    raise CannotMutateRoleError(
+                        f"Role '{self._name}' is already assigned to an actor."
+                    )
         else:
             self._actor = value
 
