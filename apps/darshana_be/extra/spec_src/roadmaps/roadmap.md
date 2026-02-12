@@ -22,21 +22,32 @@ A sunya config should have a component_name field.
 ### MS1: The user creates a local darshana server
 
 1. When darshana is installed in the virtual env, then the user can start a local darshana server using `darshana <sunya.config.yaml>`.
-2. This creates a new local mysql database from the spec_src files.
+2. This parses all spec files found from the `sunya.config.yaml` file and stores the results in memory
 3. It also opens a browser window at the darshana home-page
-4. The home-page shows links to all components.
+4. The home-page shows links to different datasets:
+   1. all components
+   2. all actors
 
-### MS2: The user views a scenario
+### MS2: The user browses the components
 
-1. On the component route the user sees a list of scenarios
-2. The user clicks on a scenario to view it
-   1. This opens the scenario viewer
-3. The scenario viewer shows the root-level steps in the scenario in a list-view
-   1. When the user clicks on a root-level step, then this expands the step to show a list of child-steps.
-   2. The actors within each step are shown as links
-      1. When the user clicks the actor link then this actor is shown in the actor view below the step view
-      2. When the user clicks the link icon (shown after the actor link) then they are redirected to the actor route for this actor
-   3. The other terms in the step are shown as simple strings
-4. Below the step-view there is an actor view that shows the currently highlighted actor
-   1. The fields in the actor view are determined by aggregating all the actor-deltas from the root-step to the highlighted step
-   2. The fields in the actor view that are changed in the current step are shown with a different color
+1. On the homepage the user clicks "all components" This opens the components page.
+2. On the components page the user clicks on a component. This opens the component page.
+3. On the component page the user sees a list of scenarios
+4. The user clicks on a scenario to view it
+   1. This opens the scenario page
+5. The scenario page shows:
+   1. the scenario markdown document
+   2. the list of all actors that participate in the scenario
+      1. the user can click on an actor (similar to how the user browses the actors in MS2)
+
+### MS3: The user browses the actors
+
+1. On the homepage the user clicks "all actors" This opens the actors page.
+2. On the actors page the user clicks on a actor. This opens the actor page.
+3. On the actor page the user sees:
+   1. a list of scenarios (grouped by component) in which the actor participates.
+   2. a list of steps that include this actor (grouped by goal, then scenario, then component)
+      1. if a goal includes an actor, but the steps in that goal do not include the actor, then
+         this goal is still shown in the list
+      2. since the results are grouped by scenario, when the user clicks on any row within that scenario group, it opens the corresponding scenario page
+      3. if the user clicks on the row that contains the component, then it opens the corresponding component page.
