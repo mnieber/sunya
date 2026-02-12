@@ -8,10 +8,9 @@ import time
 from pathlib import Path
 
 from watchdog.observers import Observer
-from sunya.runtime.actions.process_packages import process_packages
 
 from sunya.runtime.actions.create_config_context import create_config_context
-from sunya.runtime.actions.process_packages import process_packages
+from sunya.runtime.actions.process_config_contexts import process_config_contexts
 from sunya.runtime.rules.collect_all_configs import collect_all_configs
 from sunya.runtime.rules.find_default_config import find_default_config
 import logging
@@ -47,15 +46,11 @@ def render_command(args):
         config_contexts.append(ctx)
 
     # Render specs for all configs
-    _render_configs(args, config_path, config_contexts)
+    __import__("pudb").set_trace()  # zz
+    count = process_config_contexts(config_contexts, verbose=args.verbose)
 
     # Count total packages processed
-    total_packages = sum(
-        len(ctx.config_dict.get("spec_paths_by_package", {})) for ctx in config_contexts
-    )
-    logger.info(
-        f"✓ Processed {len(config_contexts)} configs, rendered {total_packages} packages"
-    )
+    logger.info(f"✓ Processed {count} configs")
 
     # If watch mode is enabled, set up file watching
     if args.watch:
@@ -84,16 +79,6 @@ def render_command(args):
             logger.info("\nStopping watch mode...")
             observer.stop()
         observer.join()
-
-
-def _render_configs(args, config_path, config_contexts):
-    for config_context in config_contexts:
-        if "spec_paths_by_package" in config_context.config_dict:
-            logger.info(f"Processing config: {config_path}")
-            config_context.watch_paths = process_packages(
-                config_context, verbose=args.verbose
-            )
-            logger.info(f"✓ Documentation rendered to: {config_context.output_dir}")
 
 
 def main():

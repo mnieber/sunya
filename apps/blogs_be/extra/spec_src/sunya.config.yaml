@@ -1,4 +1,5 @@
 output_dir: md_specs
+component_name: blogs_be
 spec_paths_by_package:
   blogs_be:
     scenario_paths:

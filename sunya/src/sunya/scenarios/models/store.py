@@ -3,16 +3,20 @@ import typing as T
 from dataclassy import dataclass
 
 if T.TYPE_CHECKING:
-    from sunya.scenarios.models.scenario import Scenario
+    from sunya.scenarios.models.component import Component
 
 
 @dataclass(kw_only=True)
 class Store:
-    scenarios: T.List["Scenario"] = []
+    components: T.List["Component"] = []
+
+    @property
+    def component(self):
+        return self.components[-1]
 
     @property
     def scenario(self):
-        return self.scenarios[-1]
+        return self.component.scenario
 
 
 store = Store()

@@ -30,12 +30,15 @@ def create_config_context(config_path: Path, config_dict: dict) -> ConfigContext
         sys.path.insert(0, str(root_dirname))
 
     # Determine output directory (required if there is a spec_paths_by_package key)
-    if "output_dir" not in config_dict and "spec_paths_by_package" in config_dict:
-        print(
-            f"Error: Config at {config_path} must contain 'output_dir' key",
-            file=sys.stderr,
-        )
-        sys.exit(1)
+    if "spec_paths_by_package" in config_dict:
+        if "output_dir" not in config_dict:
+            raise ValueError(
+                f"Error: Config at {config_path} must contain 'output_dir' key",
+            )
+        if not config_dict.get("component_name"):
+            raise ValueError(
+                f"Error: Config at {config_path} must contain 'component_name' key",
+            )
 
     # Create file_writer
     file_writer = None
@@ -49,6 +52,7 @@ def create_config_context(config_path: Path, config_dict: dict) -> ConfigContext
         file_writer = FileWriter(output_dir)
 
     return ConfigContext(
+        component_name=config_dict.get("component_name", "root"),
         config_path=config_path,
         config_dict=config_dict,
         root_dir=root_dirname,

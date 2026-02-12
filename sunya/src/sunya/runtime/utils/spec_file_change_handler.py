@@ -1,7 +1,7 @@
 import time
 import logging
 from watchdog.events import FileSystemEventHandler
-from sunya.runtime.actions.process_packages import process_packages
+from sunya.runtime.actions.process_config_contexts import process_config_contexts
 
 logger = logging.getLogger(__name__)
 
@@ -63,21 +63,8 @@ class SpecFileChangeHandler(FileSystemEventHandler):
         for config_path in config_paths:
             logger.info(f"  - {config_path}")
 
-        success_count = 0
-        error_count = 0
-
-        for ctx in self.config_contexts:
-            try:
-                if "spec_paths_by_package" in ctx.config_dict:
-                    process_packages(ctx, self.verbose)
-                    success_count += 1
-            except Exception as e:
-                logger.error(f"Error re-rendering {ctx.config_path}: {e}")
-                error_count += 1
-
-        if error_count == 0:
+        try:
+            success_count = process_config_contexts(self.config_contexts, self.verbose)
             logger.info(f"✓ Successfully re-rendered {success_count} config(s)")
-        else:
-            logger.info(
-                f"Re-rendering completed with {success_count} success(es) and {error_count} error(s)"
-            )
+        except Exception as e:
+            logger.error(f"Error re-rendering: {e}")

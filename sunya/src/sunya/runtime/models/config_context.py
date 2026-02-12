@@ -23,6 +23,7 @@ class ConfigContext:
         watch_paths: Set of file paths to watch for changes
     """
 
+    component_name: str
     config_path: Path
     config_dict: dict
     root_dir: Path

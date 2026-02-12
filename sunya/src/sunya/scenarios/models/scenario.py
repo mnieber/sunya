@@ -24,9 +24,9 @@ class Scenario:
 
 def get_scenario(name: str | None = None) -> Scenario:
     if name is None:
-        return store.scenario
+        return store.component.scenario
 
-    for scenario in store.scenarios:
+    for scenario in store.component.scenarios:
         if scenario.name == name:
             return scenario
 
