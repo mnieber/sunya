@@ -15,7 +15,13 @@ Spec(ification): the combination of a set of module specs and scenarios that tog
 
 # TODO
 
-A sunya config should have a component_name field.
+- List by actor (e.g. job) and by role (e.g. current_job)
+- Get actor descriptions from the glossary
+  - Every entry in the glossary is an actor
+  - Every model name is an actor
+- Get roles from r.foo terms in steps
+- The author maintains a list that maps from role to actor
+  - If there is no explicit entry in the list, then use word distance to find the actor for a role
 
 ## Milestones
 
