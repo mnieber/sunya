@@ -25,7 +25,7 @@ def get_scenario_markdown(scenario):
         if hasattr(node, "legend") and node.legend:
             markdown += "**Legend:**\n\n"
             for role_name, module_path in node.legend.items():
-                markdown += f"- {role_name} → {module_path}\n"
+                markdown += f"- {role_name} -> {module_path}\n"
             markdown += "\n"
 
     return markdown

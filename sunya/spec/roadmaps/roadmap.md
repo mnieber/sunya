@@ -1,5 +1,13 @@
 # Sunya roadmap
 
+# TODO:
+
+- Allow to use goal and end_goal to create nested goals
+  - And similar turn note -> into section (which can be nested)
+  - A goal will stretch the full width of the diagram, minus its indentation
+  - end_goal will insert a <remove_line>
+  - No need anymore to specify the start and end of a note-over
+
 # Completed milestones
 
 ## MS1: a scenario can declare actors in the global namespace (`g`)
