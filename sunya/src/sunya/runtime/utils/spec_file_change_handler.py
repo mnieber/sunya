@@ -1,24 +1,21 @@
 import time
-import logging
-from watchdog.events import FileSystemEventHandler
-from sunya.runtime.actions.process_config_contexts import process_config_contexts
 
-logger = logging.getLogger(__name__)
+from sunya.runtime.actions.process_config_contexts import process_config_contexts
+from sunya.runtime.utils.get_logger import get_logger
+from watchdog.events import FileSystemEventHandler
+
+logger = get_logger()
 
 
 class SpecFileChangeHandler(FileSystemEventHandler):
     """Handler for spec file changes that triggers re-rendering."""
 
-    def __init__(self, config_contexts, verbose=False):
+    def __init__(self, config_contexts, create_simple_output_dir):
         """
         Initialize handler for multiple configs.
-
-        Args:
-            config_contexts: List of ConfigContext objects to re-render
-            verbose: Whether to enable verbose logging
         """
         self.config_contexts = config_contexts
-        self.verbose = verbose
+        self.create_simple_output_dir = create_simple_output_dir
         self.last_render_time = 0
         self.debounce_seconds = 1  # Debounce to avoid multiple rapid re-renders
 
@@ -64,7 +61,11 @@ class SpecFileChangeHandler(FileSystemEventHandler):
             logger.info(f"  - {config_path}")
 
         try:
-            count = process_config_contexts(self.config_contexts, self.verbose)
+            count = process_config_contexts(
+                self.config_contexts,
+                reset_store=True,
+                create_simple_output_dir=self.create_simple_output_dir,
+            )
             logger.info(f"✓ Successfully re-rendered {count} config(s)")
         except Exception as e:
             logger.exception(f"Error re-rendering: {e}")

@@ -5,11 +5,12 @@ This action reads the store contents and creates a simplified directory structur
 that mirrors: store -> components -> scenarios -> scenario.markdown files.
 """
 
-import logging
 from pathlib import Path
+
+from sunya.runtime.utils.get_logger import get_logger
 from sunya.scenarios.models.store import get_store
 
-logger = logging.getLogger(__name__)
+logger = get_logger()
 
 
 def create_simple_scenarios_dir(root_config_context):
@@ -29,7 +30,9 @@ def create_simple_scenarios_dir(root_config_context):
     store = get_store()
 
     if not store.components:
-        logger.warning("No components found in store. Skipping simple scenarios dir creation.")
+        logger.warning(
+            "No components found in store. Skipping simple scenarios dir creation."
+        )
         return
 
     # Create the base 'store' directory

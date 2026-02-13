@@ -2,11 +2,26 @@
 
 # TODO:
 
-- Allow to use goal and end_goal to create nested goals
-  - And similar turn note -> into section (which can be nested)
+## Indentation
+
+- Allow to use goal and end_goal to set indentation level, e.g. goal(2, it().foo())
+  - And similar turn note -> into section (which have indentation level)
   - A goal will stretch the full width of the diagram, minus its indentation
   - end_goal will insert a <remove_line>
   - No need anymore to specify the start and end of a note-over
+
+## Main relations
+
+1. It would be cool if we can mark some steps as being a "main relation".
+2. This allows us to create a structural diagram that shows a sub-set of actors and their main relations.
+   1. E.g. :
+      - Backend posts to Calcium
+      - Calcium creates a Dag
+      - Calcium calls the RunDagAction
+
+## Create a small framework for magic namespaces
+
+The current solution is very ad-hoc. Would be nice to have a principled solution.
 
 # Completed milestones
 

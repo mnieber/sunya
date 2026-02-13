@@ -1,25 +1,22 @@
 import importlib
+import sys
 from pathlib import Path
 
 from sunya.modules.rules.module_namespace_to_tree import module_namespace_to_tree
 from sunya.modules.utils.module_namespace import M
 from sunya.runtime.actions.get_module_markdown import get_module_markdown
+from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
 from sunya.runtime.rules.get_scenario_markdown import get_scenario_markdown
 from sunya.runtime.utils.file_writer import FileWriter
 from sunya.runtime.utils.filepath_to_import_path import filepath_to_import_path
 from sunya.runtime.utils.get_module_spec_paths import get_module_spec_paths
 from sunya.runtime.utils.get_scenario_spec_paths import get_scenario_spec_paths
 from sunya.scenarios.models.scenario import get_scenario
-from sunya.scenarios.utils.global_namespace import G  # noqa
-from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
 
 
 def write_specs(
     root_dirname, package, spec_paths, file_writer: FileWriter, package_output_path=None
 ):
-    M.clear()
-    G.clear()
-
     # Default to package name if no custom output path provided
     if package_output_path is None:
         package_output_path = package
@@ -42,12 +39,16 @@ def write_specs(
 
 def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
     for scenario_module_path in scenario_spec_paths:
-        importlib.import_module(filepath_to_import_path(scenario_module_path))
+        module_name = filepath_to_import_path(scenario_module_path)
+        importlib.import_module(module_name)
         scenario = get_scenario()
         scenario_markdown = get_scenario_markdown(scenario)
         scenario.markdown_fn = file_writer.write_scenario(
             package, scenario, get_markdown_signature() + scenario_markdown
         )
+        # Remove module from sys.modules to allow re-import on next run
+        if module_name in sys.modules:
+            del sys.modules[module_name]
 
 
 def _write_modules(package, module_spec_paths, file_writer):

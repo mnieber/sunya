@@ -10,6 +10,14 @@ if T.TYPE_CHECKING:
 class Store:
     components: T.List["Component"] = []
 
+    def reset(self):
+        from sunya.modules.utils.module_namespace import M
+        from sunya.scenarios.utils.global_namespace import G  # noqa
+
+        self.components.clear()
+        M.clear()
+        G.clear()
+
     @property
     def component(self):
         return self.components[-1]

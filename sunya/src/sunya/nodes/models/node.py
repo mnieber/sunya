@@ -6,6 +6,7 @@ from sunya.scenarios.models.goal import Goal
 @dataclass(kw_only=True)
 class Node:
     goals: T.List[Goal] = []
+    participants: T.List[str] = []
 
     def get_goal(self) -> Goal:
         if not self.goals:

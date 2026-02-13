@@ -3,23 +3,21 @@ Sunya CLI entrypoint for rendering markdown documentation from spec files.
 """
 
 import argparse
+import logging
 import sys
 import time
 from pathlib import Path
 
-from watchdog.observers import Observer
-
 from sunya.runtime.actions.create_config_context import create_config_context
-from sunya.runtime.actions.create_simple_scenarios_dir import (
-    create_simple_scenarios_dir,
-)
 from sunya.runtime.actions.process_config_contexts import process_config_contexts
 from sunya.runtime.rules.collect_all_configs import collect_all_configs
 from sunya.runtime.rules.find_default_config import find_default_config
-import logging
+from sunya.runtime.utils.get_logger import get_logger
 from sunya.runtime.utils.spec_file_change_handler import SpecFileChangeHandler
+from watchdog.observers import Observer
 
-logger = logging.getLogger(__name__)
+logger = get_logger()
+logger.setLevel(logging.INFO)
 
 
 def render_command(args):
@@ -49,22 +47,25 @@ def render_command(args):
         config_contexts.append(ctx)
 
     # Render specs for all configs
-    count = process_config_contexts(config_contexts, verbose=args.verbose)
+    count = process_config_contexts(
+        config_contexts,
+        reset_store=True,
+        create_simple_output_dir=args.create_simple_output_dir,
+    )
 
     # Count total packages processed
     logger.info(f"✓ Processed {count} configs")
 
-    # Create simple scenarios directory if requested
-    if args.create_simple_output_dir:
-        create_simple_scenarios_dir(config_contexts[0])
-
     # If watch mode is enabled, set up file watching
     if args.watch:
+        print("Watch mode enabled. Monitoring spec files for changes...")
         logger.info("Watch mode enabled. Monitoring spec files for changes...")
         logger.info("Press Ctrl+C to stop watching.")
 
         # Create event handler and observer
-        event_handler = SpecFileChangeHandler(config_contexts, verbose=args.verbose)
+        event_handler = SpecFileChangeHandler(
+            config_contexts, create_simple_output_dir=args.create_simple_output_dir
+        )
         observer = Observer()
 
         # Watch all paths from all configs
@@ -127,8 +128,8 @@ def serve_command(args):
 
     # Start HTTP server
     import http.server
-    import socketserver
     import os
+    import socketserver
 
     port = args.port
     os.chdir(store_dir)
@@ -152,6 +153,10 @@ def serve_command(args):
 def main():
     """Main CLI entrypoint."""
     parser, args = _parse_args()
+
+    if args.verbose:
+        logger.setLevel(logging.DEBUG)
+        logger.debug("Verbose mode enabled")
 
     if args.command == "render":
         render_command(args)

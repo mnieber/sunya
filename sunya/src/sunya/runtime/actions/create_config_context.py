@@ -1,25 +1,16 @@
 import sys
 from pathlib import Path
 
-
 from sunya import FileWriter
 from sunya.runtime.models import ConfigContext
-import logging
+from sunya.runtime.utils.get_logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger()
 
 
 def create_config_context(config_path: Path, config_dict: dict) -> ConfigContext:
     """
     Create a ConfigContext from a config file and its dictionary.
-
-    Args:
-        config_path: Absolute path to the config file
-        config_dict: Parsed YAML configuration
-        verbose: Whether to enable verbose logging
-
-    Returns:
-        ConfigContext with all fields initialized
     """
     # Determine root directory (where spec files are located)
     # Paths in config are relative to the config file location

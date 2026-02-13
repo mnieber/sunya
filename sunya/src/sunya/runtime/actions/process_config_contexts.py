@@ -1,11 +1,20 @@
-import logging
 from sunya.runtime import wipe_spec_files, write_specs
+from sunya.runtime.utils.get_logger import get_logger
 from sunya.scenarios.actions.create_component import create_component
+from sunya.runtime.actions.create_simple_scenarios_dir import (
+    create_simple_scenarios_dir,
+)
+from sunya.scenarios.models.store import get_store
 
-logger = logging.getLogger(__name__)
+logger = get_logger()
 
 
-def process_config_contexts(config_contexts, verbose=False):
+def process_config_contexts(
+    config_contexts, *, reset_store: bool, create_simple_output_dir: bool
+) -> int:
+    if reset_store:
+        get_store().reset()
+
     count = 0
 
     for config_context in config_contexts:
@@ -19,8 +28,7 @@ def process_config_contexts(config_contexts, verbose=False):
         for package, spec_config in config_context.config_dict[
             "spec_paths_by_package"
         ].items():
-            if verbose:
-                logger.debug(f"Processing package: {package}")
+            logger.debug(f"Processing package: {package}")
 
             # Determine the output path for this package
             # Default to package name, but allow override via output_dir
@@ -36,5 +44,9 @@ def process_config_contexts(config_contexts, verbose=False):
             )
             config_context.watch_paths.update(more_watch_paths)
             count += 1
+
+            # Create simple scenarios directory if requested
+            if create_simple_output_dir:
+                create_simple_scenarios_dir(config_contexts[0])
 
     return count

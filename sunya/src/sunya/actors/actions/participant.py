@@ -6,19 +6,22 @@ from sunya.scenarios.models.scenario import get_scenario
 
 
 def participant(actor: any, role: Role | None = None):
+    scenario = get_scenario()
+
     if role is not None:
         role.actor = actor
         name = role.name
 
         # If the actor is an ActorSpec, add it to the current node's legend
         if isinstance(actor, ActorSpec):
-            current_node = get_scenario().get_node()
+            current_node = scenario.get_node()
             if hasattr(current_node, "legend"):
                 current_node.legend[name] = actor.full_path
     else:
         name = actor.__class__.__name__
 
     actor_name = _create_actor_name(name)
+    scenario.get_node().participants.append(name)
 
     return f"participant {name} as {actor_name}"
 
