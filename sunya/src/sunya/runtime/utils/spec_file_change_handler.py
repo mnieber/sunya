@@ -64,7 +64,7 @@ class SpecFileChangeHandler(FileSystemEventHandler):
             logger.info(f"  - {config_path}")
 
         try:
-            success_count = process_config_contexts(self.config_contexts, self.verbose)
-            logger.info(f"✓ Successfully re-rendered {success_count} config(s)")
+            count = process_config_contexts(self.config_contexts, self.verbose)
+            logger.info(f"✓ Successfully re-rendered {count} config(s)")
         except Exception as e:
-            logger.error(f"Error re-rendering: {e}")
+            logger.exception(f"Error re-rendering: {e}")

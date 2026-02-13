@@ -1,6 +1,3 @@
-from sunya.scenarios.utils.dummy_namespace import D
-
-
 class ModuleNamespace:
     """
     The module namespace (m) stores dynamically created module specs.
@@ -19,12 +16,16 @@ class ModuleNamespace:
         """Clear all module specs."""
         self._modules = {}
 
-    def __getattr__(self, name: str):
+    def __getattr__(self, name: str) -> any:
         """Get or create a module spec."""
         if name.startswith("_"):
             raise AttributeError(
                 f"'{type(self).__name__}' object has no attribute '{name}'"
             )
+
+        # Handle "External" as a special case
+        if name == "External":
+            return ExternalNamespace()
 
         if name not in self._modules:
             self._modules[name] = ModuleSpec(name)
@@ -45,10 +46,6 @@ class ModuleSpec:
             raise AttributeError(
                 f"'{type(self).__name__}' object has no attribute '{name}'"
             )
-
-        # Handle "External" as a special case
-        if self._module_name == "External":
-            return D
 
         if name not in self._sections:
             self._sections[name] = SectionSpec(self._module_name, name)
@@ -93,6 +90,12 @@ class ActorSpec:
 
     def __repr__(self):
         return self.full_path
+
+
+class ExternalNamespace:
+    Actors = SectionSpec("External", "Actors")
+    Modules = ModuleNamespace()
+    Services = ModuleNamespace()
 
 
 M = ModuleNamespace()

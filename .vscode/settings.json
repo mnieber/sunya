@@ -1,2 +1,26 @@
 {
+    "editor.formatOnSave": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        },
+        "editor.defaultFormatter": "ms-python.black-formatter"
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true
+    },
+    "files.trimTrailingWhitespace": true,
+    "isort.args": [
+        "--settings-file",
+        "/home/maarten/projects/landler/src/platform/backend/setup.cfg",
+        "--profile",
+        "black"
+    ],
+    "black-formatter.path": [
+        "/home/maarten/projects/landler/.env/bin/black"
+    ],
+    "isort.path": [
+        "/home/maarten/projects/landler/.env/bin/isort"
+    ],
 }
