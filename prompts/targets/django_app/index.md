@@ -6,7 +6,7 @@ This directory contains instructions for a spec-driven software development proc
 
 The development process follows two main phases:
 
-1. **Writing Specifications** - Define module specs and scenario specs that describe what the application should do
+1. **Writing Specifications** - Define scenario specs that describe what the application should do
 2. **Implementing from Specs** - Map specifications to actual Django and Python code following consistent patterns
 
 ## Quick Start
@@ -14,7 +14,7 @@ The development process follows two main phases:
 ### If you're writing specifications:
 
 - Start with [writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)
-- See examples in [examples/bookie/extra/spec_src/](examples/bookie/extra/spec_src/) and [examples/blogs_be/extra/spec_src/](examples/blogs_be/extra/spec_src/)
+- See examples in [examples/bookie/extra/spec_src/scenarios/](examples/bookie/extra/spec_src/scenarios/) and [examples/blogs_be/extra/spec_src/scenarios/](examples/blogs_be/extra/spec_src/scenarios/)
 
 ### If you're implementing from specifications:
 
@@ -39,16 +39,16 @@ The development process follows two main phases:
 
 **[writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)**
 
-- How to write module specs and scenario specs
-- Implicit vs. explicit code-unit declarations
-- Scenario syntax and DSL
-- The special `external.py` virtual namespace
+- How to write scenario specs
+- Implicit code-unit declarations in scenarios
+- Scenario syntax and DSL (goals, steps, markdown sections)
+- The special `External` virtual namespace
 
-### 3. Understanding Django App Specs
+### 3. Django App Spec Sections
 
 **[using_django_app_specs/sections-of-a-django-app-module-spec.md](using_django_app_specs/sections-of-a-django-app-module-spec.md)**
 
-- Django-specific module spec sections: Django models, ApiViews, DomainEvents
+- Django-specific spec sections declared implicitly in scenarios: Django models, ApiViews, DomainEvents
 
 ### 4. Mapping Specs to Implementation
 
@@ -181,7 +181,7 @@ The [examples/](examples/) directory contains two complete example applications:
 
 ## Development Workflow
 
-1. **Define specs** - Write module and scenario specs in `extra/spec_src/`
+1. **Define specs** - Write scenario specs in `extra/spec_src/scenarios/`
 2. **Review specs** - Ensure clarity; ask for clarification if needed
 3. **Implement** - Map specs to code following the implementation guides
 4. **Validate** - Specs owner validates implementation matches intent

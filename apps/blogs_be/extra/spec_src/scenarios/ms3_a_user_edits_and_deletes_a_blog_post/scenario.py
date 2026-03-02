@@ -1,46 +1,88 @@
 import sunya
-from sunya import (
-    R as r,
-    M as m,
-    Rel as rel,
-    goal,
-    actions as a,
-    it,
-    participant,
-    note_over,
-    self,
-)
-
+from sunya import M as m
+from sunya import R as r
+from sunya import goal, it, the
 
 scenario = sunya.add_scenario("ms3_a_user_edits_and_deletes_a_blog_post")
+
+
+def run_scenario():
+    r.frontend = m.External.Actors.Frontend
+    r.update_blog_post_api_view = m.Blogs.ApiViews.UpdateBlogPostApiView
+    r.update_blog_post_action = m.Blogs.Actions.UpdateBlogPost
+    r.has_forbidden_words_rule = m.Blogs.Rules.HasForbiddenWords
+    r.delete_blog_posts_api_view = m.Blogs.ApiViews.DeleteBlogPostsApiView
+    r.delete_blog_posts_action = m.Blogs.Actions.DeleteBlogPosts
+
+    with goal().edit_a(r.blog_post).in_the(r.blog):
+        the(r.frontend).calls(r.update_blog_post_api_view)
+        with the(r.update_blog_post_api_view).calls(r.update_blog_post_action).with_the(r.update_blog_post_form):
+            it().calls(r.has_forbidden_words_rule).on_the(r.title).and_the(r.content)
+            it().raises(r.forbidden_words_error).if_forbidden_words_are_found()
+            it().updates(r.blog_post)
+            it().returns(r.blog_post)
+
+    with goal().delete_some(r.blog_posts).in_the(r.blog):
+        the(r.frontend).calls(r.delete_blog_posts_api_view)
+        with the(r.delete_blog_posts_api_view).calls(r.delete_blog_posts_action).with_the(r.delete_blog_posts_form):
+            it().deletes(r.blog_posts)
+
+
 markdown_node = sunya.add_markdown_node(
     scenario, "A user edits and deletes a blog post"
 )
 
-markdown_node.markdown = f"""
+markdown_node.markdown = """
+The frontend can update or delete blog posts. Updating checks the `title` and `content`
+fields for forbidden words and raises an error if any are found. Deleting removes the
+selected posts directly.
+
+### Steps
+
+#### It edits a blog post
+
+The frontend calls `UpdateBlogPostApiView`.</br>
+The API view calls `update_blog_post` with the `update_blog_post_form`.</br>
+`update_blog_post` calls `has_forbidden_words` on the `title` and `content` fields.</br>
+If forbidden words are found, `update_blog_post` raises `UpdateBlogPostFormContainsForbiddenWordsError`.</br>
+Otherwise, `update_blog_post` updates and returns the `blog_post`.</br>
+
+#### It deletes blog posts
+
+The frontend calls `DeleteBlogPostsApiView`.</br>
+The API view calls `delete_blog_posts` with the `delete_blog_posts_form`.</br>
+`delete_blog_posts` deletes the posts.</br>
+
+### Diagram
+
 ```mermaid
 sequenceDiagram
-    {participant(m.External.Actors.Frontend, role=r.Frontend)}
-    {participant(m.Blogs.ApiViews.UpdateBlogPostApiView, role=r.UpdateBlogPostApiView)}
-    {participant(m.Blogs.Actions.UpdateBlogPost, role=r.UpdateBlogPostAction)}
-    {participant(m.Blogs.Rules.HasForbiddenWords, role=r.HasForbiddenWordsRule)}
-    {participant(m.Blogs.ApiViews.DeleteBlogPostsApiView, role=r.DeleteBlogPostsApiView)}
-    {participant(m.Blogs.Actions.DeleteBlogPosts, role=r.DeleteBlogPostsAction)}
+    participant Frontend
+    participant UBPAV as UpdateBlogPostApiView
+    participant UBPA as UpdateBlogPost (action)
+    participant HFW as HasForbiddenWords (rule)
+    participant DBPAV as DeleteBlogPostsApiView
+    participant DBPA as DeleteBlogPosts (action)
 
-    # 🔳 Edit Blog Post
-    {note_over(r.Frontend, goal(rel().edit_a(r.blog_post).in_the(r.blog)))}
-    {(r.Frontend               >> r.UpdateBlogPostApiView)   - a.calls()}
-    {(r.UpdateBlogPostApiView  >> r.UpdateBlogPostAction)    - a.calls(r.update_blog_post_form)}
-    {(r.UpdateBlogPostAction   >> r.HasForbiddenWordsRule)   - it().runs(r.blog_post)}
-    {(r.HasForbiddenWordsRule  >> r.UpdateBlogPostAction)    - a.returns()}
-    {(r.UpdateBlogPostAction   >> self())                    - it().updates(r.blog_post)}
-    {(r.UpdateBlogPostAction   >> r.UpdateBlogPostApiView)   - a.returns(r.blog_post)}
+    Note over Frontend,UBPA: Edit blog post
+    Frontend->>UBPAV: PATCH /blogs/{blog_id}/posts/{post_id}/
+    UBPAV->>UBPA: update_blog_post(update_blog_post_form)
+    UBPA->>HFW: has_forbidden_words(title)
+    HFW-->>UBPA: result
+    UBPA->>HFW: has_forbidden_words(content)
+    HFW-->>UBPA: result
 
-    # 🔳 Delete Blog Posts
-    {note_over(r.Frontend, goal(rel().delete_some(r.blog_posts).in_the(r.blog)))}
-    {(r.Frontend                >> r.DeleteBlogPostsApiView)  - a.calls()}
-    {(r.DeleteBlogPostsApiView  >> r.DeleteBlogPostsAction)   - a.calls(r.blog_posts)}
-    {(r.DeleteBlogPostsAction   >> self())                    - it().deletes(r.blog_posts)}
-    {(r.DeleteBlogPostsAction   >> r.DeleteBlogPostsApiView)  - a.returns()}
+    alt forbidden words found
+        UBPA-->>UBPAV: raise UpdateBlogPostFormContainsForbiddenWordsError
+    else no forbidden words
+        UBPA->>UBPA: update blog_post
+        UBPA-->>UBPAV: blog_post
+    end
+
+    Note over Frontend,DBPA: Delete blog posts
+    Frontend->>DBPAV: DELETE /blogs/{blog_id}/posts/
+    DBPAV->>DBPA: delete_blog_posts(delete_blog_posts_form)
+    DBPA->>DBPA: delete blog_posts
+    DBPA-->>DBPAV: (done)
 ```
 """

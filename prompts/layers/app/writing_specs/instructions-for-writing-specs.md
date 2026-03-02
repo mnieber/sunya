@@ -1,29 +1,91 @@
 # Writing specs
 
-When writing an scenario spec file, please follow the example in `extra/spec_src/scenarios/ms1_a_user_creates_a_book/scenario.py`. When writing a module spec file, follow the examples in `extra/spec_src/modules`.
+When writing a scenario spec file, please follow the example in `extra/spec_src/scenarios/ms1_a_user_creates_a_book/scenario.py`.
+
+## There are no explicit module spec files
+
+Modules are defined implicitly through the scenario spec files. There is no `extra/spec_src/modules/` directory and no explicit module spec files. All code-unit declarations are made implicitly in the scenario files by referencing module paths such as `m.Books.Actions.CreateBook`.
 
 ## Scenarios may declare that certain code-units exist in a module.
 
-A scenario spec may implicitly define a code-unit in the module spec. E.g. the bookie scenario spec contains a reference to `m.Books.Actions.CreateBook` (where `m` is the modules namespace) which implies that the books module has an Actions section with a CreateBook action. Note that `extra/spec_src/modules/books.py` doesn't contain an Actions section, but this is okay. When we later using sunya to render the spec_src into Markdown then sunya will add these implicit sections to the `modules/books` spec so that the reader will not be confused.
+A scenario spec implicitly defines code-units in a module. E.g. the bookie scenario spec contains a reference to `m.Books.Actions.CreateBook` (where `m` is the modules namespace) which implies that the books module has an Actions section with a CreateBook action.
 
 ## Specs import from the sunya package
 
 The sunya package can be used to render the spec_src to Markdown files. However, for our purposes, we can leave this step out of consideration.
 
-### The external.py module
+### The External module
 
-This module is special case. It doesn't exist in the spec_src as it is only used as a "virtual" namespace for any external actors. This is why there is no `modules/external.py` in the bookie module specs although the bookie scenario spec mentions `m.External.Actors.User`.
+The `External` module is a special virtual namespace used only for external actors in scenarios, such as `m.External.Actors.User`. There is no corresponding file for this module in the spec_src.
 
 ## The scenarios
 
-The scenarios describe sequence diagrams that reference the module spec.
+Each scenario file contains:
 
-Scenarios can declare goals and steps. Steps are small actions that contribute to completing the workflow in a milestone. A goal describes a group of steps that work towards the same (intermediate) result. Steps are usually nested within a goal.
+1. A `run_scenario()` function that describes the scenario logic using the sunya Python DSL.
+2. A `markdown_node` with a structured markdown section. This markdown section has a fixed format with **Steps** and **Diagram** subsections.
 
-The scenario source code will use the actions namespace (`a`) to define the relation between the actors that participate in a step. The action namespace supports the following actions: `calls(*args, **kwargs)`, `creates(arg)`, `returns(arg)` and `rel(it().does_something_with(r.some_other_thing))`. The latter form is used for generic action descriptions.
+### The run_scenario function
 
-### Syntax
+The `run_scenario` function describes the scenario by:
+- Assigning roles to module code-units using `r.<role> = m.<Module>.<Section>.<CodeUnit>`
+- Describing goals and steps using `with goal()...` blocks and `the(...)` / `it()` step expressions
 
-The `>>` operator represents a dotted line between actors, wheres `>` represents a solid line.
-The `self()` function is used as a shorthand when the destination of a message is the source of that message.
-The `a.it(rel()...)` construct is used to associate a relation (as started by the `rel()` function, and extended by the dot operator) with a message in the sequence diagram.
+#### Goals
+
+Every step must be nested inside a top-level goal. Goals are written as `with` blocks:
+
+```python
+with goal().create_a(r.result).using_the(r.foo):
+    the(r.actor).does_something_with(r.foo)
+```
+
+#### Steps
+
+Steps describe what each participant does. Every step starts with either:
+- `the(r.actor).does_something()` — when naming a specific actor
+- `it().does_something()` — as a shorthand referring back to the nearest preceding `the(...)` expression
+
+Steps can be nested using `with`:
+
+```python
+with the(r.frontend).calls_the(r.action).with_the(r.form):
+    it().validates(r.form)
+    it().creates(r.result)
+    it().returns(r.result)
+```
+
+### The markdown section
+
+The markdown section uses this fixed structure:
+
+```
+A short description of the scenario.
+
+### Steps
+
+#### It does X
+
+Step description.</br>
+
+#### It does Y
+
+Step description.</br>
+
+### Diagram
+
+\```mermaid
+sequenceDiagram
+    ...
+\```
+```
+
+### The sunya DSL
+
+Common patterns:
+- `with goal().do_something(r.thing):` — a goal grouping steps
+- `the(r.actor).calls(r.action).with_the(r.form)` — actor calls an action
+- `it().creates(r.thing)` — creates something (shorthand for the nearest `the(...)`)
+- `it().returns(r.thing)` — returns something
+- `it().raises(r.error).if_something()` — raises an error conditionally
+- `with the(r.actor).calls(r.action).with_the(r.form):` — a step with nested substeps

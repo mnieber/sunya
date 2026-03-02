@@ -6,7 +6,7 @@ This directory contains instructions for a spec-driven software development proc
 
 The development process follows two main phases:
 
-1. **Writing Specifications** - Define module specs and scenario specs that describe what the application should do
+1. **Writing Specifications** - Define scenario specs that describe what the application should do
 2. **Implementing from Specs** - Map specifications to actual Python code following consistent patterns
 
 ## Quick Start
@@ -14,7 +14,7 @@ The development process follows two main phases:
 ### If you're writing specifications:
 
 - Start with [writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)
-- See examples in [examples/bookie/extra/spec_src/](examples/bookie/extra/spec_src/)
+- See examples in [examples/bookie/extra/spec_src/scenarios/](examples/bookie/extra/spec_src/scenarios/)
 
 ### If you're implementing from specifications:
 
@@ -27,9 +27,9 @@ The development process follows two main phases:
 
 **[writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)**
 
-- How to write module specs and scenario specs
-- Implicit vs. explicit code-unit declarations
-- Scenario syntax and DSL (sequence diagrams, goals, steps)
+- How to write scenario specs
+- Implicit code-unit declarations in scenarios
+- Scenario syntax and DSL (goals, steps, markdown sections)
 - The `sunya` package and special modules
 
 ### 2. Mapping Specs to Implementation
@@ -72,7 +72,7 @@ Located in [writing_python_package_code/](writing_python_package_code/):
 
   - Centralized settings.py structure
   - Environment variable handling
-  - Settings consolidation from module specs
+  - Settings consolidation from scenario specs
 
 - **[instructions-for-writing-python-files.md](writing_python_package_code/instructions-for-writing-python-files.md)**
 
@@ -93,7 +93,7 @@ Located in [writing_python_package_code/](writing_python_package_code/):
 
 The [examples/bookie/](examples/bookie/) directory contains a complete example application showing:
 
-- Spec files: `extra/spec_src/modules/` and `extra/spec_src/scenarios/`
+- Spec files: `extra/spec_src/scenarios/`
 - Implementation: `src/bookie/`
 - How specs map to actual code
 
@@ -111,7 +111,7 @@ The [examples/bookie/](examples/bookie/) directory contains a complete example a
 
 ## Development Workflow
 
-1. **Define specs** - Write module and scenario specs in `extra/spec_src/`
+1. **Define specs** - Write scenario specs in `extra/spec_src/scenarios/`
 2. **Review specs** - Ensure clarity; ask for clarification if needed
 3. **Implement** - Map specs to code following the implementation guides
 4. **Validate** - Specs owner validates implementation matches intent
@@ -127,5 +127,5 @@ The [examples/bookie/](examples/bookie/) directory contains a complete example a
 ## Notes
 
 - The `External` module is virtual and only used for external actors in scenarios
-- Actions can be implicitly defined in scenarios without being in module specs
+- All code-units (actions, models, rules, etc.) are implicitly declared in scenario specs
 - The `sunya` package renders specs to Markdown but this is optional for implementation

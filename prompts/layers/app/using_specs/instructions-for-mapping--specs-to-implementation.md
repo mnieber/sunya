@@ -1,15 +1,15 @@
-# Instructions for mapping module specs to implementation
+# Instructions for mapping scenario specs to implementation
 
-## Module specs to feature packages
+## Module namespaces to feature packages
 
-Each module specification implies a corresponding "feature package" (sub-package directory) in the application.
+Each module namespace referenced in the scenario specs implies a corresponding "feature package" (sub-package directory) in the application.
 
-**Example:** The `modules/books.py` module spec implies that the application has a `bookie/books/` feature package directory.
+**Example:** A scenario spec referencing `m.Books.Actions.CreateBook` implies that the application has a `bookie/books/` feature package directory.
 
 If the application is called `bookie`, then:
 
-- The `Books` module spec → `bookie/books/` feature package
-- The `Chapters` module spec → `bookie/chapters/` feature package
+- The `Books` namespace → `bookie/books/` feature package
+- The `Chapters` namespace → `bookie/chapters/` feature package
 - Etc.
 
 ## Mapping of specs onto filenames and function names
