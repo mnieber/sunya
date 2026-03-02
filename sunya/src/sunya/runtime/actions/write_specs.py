@@ -2,8 +2,8 @@ import importlib
 import sys
 from pathlib import Path
 
-from sunya.modules.rules.module_namespace_to_tree import module_namespace_to_tree
-from sunya.modules.utils.module_namespace import M
+from sunya.modules.rules.component_namespace_to_tree import component_namespace_to_tree
+from sunya.modules.utils.component_namespace import C
 from sunya.runtime.actions.get_module_markdown import get_module_markdown
 from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
 from sunya.runtime.rules.get_scenario_markdown import get_scenario_markdown
@@ -52,7 +52,7 @@ def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
 
 
 def _write_modules(package, module_spec_paths, file_writer):
-    dynamic_trees = module_namespace_to_tree(M)
+    dynamic_trees = component_namespace_to_tree(C)
     for module_spec_path in module_spec_paths:
         module_markdown = get_module_markdown(
             module_spec_path,

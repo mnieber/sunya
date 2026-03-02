@@ -1,34 +1,51 @@
-class ModuleNamespace:
+class ComponentNamespace:
     """
-    The module namespace (m) stores dynamically created module specs.
-    An entry follows the pattern: m.<module_name>.<section_name>.<actor_name>
+    The component namespace (m) stores dynamically created component specs.
+    An entry follows the pattern: m.<component_name>.<module_name>.<section_name>.<actor_name>
 
-    Example: m.Projects.Rules.GetFoo declares:
-      - A Projects module exists
+    Example: m.WebServer.Projects.Rules.GetFoo declares:
+      - A WebServer component exists
+      - With a Projects module
       - With a Rules section
       - With a GetFoo actor
     """
 
     def __init__(self):
-        self._modules = {}
+        self._components = {}
 
     def clear(self):
-        """Clear all module specs."""
-        self._modules = {}
+        """Clear all component specs."""
+        self._components = {}
 
     def __getattr__(self, name: str) -> any:
-        """Get or create a module spec."""
+        """Get or create a component spec."""
         if name.startswith("_"):
             raise AttributeError(
                 f"'{type(self).__name__}' object has no attribute '{name}'"
             )
 
-        # Handle "External" as a special case
-        if name == "External":
-            return ExternalNamespace()
+        if name not in self._components:
+            self._components[name] = ComponentSpec(name)
+
+        return self._components[name]
+
+
+class ComponentSpec:
+    """Represents a component (e.g., Projects in m.Projects)."""
+
+    def __init__(self, component_name: str):
+        self._component_name = component_name
+        self._modules = {}
+
+    def __getattr__(self, name: str):
+        """Get or create a modules in this component."""
+        if name.startswith("_"):
+            raise AttributeError(
+                f"'{type(self).__name__}' object has no attribute '{name}'"
+            )
 
         if name not in self._modules:
-            self._modules[name] = ModuleSpec(name)
+            self._modules[name] = ModuleSpec(self._component_name, name)
 
         return self._modules[name]
 
@@ -92,10 +109,4 @@ class ActorSpec:
         return self.full_path
 
 
-class ExternalNamespace:
-    Actors = SectionSpec("External", "Actors")
-    Modules = ModuleNamespace()
-    Services = ModuleNamespace()
-
-
-M = ModuleNamespace()
+C = ComponentNamespace()

@@ -1,7 +1,7 @@
 import re
 
 from sunya.actors.models.role import Role
-from sunya.modules.utils.module_namespace import ActorSpec
+from sunya.modules.utils.component_namespace import ActorSpec
 from sunya.scenarios.models.scenario import get_scenario
 
 
@@ -9,7 +9,8 @@ def participant(actor: any, role: Role | None = None):
     scenario = get_scenario()
 
     if role is not None:
-        role.actor = actor
+        if not role.actor:
+            role.actor = actor
         name = role.name
 
         # If the actor is an ActorSpec, add it to the current node's legend
