@@ -11,7 +11,7 @@ class Store:
     components: T.List["Component"] = []
 
     def reset(self):
-        from sunya.modules.utils.component_namespace import C
+        from sunya.scenarios.utils.component_namespace import C
         from sunya.scenarios.utils.global_namespace import G  # noqa
 
         self.components.clear()

@@ -1,7 +1,6 @@
 import typing as T
 
 
-
 class Role:
     _name: str
     _actor: T.Any = None
@@ -25,10 +24,9 @@ class Role:
     def actor(self, value):
         if self._actor:
             if self._actor != value:
-                if False:
-                    raise CannotMutateRoleError(
-                        f"Role '{self._name}' is already assigned to an actor."
-                    )
+                raise CannotMutateRoleError(
+                    f"Role '{self._name}' is already assigned to an actor."
+                )
         else:
             self._actor = value
 
