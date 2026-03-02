@@ -2,9 +2,7 @@ import importlib
 import sys
 from pathlib import Path
 
-from sunya.modules.rules.component_namespace_to_tree import component_namespace_to_tree
 from sunya.modules.utils.component_namespace import C
-from sunya.runtime.actions.get_module_markdown import get_module_markdown
 from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
 from sunya.runtime.rules.get_scenario_markdown import get_scenario_markdown
 from sunya.runtime.utils.file_writer import FileWriter
@@ -29,7 +27,7 @@ def write_specs(
 
     # Write modules
     module_spec_paths = get_module_spec_paths(root_dirname, spec_paths["module_paths"])
-    _write_modules(package_output_path, module_spec_paths, file_writer)
+    _write_modules(package_output_path, file_writer)
 
     watch_paths = set()
     watch_paths.update(Path(root_dirname) / Path(path) for path in scenario_spec_paths)
@@ -51,20 +49,19 @@ def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
             del sys.modules[module_name]
 
 
-def _write_modules(package, module_spec_paths, file_writer):
-    dynamic_trees = component_namespace_to_tree(C)
-    for module_spec_path in module_spec_paths:
-        module_markdown = get_module_markdown(
-            module_spec_path,
-            dynamic_trees,
-        )
-        if not module_markdown:
+def _write_modules(package, file_writer):
+    # TODO: write C as module specs
+    print(C)
+
+    for component in C._components:
+        component_markdown = get_component_markdown(component)
+        if not component_markdown:
             continue
 
         # Derive module name from file path
-        module_name = Path(module_spec_path).stem
+        component_name = component._component_name
 
         # Write to file
         file_writer.write_module(
-            package, module_name, get_markdown_signature() + module_markdown
+            package, component_name, get_markdown_signature() + component_markdown
         )

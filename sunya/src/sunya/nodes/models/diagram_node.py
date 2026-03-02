@@ -1,4 +1,4 @@
-import typing as T
+
 from dataclassy import dataclass
 from sunya.nodes.models.node import Node
 
@@ -7,4 +7,3 @@ from sunya.nodes.models.node import Node
 class DiagramNode(Node):
     title: str
     markdown: str = ""
-    legend: T.Dict[str, str] = {}

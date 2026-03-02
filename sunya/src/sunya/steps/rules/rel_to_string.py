@@ -1,7 +1,6 @@
-from sunya.steps.rules.the import The
 from sunya.actors.models.role import Role
-from sunya.actors.models.entity import Entity
 from sunya.steps.models.rel import Rel
+from sunya.steps.rules.the import The
 
 
 def rel_to_string(rel: Rel) -> str:
@@ -27,9 +26,6 @@ def _term_to_str(term: any) -> str:
 
     elif isinstance(term, It):
         term_str = "it"
-
-    elif isinstance(term, Entity):
-        term_str = term.__class__.__name__
 
     else:
         raise ValueError(f"Cannot convert term of type {type(term)} to string.")

@@ -1,5 +1,5 @@
 import typing as T
-from sunya.steps.actions.signal import signal
+
 
 
 class Role:
@@ -12,17 +12,6 @@ class Role:
 
     def __bool__(self):
         return bool(self.actor)
-
-    def __eq__(self, other):
-        if isinstance(other, Role):
-            return self._name == other._name and self._actor == other._actor
-        return False
-
-    def __gt__(self, other):
-        return signal(self, other)
-
-    def __rshift__(self, other):
-        return signal(self, other, dashed=True)
 
     @property
     def name(self):
