@@ -1,4 +1,4 @@
-from sunya.actors.models.role import Role
+from sunya.scenarios.models.role import Role
 from sunya.steps.models.rel import Rel
 from sunya.steps.rules.the import The
 

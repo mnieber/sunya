@@ -1,5 +1,5 @@
-from sunya.actors.actions.add_role import add_role
-from sunya.actors.models.role import Role
+from sunya.scenarios.actions.add_role import add_role
+from sunya.scenarios.models.role import Role
 
 
 class RoleNamespace:

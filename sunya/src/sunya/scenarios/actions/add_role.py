@@ -1,4 +1,4 @@
-from sunya.roles.models.role import Role, get_role
+from sunya.scenarios.models.role import Role, get_role
 from sunya.scenarios.models.scenario import get_scenario
 
 

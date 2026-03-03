@@ -1,26 +1,31 @@
 import typing as T
-from sunya.scenarios.models.store import store
-from sunya.nodes.models.node import Node
 
 from dataclassy import dataclass
+from sunya.nodes.models.node import Node
+from sunya.scenarios.models.store import store
+from sunya.steps.models.step import Step
 
 
 @dataclass(kw_only=True)
 class Scenario:
     name: str
     nodes: T.List[Node] = []
+    stack: T.List[Step] = []
     roles: T.List = []
     markdown_fn: str | None = None
+    steps: T.List[Step] = []
 
-    def get_node(self) -> Node:
-        if not self.nodes:
-            raise NoNodeError("No nodes in the current scenario.")
-        return self.nodes[-1]
-
-    def get_node_or_none(self) -> Node | None:
-        if not self.nodes:
+    @property
+    def step(self) -> Step | None:
+        if not self.stack:
             return None
-        return self.get_node()
+        return self.stack[-1]
+
+    def add_step(self, step: Step):
+        if not self.step:
+            self.steps.append(step)
+        else:
+            self.step.steps.append(step)
 
 
 def get_scenario(name: str | None = None) -> Scenario:

@@ -1,11 +1,15 @@
-import typing as T
+
+from sunya.scenarios.models.scenario import get_scenario
+from sunya.steps.models.step import Step
 
 
 def the(entity):
     from sunya.steps.models.rel import Rel
 
-    rel_builder = Rel(fact_bits=(The(entity),))
-    return T.cast(T.Any, rel_builder)
+    rel = Rel(fact_bits=(The(entity),))
+    step = Step(rel=rel)
+    get_scenario().add_step(step)
+    return step
 
 
 class The:

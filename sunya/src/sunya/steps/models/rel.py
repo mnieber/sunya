@@ -5,17 +5,6 @@ class Rel:
         self.args = args or ()
         self.kwargs = kwargs or {}
 
-    def __getattr__(self, name):
-        def relates_to(other_entity=None):
-            self.fact_bits = (
-                *self.fact_bits,
-                name,
-                *([] if other_entity is None else [other_entity]),
-            )
-            return self
-
-        return relates_to
-
     def __str__(self):
         if self.verb:
             formatted_args = ", ".join(str(arg) for arg in self.args)
@@ -25,5 +14,6 @@ class Rel:
             return f"{self.verb}({params})"
         elif self.fact_bits:
             from sunya.steps.rules.rel_to_string import rel_to_string
+
             return rel_to_string(self)
         return ""
