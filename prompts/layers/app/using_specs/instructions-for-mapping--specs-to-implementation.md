@@ -4,7 +4,7 @@
 
 Each module namespace referenced in the scenario specs implies a corresponding "feature package" (sub-package directory) in the application.
 
-**Example:** A scenario spec referencing `m.Books.Actions.CreateBook` implies that the application has a `bookie/books/` feature package directory.
+**Example:** A scenario spec referencing `c.Books.Actions.CreateBook` implies that the application has a `bookie/books/` feature package directory.
 
 If the application is called `bookie`, then:
 

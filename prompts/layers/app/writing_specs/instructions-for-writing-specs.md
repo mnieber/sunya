@@ -2,6 +2,12 @@
 
 When writing a scenario spec file, please follow the example in `extra/spec_src/scenarios/ms1_a_user_creates_a_book/scenario.py`.
 
+## The goal of spec files (VERY IMPORTANT)
+
+The goal of the specification files is to make the high-level design understandable. The specification files do mention specific functions and models that are used
+in the source code when these are important for understanding the high-level design (and when this will later help the reader of the source code to understand it).
+However, it tries to strike a balance and avoids mentioning non-essential details (the reader will figure those out when they read the actual source code).
+
 ## There are no explicit module spec files
 
 Modules are defined implicitly through the scenario spec files. There is no `extra/spec_src/modules/` directory and no explicit module spec files. All code-unit declarations are made implicitly in the scenario files by referencing module paths such as `m.Books.Actions.CreateBook`.
@@ -28,6 +34,7 @@ Each scenario file contains:
 ### The run_scenario function
 
 The `run_scenario` function describes the scenario by:
+
 - Assigning roles to module code-units using `r.<role> = m.<Module>.<Section>.<CodeUnit>`
 - Describing goals and steps using `with goal()...` blocks and `the(...)` / `it()` step expressions
 
@@ -43,6 +50,7 @@ with goal().create_a(r.result).using_the(r.foo):
 #### Steps
 
 Steps describe what each participant does. Every step starts with either:
+
 - `the(r.actor).does_something()` — when naming a specific actor
 - `it().does_something()` — as a shorthand referring back to the nearest preceding `the(...)` expression
 
@@ -59,7 +67,7 @@ with the(r.frontend).calls_the(r.action).with_the(r.form):
 
 The markdown section uses this fixed structure:
 
-```
+````
 A short description of the scenario.
 
 ### Steps
@@ -78,11 +86,12 @@ Step description.</br>
 sequenceDiagram
     ...
 \```
-```
+````
 
 ### The sunya DSL
 
 Common patterns:
+
 - `with goal().do_something(r.thing):` — a goal grouping steps
 - `the(r.actor).calls(r.action).with_the(r.form)` — actor calls an action
 - `it().creates(r.thing)` — creates something (shorthand for the nearest `the(...)`)

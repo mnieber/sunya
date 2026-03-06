@@ -17,9 +17,3 @@ Please use the bookie roadmap in `extra/spec_src/roadmaps/roadmap.md` as an exam
 ## The use of an example application
 
 The rest of the software development process will be explained using the bookie example application.
-
-## The use of research/plan/implement for refactoring and feature implementation
-
-When we are refactoring the existing code or implementing features, I will often ask you to create a research.md document that describes how the current feature works. Afterwards, I will ask you to create a plan.md file that describes the refactoring plan.
-
-RULE: When I ask you to write a plan.md document, then this plan should be based on the research.md document.
