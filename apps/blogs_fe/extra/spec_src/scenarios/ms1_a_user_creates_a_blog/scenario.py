@@ -1,35 +1,61 @@
 import sunya
-from sunya import (
-    goal,
-    R as r,
-    M as m,
-    Rel as rel,
-    actions as a,
-    participant,
-    note_over,
-    self,
-)
-
+from sunya import M as m
+from sunya import R as r
+from sunya import goal, it, the
 
 scenario = sunya.add_scenario("ms1_a_user_creates_a_blog")
+
+
+def run_scenario():
+    r.user = m.External.Actors.User
+    r.blog_list_view = m.Blogs.Views.BlogListView
+    r.blog_form_view = m.Blogs.Views.BlogFormView
+    r.create_blog_mutation = m.Blogs.Mutations.CreateBlog
+
+    with goal().create_a(r.blog).for_the(r.user):
+        the(r.user).visits_the(r.blogs_route)
+        the(r.blog_list_view).shows(r.create_blog_button)
+        the(r.user).presses(r.create_blog_button)
+        the(r.user).submits(r.blog_form)
+        with the(r.blog_form_view).calls(r.create_blog_mutation).with_the(r.blog_form_data):
+            it().creates(r.blog)
+            it().returns(r.blog)
+
+
 markdown_node = sunya.add_markdown_node(scenario, "A user creates a blog")
 
-markdown_node.markdown = f"""
+markdown_node.markdown = """
+The user visits the blogs route and presses the create-blog button to open the blog form.
+After filling out the form and submitting, `BlogFormView` calls `CreateBlog` which creates
+and returns the new blog.
+
+### Steps
+
+#### It creates the blog
+
+The user visits the blogs route.</br>
+`BlogListView` shows the create-blog button.</br>
+The user presses the create-blog button to open `BlogFormView`.</br>
+The user fills out and submits the blog form.</br>
+`BlogFormView` calls `CreateBlog` with the blog form data.</br>
+`CreateBlog` creates and returns the blog.</br>
+
+### Diagram
+
 ```mermaid
 sequenceDiagram
-    {participant(m.External.Actors.User, role=r.User)}
-    {participant(m.Blogs.Views.BlogListView, role=r.BlogListView)}
-    {participant(m.Blogs.Views.BlogFormView, role=r.BlogFormView)}
-    {participant(m.Blogs.Mutations.CreateBlogMutation, role=r.CreateBlogMutation)}
+    participant User
+    participant BLV as BlogListView
+    participant BFV as BlogFormView
+    participant CBM as CreateBlog (mutation)
 
-    # 🔳 Create Blog
-    {note_over(r.User, goal(rel().create_a(r.blog).for_the(r.user)))}
-    {r.User           >  r.BlogListView}        : {a.it(rel().visits_the(r.blogs_route))}
-    {r.BlogListView   >> r.User}                : {a.it(rel().shows(r.create_blog_button))}
-    {r.User           >  r.BlogFormView}        : {a.it(rel().presses(r.create_blog_button))}
-    {r.User           >> r.BlogFormView}        : {a.it(rel().submits(r.blog_form))}
-    {r.BlogFormView   >> r.CreateBlogMutation}  : {a.calls(r.blog_form_data)}
-    {r.CreateBlogMutation >> self()}            : {a.creates(r.blog)}
-    {r.CreateBlogMutation >> r.BlogFormView}    : {a.returns(r.blog)}
+    Note over User,CBM: Create blog
+    User->>BLV: visits blogs route
+    BLV-->>User: shows create-blog button
+    User->>BFV: presses create-blog button
+    User-->>BFV: submits blog form
+    BFV->>CBM: createBlog(blogFormData)
+    CBM->>CBM: create blog
+    CBM-->>BFV: blog
 ```
 """
