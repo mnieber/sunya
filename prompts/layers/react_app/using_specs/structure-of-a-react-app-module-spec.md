@@ -1,28 +1,21 @@
-# Structure of a frontend module spec
+# Module declarations
 
-The blogs/frontend/modules/blogs.py file gives an example of a frontend module spec.
+The modules of a react app are declared implicitly in scenario specs. For example, the types section is declared implicitly in scenario specs by referencing `m.<Module>.Types.<TypeName>`.
+This section describes the Typescript types that are based on the entities in the roadmap. In general, you will be able to guess the purpose of each section by looking at the section name, and by inspecting the blogs_fe example (that contains scenarios that implicitly define sections, and also contains the actual React code that implements these sections).
 
-## Purpose of a frontend module spec
+## Types
 
-The purpose of a frontend module spec is similar to the purpose of the backend module spec, but aimed at the frontend. It declares mock code-units that can be used in frontend scenarios.
+Most of the type-script types are declared in the api module. The reason is that types often cut across the feature modules. Therefore, it's convenient to not tie them to a specific feature module but put them in a central location.
 
-## Top-level module class
-
-The top-level data-structure is a so-called module class that inherits from Module. It acts as a namespace for all mock code-units for a specific module.
-
-### Types
-
-The Types section of the module class describes the Typescript types that are based on the entities in the roadmap. Typically these Typescript types will be similar to the Django entities in the backend.
-
-### Mutations
+## Mutations
 
 The Mutations section describes the mutations that the frontend can use. These mutations correspond to the api views in the backend that mutate data.
 
-### Queries
+## Queries
 
 The Queries section describes the queries that the frontend can use. These queries correspond to the api views in the backend that query data.
 
-### States
+## States
 
 The States section describes the state objects that are used in the frontend to store local state data. Typically, any server state (that is received through queries) and any local state that is shared between different ui components is stored in these state objects.
 
@@ -39,24 +32,24 @@ Every State object has one or more containers. Each container stores a particula
 - the insertion facet allows ui components to insert an item into the resource. Insertion usually works together with addition and dragAndDrop.
 - the selection facet allows ui components to get and set the selection.
 
-### Routes
+## Routes
 
 The Routes section describes the routes that the frontend will render. Usually, a route corresponds to a particular page in the application.
 
-### StateProviders
+## StateProviders
 
 The StateProviders section describes the state-provider components that provide state to other components. For every State object in the States section, there will be a corresponding StateProvider. However, sometime additional state providers are described that provide an extra state that is not described in the States section.
 
-### Views
+## Views
 
 The Views section describes components that can be considered Views. A View component typically shows a resource.
 
 Each view in the Views section can have a root field that contains a high-level description of the layout of that view. The root field corresponds to the root div of the view. Elements in the root field that start with a double underscore denote divs that are embedded in the root div. The names of these div elements suggest a particular layout for the view.
 
-### Effects
+## Effects
 
 The Effects section describes so-called url-effects. Usually when a State is provided that has a highlight facet then the highlighted item should be synchronized with the url. The SelectEffect (which is a type of url-effect) takes care of this.
 
-### Components
+## Components
 
 The Components section describes the ui components that are used in the various views of the Views section. If a component should be stylable from the outside (i.e. by the View that uses it) then it will have a trim property.
