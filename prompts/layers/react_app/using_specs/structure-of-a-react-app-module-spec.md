@@ -1,7 +1,7 @@
 # Module declarations
 
 The modules of a react app are declared implicitly in scenario specs. For example, the types section is declared implicitly in scenario specs by referencing `m.<Module>.Types.<TypeName>`.
-This section describes the Typescript types that are based on the entities in the roadmap. In general, you will be able to guess the purpose of each section by looking at the section name, and by inspecting the blogs_fe example (that contains scenarios that implicitly define sections, and also contains the actual React code that implements these sections).
+This section describes the Typescript types that are based on the entities in the roadmap. In general, you will be able to guess the purpose of each section by looking at the section name, and by inspecting the blogs_fe example. This example contains scenarios that implicitly define sections, and also contains the actual React code that implements these sections.
 
 ## Types
 

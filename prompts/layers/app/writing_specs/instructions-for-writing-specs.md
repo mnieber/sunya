@@ -1,6 +1,6 @@
 # Writing specs
 
-When writing a scenario spec file, please follow the example in `extra/spec_src/scenarios/ms1_a_user_creates_a_book/scenario.py`.
+When writing a scenario spec file, please follow the `spec_src` directories that you find in the examples directory.
 
 ## The goal of spec files (VERY IMPORTANT)
 

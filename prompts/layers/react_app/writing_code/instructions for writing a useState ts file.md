@@ -1,6 +1,7 @@
 # Instructions for writing a useState.ts file
 
 When writing a useState.ts file, please follow the example in blogPosts/hooks/useBlogPostState.ts.
+You will need one `useState` hook function per State. For example, since there is a BlogsState.ts, it will have an associated useBlogsState.ts hook function for using that state.
 
 ## The tracking of resource states
 
