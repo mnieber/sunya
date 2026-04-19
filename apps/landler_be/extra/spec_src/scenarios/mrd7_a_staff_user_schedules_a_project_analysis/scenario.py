@@ -1,140 +1,157 @@
-from sunya import (
-    goal,
-    add_scenario,
-    run_scenario,
-    get_scenario,
-    the,
-    it,
-    G as g,
-    R as r,
-    I as i,
-)
+import sunya
+from sunya import M as m
+from sunya import R as r
+from sunya import goal, it, the
+
+scenario = sunya.add_scenario(f"mrd7_a_staff_user_schedules_a_project_analysis")
 
 
-scenario_name = f"backend/mrd_6_a_staff_user_schedules_a_project_analysis"
+def run_scenario():
+    r.user = m.External.Actors.User
+    r.frontend = m.External.Actors.Frontend
+    r.create_project_analysis_job_api_view = m.ProjectAnalyses.ApiViews.CreateProjectAnalysisJobApiView
+    r.create_project_analysis_job_action = m.ProjectAnalyses.Actions.CreateProjectAnalysisJob
+    r.project_analysis_queue = m.ProjectAnalyses.ProjectAnalysisQueue
+    r.create_project_analysis_action = m.ProjectAnalyses.Actions.CreateProjectAnalysis
+    r.run_project_analysis_action = m.ProjectAnalyses.Actions.RunProjectAnalysis
+    r.run_plot_analysis_action = m.PlotAnalyses.Actions.RunPlotAnalysis
+
+    with goal().create_a(r.project_analysis_job):
+        # Create a project analysis job
+        with the(r.frontend).calls(r.create_project_analysis_job_api_view):
+            with it().calls(r.create_project_analysis_job_action):
+                it().creates(r.project_analysis_job)
+                it().adds(r.project_analysis_job).to_the(r.project_analysis_queue)
+
+    with goal().run_the(r.project_analysis_jobs):
+        # Find project analysis jobs to run
+        with the(r.project_analysis_queue).finds_the(r.jobs_to_run):
+            pass
+
+        # Run each project analysis job
+        with the(r.project_analysis_queue).runs_each(r.project_analysis_job):
+            # Create project analysis
+            with it().calls(r.create_project_analysis_action):
+                it().creates(r.project_analysis).with_status_running()
+                it().determines_the(r.project_at_now).based_on_the_now_timestamp()
+                it().finds_the(r.default_plot_list).for_the(r.project_at_now)
+
+                # Create plot analysis for each plot
+                with it().loops_over_all_plots_in_the(r.project_at_now):
+                    it().creates(r.plot_analysis).for_each(r.plot)
+                    it().adds(r.plot_analysis).to_the(r.project_analysis)
+
+            # Run all plot analyses
+            with it().calls(r.run_project_analysis_action):
+                with it().runs_each(r.plot_analysis):
+                    with it().calls(r.run_plot_analysis_action).for_each(r.plot_analysis):
+                        it().determines_the(r.plot_at_now).based_on_the_now_timestamp()
+                        it().creates_the(r.calcium_plot_analysis_job)
 
 
-def start():
-    with add_scenario(scenario_name):
-        # create a project analysis job
-        with goal(i.create_a(r.project_analysis_job)):
-            with the(g.frontend).calls_the(g.create_project_analysis_job_api_view):
-                with it().calls_the(g.create_project_analysis_job_action):
-                    with it().creates_a(r.project_analysis_job).and_adds_it_to_the(
-                        g.project_analysis_queue
-                    ):
-                        assert r.project_analysis_job
-                        assert (
-                            r.project_analysis_job
-                            in g.project_analysis_queue.project_analysis_jobs
-                        )
+markdown_node = sunya.add_markdown_node(scenario, "A staff user schedules a project analysis")
 
-        # find project analysis jobs to run
-        with the(g.project_analysis_queue).finds_the(r.jobs_to_run):
-            assert len(r.jobs_to_run)
+markdown_node.markdown = """
+A staff user schedules a project analysis job. The system creates the job, adds it to the queue, and then processes it by creating a project analysis with plot analyses for each plot in the project. This scenario demonstrates how temporal snapshots of projects and plots are created for analysis.
 
-        # run project analysis jobs
-        for idx, a_project_analysis_job in enumerate(r.jobs_to_run):
-            r.project_analysis_job = a_project_analysis_job
-            r.project_analysis_job_loop_iteration = idx
+### Steps
 
-            # run project analysis job
-            with the(g.project_analysis_queue).runs_the(r.project_analysis_job):
+#### It creates the project analysis job
 
-                # create project analysis
-                with goal(
-                    i.create_a(r.project_analysis).from_a(r.project_analysis_job)
-                ):
-                    with the(g.project_analysis_queue).calls_the(
-                        g.create_project_analysis_action
-                    ):
-                        with it().creates_a(r.project_analysis).and_adds_it_to_the(
-                            r.project_analysis_job
-                        ):
-                            assert r.project_analysis.status == "RUNNING"
+The frontend calls the create project analysis job API view.</br>
+The API view calls the `CreateProjectAnalysisJob` action.</br>
+The action creates the project analysis job and adds it to the project analysis queue.</br>
 
-                        # determine project at now
-                        with it().determines_the(
-                            r.project_at_now
-                        ).based_on_the_now_timestamp_of_the(r.project_analysis):
-                            assert r.project_at_now._now_ == r.project_analysis.now
+**Note [1]**: The project analysis job is added to the queue where it waits to be processed. The queue ensures that jobs are processed in order and that multiple jobs can be queued for later processing.</br>
 
-                        # determine plot list
-                        with it().finds_the(r.default_plot_list).for_the(
-                            r.project_at_now
-                        ):
-                            assert r.default_plot_list
+#### It processes the project analysis job
 
-                        # run plot analysis for each plot
-                        with it().loops_over_all_plots_in_the(r.project_at_now):
-                            for idx, a_plot in enumerate(r.default_plot_list.plots):
-                                r.plot = a_plot
-                                r.plot_loop_iteration = idx
+The project analysis queue finds all jobs to run.</br>
+For each job, the queue calls `CreateProjectAnalysis` to create the project analysis with status "RUNNING".</br>
 
-                                # create a plot analysis
-                                with goal(
-                                    i.add_a(r.plot_analysis)
-                                    .for_the(r.plot)
-                                    .to_the(r.project_analysis)
-                                ):
-                                    with (
-                                        it()
-                                        .creates_a(r.plot_analysis)
-                                        .for_the_current(r.plot)
-                                        .and_adds_it_to_the(r.project_analysis)
-                                    ):
-                                        assert (
-                                            r.plot_analysis.now
-                                            == r.project_analysis.now
-                                        )
-                                        assert r.plot_analysis.status == "RUNNING"
-                                        assert r.project_analysis.plot_analyses
+**Note [2]**: The project analysis has a "now" timestamp that represents the point in time for which the analysis is being performed. This allows the system to create temporal snapshots of the project state.</br>
 
-                # run all plot analyses
-                with goal(i.run_each(r.plot_analysis).in_the(r.project_analysis)):
-                    with the(g.project_analysis_queue).calls_the(
-                        g.run_project_analysis_action
-                    ):
-                        assert r.project_analysis.plot_analyses
+The action determines the project state at the analysis timestamp (project at now).</br>
 
-                        for idx, a_plot_analysis in enumerate(
-                            r.project_analysis.plot_analyses
-                        ):
-                            r.plot_analysis = a_plot_analysis
-                            r.plot_analysis_loop_iteration = idx
+**Note [3]**: The project_at_now represents the project's state at the "now" timestamp. The project_at_now._now_ field matches the project_analysis.now timestamp, ensuring consistency.</br>
 
-                            # run plot analysis
-                            with it().calls_the(g.run_plot_analysis_action):
+The action finds the default plot list for the project.</br>
 
-                                # determine plot-at-now
-                                with it().determines_the(
-                                    r.plot_at_now
-                                ).based_on_the_now_timestamp_of_the(r.plot_analysis):
-                                    assert r.plot_at_now._now_ == r.plot_analysis.now
+**Note [4]**: For each plot in the default plot list, a plot analysis is created. Each plot analysis inherits the same "now" timestamp from its parent project analysis, ensuring all plots are analyzed at the same point in time.</br>
 
-                                # create calcium plot analysis job
-                                with it().creates_the(r.calcium_plot_analysis_job):
-                                    assert (
-                                        r.calcium_plot_analysis_job.polygon
-                                        == r.plot_at_now.polygon
-                                    )
+For each plot in the list, the action creates a plot analysis with status "RUNNING" and adds it to the project analysis.</br>
 
-            for idx, plot_analysis in enumerate(r.project_analysis.plot_analyses):
-                # TODO: the_backend_processes_a_calcium_job_result(plot_analysis, idx)
-                pass
+**Note [5]**: The plot_analysis.now timestamp equals the project_analysis.now timestamp. The plot_analysis.status is set to "RUNNING" to indicate that the analysis is in progress.</br>
 
-    return get_scenario(scenario_name)
+#### It runs the plot analyses
 
+The queue calls `RunProjectAnalysis` to run all plot analyses.</br>
+For each plot analysis, the action calls `RunPlotAnalysis`.</br>
 
-def run():
-    from ..mrd5_a_user_adds_a_plot_to_a_project import scenario as mrd5_scenario
+**Note [6]**: Similar to project_at_now, plot_at_now represents the plot's state at the analysis timestamp. The plot_at_now._now_ field matches the plot_analysis.now timestamp.</br>
 
-    run_scenario(mrd5_scenario)
+The action determines the plot state at the analysis timestamp (plot at now).</br>
 
-    assert r.project
+**Note [7]**: The calcium plot analysis job is created using the polygon from plot_at_now. This ensures that the analysis uses the plot's geometry as it existed at the specified timestamp. The calcium_plot_analysis_job.polygon field equals plot_at_now.polygon.</br>
 
-    return start()
+The action creates a calcium plot analysis job for the plot.</br>
 
+**Note [8] (TODO)**: The processing of calcium job results is not yet implemented in this scenario. Future work will include handling the results returned by the calcium analysis engine and updating the plot analysis status accordingly.</br>
 
-if __name__ == "__main__":
-    run()
+### Diagram
+
+```mermaid
+sequenceDiagram
+    actor User
+    participant Frontend as Frontend
+    participant CreateProjectAnalysisJobApiView as CreateProjectAnalysisJobApiView
+    participant CreateProjectAnalysisJob as CreateProjectAnalysisJob (action)
+    participant ProjectAnalysisQueue as ProjectAnalysisQueue
+    participant CreateProjectAnalysis as CreateProjectAnalysis (action)
+    participant RunProjectAnalysis as RunProjectAnalysis (action)
+    participant RunPlotAnalysis as RunPlotAnalysis (action)
+
+    Note over Frontend,CreateProjectAnalysisJob: Create Project Analysis Job
+    User->>Frontend: schedule project analysis
+    Frontend->>CreateProjectAnalysisJobApiView: calls
+    CreateProjectAnalysisJobApiView->>CreateProjectAnalysisJob: create_project_analysis_job()
+    CreateProjectAnalysisJob->>CreateProjectAnalysisJob: create project analysis job
+    Note over CreateProjectAnalysisJob: See [1]
+    CreateProjectAnalysisJob->>ProjectAnalysisQueue: add job to queue
+    CreateProjectAnalysisJob-->>CreateProjectAnalysisJobApiView: project_analysis_job
+
+    Note over ProjectAnalysisQueue,CreateProjectAnalysis: Process Job
+    ProjectAnalysisQueue->>ProjectAnalysisQueue: find jobs to run
+
+    loop for each job
+        Note over ProjectAnalysisQueue: See [2]
+        ProjectAnalysisQueue->>CreateProjectAnalysis: create_project_analysis(job)
+        CreateProjectAnalysis->>CreateProjectAnalysis: create project analysis with status RUNNING
+
+        Note over CreateProjectAnalysis: See [3]
+        CreateProjectAnalysis->>CreateProjectAnalysis: determine project at now (project state at timestamp)
+
+        CreateProjectAnalysis->>CreateProjectAnalysis: find default plot list
+
+        Note over CreateProjectAnalysis: See [4, 5]
+        loop for each plot
+            CreateProjectAnalysis->>CreateProjectAnalysis: create plot analysis with status RUNNING
+            CreateProjectAnalysis->>CreateProjectAnalysis: add plot analysis to project analysis
+        end
+
+        ProjectAnalysisQueue->>RunProjectAnalysis: run_project_analysis(project_analysis)
+
+        loop for each plot analysis
+            Note over RunProjectAnalysis: See [6]
+            RunProjectAnalysis->>RunPlotAnalysis: run_plot_analysis(plot_analysis)
+            RunPlotAnalysis->>RunPlotAnalysis: determine plot at now (plot state at timestamp)
+
+            Note over RunPlotAnalysis: See [7]
+            RunPlotAnalysis->>RunPlotAnalysis: create calcium plot analysis job (using polygon from plot_at_now)
+        end
+
+        Note over ProjectAnalysisQueue: See [8] (TODO)
+        Note over ProjectAnalysisQueue: Future: process calcium job results
+    end
+```
+"""

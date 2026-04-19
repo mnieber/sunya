@@ -1,95 +1,87 @@
-from sunya import (
-    goal,
-    add_scenario,
-    run_scenario,
-    get_scenario,
-    the,
-    it,
-    G as g,
-    R as r,
-    I as i,
-)
+import sunya
+from sunya import M as m
+from sunya import R as r
+from sunya import goal, it, the
 
-scenario_name = f"backend/mrd3_a_user_joins_the_demo_org"
+scenario = sunya.add_scenario(f"mrd3_a_user_joins_the_demo_org")
 
 
-def start():
-    with add_scenario(scenario_name):
-        with goal(i.add(g.user_session.user).as_admin_to_the(r.demo_organization)):
-            # add user to the demo organization
-            with the(g.frontend).calls_the(g.add_user_to_demo_organization_api_view):
-                # create demo organization
-                with (
-                    it()
-                    .finds_the(r.demo_organization)
-                    .and_if_not_found_it()
-                    .calls_the(g.create_organization_action)
-                ):
-                    with it().creates_the(r.demo_organization):
-                        assert r.demo_organization.name == "demo"
+def run_scenario():
+    r.user = m.External.Actors.User
+    r.frontend = m.External.Actors.Frontend
+    r.add_user_to_demo_organization_api_view = m.Organizations.ApiViews.AddUserToDemoOrganizationApiView
+    r.add_user_to_demo_organization_action = m.Organizations.Actions.AddUserToDemoOrganization
+    r.create_organization_action = m.Organizations.Actions.CreateOrganization
+    r.create_random_display_name_rule = m.Organizations.Rules.CreateRandomDisplayName
+    r.add_user_to_organization_action = m.Organizations.Actions.AddUserToOrganization
 
-                # add user to organization
-                with (
-                    it()
-                    .calls_the(g.add_user_to_organization_action)
-                    .using_the(g.display_name)
-                    .found_in_the(r.form)
-                ):
-                    """
-                    The user can choose their display name in the frontend.
-                    We use a fake email address based on the display name.
-                    """
-                    with it().creates_the(r.demo_organization_membership):
-                        assert r.demo_organization_membership.display_name
-                        assert (
-                            r.demo_organization_membership.member_email
-                            == r.demo_organization_membership.display_name
-                            + "@demo-org.com"
-                        )
+    with goal().add_the(r.user).to_the(r.demo_organization):
+        # Add user to demo organization
+        with the(r.frontend).calls(r.add_user_to_demo_organization_api_view):
+            with it().calls(r.add_user_to_demo_organization_action).with_the(r.current_user):
+                # Find or create demo organization
+                with it().finds_the(r.demo_organization):
+                    pass  # if not found, will create
 
-    return get_scenario(scenario_name)
+                with it().calls(r.create_organization_action).if_demo_org_not_found():
+                    it().creates(r.demo_organization).with_name("demo")
+
+                # Create random display name
+                with it().calls(r.create_random_display_name_rule):
+                    it().generates(r.display_name)
+
+                # Add user to organization
+                with it().calls(r.add_user_to_organization_action).with_the(r.demo_organization).and_the(r.current_user):
+                    it().creates(r.demo_organization_membership).with_fake_email()
 
 
-def run():
-    from ..mrd2_a_user_creates_an_org_and_invites_a_user import (
-        scenario as mrd2_scenario,
-    )
+markdown_node = sunya.add_markdown_node(scenario, "A user joins the demo org")
 
-    run_scenario(mrd2_scenario)
-    assert g.user_session.user
+markdown_node.markdown = """
+A user joins the demo organization. The system finds or creates the demo organization, generates a random display name for the user, and adds the user to the organization with a fake email address.
 
-    return start()
+### Steps
 
+#### It finds or creates the demo organization
 
-if __name__ == "__main__":
-    run()
+The frontend calls the add user to demo organization API view.</br>
+The API view calls the `AddUserToDemoOrganization` action with the current user.</br>
+The action finds the demo organization, or creates it if it doesn't exist.</br>
 
+#### It adds the user to the demo organization
 
-from sunya import G as m
-from sunya import G as r
-from sunya import G as goals
+The action calls the `CreateRandomDisplayName` rule to generate a display name.</br>
+The action calls `AddUserToOrganization` with the demo organization and current user.</br>
+The `AddUserToOrganization` action creates the demo organization membership with a fake email address.</br>
 
-diagram = f"""
+### Diagram
+
 ```mermaid
 sequenceDiagram
-    participant {m.External.Frontend}
-    participant {m.Organizations.AddUserToDemoOrganizationAPIView}
-    participant {m.Organizations.Actions.AddUserToDemoOrganization}
-    participant {m.Organizations.Rules.CreateRandomDisplayName}
-    participant {m.Organizations.Actions.CreateOrganization}
-    participant {m.Organizations.Actions.AddUserToOrganization}
+    actor User
+    participant Frontend as Frontend
+    participant AddUserToDemoOrganizationApiView as AddUserToDemoOrganizationApiView
+    participant AddUserToDemoOrganization as AddUserToDemoOrganization (action)
+    participant CreateOrganization as CreateOrganization (action)
+    participant CreateRandomDisplayName as CreateRandomDisplayName (rule)
+    participant AddUserToOrganization as AddUserToOrganization (action)
 
-    # 🔳 Add user to demo org
-    {goals.note_over(r.Frontend, goal().add_the(r.user).to_the(r.demo_organization))}
-    {r.Frontend                         >> r.AddUserToDemoOrganizationAPIView}  : {g.calls(r.current_user)}
-    {r.AddUserToDemoOrganizationAPIView >> r.AddUserToDemoOrganization}         : {g.calls(r.current_user)}
-    {r.AddUserToDemoOrganization        >> r.self}                              : {g.finds_the(r.demo_organization)}
+    Note over Frontend,AddUserToOrganization: Add user to demo org
+    User->>Frontend: join demo organization
+    Frontend->>AddUserToDemoOrganizationApiView: calls(current_user)
+    AddUserToDemoOrganizationApiView->>AddUserToDemoOrganization: add_user_to_demo_organization(current_user)
+    AddUserToDemoOrganization->>AddUserToDemoOrganization: find demo organization
+
     alt organization not found
-        {r.AddUserToDemoOrganization >> r.CreateOrganization} : {g.calls(r.create_organization_form)}
-        {r.CreateOrganization        >> r.self}               : {g.creates(r.demo_organization)}
+        AddUserToDemoOrganization->>CreateOrganization: create_organization(create_organization_form)
+        CreateOrganization->>CreateOrganization: create demo organization
+        CreateOrganization-->>AddUserToDemoOrganization: demo_organization
     end
-    {r.AddUserToDemoOrganization >> r.CreateRandomDisplayName} : {g.calls()}
-    {r.AddUserToDemoOrganization >> r.AddUserToOrganization}   : {g.calls(r.demo_organization, r.current_user, r.add_user_to_organization_form)}
-    {r.AddUserToOrganization     >> r.self}                    : {g.creates(r.demo_organization_membership)}
 
+    AddUserToDemoOrganization->>CreateRandomDisplayName: create_random_display_name()
+    CreateRandomDisplayName-->>AddUserToDemoOrganization: display_name
+    AddUserToDemoOrganization->>AddUserToOrganization: add_user_to_organization(demo_organization, current_user, add_user_to_organization_form)
+    AddUserToOrganization->>AddUserToOrganization: create demo organization membership
+    AddUserToOrganization-->>AddUserToDemoOrganization: demo_organization_membership
 ```
+"""

@@ -1,90 +1,84 @@
-from sunya import (
-    goal,
-    add_scenario,
-    get_scenario,
-    run_scenario,
-    it,
-    the,
-    G as g,
-    I as i,
-    R as r,
-)
+import sunya
+from sunya import M as m
+from sunya import R as r
+from sunya import goal, it, the
+
+scenario = sunya.add_scenario(f"mrd4_a_user_creates_a_project")
 
 
-scenario_name = f"backend/mrd4_a_user_creates_a_project"
+def run_scenario():
+    r.user = m.External.Actors.User
+    r.frontend = m.External.Actors.Frontend
+    r.set_active_organization_api_view = m.Organizations.ApiViews.SetActiveOrganizationApiView
+    r.set_active_organization_action = m.Organizations.Actions.SetActiveOrganization
+    r.create_project_api_view = m.Projects.ApiViews.CreateProjectApiView
+    r.create_project_action = m.Projects.Actions.CreateProject
+    r.add_organization_to_project_action = m.Projects.Actions.AddOrganizationToProject
 
-
-def start():
-    with add_scenario(scenario_name):
-        # set demo organization as active
-        with (
-            the(g.frontend)
-            .calls_the(g.set_active_organization_api_view)
-            .to_set_the_active_organization_to_the(r.demo_organization)
-        ):
-            with (
-                it()
-                .calls_the(g.set_active_organization_action)
-                .to_set_the_active_organization_to_the(r.demo_organization)
-            ):
+    with goal().set_the_demo_organization_as_active():
+        # Set demo organization as active
+        with the(r.frontend).calls(r.set_active_organization_api_view):
+            with it().calls(r.set_active_organization_action).to_set_the(r.demo_organization).as_active():
                 pass
 
-        # create a project in the demo organization
-        with goal(i.create_a(r.project).with_admin(g.user_session.active_organization)):
-            with the(g.frontend).calls_the(g.create_project_api_view):
-                with it().calls_the(g.create_project_action):
-                    with it().creates_the(r.project):
-                        assert r.project.plot_lists[0].name == "Default Plot List"
+    with goal().create_a(r.project).in_the(r.demo_organization):
+        # Create a project in the demo organization
+        with the(r.frontend).calls(r.create_project_api_view):
+            with it().calls(r.create_project_action).with_the(r.create_project_form):
+                it().creates(r.project).with_default_plot_list()
 
-                    with it().calls_the(g.add_organization_to_project_action):
-                        with it().creates_the(r.project_membership):
-                            assert r.project_membership.role == "admin"
-                            assert (
-                                r.project_membership.organization == r.demo_organization
-                            )
-
-    return get_scenario(scenario_name)
+                # Add organization to project
+                with it().calls(r.add_organization_to_project_action).with_the(r.project).and_the(r.demo_organization):
+                    it().creates(r.project_membership).with_admin_role()
 
 
-def run():
-    from ..mrd3_a_user_joins_the_demo_org import scenario as mrd3_scenario
+markdown_node = sunya.add_markdown_node(scenario, "A user creates a project")
 
-    run_scenario(mrd3_scenario)
+markdown_node.markdown = """
+A user sets the demo organization as active and then creates a project in that organization. The project is automatically associated with the organization with an admin role.
 
-    return start()
+### Steps
 
+#### It sets the demo organization as active
 
-if __name__ == "__main__":
-    run()
+The frontend calls the set active organization API view.</br>
+The API view calls the `SetActiveOrganization` action to set the demo organization as active.</br>
 
+#### It creates the project
 
-from sunya import G as m
-from sunya import G as r
-from sunya import G as goals
+The frontend calls the create project API view.</br>
+The API view calls the `CreateProject` action with the `create_project_form`.</br>
+The action creates the project with a default plot list.</br>
+The action calls `AddOrganizationToProject` with the project and demo organization.</br>
+The `AddOrganizationToProject` action creates the project membership with admin role.</br>
 
-diagram = f"""
+### Diagram
+
 ```mermaid
 sequenceDiagram
-    participant {m.External.Frontend}
-    participant {m.Organizations.ApiViews.SetActiveOrganizationApiView}
-    participant {m.Organizations.Actions.SetActiveOrganization}
-    participant {m.Projects.ApiViews.CreateProjectApiView}
-    participant {m.Projects.Actions.CreateProject}
-    participant {m.Projects.Actions.AddOrganizationToProject}
+    actor User
+    participant Frontend as Frontend
+    participant SetActiveOrganizationApiView as SetActiveOrganizationApiView
+    participant SetActiveOrganization as SetActiveOrganization (action)
+    participant CreateProjectApiView as CreateProjectApiView
+    participant CreateProject as CreateProject (action)
+    participant AddOrganizationToProject as AddOrganizationToProject (action)
 
-    # 🔳 Set Active Organization
-    {goals.note_over(r.Frontend, goal().set_the_active_organization_to_the(r.demo_organization))}
-    {r.Frontend                     >> r.SetActiveOrganizationApiView} : {g.calls()}
-    {r.SetActiveOrganizationApiView >> r.SetActiveOrganization}        : {g.calls(r.demo_organization)}
-    {r.SetActiveOrganization        >> r.self}                         : {g.sets(r.demo_organization).as_the(r.active_organization)}
+    Note over Frontend,SetActiveOrganization: Set Active Organization
+    User->>Frontend: set active organization
+    Frontend->>SetActiveOrganizationApiView: calls
+    SetActiveOrganizationApiView->>SetActiveOrganization: set_active_organization(demo_organization)
+    SetActiveOrganization->>SetActiveOrganization: set demo_organization as active
+    SetActiveOrganization-->>SetActiveOrganizationApiView:
 
-    # 🔳 Create Project
-    {goals.note_over(r.Frontend, goal().create_a(r.project).in_the(r.demo_organization))}
-    {r.Frontend                 >> r.CreateProjectApiView}     : {g.calls()}
-    {r.CreateProjectApiView     >> r.CreateProject}            : {g.calls(r.create_project_form)}
-    {r.CreateProject            >> r.self}                     : {g.creates(r.project)}
-    {r.CreateProject            >> r.AddOrganizationToProject} : {g.calls(r.project, organization=r.demo_organization, add_organization_to_project_form=r.add_organization_to_project_form)}
-    {r.AddOrganizationToProject >> r.self}                     : {g.creates(r.project_membership)}
-    {r.AddOrganizationToProject >> r.CreateProjectApiView}     : {g.returns(r.project)}
+    Note over Frontend,AddOrganizationToProject: Create Project
+    User->>Frontend: create project
+    Frontend->>CreateProjectApiView: calls
+    CreateProjectApiView->>CreateProject: create_project(create_project_form)
+    CreateProject->>CreateProject: create project with default plot list
+    CreateProject->>AddOrganizationToProject: add_organization_to_project(project, demo_organization, add_organization_to_project_form)
+    AddOrganizationToProject->>AddOrganizationToProject: create project membership with admin role
+    AddOrganizationToProject-->>CreateProject: project_membership
+    CreateProject-->>CreateProjectApiView: project
 ```
 """

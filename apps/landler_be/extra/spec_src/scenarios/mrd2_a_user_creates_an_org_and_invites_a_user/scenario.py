@@ -1,99 +1,85 @@
-from sunya import (
-    goal,
-    add_scenario,
-    run_scenario,
-    get_scenario,
-    it,
-    the,
-    G as g,
-    R as r,
-    I as i,
-)
+import sunya
+from sunya import M as m
+from sunya import R as r
+from sunya import goal, it, the
 
-scenario_name = f"backend/mrd2_a_user_creates_an_org_and_invites_a_user"
+scenario = sunya.add_scenario(f"mrd2_a_user_creates_an_org_and_invites_a_user")
 
 
-def start():
-    with add_scenario(scenario_name):
-        with goal(i.create_an(r.organization).with_admin(g.user_session.user)):
+def run_scenario():
+    r.user = m.External.Actors.User
+    r.frontend = m.External.Actors.Frontend
+    r.create_organization_api_view = m.Organizations.ApiViews.CreateOrganizationApiView
+    r.create_organization_action = m.Organizations.Actions.CreateOrganization
+    r.add_user_to_organization_action = m.Organizations.Actions.AddUserToOrganization
+    r.set_active_organization_api_view = m.Organizations.ApiViews.SetActiveOrganizationApiView
+    r.set_active_organization_action = m.Organizations.Actions.SetActiveOrganization
 
-            # create an organization for the user
-            with the(g.frontend).calls_the(g.create_organization_api_view):
+    with goal().create_an(r.organization).for_the(r.user):
+        # Create organization
+        with the(r.frontend).calls(r.create_organization_api_view):
+            with it().calls(r.create_organization_action).with_the(r.create_organization_form):
+                it().creates(r.organization)
 
-                # create organization
-                with it().calls_the(g.create_organization_action):
-                    with it().creates_the(r.organization):
-                        assert r.organization.name == "my-org"
+                # Add user to organization as admin
+                with it().calls(r.add_user_to_organization_action).with_the(r.organization).and_the(r.user):
+                    it().creates(r.organization_membership)
 
-                    # add user to organization
-                    with it().calls_the(g.add_user_to_organization_action):
-                        with it().creates_the(r.organization_membership):
-                            assert r.organization_membership
-
-        # set organization as the active organization
-        with (
-            the(r.user)
-            .uses_the(g.organization_picker)
-            .in_the(g.frontend)
-            .to_switch_to_the(g.organization_route)
-            .of_the(r.organization)
-        ):
-            with the(r.user).is_redirected_to_the(g.organization_route):
-                pass
-
-            with goal(i.set(r.organization).as_the_active_organization()):
-                with the(g.frontend).calls_the(g.set_active_organization_api_view):
-                    with it().calls_the(g.set_active_organization_action):
-                        with (
-                            it()
-                            .sets(r.organization)
-                            .as_the_active_organization_in_the(g.user_session)
-                        ):
-                            pass
-
-    return get_scenario(scenario_name)
+    with goal().set(r.organization).as_the_active_organization():
+        # Set active organization
+        with the(r.frontend).calls(r.set_active_organization_api_view):
+            with it().calls(r.set_active_organization_action).with_the(r.organization):
+                it().sets(r.organization).as_the_active_organization_in_the_user_session()
 
 
-def run():
-    from ..mrd1_a_user_signs_up import scenario as mrd1_scenario
+markdown_node = sunya.add_markdown_node(scenario, "A user creates an org and invites a user")
 
-    run_scenario(mrd1_scenario)
-    assert g.user_session.user == r.user
+markdown_node.markdown = """
+A user creates an organization and is automatically added as an admin. Then the user sets the organization as their active organization.
 
-    return start()
+### Steps
 
+#### It creates the organization
 
-if __name__ == "__main__":
-    run()
+The frontend calls the create organization API view.</br>
+The API view calls the `CreateOrganization` action with the `create_organization_form`.</br>
+The action creates the organization.</br>
+The action calls `AddUserToOrganization` with the organization, user, and admin role.</br>
+The `AddUserToOrganization` action creates the organization membership.</br>
 
+#### It sets the active organization
 
-from sunya import G as m
-from sunya import G as r
-from sunya import G as goals
+The frontend calls the set active organization API view.</br>
+The API view calls the `SetActiveOrganization` action with the organization.</br>
+The action sets the organization as the active organization in the user session.</br>
 
-diagram = f"""
+### Diagram
+
 ```mermaid
 sequenceDiagram
-    participant {m.External.Frontend}
-    participant {m.Organizations.ApiViews.CreateOrganizationApiView}
-    participant {m.Organizations.CreateOrganizationAction}
-    participant {m.Organizations.Actions.AddUserToOrganization}
-    participant {m.Organizations.ApiViews.SetActiveOrganizationApiView}
-    participant {m.Organizations.Actions.SetActiveOrganization}
+    actor User
+    participant Frontend as Frontend
+    participant CreateOrganizationApiView as CreateOrganizationApiView
+    participant CreateOrganization as CreateOrganization (action)
+    participant AddUserToOrganization as AddUserToOrganization (action)
+    participant SetActiveOrganizationApiView as SetActiveOrganizationApiView
+    participant SetActiveOrganization as SetActiveOrganization (action)
 
-    # 🔳 Create Organization
-    {goals.note_over(r.Frontend, goal().create_an(r.organization).for_the(r.user))}
-    {r.Frontend                    >> r.CreateOrganizationApiView}   : {g.calls()}
-    {r.CreateOrganizationApiView   >> r.CreateOrganization}          : {g.calls(r.create_organization_form)}
-    {r.CreateOrganization          >> r.self}                        : {g.creates(r.organization)}
-    {r.CreateOrganization          >> r.AddUserToOrganization}       : {g.calls(r.organization, r.user, r.admin_role)}
-    {r.AddUserToOrganization       >> r.self}                        : {g.creates(r.organization_membership)}
-    {r.AddUserToOrganization       >> r.CreateOrganizationApiView}   : {g.returns(r.organization)}
+    Note over Frontend,AddUserToOrganization: Create Organization
+    User->>Frontend: create organization
+    Frontend->>CreateOrganizationApiView: calls
+    CreateOrganizationApiView->>CreateOrganization: create_organization(create_organization_form)
+    CreateOrganization->>CreateOrganization: create organization
+    CreateOrganization->>AddUserToOrganization: add_user_to_organization(organization, user, admin_role)
+    AddUserToOrganization->>AddUserToOrganization: create organization membership
+    AddUserToOrganization-->>CreateOrganization: organization_membership
+    CreateOrganization-->>CreateOrganizationApiView: organization
 
-    # 🔳 Set Active Organization
-    {goals.note_over(r.Frontend, goal().the(r.user).sets(r.organization).as_the_active_organization())}
-    {r.Frontend                     >> r.SetActiveOrganizationApiView} : {g.calls()}
-    {r.SetActiveOrganizationApiView >> r.SetActiveOrganization}        : {g.calls(r.organization, r.user)}
-    {r.SetActiveOrganization        >> r.self}                         : {g.sets(r.organization).as_the_active_organization_in_the(g.user_session)}
+    Note over Frontend,SetActiveOrganization: Set Active Organization
+    User->>Frontend: set active organization
+    Frontend->>SetActiveOrganizationApiView: calls
+    SetActiveOrganizationApiView->>SetActiveOrganization: set_active_organization(organization)
+    SetActiveOrganization->>SetActiveOrganization: set organization as active in user session
+    SetActiveOrganization-->>SetActiveOrganizationApiView:
 ```
 """
