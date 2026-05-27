@@ -1,6 +1,6 @@
 # Skill: fe-add-api-hooks
 
-Applies when adding API communication for a feature: writing query hooks, mutation hooks, and their MSW mock handlers. Every query and every mutation must have an MSW handler so the app can always run in isolation (Storybook, local dev, tests) without a real backend.
+Applies when adding API communication for a feature: writing query hooks and mutation hooks. After writing these, also write their MSW handlers — see the `fe-add-msw` skill.
 
 See the `fe-add-model` skill for the `XT.ts` and `XSchema.ts` files that the hooks import.
 
@@ -11,19 +11,12 @@ See the `fe-add-model` skill for the `XT.ts` and `XSchema.ts` files that the hoo
 ```
 api/
   queries/
-    use<QueryName>.ts          ← query hook + query function + invalidate helper
+    use<QueryName>.ts      ← query hook + query function + invalidate helper
   mutations/
-    use<MutationName>.ts       ← mutation hook + mutation function
-mocks/
-  queries/
-    handle<QueryName>.ts       ← MSW GET handler
-  mutations/
-    handle<MutationName>.ts    ← MSW POST handler
-  browser/
-    index.ts                   ← registers all handlers with setupWorker
+    use<MutationName>.ts   ← mutation hook + mutation function
 ```
 
-Primary reference: `blogs_fe/src/api/queries/useGetBlogPosts.ts`, `blogs_fe/src/api/mutations/useCreateBlogPost.ts`, `blogs_fe/src/mocks/queries/handleGetBlogPosts.ts`
+Primary reference: `blogs_fe/src/api/queries/useGetBlogPosts.ts`, `blogs_fe/src/api/mutations/useCreateBlogPost.ts`
 
 ---
 
@@ -34,15 +27,15 @@ Reference: `blogs_fe/src/api/queries/useGetBlogPosts.ts`
 ### Structure
 
 ```ts
-import { useQuery } from "@tanstack/react-query";
-import { z } from "zod";
-import { queryClient } from "/src/api/queryClient";
-import { get } from "/src/api/restClient";
-import { BlogPostSchema } from "/src/api/types/BlogPostSchema";
-import { createQueryKey } from "/src/api/utils/createQueryKey";
-import { parseResponse } from "/src/api/utils/parseResponse";
-import { generatePath } from "/src/routes/utils";
-import { waitOnDev } from "/src/utils/wait";
+import { useQuery } from '@tanstack/react-query';
+import { z } from 'zod';
+import { queryClient } from '/src/api/queryClient';
+import { get } from '/src/api/restClient';
+import { BlogPostSchema } from '/src/api/types/BlogPostSchema';
+import { createQueryKey } from '/src/api/utils/createQueryKey';
+import { parseResponse } from '/src/api/utils/parseResponse';
+import { generatePath } from '/src/routes/utils';
+import { waitOnDev } from '/src/utils/wait';
 
 export type GetBlogPostsArgsT = {
   blogSlug: string;
@@ -53,10 +46,10 @@ export type OptionsT = {
 
 export type GetBlogPostsQueryKeyT = GetBlogPostsArgsT;
 export function getBlogPostsQueryKey(args: GetBlogPostsQueryKeyT) {
-  return createQueryKey<GetBlogPostsQueryKeyT>("getBlogPosts", args);
+  return createQueryKey<GetBlogPostsQueryKeyT>('getBlogPosts', args);
 }
 
-export const getBlogPostsUrl = "/blogs/:blogSlug/blog-posts/list/";
+export const getBlogPostsUrl = '/blogs/:blogSlug/blog-posts/list/';
 
 export const getBlogPosts = (args: GetBlogPostsArgsT) => {
   return get(generatePath(getBlogPostsUrl, { blogSlug: args.blogSlug })).then(
@@ -67,10 +60,7 @@ export const getBlogPosts = (args: GetBlogPostsArgsT) => {
   );
 };
 
-export const useGetBlogPosts = (
-  args: GetBlogPostsArgsT,
-  options?: OptionsT
-) => {
+export const useGetBlogPosts = (args: GetBlogPostsArgsT, options?: OptionsT) => {
   return useQuery({
     queryKey: getBlogPostsQueryKey(args),
     queryFn: () => getBlogPosts(args),
@@ -79,15 +69,13 @@ export const useGetBlogPosts = (
 };
 
 export const invalidateGetBlogPosts = (args: GetBlogPostsQueryKeyT) => {
-  return queryClient.invalidateQueries({
-    queryKey: getBlogPostsQueryKey(args),
-  });
+  return queryClient.invalidateQueries({ queryKey: getBlogPostsQueryKey(args) });
 };
 ```
 
 ### Key rules
 
-- **`XxxUrl` constant** — export the URL string so MSW handlers can import it directly. Use `:param` tokens for path parameters.
+- **`XxxUrl` constant** — export the URL string so the MSW handler can import it directly. Use `:param` tokens for path parameters.
 - **`generatePath`** — use to expand `:param` tokens before calling `get(...)`.
 - **`parseResponse(schema, data)`** — always validate the response against the Zod schema before returning.
 - **`waitOnDev(ms, data)`** — wrap the return value; simulates network latency in dev without affecting production.
@@ -103,10 +91,10 @@ In `useXState.ts`, queries are wrapped in `useObservableQuery` (not called direc
 ```ts
 const getBlogPosts = useObservableQuery(
   useGetBlogPosts(
-    { blogSlug: props.getBlog()?.slug ?? "" },
+    { blogSlug: props.getBlog()?.slug ?? '' },
     { enabled: !!props.getBlog() }
   ),
-  { fetchAsLoad: true, debugLabel: "getBlogPosts" }
+  { fetchAsLoad: true, debugLabel: 'getBlogPosts' }
 );
 ```
 
@@ -121,15 +109,15 @@ Reference: `blogs_fe/src/api/mutations/useCreateBlogPost.ts`
 ### Structure
 
 ```ts
-import snakecaseKeys from "snakecase-keys";
-import { useObservableMutation } from "/src/api/lib/ObservableMutation";
-import { invalidateGetBlogPosts } from "/src/api/queries/useGetBlogPosts";
-import { post } from "/src/api/restClient";
-import { BlogPostSchema } from "/src/api/types/BlogPostSchema";
-import { BlogT } from "/src/api/types/BlogT";
-import { parseResponse } from "/src/api/utils/parseResponse";
-import { ObjT } from "/src/utils/types";
-import { waitOnDev } from "/src/utils/wait";
+import snakecaseKeys from 'snakecase-keys';
+import { useObservableMutation } from '/src/api/lib/ObservableMutation';
+import { invalidateGetBlogPosts } from '/src/api/queries/useGetBlogPosts';
+import { post } from '/src/api/restClient';
+import { BlogPostSchema } from '/src/api/types/BlogPostSchema';
+import { BlogT } from '/src/api/types/BlogT';
+import { parseResponse } from '/src/api/utils/parseResponse';
+import { ObjT } from '/src/utils/types';
+import { waitOnDev } from '/src/utils/wait';
 
 export type CreateBlogPostArgsT = {
   blog: BlogT;
@@ -151,7 +139,7 @@ export const createBlogPost = (args: CreateBlogPostArgsT) => {
     })
     .catch((error) => {
       const errorCodes = error.response.data;
-      if (errorCodes.includes("BLOG_NOT_FOUND")) {
+      if (errorCodes.includes('BLOG_NOT_FOUND')) {
         return waitOnDev(1000, { success: false });
       }
       throw error;
@@ -181,108 +169,6 @@ export const useCreateBlogPost = () => {
 
 ---
 
-## 3. MSW handlers — `mocks/queries/` and `mocks/mutations/`
-
-Every query and every mutation must have a corresponding MSW handler. This ensures the app can run fully in isolation: Storybook stories get real-looking data, local dev works without a backend, and tests are deterministic.
-
-### Query handler
-
-Reference: `blogs_fe/src/mocks/queries/handleGetBlogPosts.ts`
-
-```ts
-import { http, HttpResponse } from "msw";
-import { getBlogPostsUrl } from "/src/api/queries/useGetBlogPosts";
-import { hostUrl } from "/src/api/restClient";
-import { createBlogPost } from "/src/api/types/BlogPostT";
-import { joinUrls } from "/src/utils/urls";
-
-export const handleGetBlogPosts = http.get(
-  joinUrls(hostUrl, getBlogPostsUrl),
-  () => {
-    return HttpResponse.json([
-      createBlogPost({
-        title: "First Post",
-        slug: "first-post",
-        content: "One",
-      }),
-      createBlogPost({
-        title: "Second Post",
-        slug: "second-post",
-        content: "Two",
-      }),
-    ]);
-  }
-);
-```
-
-- Import `XxxUrl` directly from the query hook file — no URL duplication.
-- Use `joinUrls(hostUrl, url)` to match the full URL that the browser will request.
-- Use `create<Name>(...)` factory functions (from `fe-add-model`) to build realistic fixture data.
-- For parameterised URLs (e.g. `/blogs/:blogSlug/blog-posts/list/`), MSW matches `:param` tokens as wildcards — no special handling needed.
-
-### Handler with filtering (query parameters)
-
-When the endpoint accepts query parameters that affect results, read them from `request.url` and filter the mock data accordingly:
-
-```ts
-export const handleQueryTraces = http.get(
-  joinUrls(hostUrl, queryTracesUrl),
-  ({ request }) => {
-    const url = new URL(request.url);
-    const traceKeyPrefix = url.searchParams.get("trace_key_prefix");
-    let filtered = [...mockTraces];
-    if (traceKeyPrefix) {
-      filtered = filtered.filter((t) => t.traceKey.startsWith(traceKeyPrefix));
-    }
-    return HttpResponse.json({ items: filtered });
-  }
-);
-```
-
-### Mutation handler
-
-Reference: `blogs_fe/src/mocks/mutations/handleGetBlogTags.ts`
-
-```ts
-import { http, HttpResponse } from "msw";
-import { hostUrl } from "/src/api/restClient";
-
-export const handleGetBlogTags = http.post(
-  `${hostUrl}${getBlogTagsUrl}*`,
-  () => {
-    return HttpResponse.json({ tags: ["sports", "music"] });
-  }
-);
-```
-
-- Use `http.post(...)` for mutations.
-- Return a plausible response shape matching what `parseResponse` expects (if the mutation validates the response).
-
-### Registering handlers in `mocks/browser/index.ts`
-
-Import and add every new handler to the `handlers` array:
-
-```ts
-import { setupWorker } from "msw/browser";
-import { handleGetBlogs } from "/src/mocks/queries/handleGetBlogs";
-import { handleGetBlogPosts } from "/src/mocks/queries/handleGetBlogPosts";
-import { handleGetBlogTags } from "/src/mocks/mutations/handleGetBlogTags";
-import { passthroughHandlers } from "./defaultPassthrough";
-
-export const handlers = [
-  handleGetBlogs,
-  handleGetBlogPosts,
-  handleGetBlogTags,
-  ...passthroughHandlers,
-];
-
-export const worker = setupWorker(...handlers);
-```
-
-Reference: `blogs_fe/src/mocks/browser/index.ts`
-
----
-
 ## Checklist
 
 - [ ] Query hook: `XxxUrl` constant exported for MSW handler to import
@@ -294,8 +180,4 @@ Reference: `blogs_fe/src/mocks/browser/index.ts`
 - [ ] Mutation hook: uses `useObservableMutation`, not `useMutation`
 - [ ] Mutation hook: `snakecaseKeys` applied to form payloads before posting
 - [ ] Mutation hook: `onSuccess` invalidates the relevant query cache
-- [ ] MSW query handler: imports `XxxUrl` from the query hook file
-- [ ] MSW query handler: uses `joinUrls(hostUrl, url)` for URL matching
-- [ ] MSW query handler: uses `create<Name>(...)` factories for fixture data
-- [ ] MSW mutation handler: uses `http.post(...)`
-- [ ] All handlers registered in `mocks/browser/index.ts`
+- [ ] MSW handler written for every query and mutation — see `fe-add-msw` skill
