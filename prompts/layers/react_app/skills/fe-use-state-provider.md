@@ -9,10 +9,16 @@ Applies when the React app must provide state to a collection of components in t
 ```
 <module>/
   <Name>State/
-    <Name>State.ts          ← State class: containers + facets + props + actionsCtr
-    register<Name>Ctr.ts    ← wires facets together (mapData + setCallbacks)
+    <Name>State.ts          ← State class: containers + child facet instances + props + actionsCtr
+    register<Name>Ctr.ts    ← wires facets together (mapData only)
     facets/
       <Name>Data.ts         ← custom Data facet (one per container that needs it)
+      <Name>Addition.ts     ← child class extending Addition<T> (if needed)
+      <Name>Deletion.ts     ← child class extending Deletion<T> (if needed)
+      <Name>Edit.ts         ← child class extending Edit (if needed)
+      <Name>Selection.ts    ← child class extending Selection<T> (if needed)
+      <Name>Insertion.ts    ← child class extending Insertion<T> (if needed)
+      ... other child facets as needed
   hooks/
     use<Name>State.ts       ← React hook: queries/mutations + State construction
     use<Name>Context.ts     ← React context + typed selector object (<name>Ctx)
@@ -43,14 +49,15 @@ export type PropsT = {
 export class BlogPostsState {
   props: PropsT;
 
-  // One container object per resource; each field is a facet instance
+  // One container object per resource; each field is a child facet instance
+  // Child facets receive `this` as constructor argument for full state access
   blogPostsCtr = {
     data: new BlogPostsData(),
-    addition: new Addition(),
-    deletion: new Deletion(),
-    edit: new Edit(),
-    highlight: new Highlight<BlogPostT>(),
-    selection: new Selection<BlogPostT>(),
+    addition: new BlogPostsAddition(this),
+    deletion: new BlogPostsDeletion(this),
+    edit: new BlogPostsEdit(this),
+    highlight: new Highlight<BlogPostT>(), // reusable facets that need no customization
+    selection: new BlogPostsSelection(this),
   };
 
   // Optional: simple direct actions that don't warrant a full facet
@@ -84,16 +91,29 @@ export class BlogPostsState {
 
 Facets (from `skandha-facets`) are the standard building blocks for resource meta-state. Common ones:
 
-| Facet       | Purpose                                              |
-| ----------- | ---------------------------------------------------- |
-| `Data`      | custom; stores the resource list and derived lookups |
-| `Addition`  | transient-instance creation flow                     |
-| `Deletion`  | deletion flow                                        |
-| `Edit`      | edit/save flow                                       |
-| `Highlight` | single highlighted item                              |
-| `Selection` | multi-select                                         |
+| Facet       | Purpose                                              | Customization approach                                              |
+| ----------- | ---------------------------------------------------- | ------------------------------------------------------------------- |
+| `Data`      | custom; stores the resource list and derived lookups | Always custom (no parent in skandha-facets)                         |
+| `Addition`  | transient-instance creation flow                     | Create child class extending `Addition<T>`                          |
+| `Deletion`  | deletion flow                                        | Create child class extending `Deletion<T>` or `DeletionWithFlag<T>` |
+| `Edit`      | edit/save flow                                       | Create child class extending `Edit`                                 |
+| `Highlight` | single highlighted item                              | Use directly (rarely needs customization)                           |
+| `Selection` | multi-select                                         | Create child class extending `Selection<T>`                         |
+| `Insertion` | reordering items in a list                           | Create child class extending `Insertion<T>`                         |
 
-The spec file states which facets a container needs. Use only what the spec requires. For the internal structure of facets (CallbackMap etc.), refer to existing facet examples rather than re-implementing from scratch.
+The spec file states which facets a container needs. Use only what the spec requires.
+
+### When to create child facet classes
+
+Most reusable facets (Addition, Deletion, Edit, Selection, Insertion) need app-specific behavior. We use inheritance to implement callbacks (if needed) that wire facets together.
+
+1. **Create a child class** in `<Name>State/facets/` that extends the parent facet from `skandha-facets`
+2. **Pass `this` (the State instance)** to the child's constructor for full access to all state, props, and other facets
+3. **Override protected methods** in the child class to implement app-specific behavior
+
+**Do not override core facet methods** (like `delete()`, `add()`, `save()`, `selectItem()`) — these contain the workflow logic. Only override the **protected callback slots** that the parent provides.
+
+Inheriting from a parent facet-class is often useful (because it leads to reusable solutions) but it's also fine to create the child facet class as a stand-alone class if this is more suitable.
 
 ### The Data facet
 
@@ -114,28 +134,177 @@ export class BlogPostsData {
 
 Reference: `blogs_fe/src/blogPosts/BlogPostsState/facets/BlogPostsData.ts`
 
+### Example child facet classes
+
+#### Addition example
+
+```ts
+// facets/BlogPostsAddition.ts
+import { Addition } from "skandha-facets";
+import { BlogPostT } from "/src/api/types";
+import { BlogPostsState } from "/src/blogPosts/BlogPostsState";
+
+export class BlogPostsAddition extends Addition<BlogPostT> {
+  constructor(private state: BlogPostsState) {
+    super();
+  }
+
+  protected stageAdd(): void {
+    this.parentId = this.state.blogPostsCtr.highlight.itemId;
+  }
+
+  protected highlightNewItem(item: BlogPostT): void {
+    this.state.blogPostsCtr.selection.selectItem({ itemId: item.id });
+    this.state.blogPostsCtr.edit.enable();
+  }
+
+  protected unstageAdd(parentId: string | undefined): void {
+    this.state.blogPostsCtr.edit.cancel();
+  }
+}
+```
+
+Reference: `blogs_fe/src/blogPosts/BlogPostsState/facets/BlogPostsAddition.ts`
+
+#### Deletion example
+
+```ts
+// facets/BlogPostsDeletion.ts
+import { DeletionWithFlag } from "skandha-facets";
+import { BlogPostT } from "/src/api/types";
+import { BlogPostsState } from "/src/blogPosts/BlogPostsState";
+
+export class BlogPostsDeletion extends DeletionWithFlag<BlogPostT> {
+  constructor(private state: BlogPostsState) {
+    super();
+  }
+
+  protected deleteItems(args: {
+    itemIds: string[];
+    moveToTrash?: boolean;
+  }): any {
+    return this.state.props.deleteBlogPosts(args.itemIds);
+  }
+}
+```
+
+Reference: `blogs_fe/src/blogPosts/BlogPostsState/facets/BlogPostsDeletion.ts`
+
+#### Edit example
+
+```ts
+// facets/BlogPostsEdit.ts
+import { Edit } from "skandha-facets";
+import { BlogPostsState } from "/src/blogPosts/BlogPostsState";
+import { ObjT } from "/src/utils/types";
+
+export class BlogPostsEdit extends Edit {
+  constructor(private state: BlogPostsState) {
+    super();
+  }
+
+  protected saveItem(args: { values: any }): any {
+    return this.state.props.saveBlogPost(args.values).then((response: ObjT) => {
+      this.state.blogPostsCtr.addition.confirm();
+      return response;
+    });
+  }
+
+  protected onCancel(): void {
+    this.state.blogPostsCtr.addition.cancel();
+  }
+}
+```
+
+Reference: `blogs_fe/src/blogPosts/BlogPostsState/facets/BlogPostsEdit.ts`
+
+#### Selection example
+
+```ts
+// facets/BlogPostsSelection.ts
+import { Selection, handleSelectItem } from "skandha-facets";
+import { BlogPostT } from "/src/api/types";
+import { BlogPostsState } from "/src/blogPosts/BlogPostsState";
+
+export class BlogPostsSelection extends Selection<BlogPostT> {
+  constructor(private state: BlogPostsState) {
+    super();
+  }
+
+  protected performSelection(args: {
+    itemId: string;
+    isCtrl: boolean;
+    isShift: boolean;
+  }): void {
+    handleSelectItem(this, args);
+    if (!args.isCtrl && !args.isShift) {
+      this.state.blogPostsCtr.highlight.set({ itemId: args.itemId });
+    }
+  }
+}
+```
+
+Reference: `blogs_fe/src/blogPosts/BlogPostsState/facets/BlogPostsSelection.ts`
+
+### Key facet patterns
+
+- **Always pass the State reference**: `constructor(private state: BlogPostsState)`
+- **Access other facets via state**: `this.state.blogPostsCtr.edit.cancel()`
+- **Access props via state**: `this.state.props.deleteBlogPosts(args.itemIds)`
+- **Override only protected methods**, never core operation methods
+- **Reusable facets that need no customization** (like `Highlight`) can be instantiated directly without a child class
+
 ---
 
 ## 2. `register<Name>Ctr.ts` — wiring facets
 
 Reference: `blogs_fe/src/blogPosts/BlogPostsState/registerBlogPostsCtr.ts`
 
-This file wires the container's facets together using `mapDataToProps` and `setCallbacks`, then registers everything with `registerCtr` from `skandha-mobx`. See the reference file for the exact pattern; the internal mechanism (CallbackMap) is intentional implementation detail that will change — do not attempt to explain or re-derive it.
+This file wires the container's facets together using `mapDataToProps`, then registers everything with `registerCtr` from `skandha-mobx`.
+
+### Structure
 
 ```ts
+const mapData = (state: BlogPostsState) => {
+  const ctr = state.blogPostsCtr;
+  const getBlogPostById = (x: string | undefined) =>
+    x ? ctr.data.blogPostById[x] : undefined;
+
+  mapDataToProps(ctr, {
+    data: {
+      blogPosts: () => state.props.getBlogPosts(),
+    },
+    selection: {
+      selectableIds: () => R.map(R.prop("id"), ctr.data.blogPosts),
+      items: () =>
+        ctr.selection.itemIds
+          .map(getBlogPostById)
+          .filter((x?: BlogPostT) => !!x) as BlogPostT[],
+    },
+    highlight: {
+      highlightableIds: () => R.map(R.prop("id"), ctr.data.blogPosts),
+      item: () => getBlogPostById(ctr.highlight.itemId),
+    },
+  });
+};
+
 export const registerBlogPostsCtr = (state: BlogPostsState) => {
   registerCtr({
     ctr: state.blogPostsCtr,
     options: { name: "BlogPostsState.BlogPosts" },
     initCtr: () => {
       mapData(state);
-      setCallbacks(state);
     },
   });
 };
 ```
 
-When in doubt about how to wire specific facets together, ask rather than guessing — this is the part most likely to need correction.
+### Key rules
+
+- **`mapData` only**: Wire computed/derived data properties into facets. No callback maps.
+- **Structure mirrors the container**: Each top-level key in the object passed to `mapDataToProps` corresponds to a facet name in the container (e.g., `data`, `selection`, `highlight`).
+- **Each facet's object contains getters**: The keys are the facet's property names; the values are getter functions.
+- **Behavioral customization is in child classes**, not in this file.
 
 ---
 
@@ -336,6 +505,11 @@ The resource-state is attached by `updateSources` in the cache — components ju
 - [ ] `XState.ts`: `PropsT` contains only hook functions, not raw data
 - [ ] `XState.ts`: `destroy()` calls `Skandha.cleanUpCtr(this)`
 - [ ] `XState.ts`: `actionsCtr` omitted if all interactions go through facets
+- [ ] `XState.ts`: child facet instances receive `this` in constructor (e.g., `new XAddition(this)`)
+- [ ] `facets/XAddition.ts` (and similar): child class extends parent from `skandha-facets`
+- [ ] `facets/XAddition.ts` (and similar): constructor receives `private state: XState` parameter
+- [ ] `facets/XAddition.ts` (and similar): overrides only protected methods, not core operations
+- [ ] `registerXCtr.ts`: `mapData` wires computed properties; no `setCallbacks` function
 - [ ] `useXState.ts`: State constructed inside `useBuilder()`; result cast to concrete type
 - [ ] `useXState.ts`: `useEffect` cleanup calls `state.destroy()`
 - [ ] `useXState.ts`: `getBlogPosts` prop wraps data in `graftResourceStatesFromMemo`
