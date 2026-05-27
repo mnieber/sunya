@@ -1,7 +1,11 @@
 import * as Skandha from 'skandha';
-import { Addition, Deletion, Edit, Highlight, Selection } from 'skandha-facets';
+import { Highlight } from 'skandha-facets';
 import { BlogPostT } from '/src/api/types';
+import { BlogPostsAddition } from '/src/blogPosts/BlogPostsState/facets/BlogPostsAddition';
 import { BlogPostsData } from '/src/blogPosts/BlogPostsState/facets/BlogPostsData';
+import { BlogPostsDeletion } from '/src/blogPosts/BlogPostsState/facets/BlogPostsDeletion';
+import { BlogPostsEdit } from '/src/blogPosts/BlogPostsState/facets/BlogPostsEdit';
+import { BlogPostsSelection } from '/src/blogPosts/BlogPostsState/facets/BlogPostsSelection';
 import { registerBlogPostsCtr } from '/src/blogPosts/BlogPostsState/registerBlogPostsCtr';
 import { reformatBlogPost } from '/src/blogPosts/lib/reformatBlogPost';
 import { bindActionsCtr } from '/src/utils/bindActionsCtr';
@@ -19,11 +23,11 @@ export class BlogPostsState {
 
   blogPostsCtr = {
     data: new BlogPostsData(),
-    addition: new Addition(),
-    deletion: new Deletion(),
-    edit: new Edit(),
+    addition: new BlogPostsAddition(this),
+    deletion: new BlogPostsDeletion(this),
+    edit: new BlogPostsEdit(this),
     highlight: new Highlight<BlogPostT>(),
-    selection: new Selection<BlogPostT>(),
+    selection: new BlogPostsSelection(this),
   };
 
   actionsCtr = {
