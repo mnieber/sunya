@@ -17,7 +17,7 @@ api/types/
 Types live in `api/types/` even when they are only used by a single feature module, because types tend to be imported across module boundaries (by queries, mutations, state, and components alike).
 
 Primary reference: `blogs_fe/src/api/types/BlogPostT.ts` + `BlogPostSchema.ts`
-Secondary references: `blogs_fe/src/api/types/BlogT.ts`, `woodstock_ui/src/api/types/TraceRecordT.ts` + `TraceRecordSchema.ts`
+Secondary references: `blogs_fe/src/api/types/BlogT.ts`
 
 ---
 
@@ -28,10 +28,10 @@ Secondary references: `blogs_fe/src/api/types/BlogT.ts`, `woodstock_ui/src/api/t
 Use the `EntityT` mixin for any model that has a server-assigned id:
 
 ```ts
-import { initRS } from 'mobx-resource-states';
-import { EntityT } from '/src/api/types/EntityT';
-import { createUUID } from '/src/utils/ids';
-import { ObjT } from '/src/utils/types';
+import { initRS } from "mobx-resource-states";
+import { EntityT } from "/src/api/types/EntityT";
+import { createUUID } from "/src/utils/ids";
+import { ObjT } from "/src/utils/types";
 
 export type BlogPostT = EntityT & {
   title: string;
@@ -39,41 +39,27 @@ export type BlogPostT = EntityT & {
   slug: string;
   isPublished: boolean;
   level: BlogPostLevelT;
-  isTransient?: boolean;   // present on transient (unsaved) instances
+  isTransient?: boolean; // present on transient (unsaved) instances
 };
 
-export type BlogPostLevelT = 'easy' | 'medium' | 'hard';
+export type BlogPostLevelT = "easy" | "medium" | "hard";
 
-export type BlogPostByIdT = { [id: string]: BlogPostT };  // add when a lookup map is needed
+export type BlogPostByIdT = { [id: string]: BlogPostT }; // add when a lookup map is needed
 
 export const createBlogPost = (values: ObjT): BlogPostT => {
   return initRS({
     id: values.id ?? createUUID(),
-    title: values.title ?? 'New blog-post',
-    slug: values.slug ?? '-',
+    title: values.title ?? "New blog-post",
+    slug: values.slug ?? "-",
     content: values.content,
     isPublished: values.isPublished ?? false,
-    level: values.level ?? 'medium',
+    level: values.level ?? "medium",
     isTransient: true,
   } as BlogPostT);
 };
 ```
 
 Reference: `blogs_fe/src/api/types/BlogPostT.ts`
-
-### Non-entity models (no `id`, e.g. response envelopes)
-
-Omit `EntityT` and the `create` function when the model is a response wrapper or a value object with no identity:
-
-```ts
-import { TraceRecordT } from '/src/api/types/TraceRecordT';
-
-export type TraceListT = {
-  items: TraceRecordT[];
-};
-```
-
-Reference: `woodstock_ui/src/api/types/TraceListT.ts`
 
 ### Key rules
 
@@ -93,9 +79,9 @@ If a field uses a `ValuePickerField` with a static option set, export the loader
 ```ts
 export const getBlogPostLevelOptions = (args: {}) => {
   return Promise.resolve([
-    { value: 'easy', label: 'Easy' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'hard', label: 'Hard' },
+    { value: "easy", label: "Easy" },
+    { value: "medium", label: "Medium" },
+    { value: "hard", label: "Hard" },
   ]);
 };
 ```
@@ -111,36 +97,22 @@ The schema validates the raw API response before it reaches the rest of the app.
 ### Entity schema
 
 ```ts
-import { z } from 'zod';
-import { BlogPostT } from '/src/api/types/BlogPostT';
-import { EntitySchema } from '/src/api/types/EntitySchema';
+import { z } from "zod";
+import { BlogPostT } from "/src/api/types/BlogPostT";
+import { EntitySchema } from "/src/api/types/EntitySchema";
 
 export const BlogPostSchema: z.ZodType<BlogPostT> = z.object({
-  ...EntitySchema.shape,   // spreads in { id: z.string() }
+  ...EntitySchema.shape, // spreads in { id: z.string() }
   title: z.string(),
   content: z.string(),
   slug: z.string(),
   isPublished: z.boolean(),
-  level: z.union([z.literal('easy'), z.literal('medium'), z.literal('hard')]),
+  level: z.union([z.literal("easy"), z.literal("medium"), z.literal("hard")]),
   isTransient: z.boolean().optional(),
 });
 ```
 
 Reference: `blogs_fe/src/api/types/BlogPostSchema.ts`
-
-### Non-entity schema (response envelope)
-
-```ts
-import { z } from 'zod';
-import { TraceListT } from '/src/api/types/TraceListT';
-import { TraceRecordSchema } from '/src/api/types/TraceRecordSchema';
-
-export const TraceListSchema: z.ZodType<TraceListT> = z.object({
-  items: z.array(TraceRecordSchema),
-});
-```
-
-Reference: `woodstock_ui/src/api/types/TraceListSchema.ts`
 
 ### Key rules
 
@@ -157,8 +129,8 @@ Add the new type (not the schema) to the barrel export:
 
 ```ts
 // api/types/index.ts
-export { type BlogPostT } from './BlogPostT';
-export { type BlogT }     from './BlogT';
+export { type BlogPostT } from "./BlogPostT";
+export { type BlogT } from "./BlogT";
 ```
 
 Only types are re-exported from `index.ts`; schemas are imported directly by the files that need them (query hooks, MSW handlers).
