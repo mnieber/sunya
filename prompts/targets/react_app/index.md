@@ -22,140 +22,88 @@ The development process follows two main phases:
 - Understand the React-specific spec sections in [using_specs/structure-of-a-react-app-module-spec.md](using_specs/structure-of-a-react-app-module-spec.md)
 - Then refer to the detailed implementation guides below
 
-## Documentation Structure
+## Concerns and skills
 
-### 1. General Code Generation Instructions
+When you are asked to generate code, or to plan for generating code, identify which of the below skills are needed and apply them.
+Skills are in [react_app_skills/](react_app_skills/). Each skill is self-contained.
 
-- **[general_code_generation_instructions/general code generation instructions.md](general_code_generation_instructions/general%20code%20generation%20instructions.md)**
-  - Rules for following project instructions
-  - Using example code as templates
+### Data model
 
-- **[general_code_generation_instructions/project_structure.md](general_code_generation_instructions/project_structure.md)**
-  - Three-step development process: roadmap, spec_src, application code
+Define a TypeScript type and its Zod validation schema for a new entity or value object.
+→ [fe-add-model](react_app_skills/fe-add-model.md)
 
-### 2. Writing Specifications
+### API — queries and mutations
 
-**[writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)**
+Write a `useQuery` hook and/or a `useMutation` hook to fetch or write data via the REST API.
+→ [fe-add-api-hooks](react_app_skills/fe-add-api-hooks.md)
 
-- How to write scenario specs
-- Implicit code-unit declarations in scenarios
-- Scenario syntax and DSL (goals, steps, markdown sections)
-- The special `External` virtual namespace
+### API — MSW mock handlers
 
-### 3. React App Spec Sections
+Add MSW handlers so the app and Storybook can run without a real backend. Also covers enabling MSW in `main.tsx`.
+→ [fe-add-msw](react_app_skills/fe-add-msw.md)
 
-**[using_specs/structure-of-a-react-app-module-spec.md](using_specs/structure-of-a-react-app-module-spec.md)**
+### State layer
 
-- React-specific spec sections declared implicitly in scenarios: Types, Mutations, Queries, States, Routes, StateProviders, Views, Effects, Components
-- Facet types available on State containers (data, selection, highlight, addition, deletion, edit, etc.)
+Provide MobX-based application state to the View components (containers, facets, `useXState` hook, `registerXCtr`, `XStateProvider`).
+→ [fe-use-state-provider](react_app_skills/fe-use-state-provider.md)
 
-### 4. Mapping Specs to Implementation
+### Routing
 
-**[using_specs/instructions-for-mapping--specs-to-implementation.md](using_specs/instructions-for-mapping--specs-to-implementation.md)**
+Define module routes (`XxxRoutes`, `XxxNav`, `DefaultXxxNavHandler`) and wire Switch components.
+→ [fe-use-nav-handler](react_app_skills/fe-use-nav-handler.md)
 
-- Module namespaces to feature package directories
-- File structure patterns
-- One file per code unit (camelCase filenames matching spec names)
+### Form view
 
-### 5. React Code Implementation Guides
+Write a form component (`XFormView.tsx`) and its companion `form.ts` (initial values, validation, submit, cancel).
+→ [fe-create-formview](react_app_skills/fe-create-formview.md)
 
-#### API layer
+### List view
 
-- **[instructions for writing model type files.md](./writing_code/instructions%20for%20writing%20model%20type%20files.md)**
-  - TypeScript types with `T` suffix and `create` factory functions
-  - `EntityT` mixin, resource-state initialization
+Write a `XListView` + `XListViewItem` with loading guard, keyboard selection, and highlight/selected styles.
+→ [fe-add-list-view](react_app_skills/fe-add-list-view.md)
 
-- **[instructions for writing model schema files.md](./writing_code/instructions%20for%20writing%20model%20schema%20files.md)**
-  - Zod schema definitions for API response validation
+### Select effect
 
-- **[instructions for writing query hooks.md](./writing_code/instructions%20for%20writing%20query%20hooks.md)**
-  - Query hooks using `useObservableQuery`, camelCase conversion, optional `enabled` flag
+Write a `SelectXxxEffect` that reads a URL param and drives the selection facet (which is part of the state layer) when the URL changes.
+→ [fe-add-select-effect](react_app_skills/fe-add-select-effect.md)
 
-- **[instructions for writing mutation hooks.md](./writing_code/instructions%20for%20writing%20mutation%20hooks.md)**
-  - Mutation hooks using `useObservableMutation`, camelCase-to-snake-case post conversion
+### Create effect
 
-- **[instructions for writing msw handlers.md](./writing_code/instructions%20for%20writing%20msw%20handlers.md)**
-  - MSW mock handlers for queries (used in Storybook and tests)
+Write a `CreateXxxEffect` that instantiates a transient resource when the "create" route is entered. This effect is used in combination
+with the addition facet (which is part of the state layer).
 
-#### State layer
+→ [fe-add-create-effect](react_app_skills/fe-add-create-effect.md)
 
-- **[instructions for writing State ts files.md](./writing_code/instructions%20for%20writing%20State%20ts%20files.md)**
-  - State classes with containers, facets, props, and `registerCtr`
-  - `actionsCtr` for simple direct actions that don't warrant a facet
+### General component
 
-- **[instructions for writing a useState ts file.md](./writing_code/instructions%20for%20writing%20a%20useState%20ts%20file.md)**
-  - `useState` hooks, resource-state tracking, `graftResourceStatesFromMemo`, `trackPromise`
+Write a page, panel, or button component that reads MobX state and/or accepts layout props.
+→ [fe-add-component](react_app_skills/fe-add-component.md)
 
-- **[instructions for writing registerCtr files.md](./writing_code/instructions%20for%20writing%20registerCtr%20files.md)**
-  - Wiring facet outputs to inputs, `setCallbacks` for side-effects on facet operations
+### Trimmed component
 
-- **[instructions for writing a routes ts file.md](./writing_code/instructions%20for%20writing%20a%20routes%20ts%20file.md)**
-  - `Nav` and `DefaultNav` classes delegating to the global `navHandler`
+Write a shared UI primitive (button, card, badge) with a structured `trim` styling interface.
+→ [fe-add-trimmed-component](react_app_skills/fe-add-trimmed-component.md)
 
-#### Component layer
+### App root
 
-- **[instructions for writing a component file.md](./writing_code/instructions%20for%20writing%20a%20component%20file.md)**
-  - General React component patterns: props not unpacked, `L` layout object, intrinsic vs. ad-hoc styles, scss files
+Compose providers, `AppBody`, and Switch components in `App.tsx`.
+→ [fe-add-app-component](react_app_skills/fe-add-app-component.md)
 
-- **[instructions for writing a StateProvider tsx file.md](./writing_code/instructions%20for%20writing%20a%20StateProvider%20tsx%20file.md)**
-  - One StateProvider per State; cache object, `updateSources`, `createGetProps`, MobX + React Context
+### Storybook stories
 
-- **[instructions for writing a FormView tsx file.md](./writing_code/instructions%20for%20writing%20a%20FormView%20tsx%20file.md)**
-  - `withContextProps` HOC, `FormFieldLabel` buttons, `Field` context component
+Write isolated stories for standalone views and reusable components, backed by MSW handlers.
+→ [fe-add-storybook](react_app_skills/fe-add-storybook.md)
 
-- **[instructions for writing a form ts file.md](./writing_code/instructions%20for%20writing%20a%20form%20ts%20file.md)**
-  - `getInitialValues` to declare fields and initial values, `getInitialErrors` for external errors
+---
 
-- **[instructions for writing a ListView tsx file.md](./writing_code/instructions%20for%20writing%20a%20ListView%20tsx%20file.md)**
-  - ListView and ListViewItem component patterns
+## General code generation instructions
 
-- **[instructions for writing a SelectEffect tsx file.md](./writing_code/instructions%20for%20writing%20a%20SelectEffect%20tsx%20file.md)**
-  - URL-driven resource selection via the selection facet; `UrlEffectView` sync warning
+- [general code generation instructions](general_code_generation_instructions/general%20code%20generation%20instructions.md) — rules for following project instructions and using example code as templates
+- [project structure](general_code_generation_instructions/project_structure.md) — codebase layout and development workflow
 
-- **[instructions for writing a CreateEffect tsx file.md](./writing_code/instructions%20for%20writing%20a%20CreateEffect%20tsx%20file.md)**
-  - URL-driven transient-instance creation via `addition.add()`
+## Reference app
 
-- **[instructions for writing a trimmed component.md](./writing_code/instructions%20for%20writing%20a%20trimmed%20component.md)**
-  - `trim.ts` (trim type + style object) and `trims.ts` (pre-made trim variants)
-
-- **[instructions for writing a Menu tsx file.md](./writing_code/instructions%20for%20writing%20a%20Menu%20tsx%20file.md)**
-  - Menu component pattern
-
-- **[instructions for writing App tsx files.md](./writing_code/instructions%20for%20writing%20App%20tsx%20files.md)**
-  - Provider placement strategy, Switches for route grouping
-
-- **[instructions for writing a storybook tsx file.md](./writing_code/instructions%20for%20writing%20a%20storybook%20tsx%20file.md)**
-  - One story per standalone View or reusable Component; MSW mocks for query data
-
-- **[instructions for writing a mock component file.md](./writing_code/instructions%20for%20writing%20a%20mock%20component%20file.md)**
-  - Mock components: name prefix `Mock`, TailwindCSS, single-file, renderable in artifact viewer
-
-## Examples
-
-The [examples/](examples/) directory contains one complete example application:
-
-- **[examples/blogs_fe/](examples/blogs_fe/)** - A blogs frontend showing all React patterns (types, mutations, queries, state, state-providers, views, effects, routes, forms, storybook, msw mocks)
-
-## Spec Section to Implementation Mapping
-
-| Spec Section                    | Implementation Location                              | Documented In                                      |
-| ------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
-| Module.Types.X                  | api/types/XT.ts + XSchema.ts                         | instructions for writing model type/schema files   |
-| Module.Mutations.X              | api/mutations/useX.ts                                | instructions for writing mutation hooks            |
-| Module.Queries.X                | api/queries/useX.ts                                  | instructions for writing query hooks               |
-| Module.States.XState            | module/XState/XState.ts + XData.ts + registerXCtr.ts | instructions for writing State ts files            |
-| Module.Routes.X                 | module/routes.ts (Nav + DefaultNav)                  | instructions for writing a routes ts file          |
-| Module.StateProviders.XProvider | module/components/XStateProvider.tsx                 | instructions for writing a StateProvider tsx file  |
-| Module.Views.X                  | module/components/X.tsx (+ form.ts if form-based)    | instructions for writing a FormView/ListView file  |
-| Module.Effects.X                | module/components/XEffect.tsx                        | instructions for writing SelectEffect/CreateEffect |
-| Module.Components.X             | module/components/X/ (trim.ts, trims.ts, X.tsx)      | instructions for writing a trimmed component       |
-
-## Development Workflow
-
-1. **Define specs** - Write scenario specs in `extra/spec_src/scenarios/`
-2. **Review specs** - Ensure clarity; ask for clarification if needed
-3. **Implement** - Map specs to code following the implementation guides
-4. **Validate** - Specs owner validates implementation matches intent
+**[examples/blogs_fe/](examples/blogs_fe/)** — complete reference implementation; primary template for all patterns
 
 ## Key Principles
 
