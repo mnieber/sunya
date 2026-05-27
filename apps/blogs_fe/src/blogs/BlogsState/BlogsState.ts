@@ -1,7 +1,7 @@
 import * as Skandha from 'skandha';
 import { Addition, Edit, Highlight, Selection } from 'skandha-facets';
 import { BlogT } from '/src/api/types';
-import { BlogsData } from '/src/blogs/BlogsState/BlogsData';
+import { BlogsData } from '/src/blogs/BlogsState/facets/BlogsData';
 import { registerBlogsCtr } from '/src/blogs/BlogsState/registerBlogsCtr';
 import { ObjT } from '/src/utils/types';
 

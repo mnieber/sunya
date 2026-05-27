@@ -1,7 +1,7 @@
 import * as Skandha from 'skandha';
 import { Addition, Deletion, Edit, Highlight, Selection } from 'skandha-facets';
 import { BlogPostT } from '/src/api/types';
-import { BlogPostsData } from '/src/blogPosts/BlogPostsState/BlogPostsData';
+import { BlogPostsData } from '/src/blogPosts/BlogPostsState/facets/BlogPostsData';
 import { registerBlogPostsCtr } from '/src/blogPosts/BlogPostsState/registerBlogPostsCtr';
 import { reformatBlogPost } from '/src/blogPosts/lib/reformatBlogPost';
 import { bindActionsCtr } from '/src/utils/bindActionsCtr';
