@@ -1,11 +1,13 @@
 import * as Skandha from 'skandha';
-import { Highlight, Selection } from 'skandha-facets';
-import { RoadmapT, ResultT } from '/src/api/types';
+import { Highlight } from 'skandha-facets';
+import { RoadmapT } from '/src/api/types';
 import { RoadmapsData } from '/src/atlases/AtlasState/RoadmapsData';
 import { ResultsData } from '/src/atlases/AtlasState/facets/ResultsData';
 import { AtlasData } from '/src/atlases/AtlasState/facets/AtlasData';
 import { AtlasFiltering } from '/src/atlases/AtlasState/facets/AtlasFiltering';
 import { RoadmapExpansion } from '/src/atlases/AtlasState/facets/RoadmapExpansion';
+import { ResultsHighlight } from '/src/atlases/AtlasState/facets/ResultsHighlight';
+import { ResultsSelection } from '/src/atlases/AtlasState/facets/ResultsSelection';
 import { registerRoadmapsCtr } from '/src/atlases/AtlasState/registerRoadmapsCtr';
 import { registerAtlasCtr } from '/src/atlases/AtlasState/registerAtlasCtr';
 import { registerResultsCtr } from '/src/atlases/AtlasState/registerResultsCtr';
@@ -31,8 +33,8 @@ export class AtlasState {
 
   resultsCtr = {
     data: new ResultsData(),
-    highlight: new Highlight<ResultT>(),
-    selection: new Selection<ResultT>(),
+    highlight: new ResultsHighlight(this),
+    selection: new ResultsSelection(this),
   };
 
   destroy() {

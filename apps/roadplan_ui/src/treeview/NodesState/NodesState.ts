@@ -23,7 +23,7 @@ export class NodesState {
   nodesInZoomModeCtr = {
     data: new NodesData(),
     expansion: new Expansion(),
-    zoom: new Zoom(),
+    zoom: new Zoom(this),
   };
 
   destroy() {

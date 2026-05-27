@@ -1,7 +1,5 @@
-import { Cbs } from 'aspiration';
 import * as R from 'ramda';
 import { mapDataToProps } from 'skandha';
-import { Selection, handleSelectItem } from 'skandha-facets';
 import { registerCtr } from 'skandha-mobx';
 import { AtlasesState } from '/src/atlases/AtlasesState';
 
@@ -27,28 +25,12 @@ const mapData = (state: AtlasesState) => {
   });
 };
 
-const setCallbacks = (state: AtlasesState) => {
-  const ctr = state.atlasBriefsCtr;
-
-  ctr.selection.callbackMap = {
-    selectItem: {
-      selectItem(this: Cbs<Selection['selectItem']>) {
-        handleSelectItem(ctr.selection, this.args);
-        if (!this.args.isCtrl && !this.args.isShift) {
-          ctr.highlight.set({ itemId: this.args.itemId });
-        }
-      },
-    },
-  };
-};
-
 export const registerAtlasBriefsCtr = (state: AtlasesState) => {
   registerCtr({
     ctr: state.atlasBriefsCtr,
     options: { name: 'AtlasesState.AtlasBriefs' },
     initCtr: () => {
       mapData(state);
-      setCallbacks(state);
     },
   });
 };
