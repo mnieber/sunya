@@ -18,7 +18,7 @@ The development process follows two main phases:
 
 ### If you're implementing from specifications:
 
-- Start with [using_specs/instructions-for-mapping--specs-to-implementation.md](using_specs/instructions-for-mapping--specs-to-implementation.md)
+- Start with [using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)
 - Then refer to the detailed implementation guides below
 
 ## Documentation Structure
@@ -34,7 +34,7 @@ The development process follows two main phases:
 
 ### 2. Mapping Specs to Implementation
 
-**[using_specs/instructions-for-mapping--specs-to-implementation.md](using_specs/instructions-for-mapping--specs-to-implementation.md)**
+**[using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)**
 
 - Module specs → feature packages
 - Section naming conventions (PascalCase → snake_case)
@@ -47,43 +47,35 @@ The development process follows two main phases:
 Located in [writing_python_package_code/](writing_python_package_code/):
 
 - **[instructions-for-writing-actions.md](writing_python_package_code/instructions-for-writing-actions.md)**
-
   - Action functions and their file structure
   - Forms co-location with actions
   - Exception handling patterns
   - Helper function conventions
 
 - **[instructions-for-writing-models.md](writing_python_package_code/instructions-for-writing-models.md)**
-
   - Model class structure
   - Data class patterns
 
 - **[instructions-for-writing-rule-files.md](writing_python_package_code/instructions-for-writing-rule-files.md)**
-
   - Pure functions that don't modify state
   - Rule vs. action distinction
 
 - **[instructions-for-writing-utils-files.md](writing_python_package_code/instructions-for-writing-utils-files.md)**
-
   - Utility function patterns
   - Helper code organization
 
 - **[instructions-for-writing-settings.md](writing_python_package_code/instructions-for-writing-settings.md)**
-
   - Centralized settings.py structure
   - Environment variable handling
   - Settings consolidation from scenario specs
 
 - **[instructions-for-writing-python-files.md](writing_python_package_code/instructions-for-writing-python-files.md)**
-
   - General Python code conventions
 
 - **[instructions-for-writing-schemas.md](writing_python_package_code/instructions-for-writing-schemas.md)**
-
   - Schema definitions
 
 - **[instructions-for-writing-enums-files.md](writing_python_package_code/instructions-for-writing-enums-files.md)**
-
   - Enums
 
 - **[instructions-for-writing-entrypoints.md](writing_python_package_code/instructions-for-writing-entrypoints.md)**
