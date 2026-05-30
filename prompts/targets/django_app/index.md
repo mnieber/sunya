@@ -20,7 +20,8 @@ The development process follows two main phases:
 
 - Start with [using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)
 - Understand the Django-specific spec sections in [using_django_app_specs/sections-of-a-django-app-module-spec.md](using_django_app_specs/sections-of-a-django-app-module-spec.md)
-- Then refer to the detailed implementation guides below
+- Then read [general code generation instructions](general_code_generation_instructions/) — rules for following project instructions and using example code as templates
+- Then follow the high-level plan and consult [django_app_layer/index.md](django_app_layer/index.md) for Django skills and [python_lib_layer/index.md](python_lib_layer/index.md) for Python package skills
 
 ## Documentation Structure
 
@@ -56,74 +57,13 @@ The development process follows two main phases:
 - Section naming conventions
 - File structure patterns
 
-### 5. Django Code Implementation Guides
+### 5. Django Skills
 
-Located in [writing_django_code/](writing_django_code/):
+See **[django_app_layer/index.md](django_app_layer/index.md)** for the full list of available Django skills.
 
-- **[instructions-for-writing-models.md](writing_django_code/instructions-for-writing-models.md)**
-  - Django model patterns (e.g. SingleLineTextField for short strings)
+### 6. Python Package Skills
 
-- **[instructions-for-writing-api-views.md](writing_django_code/instructions-for-writing-api-views.md)**
-  - REST API view structure, permissions, and data specs
-
-- **[instructions-for-writing-serializers.md](writing_django_code/instructions-for-writing-serializers.md)**
-  - Django REST framework serializer patterns
-
-- **[instructions-for-writing-urls.md](writing_django_code/instructions-for-writing-urls.md)**
-  - URL configuration patterns
-
-- **[instructions-for-writing-permissions.md](writing_django_code/instructions-for-writing-permissions.md)**
-  - Permission class patterns
-
-- **[instructions-for-writing-admin.md](writing_django_code/instructions-for-writing-admin.md)**
-  - Django admin configuration
-
-- **[instructions-for-writing-factories.md](writing_django_code/instructions-for-writing-factories.md)**
-  - Factory classes for testing
-
-- **[instructions-for-writing-schemas.md](writing_django_code/instructions-for-writing-schemas.md)**
-  - Pydantic schema classes for JSON blob structures
-
-- **[instructions-for-writing-shortcuts.md](writing_django_code/instructions-for-writing-shortcuts.md)**
-  - Shortcut function patterns
-
-- **[instructions-for-writing-tests.md](writing_django_code/instructions-for-writing-tests.md)**
-  - Tests for actions, API views, and permissions (including checks_permission usage)
-
-### 6. Python Package Code Implementation Guides
-
-Located in [writing_python_package_code/](writing_python_package_code/):
-
-- **[instructions-for-writing-actions.md](writing_python_package_code/instructions-for-writing-actions.md)**
-  - Action functions and their file structure
-  - Forms co-location with actions
-  - Exception handling patterns
-
-- **[instructions-for-writing-models.md](writing_python_package_code/instructions-for-writing-models.md)**
-  - Data model class structure (dataclass patterns)
-
-- **[instructions-for-writing-rule-files.md](writing_python_package_code/instructions-for-writing-rule-files.md)**
-  - Pure business logic functions (opinionated, don't modify state)
-  - Rule vs. action distinction
-
-- **[instructions-for-writing-utils-files.md](writing_python_package_code/instructions-for-writing-utils-files.md)**
-  - Utility function patterns (unopinionated helpers)
-
-- **[instructions-for-writing-settings.md](writing_python_package_code/instructions-for-writing-settings.md)**
-  - Centralized settings.py structure
-  - Environment variable handling
-
-- **[instructions-for-writing-python-files.md](writing_python_package_code/instructions-for-writing-python-files.md)**
-  - General Python code conventions (no docstrings, inline comments, logging)
-
-- **[instructions-for-writing-schemas.md](writing_python_package_code/instructions-for-writing-schemas.md)**
-  - Pydantic schema definitions for JSON blobs
-
-- **[instructions-for-writing-enums-files.md](writing_python_package_code/instructions-for-writing-enums-files.md)**
-  - Enum class definitions
-
-- **[instructions-for-writing-entrypoints.md](writing_python_package_code/instructions-for-writing-entrypoints.md)**
-  - Application entry points with argparse
+See **[python_lib_layer/index.md](python_lib_layer/index.md)** for the full list of available Python package skills.
 
 ## Examples
 
@@ -136,27 +76,27 @@ The [examples/](examples/) directory contains two complete example applications:
 
 ### Django Code
 
-| Spec Section          | Implementation Location    | Documented In                                               |
-| --------------------- | -------------------------- | ----------------------------------------------------------- |
-| Module.DjangoModels.X | module/models.py (X class) | writing_django_code/instructions-for-writing-models.md      |
-| Module.ApiViews.X     | module/api_views.py        | writing_django_code/instructions-for-writing-api-views.md   |
-| Module.Serializers    | module/serializers.py      | writing_django_code/instructions-for-writing-serializers.md |
-| Module.Urls           | module/urls.py             | writing_django_code/instructions-for-writing-urls.md        |
-| Module.Permissions    | module/permissions.py      | writing_django_code/instructions-for-writing-permissions.md |
-| Module.Admin          | module/admin.py            | writing_django_code/instructions-for-writing-admin.md       |
-| Module.Factories      | module/factories.py        | writing_django_code/instructions-for-writing-factories.md   |
+| Spec Section          | Implementation Location    | Skill                                        |
+| --------------------- | -------------------------- | -------------------------------------------- |
+| Module.DjangoModels.X | module/models.py (X class) | django_app_layer: dj-write-model             |
+| Module.ApiViews.X     | module/api_views.py        | django_app_layer: dj-write-api-view          |
+| Module.Serializers    | module/serializers.py      | django_app_layer: dj-write-serializer        |
+| Module.Urls           | module/urls.py             | django_app_layer: dj-write-urls              |
+| Module.Permissions    | module/permissions.py      | django_app_layer: dj-write-permissions       |
+| Module.Admin          | module/admin.py            | django_app_layer: dj-write-admin             |
+| Module.Factories      | module/factories.py        | django_app_layer: dj-write-factories         |
 
 ### Python Package Code
 
-| Spec Section       | Implementation Location               | Documented In                                                       |
-| ------------------ | ------------------------------------- | ------------------------------------------------------------------- |
-| Module.Models.X    | module/models/x.py (X class)          | writing_python_package_code/instructions-for-writing-models.md      |
-| Module.Actions.X   | module/actions/x.py (x function)      | writing_python_package_code/instructions-for-writing-actions.md     |
-| Module.Forms.XForm | Co-located in action file (dataclass) | writing_python_package_code/instructions-for-writing-actions.md     |
-| Module.Rules.X     | module/rules/x.py (x function)        | writing_python_package_code/instructions-for-writing-rule-files.md  |
-| Module.Utils.X     | module/utils/x.py (x function)        | writing_python_package_code/instructions-for-writing-utils-files.md |
-| Module.Settings.X  | settings.py at app root (constant)    | writing_python_package_code/instructions-for-writing-settings.md    |
-| Module.Enums.X     | module/enums.py (X class)             | writing_python_package_code/instructions-for-writing-enums-files.md |
+| Spec Section       | Implementation Location               | Skill                              |
+| ------------------ | ------------------------------------- | ---------------------------------- |
+| Module.Models.X    | module/models/x.py (X class)          | python_lib_layer: py-write-model   |
+| Module.Actions.X   | module/actions/x.py (x function)      | python_lib_layer: py-write-action  |
+| Module.Forms.XForm | Co-located in action file (dataclass) | python_lib_layer: py-write-action  |
+| Module.Rules.X     | module/rules/x.py (x function)        | python_lib_layer: py-write-rule    |
+| Module.Utils.X     | module/utils/x.py (x function)        | python_lib_layer: py-write-util    |
+| Module.Settings.X  | settings.py at app root (constant)    | python_lib_layer: py-write-settings|
+| Module.Enums.X     | module/enums.py (X class)             | python_lib_layer: py-write-enums   |
 
 ## Development Workflow
 
