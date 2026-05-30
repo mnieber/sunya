@@ -7,7 +7,7 @@ This directory contains instructions for a spec-driven software development proc
 The development process follows two main phases:
 
 1. **Writing Specifications** - Define scenario specs that describe what the application should do
-2. **Create an implementation plan based on skills** - Based on the specifications, create a high-level implementation plan that refers to the skills needed.
+2. **Create an implementation plan based on skills** - Before writing the plan, read [python_lib_layer/index.md](python_lib_layer/index.md) to identify which skills apply to the code units you need to generate. Then create a high-level implementation plan that refers to those skills.
 3. **Implementation** - Map specifications to actual Python code following the consistent patterns described in the skills.
 
 ## Quick Start
@@ -20,7 +20,7 @@ Consult app_layer/index.md for instructions on:
 
 Consult python_lib_layer/index.md for instructions on:
 
-- Using specific python_lib skills, such as fe-add-api-hooks.
+- Using specific python_lib skills, such as py-write-action.
 
 ## Examples
 

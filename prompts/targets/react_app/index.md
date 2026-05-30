@@ -7,7 +7,7 @@ This directory contains instructions for a spec-driven software development proc
 The development process follows two main phases:
 
 1. **Writing Specifications** - Define scenario specs that describe what the application should do.
-2. **Create an implementation plan based on skills** - Based on the specifications, we'll create a high-level implementation plan that refers to the skills that are needed. E.g. the skills for building a react-app are contained in react_app/skills and are listed in react_app/index.md.
+2. **Create an implementation plan based on skills** - Before writing the plan, read [react_app_layer/index.md](react_app_layer/index.md) to identify which skills apply to the code units you need to generate. Then create a high-level implementation plan that refers to those skills.
 3. **Implementation** - Map specifications to actual React/TypeScript code following the consistent patterns described in the skills.
 
 ## Quick Start
