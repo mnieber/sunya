@@ -14,14 +14,14 @@ The development process follows two main phases:
 
 ### If you're writing specifications:
 
-- Start with [writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)
+- Start with [app_layer/writing_specs/instructions-for-writing-specs.md](app_layer/writing_specs/instructions-for-writing-specs.md)
 - See examples in [examples/blogs_fe/extra/spec_src/scenarios/](examples/blogs_fe/extra/spec_src/scenarios/)
 
 ### If you're implementing from specifications:
 
-- Start with [using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)
-- Then read [general code generation instructions](general_code_generation_instructions/general%20code%20generation%20instructions.md) — rules for following project instructions and using example code as templates
-- Then read [project structure](general_code_generation_instructions/project_structure.md) — codebase layout and development workflow
+- Start with [app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md](app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md)
+- Then read [general code generation instructions](app_layer/general_code_generation_instructions/general%20code%20generation%20instructions.md) — rules for following project instructions and using example code as templates
+- Then read [project structure](app_layer/general_code_generation_instructions/project_structure.md) — codebase layout and development workflow
 - Then follow the high-level plan and consult [react_app_layer/index.md](react_app_layer/index.md) for the available skills.
 
 ## Reference app

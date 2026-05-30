@@ -13,30 +13,30 @@ The development process follows two main phases:
 
 ### If you're writing specifications:
 
-- Start with [writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)
+- Start with [app_layer/writing_specs/instructions-for-writing-specs.md](app_layer/writing_specs/instructions-for-writing-specs.md)
 - See examples in [examples/bookie/extra/spec_src/scenarios/](examples/bookie/extra/spec_src/scenarios/) and [examples/blogs_be/extra/spec_src/scenarios/](examples/blogs_be/extra/spec_src/scenarios/)
 
 ### If you're implementing from specifications:
 
-- Start with [using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)
-- Understand the Django-specific spec sections in [using_django_app_specs/sections-of-a-django-app-module-spec.md](using_django_app_specs/sections-of-a-django-app-module-spec.md)
-- Then read [general code generation instructions](general_code_generation_instructions/) — rules for following project instructions and using example code as templates
+- Start with [app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md](app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md)
+- Understand the Django-specific spec sections in [django_app_layer/using_django_app_specs/sections-of-a-django-app-module-spec.md](django_app_layer/using_django_app_specs/sections-of-a-django-app-module-spec.md)
+- Then read [general code generation instructions](app_layer/writing_code/) — rules for following project instructions and using example code as templates
 - Then follow the high-level plan and consult [django_app_layer/index.md](django_app_layer/index.md) for Django skills and [python_lib_layer/index.md](python_lib_layer/index.md) for Python package skills
 
 ## Documentation Structure
 
 ### 1. General Code Generation Instructions
 
-- **[general_code_generation_instructions/general code generation instructions.md](general_code_generation_instructions/general%20code%20generation%20instructions.md)**
+- **[app_layer/writing_code/general code generation instructions.md](app_layer/writing_code/general%20code%20generation%20instructions.md)**
   - Rules for following project instructions
   - Using example code as templates
 
-- **[general_code_generation_instructions/project_structure.md](general_code_generation_instructions/project_structure.md)**
+- **[app_layer/writing_code/project_structure.md](app_layer/writing_code/project_structure.md)**
   - Three-step development process: roadmap, spec_src, application code
 
 ### 2. Writing Specifications
 
-**[writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)**
+**[app_layer/writing_specs/instructions-for-writing-specs.md](app_layer/writing_specs/instructions-for-writing-specs.md)**
 
 - How to write scenario specs
 - Implicit code-unit declarations in scenarios
@@ -45,13 +45,13 @@ The development process follows two main phases:
 
 ### 3. Django App Spec Sections
 
-**[using_django_app_specs/sections-of-a-django-app-module-spec.md](using_django_app_specs/sections-of-a-django-app-module-spec.md)**
+**[django_app_layer/using_django_app_specs/sections-of-a-django-app-module-spec.md](django_app_layer/using_django_app_specs/sections-of-a-django-app-module-spec.md)**
 
 - Django-specific spec sections declared implicitly in scenarios: Django models, ApiViews, DomainEvents
 
 ### 4. Mapping Specs to Implementation
 
-**[using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)**
+**[app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md](app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md)**
 
 - Module specs to feature packages
 - Section naming conventions
@@ -76,27 +76,27 @@ The [examples/](examples/) directory contains two complete example applications:
 
 ### Django Code
 
-| Spec Section          | Implementation Location    | Skill                                        |
-| --------------------- | -------------------------- | -------------------------------------------- |
-| Module.DjangoModels.X | module/models.py (X class) | django_app_layer: dj-write-model             |
-| Module.ApiViews.X     | module/api_views.py        | django_app_layer: dj-write-api-view          |
-| Module.Serializers    | module/serializers.py      | django_app_layer: dj-write-serializer        |
-| Module.Urls           | module/urls.py             | django_app_layer: dj-write-urls              |
-| Module.Permissions    | module/permissions.py      | django_app_layer: dj-write-permissions       |
-| Module.Admin          | module/admin.py            | django_app_layer: dj-write-admin             |
-| Module.Factories      | module/factories.py        | django_app_layer: dj-write-factories         |
+| Spec Section          | Implementation Location    | Skill                                  |
+| --------------------- | -------------------------- | -------------------------------------- |
+| Module.DjangoModels.X | module/models.py (X class) | django_app_layer: dj-write-model       |
+| Module.ApiViews.X     | module/api_views.py        | django_app_layer: dj-write-api-view    |
+| Module.Serializers    | module/serializers.py      | django_app_layer: dj-write-serializer  |
+| Module.Urls           | module/urls.py             | django_app_layer: dj-write-urls        |
+| Module.Permissions    | module/permissions.py      | django_app_layer: dj-write-permissions |
+| Module.Admin          | module/admin.py            | django_app_layer: dj-write-admin       |
+| Module.Factories      | module/factories.py        | django_app_layer: dj-write-factories   |
 
 ### Python Package Code
 
-| Spec Section       | Implementation Location               | Skill                              |
-| ------------------ | ------------------------------------- | ---------------------------------- |
-| Module.Models.X    | module/models/x.py (X class)          | python_lib_layer: py-write-model   |
-| Module.Actions.X   | module/actions/x.py (x function)      | python_lib_layer: py-write-action  |
-| Module.Forms.XForm | Co-located in action file (dataclass) | python_lib_layer: py-write-action  |
-| Module.Rules.X     | module/rules/x.py (x function)        | python_lib_layer: py-write-rule    |
-| Module.Utils.X     | module/utils/x.py (x function)        | python_lib_layer: py-write-util    |
-| Module.Settings.X  | settings.py at app root (constant)    | python_lib_layer: py-write-settings|
-| Module.Enums.X     | module/enums.py (X class)             | python_lib_layer: py-write-enums   |
+| Spec Section       | Implementation Location               | Skill                               |
+| ------------------ | ------------------------------------- | ----------------------------------- |
+| Module.Models.X    | module/models/x.py (X class)          | python_lib_layer: py-write-model    |
+| Module.Actions.X   | module/actions/x.py (x function)      | python_lib_layer: py-write-action   |
+| Module.Forms.XForm | Co-located in action file (dataclass) | python_lib_layer: py-write-action   |
+| Module.Rules.X     | module/rules/x.py (x function)        | python_lib_layer: py-write-rule     |
+| Module.Utils.X     | module/utils/x.py (x function)        | python_lib_layer: py-write-util     |
+| Module.Settings.X  | settings.py at app root (constant)    | python_lib_layer: py-write-settings |
+| Module.Enums.X     | module/enums.py (X class)             | python_lib_layer: py-write-enums    |
 
 ## Development Workflow
 

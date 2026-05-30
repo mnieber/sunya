@@ -14,20 +14,20 @@ The development process follows two main phases:
 
 ### If you're writing specifications:
 
-- Start with [writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)
+- Start with [app_layer/writing_specs/instructions-for-writing-specs.md](app_layer/writing_specs/instructions-for-writing-specs.md)
 - See examples in [examples/bookie/extra/spec_src/scenarios/](examples/bookie/extra/spec_src/scenarios/)
 
 ### If you're implementing from specifications:
 
-- Start with [using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)
-- Then read [general code generation instructions](general_code_generation_instructions/) — rules for following project instructions and using example code as templates
+- Start with [app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md](app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md)
+- Then read [general code generation instructions](app_layer/general_code_generation_instructions/) — rules for following project instructions and using example code as templates
 - Then follow the high-level plan and consult [python_lib_skills/index.md](python_lib_skills/index.md) for the available skills.
 
 ## Documentation Structure
 
 ### 1. Writing Specifications
 
-**[writing_specs/instructions-for-writing-specs.md](writing_specs/instructions-for-writing-specs.md)**
+**[app_layer/writing_specs/instructions-for-writing-specs.md](app_layer/writing_specs/instructions-for-writing-specs.md)**
 
 - How to write scenario specs
 - Implicit code-unit declarations in scenarios
@@ -36,7 +36,7 @@ The development process follows two main phases:
 
 ### 2. Mapping Specs to Implementation
 
-**[using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)**
+**[app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md](app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md)**
 
 - Module specs → feature packages
 - Section naming conventions (PascalCase → snake_case)
@@ -58,15 +58,15 @@ The [examples/bookie/](examples/bookie/) directory contains a complete example a
 
 ## Spec Section to Implementation Mapping
 
-| Spec Section       | Implementation Location               | Skill                    |
-| ------------------ | ------------------------------------- | ------------------------ |
-| Module.Models.X    | module/models/x.py (X class)          | py-write-model.md        |
-| Module.Actions.X   | module/actions/x.py (x function)      | py-write-action.md       |
-| Module.Forms.XForm | Co-located in action file (dataclass) | py-write-action.md       |
-| Module.Rules.X     | module/rules/x.py (x function)        | py-write-rule.md         |
-| Module.Utils.X     | module/utils/x.py (x function)        | py-write-util.md         |
-| Module.Settings.X  | settings.py at app root (constant)    | py-write-settings.md     |
-| Module.Enums.X     | module/enums.py (X class)             | py-write-enums.md        |
+| Spec Section       | Implementation Location               | Skill                |
+| ------------------ | ------------------------------------- | -------------------- |
+| Module.Models.X    | module/models/x.py (X class)          | py-write-model.md    |
+| Module.Actions.X   | module/actions/x.py (x function)      | py-write-action.md   |
+| Module.Forms.XForm | Co-located in action file (dataclass) | py-write-action.md   |
+| Module.Rules.X     | module/rules/x.py (x function)        | py-write-rule.md     |
+| Module.Utils.X     | module/utils/x.py (x function)        | py-write-util.md     |
+| Module.Settings.X  | settings.py at app root (constant)    | py-write-settings.md |
+| Module.Enums.X     | module/enums.py (X class)             | py-write-enums.md    |
 
 ## Development Workflow
 
