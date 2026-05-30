@@ -1,8 +1,0 @@
-targets:
-  instructions:
-    files:
-      instructions:
-        writing_specs:
-          "prompts/using_specs/*": true
-          "prompts/writing_specs/*": true
-          "prompts/writing_code/*": true

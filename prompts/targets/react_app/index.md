@@ -12,17 +12,15 @@ The development process follows two main phases:
 
 ## Quick Start
 
-### If you're writing specifications:
+Consult app_layer/index.md for instructions on:
 
-- Start with [app_layer/writing_specs/instructions-for-writing-specs.md](app_layer/writing_specs/instructions-for-writing-specs.md)
-- See examples in [examples/blogs_fe/extra/spec_src/scenarios/](examples/blogs_fe/extra/spec_src/scenarios/)
+- writing specifications
+- implementing specifications
+- general code generation guidelines
 
-### If you're implementing from specifications:
+Consult react_app_layer/index.md for instructions on:
 
-- Start with [app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md](app_layer/using_specs/instructions-for-mapping-specs-to-implementation.md)
-- Then read [general code generation instructions](app_layer/general_code_generation_instructions/general%20code%20generation%20instructions.md) — rules for following project instructions and using example code as templates
-- Then read [project structure](app_layer/general_code_generation_instructions/project_structure.md) — codebase layout and development workflow
-- Then follow the high-level plan and consult [react_app_layer/index.md](react_app_layer/index.md) for the available skills.
+- Using specific react_app skills, such as fe-add-api-hooks.
 
 ## Reference app
 
