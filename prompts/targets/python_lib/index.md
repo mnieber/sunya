@@ -7,7 +7,8 @@ This directory contains instructions for a spec-driven software development proc
 The development process follows two main phases:
 
 1. **Writing Specifications** - Define scenario specs that describe what the application should do
-2. **Implementing from Specs** - Map specifications to actual Python code following consistent patterns
+2. **Create an implementation plan based on skills** - Based on the specifications, create a high-level implementation plan that refers to the skills needed. Skills for building a Python library are contained in `python_lib_skills/` and listed in this file.
+3. **Implementation** - Map specifications to actual Python code following the consistent patterns described in the skills.
 
 ## Quick Start
 
@@ -19,7 +20,8 @@ The development process follows two main phases:
 ### If you're implementing from specifications:
 
 - Start with [using_specs/instructions-for-mapping-specs-to-implementation.md](using_specs/instructions-for-mapping-specs-to-implementation.md)
-- Then refer to the detailed implementation guides below
+- Then read [general code generation instructions](general_code_generation_instructions/) — rules for following project instructions and using example code as templates
+- Then follow the high-level plan and consult [python_lib_skills/index.md](python_lib_skills/index.md) for the available skills.
 
 ## Documentation Structure
 
@@ -42,44 +44,9 @@ The development process follows two main phases:
 - Settings consolidation
 - Validation approach
 
-### 3. Detailed Implementation Guides
+### 3. Skills
 
-Located in [writing_python_package_code/](writing_python_package_code/):
-
-- **[instructions-for-writing-actions.md](writing_python_package_code/instructions-for-writing-actions.md)**
-  - Action functions and their file structure
-  - Forms co-location with actions
-  - Exception handling patterns
-  - Helper function conventions
-
-- **[instructions-for-writing-models.md](writing_python_package_code/instructions-for-writing-models.md)**
-  - Model class structure
-  - Data class patterns
-
-- **[instructions-for-writing-rule-files.md](writing_python_package_code/instructions-for-writing-rule-files.md)**
-  - Pure functions that don't modify state
-  - Rule vs. action distinction
-
-- **[instructions-for-writing-utils-files.md](writing_python_package_code/instructions-for-writing-utils-files.md)**
-  - Utility function patterns
-  - Helper code organization
-
-- **[instructions-for-writing-settings.md](writing_python_package_code/instructions-for-writing-settings.md)**
-  - Centralized settings.py structure
-  - Environment variable handling
-  - Settings consolidation from scenario specs
-
-- **[instructions-for-writing-python-files.md](writing_python_package_code/instructions-for-writing-python-files.md)**
-  - General Python code conventions
-
-- **[instructions-for-writing-schemas.md](writing_python_package_code/instructions-for-writing-schemas.md)**
-  - Schema definitions
-
-- **[instructions-for-writing-enums-files.md](writing_python_package_code/instructions-for-writing-enums-files.md)**
-  - Enums
-
-- **[instructions-for-writing-entrypoints.md](writing_python_package_code/instructions-for-writing-entrypoints.md)**
-  - Application entry points
+See **[python_lib_skills/index.md](python_lib_skills/index.md)** for the full list of available skills.
 
 ## Examples
 
@@ -91,15 +58,15 @@ The [examples/bookie/](examples/bookie/) directory contains a complete example a
 
 ## Spec Section to Implementation Mapping
 
-| Spec Section       | Implementation Location               | Documented In                           |
-| ------------------ | ------------------------------------- | --------------------------------------- |
-| Module.Models.X    | module/models/x.py (X class)          | instructions-for-writing-models.md      |
-| Module.Actions.X   | module/actions/x.py (x function)      | instructions-for-writing-actions.md     |
-| Module.Forms.XForm | Co-located in action file (dataclass) | instructions-for-writing-actions.md     |
-| Module.Rules.X     | module/rules/x.py (x function)        | instructions-for-writing-rule-files.md  |
-| Module.Utils.X     | module/utils/x.py (x function)        | instructions-for-writing-utils-files.md |
-| Module.Settings.X  | settings.py at app root (constant)    | instructions-for-writing-settings.md    |
-| Module.Enums.X     | module/enums.py (X class)             | _(see bookie example)_                  |
+| Spec Section       | Implementation Location               | Skill                    |
+| ------------------ | ------------------------------------- | ------------------------ |
+| Module.Models.X    | module/models/x.py (X class)          | py-write-model.md        |
+| Module.Actions.X   | module/actions/x.py (x function)      | py-write-action.md       |
+| Module.Forms.XForm | Co-located in action file (dataclass) | py-write-action.md       |
+| Module.Rules.X     | module/rules/x.py (x function)        | py-write-rule.md         |
+| Module.Utils.X     | module/utils/x.py (x function)        | py-write-util.md         |
+| Module.Settings.X  | settings.py at app root (constant)    | py-write-settings.md     |
+| Module.Enums.X     | module/enums.py (X class)             | py-write-enums.md        |
 
 ## Development Workflow
 

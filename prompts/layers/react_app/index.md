@@ -7,69 +7,69 @@ When you are asked to generate code, or to plan for generating code, identify wh
 ### Data model
 
 Define a TypeScript type and its Zod validation schema for a new entity or value object.
-→ [fe-add-model](react_app_skills/fe-add-model.md)
+→ [fe-add-model](./skills/fe-add-model.md)
 
 ### API — queries and mutations
 
 Write a `useQuery` hook and/or a `useMutation` hook to fetch or write data via the REST API.
-→ [fe-add-api-hooks](react_app_skills/fe-add-api-hooks.md)
+→ [fe-add-api-hooks](./skills/fe-add-api-hooks.md)
 
 ### API — MSW mock handlers
 
 Add MSW handlers so the app and Storybook can run without a real backend. Also covers enabling MSW in `main.tsx`.
-→ [fe-add-msw](react_app_skills/fe-add-msw.md)
+→ [fe-add-msw](./skills/fe-add-msw.md)
 
 ### State layer
 
 Provide MobX-based application state to the View components (containers, facets, `useXState` hook, `registerXCtr`, `XStateProvider`).
-→ [fe-use-state-provider](react_app_skills/fe-use-state-provider.md)
+→ [fe-use-state-provider](./skills/fe-use-state-provider.md)
 
 ### Routing
 
 Define module routes (`XxxRoutes`, `XxxNav`, `DefaultXxxNavHandler`) and wire Switch components.
-→ [fe-use-nav-handler](react_app_skills/fe-use-nav-handler.md)
+→ [fe-use-nav-handler](./skills/fe-use-nav-handler.md)
 
 ### Form view
 
 Write a form component (`XFormView.tsx`) and its companion `form.ts` (initial values, validation, submit, cancel).
-→ [fe-create-formview](react_app_skills/fe-create-formview.md)
+→ [fe-create-formview](./skills/fe-create-formview.md)
 
 ### List view
 
 Write a `XListView` + `XListViewItem` with loading guard, keyboard selection, and highlight/selected styles.
-→ [fe-add-list-view](react_app_skills/fe-add-list-view.md)
+→ [fe-add-list-view](./skills/fe-add-list-view.md)
 
 ### Select effect
 
 Write a `SelectXxxEffect` that reads a URL param and drives the selection facet (which is part of the state layer) when the URL changes.
-→ [fe-add-select-effect](react_app_skills/fe-add-select-effect.md)
+→ [fe-add-select-effect](./skills/fe-add-select-effect.md)
 
 ### Create effect
 
 Write a `CreateXxxEffect` that instantiates a transient resource when the "create" route is entered. This effect is used in combination
 with the addition facet (which is part of the state layer).
 
-→ [fe-add-create-effect](react_app_skills/fe-add-create-effect.md)
+→ [fe-add-create-effect](./skills/fe-add-create-effect.md)
 
 ### General component
 
 Write a page, panel, or button component that reads MobX state and/or accepts layout props.
-→ [fe-add-component](react_app_skills/fe-add-component.md)
+→ [fe-add-component](./skills/fe-add-component.md)
 
 ### Trimmed component
 
 Write a shared UI primitive (button, card, badge) with a structured `trim` styling interface.
-→ [fe-add-trimmed-component](react_app_skills/fe-add-trimmed-component.md)
+→ [fe-add-trimmed-component](./skills/fe-add-trimmed-component.md)
 
 ### App root
 
 Compose providers, `AppBody`, and Switch components in `App.tsx`.
-→ [fe-add-app-component](react_app_skills/fe-add-app-component.md)
+→ [fe-add-app-component](./skills/fe-add-app-component.md)
 
 ### Storybook stories
 
 Write isolated stories for standalone views and reusable components, backed by MSW handlers.
-→ [fe-add-storybook](react_app_skills/fe-add-storybook.md)
+→ [fe-add-storybook](./skills/fe-add-storybook.md)
 
 ---
 
