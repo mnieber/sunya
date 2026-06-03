@@ -1,1 +1,2 @@
 docker/env_files/*.env
+secrets.env
