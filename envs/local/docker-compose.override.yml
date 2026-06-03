@@ -34,20 +34,6 @@ services:
   landler_fe:
     volumes:
       - /opt/projects/sunya/landler_fe/fish_history:/root/.local/share/fish/fish_history
-  blogs_be:
-    volumes:
-      - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/blogs_be/assets:/app/assets
-      - /opt/projects/sunya/blogs_be/dumps:/app/dumps
-      - /opt/projects/sunya/blogs_be/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/blogs_be/ipython:/root/.ipython
-      - /opt/projects/sunya/blogs_be/log:/app/log
-      - /opt/projects/sunya/blogs_be/media:/app/media
-      - /opt/projects/sunya/blogs_be/pytest_report.html:/app/pytest_report.html
-      - /opt/projects/sunya/blogs_be/static:/app/static
-  blogs_fe:
-    volumes:
-      - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
   roadplan_ui:
     volumes:
       - /opt/projects/sunya/roadplan_ui/fish_history:/root/.local/share/fish/fish_history

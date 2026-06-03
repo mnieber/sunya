@@ -1,118 +1,47 @@
 services:
-  mock:
-    build:
-      context: ./mock
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    env_file:
-      - ./mock/.env/dev.injected.env
-    image: sunya_mock_dev
   blogs_be:
+    container_name: blogs_be
     build:
-      context: ./blogs_be
-      dockerfile: Dockerfile.dev
+      context: ${ROOT_DIR}/src/services/blogs_be
+      dockerfile: Dockerfile
     command: sleep infinity
     depends_on:
       - postgres
     env_file:
-      - ./blogs_be/.env/dev.injected.env
+      - ./env_files/blogs_be.env
     environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
+      - DJANGO_SETTINGS_MODULE=app.settings.local
     image: blogs_be_dev
     ports:
-      - 8002:8002
+      - 8000:8000
   blogs_fe:
+    container_name: blogs_fe
     build:
-      context: ./blogs_fe
-      dockerfile: Dockerfile.dev
+      context: ${ROOT_DIR}/src/services/blogs_fe
+      dockerfile: Dockerfile
     command: sleep infinity
     env_file:
-      - ./blogs_fe/.env/dev.injected.env
+      - ./env_files/blogs_fe.env
     image: blogs_fe_dev
     ports:
-      - 3002:3002
-      - 6008:6008
-  darshana_be:
-    build:
-      context: ./darshana_be
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    depends_on:
-      - postgres
-    env_file:
-      - ./darshana_be/.env/dev.injected.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: darshana_be_dev
-    ports:
-      - 8000:8000
-  darshana_fe:
-    build:
-      context: ./darshana_fe
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    env_file:
-      - ./darshana_fe/.env/dev.injected.env
-    image: darshana_fe_dev
-    ports:
       - 3000:3000
-      - 6006:6006
-  landler_be:
-    build:
-      context: ./landler_be
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    depends_on:
-      - postgres
-    env_file:
-      - ./landler_be/.env/dev.injected.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: sunya_landler_be_dev
+      - 6008:6008 # For Storybook
+  localstack:
+    container_name: blogs_localstack
+    image: "localstack/localstack:3.4.0"
     ports:
-      - 8001:8001
-  landler_fe:
-    build:
-      context: ./landler_fe
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
+      - 4566:4566
     env_file:
-      - ./landler_fe/.env/dev.injected.env
-    image: sunya_landler_fe_dev
-    ports:
-      - 3001:3001
-      - 6007:6007
-  roadplan_ui:
-    build:
-      context: ${ROOT_DIR}/apps/roadplan_ui
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    depends_on:
-      - roadplan_server
-    env_file:
-      - ./env_files/roadplan_ui.env
-    image: roadplan_ui_dev
-    ports:
-      - 3003:3003
-      - 6003:6003
-  roadplan_server:
-    build:
-      context: ${ROOT_DIR}/apps/roadplan_server
-      dockerfile: Dockerfile.dev
-      additional_contexts:
-        roadplan: ~/projects/roadplan/src/roadplan
-    command: sleep infinity
-    depends_on:
-      - postgres
-    env_file:
-      - ./env_files/roadplan_server.env
-      - ./env_files/roadplan_server.local.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: roadplan_server_dev
-    ports:
-      - 8003:8003
+      - env_files/localstack.env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - "${ROOT_DIR}/src/localstack/scripts/initaws.d:/docker-entrypoint-initaws.d"
   postgres:
+    container_name: blogs_postgres
     env_file:
       - ./env_files/postgres.env
     image: postgres:14.0
@@ -120,18 +49,5 @@ services:
       - 5432:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
-  preline:
-    build:
-      context: ./preline
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    env_file:
-      - ./darshana_fe/.env/dev.injected.env
-    image: preline_dev
-    ports:
-      - 3003:3003
-      - 6009:6009
-    volumes:
-      - ./preline:/app/src
 volumes:
   postgres_data: {}

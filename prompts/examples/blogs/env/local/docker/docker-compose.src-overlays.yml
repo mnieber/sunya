@@ -1,8 +1,4 @@
 services:
-  mock:
-    volumes:
-      - ./mock:/app/src
-      - ./sunya:/app/src/sunya
   blogs_be:
     volumes:
       - ./blogs_be:/app/src
@@ -13,37 +9,3 @@ services:
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
       - /home/maarten/projects/skandha/src:/npm/skandha
-  darshana_be:
-    volumes:
-      - ./darshana_be:/app/src
-      - ./mock:/app/mock
-  darshana_fe:
-    volumes:
-      - ./darshana_fe:/app/src
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha
-  landler_be:
-    volumes:
-      - ./landler_be:/app/src
-  landler_fe:
-    volumes:
-      - ./landler_fe:/app/src
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha
-  roadplan_ui:
-    volumes:
-      - ${ROOT_DIR}/apps/roadplan_ui:/app/src
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha
-  roadplan_server:
-    volumes:
-      - ${ROOT_DIR}/apps/roadplan_server:/app/src
-      - /home/maarten/projects/roadplan/src/roadplan:/app/libs/roadplan/
-      - ${ROOT_DIR}/apps/roadplan_server/extra/.roadplan-config.yaml:/app/config/.roadplan-config.yaml
-

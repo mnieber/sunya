@@ -1,39 +1,4 @@
 services:
-  mock:
-    volumes:
-      - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/mock/assets:/app/assets
-      - /opt/projects/sunya/mock/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/mock/ipython:/root/.ipython
-      - /opt/projects/sunya/mock/pytest_report.html:/app/pytest_report.html
-  darshana_be:
-    volumes:
-      - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/darshana_be/assets:/app/assets
-      - /opt/projects/sunya/darshana_be/dumps:/app/dumps
-      - /opt/projects/sunya/darshana_be/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/darshana_be/ipython:/root/.ipython
-      - /opt/projects/sunya/darshana_be/log:/app/log
-      - /opt/projects/sunya/darshana_be/media:/app/media
-      - /opt/projects/sunya/darshana_be/pytest_report.html:/app/pytest_report.html
-      - /opt/projects/sunya/darshana_be/static:/app/static
-  darshana_fe:
-    volumes:
-      - /opt/projects/sunya/darshana_fe/fish_history:/root/.local/share/fish/fish_history
-  landler_be:
-    volumes:
-      - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/landler_be/assets:/app/assets
-      - /opt/projects/sunya/landler_be/dumps:/app/dumps
-      - /opt/projects/sunya/landler_be/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/landler_be/ipython:/root/.ipython
-      - /opt/projects/sunya/landler_be/log:/app/log
-      - /opt/projects/sunya/landler_be/media:/app/media
-      - /opt/projects/sunya/landler_be/pytest_report.html:/app/pytest_report.html
-      - /opt/projects/sunya/landler_be/static:/app/static
-  landler_fe:
-    volumes:
-      - /opt/projects/sunya/landler_fe/fish_history:/root/.local/share/fish/fish_history
   blogs_be:
     volumes:
       - $HOME/.config/pudb:/root/.config/pudb
@@ -48,18 +13,3 @@ services:
   blogs_fe:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
-  roadplan_ui:
-    volumes:
-      - /opt/projects/sunya/roadplan_ui/fish_history:/root/.local/share/fish/fish_history
-  roadplan_server:
-    volumes:
-      - $HOME/.config/pudb:/root/.config/pudb
-      - /opt/projects/sunya/roadplan_server/assets:/app/assets
-      - /opt/projects/sunya/roadplan_server/dumps:/app/dumps
-      - /opt/projects/sunya/roadplan_server/fish_history:/root/.local/share/fish/fish_history
-      - /opt/projects/sunya/roadplan_server/ipython:/root/.ipython
-      - /opt/projects/sunya/roadplan_server/log:/app/log
-      - /opt/projects/sunya/roadplan_server/media:/app/media
-      - /opt/projects/sunya/roadplan_server/pytest_report.html:/app/pytest_report.html
-      - /opt/projects/sunya/roadplan_server/static:/app/static
-      - /opt/projects/roadplan/mock_roadmaps:/app/data/mock_roadmaps

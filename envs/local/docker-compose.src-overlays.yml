@@ -3,16 +3,6 @@ services:
     volumes:
       - ./mock:/app/src
       - ./sunya:/app/src/sunya
-  blogs_be:
-    volumes:
-      - ./blogs_be:/app/src
-  blogs_fe:
-    volumes:
-      - ./blogs_fe:/app/src
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
-      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
-      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
-      - /home/maarten/projects/skandha/src:/npm/skandha
   darshana_be:
     volumes:
       - ./darshana_be:/app/src

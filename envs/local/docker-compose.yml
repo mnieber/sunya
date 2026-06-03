@@ -7,31 +7,6 @@ services:
     env_file:
       - ./mock/.env/dev.injected.env
     image: sunya_mock_dev
-  blogs_be:
-    build:
-      context: ./blogs_be
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    depends_on:
-      - postgres
-    env_file:
-      - ./blogs_be/.env/dev.injected.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: blogs_be_dev
-    ports:
-      - 8002:8002
-  blogs_fe:
-    build:
-      context: ./blogs_fe
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    env_file:
-      - ./blogs_fe/.env/dev.injected.env
-    image: blogs_fe_dev
-    ports:
-      - 3002:3002
-      - 6008:6008
   darshana_be:
     build:
       context: ./darshana_be
