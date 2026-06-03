@@ -1,4 +1,5 @@
 import './just/docker/_build.just'
+import './just/docker/_build_base_images.just'
 import './just/docker/_up.just'
 import './just/docker/_run_image.just'
 import './just/docker/_up.just'
@@ -16,9 +17,15 @@ export PYTHON := `which python3 2>/dev/null || which python`
 export COMPOSE_DIR := source_directory() / "docker"
 export COMPOSE_PROJECT_NAME := "blogs"
 
-build use_no_cache="false": \
+# Local variables
+default_use_dockerfile_local := env_var_or_default("BLOGS_USE_DOCKERFILE_LOCAL", "false")
+
+build use_dockerfile_local=default_use_dockerfile_local use_no_cache="false": \
     (compile-env-files) \
-    (_build use_no_cache)
+    (_build use_dockerfile_local use_no_cache)
+
+build_base_images use_no_cache="false": \
+    (_build_base_images use_no_cache)
 
 touch:
     touch ${ROOT_DIR}/env/local/docker/docker-compose.override.yml
@@ -46,4 +53,4 @@ shell service_name: \
     (_run_image service_name "true" "true" "true" "fish")
 
 debug:
-    echo "JUST_SHELL_COMMAND: ${JUST_SHELL_COMMAND}"
+    echo "JUST_SHELL_COMMAND: ${BLOGS_SHELL_COMMAND}"

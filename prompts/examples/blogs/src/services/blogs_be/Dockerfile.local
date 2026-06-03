@@ -1,0 +1,3 @@
+FROM blogs_base_python
+
+WORKDIR /app/src

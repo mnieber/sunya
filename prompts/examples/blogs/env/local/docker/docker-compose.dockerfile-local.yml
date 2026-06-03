@@ -1,0 +1,11 @@
+services:
+  blogs_be:
+    build:
+      context: ${ROOT_DIR}/src/services/blogs_be
+      dockerfile: Dockerfile.local
+    image: blogs_be_local
+  blogs_fe:
+    build:
+      context: ${ROOT_DIR}/src/services/blogs_fe
+      dockerfile: Dockerfile.local
+    image: blogs_fe_local

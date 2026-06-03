@@ -1,4 +1,4 @@
-_build use_no_cache:
+_build use_dockerfile_local use_no_cache:
     #!/usr/bin/env bash
     set -euox pipefail
     DOCKER_BUILDKIT=1 \
@@ -7,5 +7,6 @@ _build use_no_cache:
     ROOT_DIR="${ROOT_DIR}" \
     docker compose \
         --file "${COMPOSE_DIR}/docker-compose.yml" \
+        {{ if use_dockerfile_local == "true" { "--file " + "${COMPOSE_DIR}/docker-compose.dockerfile-local.yml" } else { "" } }} \
         --progress=plain \
         build {{ if use_no_cache == "true" { "--no-cache" } else { "" } }}

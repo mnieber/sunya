@@ -11,7 +11,7 @@ services:
       - ./env_files/blogs_be.env
     environment:
       - DJANGO_SETTINGS_MODULE=app.settings.local
-    image: blogs_be_dev
+    image: blogs_be
     ports:
       - 8000:8000
   blogs_fe:
@@ -22,7 +22,7 @@ services:
     command: sleep infinity
     env_file:
       - ./env_files/blogs_fe.env
-    image: blogs_fe_dev
+    image: blogs_fe
     ports:
       - 3000:3000
       - 6008:6008 # For Storybook
