@@ -1,19 +1,19 @@
-import blogs.urls
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.admin.views.decorators import staff_member_required
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
-import api.urls
-import users.urls
+import blogs_be.api.urls
+import blogs_be.users.urls
+import blogs_be.blogs.urls
 from blogs_be.app.utils.serve_static import serve_static
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
-    path(r"", include(api.urls)),
-    path(r"api/blogs/", include(blogs.urls)),
-    path(r"api/users/", include(users.urls)),
+    path(r"", include(blogs_be.api.urls)),
+    path(r"api/blogs/", include(blogs_be.blogs.urls)),
+    path(r"api/users/", include(blogs_be.users.urls)),
     path(
         "api/v1/schema/",
         staff_member_required(SpectacularAPIView.as_view()),

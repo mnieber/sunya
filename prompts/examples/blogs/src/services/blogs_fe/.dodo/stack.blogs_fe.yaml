@@ -12,9 +12,29 @@ COMMANDS:
 DOCKER:
   container: blogs_fe
 
-ROOT: {}
+NODE:
+  node_modules_dir: ${/SERVER/src_dir}/node_modules
+
+ROOT:
+  decorators:
+    docker:
+      - exec
+      - make
+      - npm-link
+      - npm-publish
+      - tsc
 
 SERVER:
   install_dir: /app
   src_dir: ${/SERVER/install_dir}/src
   host_src_dir: ${/ROOT/src_dir}/src/services/blogs_fe
+
+TSC:
+  src_dir_map:
+    skandha: /npm/skandha
+    skandha-facets: /npm/skandha-facets
+    skandha-mobx: /npm/skandha-mobx
+    mobx-resource-states: /npm/mobx-resource-states
+    react-props-from-context: /npm/react-props-from-context
+    react-form-state-context: /npm/react-form-state-context
+    react-nav-handler: /npm/react-nav-handler

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blogs import models
+from blogs_be.blogs import models
 
 
 class BlogPostInline(admin.TabularInline):

@@ -15,7 +15,6 @@ THIRD_PARTY_APPS = [
     "dbbackup",
     "django_extensions",
     "rest_framework",
-    "rest_framework_gis",
     "drf_spectacular",
     "drf_spectacular_sidecar",
     "drf_standardized_errors",
@@ -24,10 +23,10 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
-    "api.apps.ApiConfig",
-    "app.apps.AppConfig",
-    "blogs.apps.BlogsConfig",
-    "users.apps.UsersConfig",
+    "blogs_be.api.apps.ApiConfig",
+    "blogs_be.app.apps.AppConfig",
+    "blogs_be.blogs.apps.BlogsConfig",
+    "blogs_be.users.apps.UsersConfig",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -2,8 +2,6 @@ from argparse import Namespace
 from typing import Union, get_args, get_origin
 from uuid import UUID
 
-import rest_framework_gis.fields
-from django.contrib.gis.geos import Polygon
 from rest_framework import serializers
 
 
@@ -36,8 +34,6 @@ class FormSerializer(serializers.Serializer):
 
             if field_type == UUID:
                 field = serializers.UUIDField(**field_kwargs)
-            elif field_type == Polygon:
-                field = rest_framework_gis.fields.GeometryField(**field_kwargs)
             elif field_type == str:
                 field = serializers.CharField(**field_kwargs)
             elif field_type == bool:

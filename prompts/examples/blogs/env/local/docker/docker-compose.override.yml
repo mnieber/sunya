@@ -16,7 +16,10 @@ services:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
       # Npm package overlays
-      - /home/maarten/projects/aspiration/src:/npm/aspiration
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
       - /home/maarten/projects/skandha/src:/npm/skandha
+      - /home/maarten/projects/mobx-resource-states/src:/npm/mobx-resource-states
+      - /home/maarten/projects/react-props-from-context/src:/npm/react-props-from-context
+      - /home/maarten/projects/react-form-state-context/src:/npm/react-form-state-context
+      - /home/maarten/projects/react-nav-handler/src:/npm/react-nav-handler

@@ -1,4 +1,4 @@
-from blogs_be.app.settings.dev.inherit import CACHES
+from blogs_be.app.settings.local.inherit import CACHES
 
 CACHES["default"] = {
     "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
