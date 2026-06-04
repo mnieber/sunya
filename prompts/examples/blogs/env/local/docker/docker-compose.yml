@@ -18,6 +18,8 @@ services:
       context: ${ROOT_DIR}/src
       dockerfile: services/blogs_fe/Dockerfile
     command: sleep infinity
+    depends_on:
+      - blogs_be
     env_file:
       - ./env_files/blogs_fe.env
     image: blogs_fe
