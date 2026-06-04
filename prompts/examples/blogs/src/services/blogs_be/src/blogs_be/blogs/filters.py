@@ -1,4 +1,4 @@
-from blogs.models import Blog, BlogPost
+from blogs_be.blogs.models import Blog, BlogPost
 from django_filters import rest_framework as filters
 
 

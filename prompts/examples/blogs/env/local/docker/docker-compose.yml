@@ -9,8 +9,6 @@ services:
       - postgres
     env_file:
       - ./env_files/blogs_be.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.local
     image: blogs_be
     ports:
       - 8000:8000 # Django

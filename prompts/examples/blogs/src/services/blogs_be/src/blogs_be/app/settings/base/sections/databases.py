@@ -1,4 +1,4 @@
-from app.utils.env import env
+from blogs_be.app.utils.env import env
 
 # Database
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases

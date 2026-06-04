@@ -1,13 +1,13 @@
 import pytest
-from blogs.actions.create_blog_post import (
+from blogs_be.blogs.actions.create_blog_post import (
     BlogPostWithTitleAlreadyExistsError,
     CreateBlogPostFormContainsForbiddenWordsError,
     CreateBlogPostForm,
     create_blog_post,
 )
-from blogs.tests.factories import BlogFactory, BlogPostFactory
+from blogs_be.blogs.tests.factories import BlogFactory, BlogPostFactory
 
-from users.tests.factories import UserFactory
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestCreateBlogPostAction:

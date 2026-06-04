@@ -1,4 +1,4 @@
-from common.utils.inspect import get_argument_names
+from blogs_be.common.utils.inspect import get_argument_names
 
 
 def resolve_data_spec(data_spec, initial_resolved_data):

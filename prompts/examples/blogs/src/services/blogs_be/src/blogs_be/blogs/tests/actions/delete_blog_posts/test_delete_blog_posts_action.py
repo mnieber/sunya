@@ -1,10 +1,13 @@
 import pytest
-from users.tests.factories import UserFactory
+from blogs_be.users.tests.factories import UserFactory
 from uuid import uuid4
-from blogs.actions.delete_blog_posts import delete_blog_posts, DeleteBlogPostsForm
-from blogs.models import BlogPost
-from blogs.tests.factories import BlogFactory, BlogPostFactory
-from blogs.actions.delete_blog_posts import BlogPostsNotFoundError
+from blogs_be.blogs.actions.delete_blog_posts import (
+    delete_blog_posts,
+    DeleteBlogPostsForm,
+)
+from blogs_be.blogs.models import BlogPost
+from blogs_be.blogs.tests.factories import BlogFactory, BlogPostFactory
+from blogs_be.blogs.actions.delete_blog_posts import BlogPostsNotFoundError
 
 
 class TestDeleteBlogPostsAction:

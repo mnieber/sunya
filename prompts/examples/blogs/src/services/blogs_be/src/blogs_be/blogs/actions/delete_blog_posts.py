@@ -1,7 +1,7 @@
 from dataclassy import dataclass
 from typing import List
 from django.db import transaction
-from blogs.models import Blog, BlogPost
+from blogs_be.blogs.models import Blog, BlogPost
 
 
 @dataclass

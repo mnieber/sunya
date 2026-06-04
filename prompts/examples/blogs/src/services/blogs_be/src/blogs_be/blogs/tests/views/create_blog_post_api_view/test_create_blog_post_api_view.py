@@ -1,14 +1,14 @@
 import deepdiff
 import pytest
-from blogs.permissions import user_is_blog_owner
-from blogs.tests.factories import BlogFactory
-from blogs.views.create_blog_post_api_view import CreateBlogPostApiView
+from blogs_be.blogs.permissions import user_is_blog_owner
+from blogs_be.blogs.tests.factories import BlogFactory
+from blogs_be.blogs.views.create_blog_post_api_view import CreateBlogPostApiView
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from api.utils.extend_schema.permissions import checks_permission
-from common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
-from users.tests.factories import UserFactory
+from blogs_be.api.utils.extend_schema.permissions import checks_permission
+from blogs_be.common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestCreateBlogPostApiView:

@@ -6,8 +6,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from common.models import BaseModel
-from users.actions.create_user import CreateUserForm
+from blogs_be.common.models import BaseModel
+from blogs_be.users.actions.create_user import CreateUserForm
 from django.db import models
 
 
@@ -15,7 +15,7 @@ class UserManager(django.contrib.auth.models.UserManager):
     def create_superuser(
         self, username=None, email=None, password=None, **extra_fields
     ):
-        from users.actions.create_user import create_user
+        from blogs_be.users.actions.create_user import create_user
 
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
@@ -67,7 +67,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
         super().delete(using=using)
 
     def delete(self, using=None):
-        from users.actions.delete_user import delete_user
+        from blogs_be.users.actions.delete_user import delete_user
 
         delete_user(self, using=using)
 

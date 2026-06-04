@@ -1,11 +1,11 @@
-from blogs.actions.create_blog import CreateBlogForm
-from blogs.actions.create_blog_post import CreateBlogPostForm
-from blogs.models import Blog, BlogPost
-from blogs.actions.update_blog_post import UpdateBlogPostForm
-from common.form_serializer import FormSerializer
-from common.serializers import BaseModelSerializer, ReadSerializerMixin
-from blogs.actions.delete_blog_posts import DeleteBlogPostsForm
-from common.form_serializer import FormSerializer
+from blogs_be.blogs.actions.create_blog import CreateBlogForm
+from blogs_be.blogs.actions.create_blog_post import CreateBlogPostForm
+from blogs_be.blogs.models import Blog, BlogPost
+from blogs_be.blogs.actions.update_blog_post import UpdateBlogPostForm
+from blogs_be.common.form_serializer import FormSerializer
+from blogs_be.common.serializers import BaseModelSerializer, ReadSerializerMixin
+from blogs_be.blogs.actions.delete_blog_posts import DeleteBlogPostsForm
+from blogs_be.common.form_serializer import FormSerializer
 
 
 class CreateBlogFormSerializer(FormSerializer):

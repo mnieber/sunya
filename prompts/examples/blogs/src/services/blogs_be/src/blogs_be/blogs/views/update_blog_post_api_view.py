@@ -1,17 +1,17 @@
-from blogs.actions.update_blog_post import (
+from blogs_be.blogs.actions.update_blog_post import (
     BlogPostWithTitleAlreadyExistsError,
     update_blog_post,
 )
-from blogs.permissions import user_is_blog_owner
-from blogs.serializers import BlogPostSerializer, UpdateBlogPostFormSerializer
-from blogs.shortcuts import get_blog_post_or_400
+from blogs_be.blogs.permissions import user_is_blog_owner
+from blogs_be.blogs.serializers import BlogPostSerializer, UpdateBlogPostFormSerializer
+from blogs_be.blogs.shortcuts import get_blog_post_or_400
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.utils.extend_schema import extend_schema
-from common.form_serializer import FormSerializer
+from blogs_be.api.utils.extend_schema import extend_schema
+from blogs_be.common.form_serializer import FormSerializer
 
 
 class UpdateBlogPostRequestSerializer(FormSerializer):

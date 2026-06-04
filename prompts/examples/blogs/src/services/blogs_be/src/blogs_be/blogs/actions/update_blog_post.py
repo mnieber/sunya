@@ -1,8 +1,8 @@
 import typing as T
 
-from blogs.models import BlogPost
+from blogs_be.blogs.models import BlogPost
 from dataclassy import dataclass
-from blogs.rules.has_forbidden_words import has_forbidden_words
+from blogs_be.blogs.rules.has_forbidden_words import has_forbidden_words
 
 
 @dataclass

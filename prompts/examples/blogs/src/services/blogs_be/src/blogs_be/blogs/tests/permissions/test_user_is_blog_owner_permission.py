@@ -1,8 +1,8 @@
 import pytest
 
-from blogs.permissions import user_is_blog_owner
-from blogs.tests.factories import BlogFactory
-from users.tests.factories import UserFactory
+from blogs_be.blogs.permissions import user_is_blog_owner
+from blogs_be.blogs.tests.factories import BlogFactory
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestUserIsBlogOwnerPermission:

@@ -2,7 +2,7 @@ import uuid
 
 from django.db import models
 
-from common.fields import AutoCreatedAtField, AutoLastModifiedAtField
+from blogs_be.common.fields import AutoCreatedAtField, AutoLastModifiedAtField
 
 
 class BaseModel(models.Model):

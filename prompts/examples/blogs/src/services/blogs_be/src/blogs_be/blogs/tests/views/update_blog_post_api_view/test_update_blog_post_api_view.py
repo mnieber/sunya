@@ -1,13 +1,13 @@
 import deepdiff
 import pytest
-from blogs.permissions import user_is_blog_owner
-from blogs.tests.factories import BlogFactory, BlogPostFactory
-from blogs.views.update_blog_post_api_view import UpdateBlogPostApiView
+from blogs_be.blogs.permissions import user_is_blog_owner
+from blogs_be.blogs.tests.factories import BlogFactory, BlogPostFactory
+from blogs_be.blogs.views.update_blog_post_api_view import UpdateBlogPostApiView
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from api.utils.extend_schema.permissions import checks_permission
-from users.tests.factories import UserFactory
+from blogs_be.api.utils.extend_schema.permissions import checks_permission
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestUpdateBlogPostApiView:

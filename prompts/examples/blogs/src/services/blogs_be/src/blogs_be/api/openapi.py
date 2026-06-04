@@ -2,7 +2,7 @@ from drf_spectacular.openapi import AutoSchema
 from rest_framework import serializers
 from rest_framework.permissions import AND, NOT, OR
 from drf_spectacular.extensions import OpenApiFilterExtension
-from api.utils.extend_schema import get_permissions_description
+from blogs_be.api.utils.extend_schema import get_permissions_description
 from django_filters.rest_framework import DjangoFilterBackend
 
 

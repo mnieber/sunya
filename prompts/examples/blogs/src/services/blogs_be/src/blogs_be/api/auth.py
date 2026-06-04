@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import (
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import AccessToken
 
-from users.models import BlockedToken
+from blogs_be.users.models import BlockedToken
 
 
 class JWTAuthentication(OriginalJWTAuthentication):

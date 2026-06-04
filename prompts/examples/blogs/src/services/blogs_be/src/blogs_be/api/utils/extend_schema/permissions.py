@@ -1,4 +1,5 @@
-from common.utils.inspect import get_argument_names
+from blogs_be.common.utils.inspect import get_argument_names
+
 
 class PermissionResult:
     def __init__(self, permission_allowed, reason=None):

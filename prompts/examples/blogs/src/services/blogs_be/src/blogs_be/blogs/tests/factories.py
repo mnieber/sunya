@@ -1,5 +1,5 @@
 import factory
-from blogs.models import Blog, BlogPost
+from blogs_be.blogs.models import Blog, BlogPost
 from factory.django import DjangoModelFactory
 
 

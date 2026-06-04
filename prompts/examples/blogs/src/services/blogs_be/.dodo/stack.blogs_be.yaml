@@ -5,7 +5,7 @@ COMMANDS:
     "~just":
       run: [in: docker, cmd: just]
     "~serve":
-      run: [in: docker, cmd: just, run-django-server]
+      run: [in: docker, cmd: just, run-server]
     "~shell":
       run: [in: docker, cmd: fish]
 

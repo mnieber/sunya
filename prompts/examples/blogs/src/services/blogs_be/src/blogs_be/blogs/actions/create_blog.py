@@ -1,11 +1,11 @@
 import typing as T
 
-from blogs.models import Blog
-from blogs.rules.has_forbidden_words import has_forbidden_words
+from blogs_be.blogs.models import Blog
+from blogs_be.blogs.rules.has_forbidden_words import has_forbidden_words
 from dataclassy import dataclass
 from django.contrib.auth import get_user_model
 
-from common.utils.arg_utils import optional_args
+from blogs_be.common.utils.arg_utils import optional_args
 
 User = get_user_model()
 

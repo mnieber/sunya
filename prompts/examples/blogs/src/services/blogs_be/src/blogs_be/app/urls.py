@@ -7,7 +7,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 import api.urls
 import users.urls
-from app.utils.serve_static import serve_static
+from blogs_be.app.utils.serve_static import serve_static
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),

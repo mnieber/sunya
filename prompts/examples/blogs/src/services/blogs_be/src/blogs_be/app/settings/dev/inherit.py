@@ -1,1 +1,1 @@
-from app.settings.base import *  # noqa
+from blogs_be.app.settings.base import *  # noqa

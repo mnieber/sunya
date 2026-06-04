@@ -4,8 +4,8 @@ import pytest
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-from blogs.tests.factories import BlogFactory
-from users.tests.factories import UserFactory
+from blogs_be.blogs.tests.factories import BlogFactory
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestGetBlogsApiView:

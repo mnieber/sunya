@@ -1,9 +1,9 @@
 import pytest
-from blogs.tests.factories import BlogFactory
+from blogs_be.blogs.tests.factories import BlogFactory
 
-from users.tests.factories import UserFactory
+from blogs_be.users.tests.factories import UserFactory
 
-from blogs.actions.create_blog import (  # isort: skip noqa: F401
+from blogs_be.blogs.actions.create_blog import (  # isort: skip noqa: F401
     BlogWithNameAlreadyExistsError,
     CreateBlogFormContainsForbiddenWordsError,
     CreateBlogForm,

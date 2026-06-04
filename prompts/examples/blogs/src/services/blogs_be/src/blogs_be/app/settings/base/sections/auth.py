@@ -1,6 +1,6 @@
 from datetime import timedelta
 
-from app.utils.env import env
+from blogs_be.app.utils.env import env
 
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",

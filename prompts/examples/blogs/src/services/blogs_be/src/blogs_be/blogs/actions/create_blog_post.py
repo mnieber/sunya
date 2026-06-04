@@ -1,10 +1,10 @@
 import typing as T
 
-from blogs.models import Blog, BlogPost
+from blogs_be.blogs.models import Blog, BlogPost
 from dataclassy import dataclass
-from blogs.rules.has_forbidden_words import has_forbidden_words
+from blogs_be.blogs.rules.has_forbidden_words import has_forbidden_words
 
-from common.utils.arg_utils import optional_args
+from blogs_be.common.utils.arg_utils import optional_args
 
 
 @dataclass

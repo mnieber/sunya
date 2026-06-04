@@ -1,12 +1,12 @@
-from blogs.shortcuts import get_blog_or_400
+from blogs_be.blogs.shortcuts import get_blog_or_400
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from api.utils.extend_schema import extend_schema
-from blogs.models import BlogPost
-from blogs.serializers import BlogPostSerializer
-from blogs.filters import BlogPostFilterSet
-from common.utils.apply_filter_set_or_400 import apply_filter_set_or_400
+from blogs_be.api.utils.extend_schema import extend_schema
+from blogs_be.blogs.models import BlogPost
+from blogs_be.blogs.serializers import BlogPostSerializer
+from blogs_be.blogs.filters import BlogPostFilterSet
+from blogs_be.common.utils.apply_filter_set_or_400 import apply_filter_set_or_400
 
 
 class GetBlogPostsApiView(APIView):

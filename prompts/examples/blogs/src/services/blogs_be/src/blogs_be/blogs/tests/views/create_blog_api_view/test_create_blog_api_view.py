@@ -3,8 +3,8 @@ import pytest
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
-from users.tests.factories import UserFactory
+from blogs_be.common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestCreateBlogApiView:

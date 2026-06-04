@@ -1,13 +1,13 @@
 import pytest
-from blogs.tests.factories import BlogFactory, BlogPostFactory
+from blogs_be.blogs.tests.factories import BlogFactory, BlogPostFactory
 
-from blogs.actions.update_blog_post import (
+from blogs_be.blogs.actions.update_blog_post import (
     BlogPostWithTitleAlreadyExistsError,
     UpdateBlogPostFormContainsForbiddenWordsError,
     UpdateBlogPostForm,
     update_blog_post,
 )
-from users.tests.factories import UserFactory
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestUpdateBlogPostAction:

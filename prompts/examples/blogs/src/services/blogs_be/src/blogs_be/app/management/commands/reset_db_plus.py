@@ -1,8 +1,8 @@
-from blogs.tests.factories import BlogFactory, BlogPostFactory
+from blogs_be.blogs.tests.factories import BlogFactory, BlogPostFactory
 from django.core.management.base import BaseCommand
 
 from django.core.management import call_command
-from users.models import User
+from blogs_be.users.models import User
 
 
 class Command(BaseCommand):
