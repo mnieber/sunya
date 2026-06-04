@@ -1,43 +1,20 @@
 COMMANDS:
   list:
-    '~dm':
+    "~dm":
       run: [in: docker, cmd: python, manage.py]
-    '~install':
-      run: [in: docker, cmd: make, install]
-    '~make':
-      run: [in: docker, cmd: make]
-    '~pip-compile':
-      run: [in: docker, cmd: make, pip-compile]
-    '~pt':
-      run: [in: docker, cmd: dodo, blogs_be.pytest, ++allow-unix-socket]
-      cwd: ${/SERVER/src_dir}
-      kwargs:
-        ++maxfail: 10
-      env: [CELERY_TASK_ALWAYS_EAGER=True, OTEL_SDK_DISABLED=True]
-    '~pts':
-      run: [in: docker, cmd: dodo, blogs_be.pytest, ++allow-unix-socket]
-      cwd: ${/SERVER/src_dir}
-      kwargs:
-        ++select-from-file: keep-tests.txt
-        ++maxfail: 10
-      env: [CELERY_TASK_ALWAYS_EAGER=True, OTEL_SDK_DISABLED=True]
-    '~serve':
-      run: [in: docker, cmd: make, run-server]
-    '~shell':
+    "~just":
+      run: [in: docker, cmd: just]
+    "~serve":
+      run: [in: docker, cmd: just, run-django-server]
+    "~shell":
       run: [in: docker, cmd: fish]
 
-PYTEST:
-  html_report: ${/SERVER/install_dir}/pytest/pytest_report.html
-  python: python
-
 DOCKER:
-  container: sunya-dev-blogs_be-1
+  container: blogs_be
 
-ROOT:
-  aliases:
-    foo: run django-manage
+ROOT: {}
 
 SERVER:
   install_dir: /app
   src_dir: ${/SERVER/install_dir}/src
-  host_src_dir: ${/ROOT/src_dir}/blogs_be
+  host_src_dir: ${/ROOT/src_dir}/src/services/blogs_be

@@ -1,21 +1,20 @@
 COMMANDS:
   list:
-    '~install':
-      run: [in: docker, cmd: make, install]
-    '~make':
-      run: [in: docker, cmd: make]
+    '~just':
+      run: [in: docker, cmd: just]
     '~serve':
-      run: [in: docker, cmd: make, run-server]
+      run: [in: docker, cmd: just, run-server]
     '~storybook':
-      run: [in: docker, cmd: make, storybook]
+      run: [in: docker, cmd: just, storybook]
     '~shell':
       run: [in: docker, cmd: fish]
 
 DOCKER:
-  container: sunya-dev-blogs_fe-1
+  container: blogs_fe
 
 ROOT: {}
 
 SERVER:
   install_dir: /app
   src_dir: ${/SERVER/install_dir}/src
+  host_src_dir: ${/ROOT/src_dir}/src/services/blogs_fe
