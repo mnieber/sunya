@@ -1,6 +1,7 @@
 import './just/docker/build.just'
 import './just/docker/run.just'
 import './just/docker/env-files.just'
+import './just/python/_pip_compile.just'
 
 set dotenv-load := true
 set dotenv-filename := 'env/local/.local.env'
