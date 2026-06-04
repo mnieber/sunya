@@ -11,7 +11,7 @@ services:
       - /opt/projects/sunya/blogs_be/pytest_report.html:/app/pytest_report.html
       - /opt/projects/sunya/blogs_be/static:/app/static
       # Lib code overlays
-      - /home/maarten/projects/woodstock/src:/app/libs/woodstock
+      - /home/maarten/projects/woodstock/src/libs/woodstock:/app/libs/woodstock
   blogs_fe:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
