@@ -1,4 +1,6 @@
-import './just/docker/index.just'
+import './just/docker/build.just'
+import './just/docker/run.just'
+import './just/docker/env-files.just'
 
 set dotenv-load := true
 set dotenv-filename := 'env/local/.local.env'
@@ -12,41 +14,8 @@ export PYTHON := `which python3 2>/dev/null || which python`
 export COMPOSE_DIR := source_directory() / "docker"
 export COMPOSE_PROJECT_NAME := "blogs"
 
-# Local variables
-default_use_dockerfile_local := env_var_or_default("BLOGS_USE_DOCKERFILE_LOCAL", "false")
-
-build use_dockerfile_local=default_use_dockerfile_local use_no_cache="false": \
-    (compile-env-files) \
-    (_build use_dockerfile_local use_no_cache)
-
-build_base_images use_no_cache="false": \
-    (_build_base_images use_no_cache)
-
-_touch:
-    touch ${ROOT_DIR}/env/local/docker/docker-compose.override.yml
-    touch ${ROOT_DIR}/env/local/secrets.env
-
-compile-env-files: \
-    (_touch) \
-    python ${ROOT_DIR}/env/local/scripts/compile_env_files.py \
-        --input=${ROOT_DIR}/env/local/secrets.env \
-        ${ROOT_DIR}/env/local/docker/env_files
-
-up: \
-    (_touch) \
-    (compile-env-files) \
-    (_up "true" "true")
-
-down: \
-    (compile-env-files) \
-    (_down "true" "true")
-
 render-specs:
     sunya render --create-simple-output-dir --watch
-
-shell service_name: \
-    (compile-env-files) \
-    (_run_image service_name "true" "true" "true" "fish")
 
 debug:
     echo "JUST_SHELL_COMMAND: ${BLOGS_SHELL_COMMAND}"

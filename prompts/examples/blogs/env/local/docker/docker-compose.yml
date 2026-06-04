@@ -39,7 +39,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - "${ROOT_DIR}/src/localstack/scripts/initaws.d:/docker-entrypoint-initaws.d"
+      - "${ROOT_DIR}/src/services/localstack/scripts/initaws.d:/docker-entrypoint-initaws.d"
   postgres:
     container_name: blogs_postgres
     env_file:

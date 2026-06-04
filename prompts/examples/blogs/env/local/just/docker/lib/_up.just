@@ -1,4 +1,4 @@
-_up use_override_file use_src_overlays:
+_up use_dockerfile_local use_override_file use_src_overlays:
     #!/usr/bin/env bash
     set -euox pipefail
     DOCKER_BUILDKIT=1 \
@@ -7,5 +7,6 @@ _up use_override_file use_src_overlays:
     docker compose \
         --file "${COMPOSE_DIR}/docker-compose.yml" \
         {{ if use_src_overlays == "true" { "--file " + "${COMPOSE_DIR}/docker-compose.src-overlays.yml" } else { "" } }} \
+        {{ if use_dockerfile_local == "true" { "--file " + "${COMPOSE_DIR}/docker-compose.dockerfile-local.yml" } else { "" } }} \
         {{ if use_override_file == "true" { "--file " + "${COMPOSE_DIR}/docker-compose.override.yml" } else { "" } }} \
         up
