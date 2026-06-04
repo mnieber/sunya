@@ -2,8 +2,8 @@ services:
   blogs_be:
     container_name: blogs_be
     build:
-      context: ${ROOT_DIR}/src/services/blogs_be
-      dockerfile: Dockerfile
+      context: ${ROOT_DIR}/src
+      dockerfile: services/blogs_be/Dockerfile
     command: sleep infinity
     depends_on:
       - postgres
@@ -17,8 +17,8 @@ services:
   blogs_fe:
     container_name: blogs_fe
     build:
-      context: ${ROOT_DIR}/src/services/blogs_fe
-      dockerfile: Dockerfile
+      context: ${ROOT_DIR}/src
+      dockerfile: services/blogs_fe/Dockerfile
     command: sleep infinity
     env_file:
       - ./env_files/blogs_fe.env

@@ -1,5 +1,3 @@
--r base.txt
-
 factory-boy
 faker
 pytest
