@@ -10,10 +10,12 @@ services:
       - /opt/projects/sunya/blogs_be/media:/app/media
       - /opt/projects/sunya/blogs_be/pytest_report.html:/app/pytest_report.html
       - /opt/projects/sunya/blogs_be/static:/app/static
+      # Lib code overlays
+      - /home/maarten/projects/woodstock/src:/app/libs/woodstock
   blogs_fe:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
-      # Npm package overlays for local development
+      # Npm package overlays
       - /home/maarten/projects/aspiration/src:/npm/aspiration
       - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
       - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
