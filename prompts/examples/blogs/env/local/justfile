@@ -1,9 +1,4 @@
-import './just/docker/_build.just'
-import './just/docker/_build_base_images.just'
-import './just/docker/_up.just'
-import './just/docker/_run_image.just'
-import './just/docker/_up.just'
-import './just/docker/_down.just'
+import './just/docker/index.just'
 
 set dotenv-load := true
 set dotenv-filename := 'env/local/.local.env'
@@ -27,17 +22,18 @@ build use_dockerfile_local=default_use_dockerfile_local use_no_cache="false": \
 build_base_images use_no_cache="false": \
     (_build_base_images use_no_cache)
 
-touch:
+_touch:
     touch ${ROOT_DIR}/env/local/docker/docker-compose.override.yml
-
-compile-env-files:
     touch ${ROOT_DIR}/env/local/secrets.env
+
+compile-env-files: \
+    (_touch) \
     python ${ROOT_DIR}/env/local/scripts/compile_env_files.py \
         --input=${ROOT_DIR}/env/local/secrets.env \
         ${ROOT_DIR}/env/local/docker/env_files
 
 up: \
-    (touch) \
+    (_touch) \
     (compile-env-files) \
     (_up "true" "true")
 

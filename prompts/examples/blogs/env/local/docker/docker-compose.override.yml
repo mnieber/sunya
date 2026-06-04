@@ -13,3 +13,8 @@ services:
   blogs_fe:
     volumes:
       - /opt/projects/sunya/blogs_fe/fish_history:/root/.local/share/fish/fish_history
+      # Npm package overlays for local development
+      - /home/maarten/projects/aspiration/src:/npm/aspiration
+      - /home/maarten/projects/skandha-facets/src:/npm/skandha-facets
+      - /home/maarten/projects/skandha-mobx/src:/npm/skandha-mobx
+      - /home/maarten/projects/skandha/src:/npm/skandha
