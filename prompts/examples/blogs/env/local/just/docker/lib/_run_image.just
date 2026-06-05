@@ -1,4 +1,4 @@
-_run_image geomodel_service_name use_dockerfile_local use_override_file use_src_overlays cmd="":
+_run_image service_name use_dockerfile_local use_override_file use_src_overlays cmd="":
     #!/usr/bin/env bash
     set -euox pipefail
 
@@ -15,5 +15,5 @@ _run_image geomodel_service_name use_dockerfile_local use_override_file use_src_
             --rm \
             --remove-orphans \
             --service-ports \
-            {{ geomodel_service_name }} \
+            {{ service_name }} \
             {{ if cmd != "" { "--command " + cmd } else { "" } }}

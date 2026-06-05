@@ -1,6 +1,4 @@
-import './just/docker/build.just'
-import './just/docker/run.just'
-import './just/docker/env-files.just'
+import './just/docker/index.just'
 import './just/python/index.just'
 
 set dotenv-load := true
@@ -14,12 +12,6 @@ export PYTHON := `which python3 2>/dev/null || which python`
 # Determine compose properties
 export COMPOSE_DIR := source_directory() / "docker"
 export COMPOSE_PROJECT_NAME := "blogs"
-
-restart use_dockerfile_local=default_use_dockerfile_local use_no_cache="false": \
-    (down) \
-    (pip-compile) \
-    (build use_dockerfile_local use_no_cache) \
-    (up use_dockerfile_local) \
 
 render-specs:
     sunya render --create-simple-output-dir --watch
