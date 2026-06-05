@@ -1,75 +1,40 @@
-# Target: local_env
+# Local Development Environment Setup
 
-This target describes how to set up and manage a **local development environment** for a stack containing multiple services and applications.
+This directory contains instructions for setting up and managing a **local development environment** for a stack containing multiple services and applications.
 
-## Scope
+## Overview
 
-This target covers:
-- Docker Compose configuration for local development
-- Just commands (Justfile) for managing the local stack
-- Environment file structure and management
-- Service orchestration and dependencies
-- Local infrastructure services (databases, LocalStack, etc.)
+Setting up a local development stack follows these main phases:
 
-This target does **not** cover:
-- Individual service/application code (see targets/django_app, targets/react_app, etc.)
-- CI/CD environments (see targets/ci_env when available)
-- Production deployments
+1. **Initial Setup** - Configure justfile structure, Docker Compose files, and base images
+2. **Add Services** - Add backend/frontend services and infrastructure (databases, etc.)
+3. **Configure Development Environment** - Set up overlays, environment variables, and developer tooling
 
-## What is a local_env stack?
+## Quick Start
 
-A local_env stack is a complete local development environment where:
-- All services run in Docker containers via Docker Compose
-- Services can communicate with each other via Docker networking
-- Developers use Just commands to manage the stack (start, stop, run tests, etc.)
-- Environment variables are managed through .env files
-- Local infrastructure (databases, message queues, etc.) runs alongside application services
+Consult [local_env_layer/index.md](local_env_layer/index.md) for instructions on:
 
-## Layers used
+- Setting up Docker Compose configuration
+- Creating justfile commands for stack operations
+- Adding Python/React services to the stack
+- Configuring base images and stub libraries
+- Managing environment variables
 
-This target composes the following layers:
+## Reference app
 
-- **layers/docker** - Docker Compose patterns, Dockerfile patterns, service orchestration
-- **layers/just** - Justfile commands for managing the local development workflow
+**[examples/blogs/](examples/blogs/)** — complete reference stack; primary template for all patterns
 
-## Example application
-
-The `examples/blogs/` directory demonstrates a complete local development stack containing:
-- Backend service (Django)
-- Frontend service (React)
-- PostgreSQL database
-- Docker Compose configuration
+The blogs stack contains:
+- Django backend (`blogs_be`) with PostgreSQL
+- React frontend (`blogs_fe`)
+- Docker Compose orchestration
 - Just commands for common operations
-- Environment file structure
 
-## File structure overview
+## Key Principles
 
-```
-<stack>/
-├── env/
-│   └── local/
-│       ├── docker/
-│       │   ├── docker-compose.yml
-│       │   └── env_files/
-│       │       ├── <service>.env
-│       │       └── ...
-│       └── secrets.env
-├── src/
-│   ├── services/
-│   │   ├── <service_name>/
-│   │   │   ├── Dockerfile
-│   │   │   └── ...
-│   │   └── ...
-│   └── libs/
-│       └── <lib_name>/
-│           └── ...
-├── Justfile
-└── dodo.py
-```
-
-## Getting started
-
-For detailed instructions on:
-- Setting up Docker Compose configuration → see `layers/docker/index.md`
-- Creating Just commands → see `layers/just/index.md`
-- Adding specific services/infrastructure → see skills in `layers/docker/skills/`
+- **Layered Compose Files** - Base (`docker-compose.yml`) + local dev overrides (`dockerfile-local.yml`, `src-overlays.yml`, `override.yml`)
+- **Src Overlays** - Mount service source code for live editing without rebuilds
+- **Base Images** - Shared images (`<stack>_base_python`) reduce build times
+- **Environment Templates** - Use `.env.in` templates compiled to `.env` files
+- **Just Commands** - Consistent interface (`just build`, `just up`, `just shell <service>`)
+- **Developer Customization** - Personal preferences in `.local.env` and `docker-compose.override.yml`
