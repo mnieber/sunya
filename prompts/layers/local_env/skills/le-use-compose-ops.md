@@ -185,8 +185,12 @@ just build use_no_cache=true
 **What it does:**
 
 1. Compiles environment files (`.env.in` → `.env`)
+   - In a service's `.env.in` file, reference secrets with `${VARIABLE_NAME}` where VARIABLE_NAME is defined in `secrets.env`.
+   - Non-secrets are hard-coded directly in the .env.in file
 2. Builds all services defined in docker-compose.yml
 3. Uses Dockerfile.local if `use_dockerfile_local=true`
+
+Note that the user is responsible for calling `pip install compile-env` in their local python env.
 
 **When to use:** After changing Dockerfile, requirements, or dependencies.
 
@@ -346,3 +350,5 @@ just restart use_dockerfile_local=true
 - [ ] `env/local/.local.env` created with developer preferences (gitignored)
 - [ ] Compose operations justfiles copied to `env/local/just/compose/`
 - [ ] Variable names updated in build.just and run.just to match stack name
+- [ ] `env/local/.gitignore` excludes `docker/env_files/*.env` and `secrets.env`
+- [ ] Non-secrets are hard-coded directly in the .env.in file
