@@ -176,6 +176,17 @@ init-dev: \
 
 **init-dev:** Called once after the container first starts to install node modules.
 
+## Optional Justfile commands
+
+It can optionally also provide this command (which is run on the host)
+
+```
+create-opt-paths:
+    sudo mkdir -p /opt/projects/blogs/blogs_fe
+    sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/blogs/blogs_fe/fish_history
+    sudo chmod -R 777 /opt/projects/blogs
+```
+
 ---
 
 ## Checklist

@@ -316,6 +316,22 @@ run-server:
 
 **RULE:** The Python version in `pip-compile` should match the base image Python version.
 
+## Optional Justfile commands
+
+It can optionally also provide this command (which is run on the host)
+
+```
+create-opt-paths:
+    sudo mkdir -p /opt/projects/blogs/blogs_be
+    sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/blogs/blogs_be/fish_history
+    sudo mkdir -p /opt/projects/blogs/blogs_be/ipython
+    sudo mkdir -p /opt/projects/blogs/blogs_be/assets
+    sudo touch    /opt/projects/blogs/blogs_be/pytest_report.html
+    sudo mkdir -p /opt/projects/blogs/blogs_be/media  # when using django
+    sudo mkdir -p /opt/projects/blogs/blogs_be/static  # when using django
+    sudo chmod -R 777 /opt/projects/blogs
+```
+
 ---
 
 ## Checklist

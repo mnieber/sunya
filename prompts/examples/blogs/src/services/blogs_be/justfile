@@ -44,3 +44,13 @@ generateschema:
 #
 
 init-dev: create-db migrate collect-static create-superuser
+
+create-opt-paths:
+    sudo mkdir -p /opt/projects/blogs/blogs_be
+    sudo echo     "- cmd: echo 'start of the fish history'" >> /opt/projects/blogs/blogs_be/fish_history
+    sudo mkdir -p /opt/projects/blogs/blogs_be/ipython
+    sudo mkdir -p /opt/projects/blogs/blogs_be/assets
+    sudo touch    /opt/projects/blogs/blogs_be/pytest_report.html
+    sudo mkdir -p /opt/projects/blogs/blogs_be/media
+    sudo mkdir -p /opt/projects/blogs/blogs_be/static
+    sudo chmod -R 777 /opt/projects/blogs
