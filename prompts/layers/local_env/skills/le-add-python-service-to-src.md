@@ -25,7 +25,7 @@ The following topics are covered in separate skills/targets:
 - **Django-specific patterns** (models, views, settings, etc.) → see `targets/django_app`
 - **Adding the service to docker-compose.yml** → see `layers/local_env/skills/le-add-python-service-to-compose.md`
 - **Creating base images** → see `layers/local_env/skills/le-add-base-image.md`
-- **Stub libraries backed by external code** → see `layers/local_env/skills/le-add-external-lib-stub.md`
+- **Stub libraries backed by external code** → see `layers/local_env/skills/le-python-lib-stub.md`
 - **Test configuration** (conftest.py, pytest_plugins) → see target-specific documentation
 - **Specification files** (extra/spec_src) → see `targets/app` for how spec files are written and used
 - **Setting up the environment variables** → see `layers/local_env/skills/le-add-python-service-to-compose.md`

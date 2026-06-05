@@ -1,4 +1,4 @@
-# Skill: do-add-localstack
+# Skill: le-add-localstack
 
 Applies when adding LocalStack to a stack for local AWS service emulation (S3, SQS, etc.).
 
