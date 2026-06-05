@@ -1,7 +1,6 @@
 # Instructions for working on a stack
 
-This directory contains instructions for working on an entire stack.
-Note that the stack will typically contain services and libs that have their own index.md file with instructions.
+A stack contains various services and applications. The code generation instructions for each contained service or application are given in the respective target directory for that service or application (e.g. targets/django_app). In the current targets/stack directory, we will describe how to generate the stack code that will allow us to manage these services and applications.
 
 ## Overview
 
