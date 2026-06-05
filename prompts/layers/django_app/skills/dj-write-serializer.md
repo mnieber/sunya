@@ -19,8 +19,8 @@ Primary reference: `blogs_be/src/blogs_be/blogs/serializers.py`
 Used to deserialize incoming POST request bodies. They are generated automatically from a dataclass form using `FormSerializer`:
 
 ```python
-from common.form_serializer import FormSerializer
-from blogs.actions.create_blog_post import CreateBlogPostForm
+from blogs_be.common.form_serializer import FormSerializer
+from blogs_be.blogs.actions.create_blog_post import CreateBlogPostForm
 
 
 class CreateBlogPostFormSerializer(FormSerializer):
@@ -35,8 +35,8 @@ RULE: The `Meta.form_class` must point to the dataclass defined in the action fi
 Used to serialize model instances in responses. They inherit from both `ReadSerializerMixin` and `BaseModelSerializer`:
 
 ```python
-from common.serializers import BaseModelSerializer, ReadSerializerMixin
-from blogs.models import BlogPost
+from blogs_be.common.serializers import BaseModelSerializer, ReadSerializerMixin
+from blogs_be.blogs.models import BlogPost
 
 
 class BlogPostSerializer(ReadSerializerMixin, BaseModelSerializer):

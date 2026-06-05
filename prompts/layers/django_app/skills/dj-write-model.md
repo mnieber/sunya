@@ -43,9 +43,9 @@ RULE: Always define `__str__` and return the field that best identifies the inst
 ```python
 from django.db import models
 
-from blogs.enums import Audiences
-from common.fields import SingleLineTextField
-from common.models import BaseModel
+from blogs_be.blogs.enums import Audiences
+from blogs_be.common.fields import SingleLineTextField
+from blogs_be.common.models import BaseModel
 from django.utils.text import slugify
 
 

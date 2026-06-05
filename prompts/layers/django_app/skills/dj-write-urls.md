@@ -17,9 +17,9 @@ Primary reference: `blogs_be/src/blogs_be/blogs/urls.py`
 Import each view class from its own view file, then list all URL patterns in `urlpatterns`:
 
 ```python
-from blogs.views.create_blog_api_view import CreateBlogApiView
-from blogs.views.create_blog_post_api_view import CreateBlogPostApiView
-from blogs.views.get_blogs_api_view import GetBlogsApiView
+from blogs_be.blogs.views.create_blog_api_view import CreateBlogApiView
+from blogs_be.blogs.views.create_blog_post_api_view import CreateBlogPostApiView
+from blogs_be.blogs.views.get_blogs_api_view import GetBlogsApiView
 from django.urls import path
 
 

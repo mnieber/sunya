@@ -19,7 +19,7 @@ Register each model with `@admin.register`. Use `TabularInline` for related mode
 ```python
 from django.contrib import admin
 
-from blogs import models
+from blogs_be.blogs import models
 
 
 class BlogPostInline(admin.TabularInline):

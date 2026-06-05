@@ -17,7 +17,7 @@ Primary reference: `blogs_be/src/blogs_be/blogs/permissions.py`
 Permission functions are plain Python functions — not DRF `BasePermission` subclasses. They return the result of calling `allow()` or `deny(reason)` (both imported from `api.utils.extend_schema`).
 
 ```python
-from api.utils.extend_schema import allow, deny
+from blogs_be.api.utils.extend_schema import allow, deny
 
 
 def user_is_blog_owner(user, blog):

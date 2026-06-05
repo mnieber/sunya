@@ -19,9 +19,9 @@ Shortcuts are small helper functions that look up a model instance (or perform a
 ## Pattern
 
 ```python
-from blogs.models import Blog, BlogPost
+from blogs_be.blogs.models import Blog, BlogPost
 from rest_framework.exceptions import ValidationError
-from common.utils.ids import is_uuid
+from blogs_be.common.utils.ids import is_uuid
 
 
 def get_blog_or_400(blog_key):

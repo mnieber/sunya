@@ -23,13 +23,13 @@ Test the action function directly. Use pytest fixtures to create the database st
 
 ```python
 import pytest
-from blogs.actions.create_blog_post import (
+from blogs_be.blogs.actions.create_blog_post import (
     BlogPostWithTitleAlreadyExistsError,
     CreateBlogPostForm,
     create_blog_post,
 )
-from blogs.tests.factories import BlogFactory, BlogPostFactory
-from users.tests.factories import UserFactory
+from blogs_be.blogs.tests.factories import BlogFactory, BlogPostFactory
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestCreateBlogPostAction:
@@ -66,15 +66,15 @@ Always include a separate `test_<view_name>_permissions` test that uses `checks_
 ```python
 import deepdiff
 import pytest
-from blogs.permissions import user_is_blog_owner
-from blogs.tests.factories import BlogFactory
-from blogs.views.create_blog_post_api_view import CreateBlogPostApiView
+from blogs_be.blogs.permissions import user_is_blog_owner
+from blogs_be.blogs.tests.factories import BlogFactory
+from blogs_be.blogs.views.create_blog_post_api_view import CreateBlogPostApiView
 from django.urls import reverse
 from rest_framework.test import APIClient
 
-from api.utils.extend_schema.permissions import checks_permission
-from common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
-from users.tests.factories import UserFactory
+from blogs_be.api.utils.extend_schema.permissions import checks_permission
+from blogs_be.common.utils.test_utils import DeepDiffOperator, rhs_is_not_none
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestCreateBlogPostApiView:
@@ -119,9 +119,9 @@ Test each permission function directly, verifying both the allow and deny branch
 
 ```python
 import pytest
-from blogs.permissions import user_is_blog_owner
-from blogs.tests.factories import BlogFactory
-from users.tests.factories import UserFactory
+from blogs_be.blogs.permissions import user_is_blog_owner
+from blogs_be.blogs.tests.factories import BlogFactory
+from blogs_be.users.tests.factories import UserFactory
 
 
 class TestUserIsBlogOwnerPermission:
