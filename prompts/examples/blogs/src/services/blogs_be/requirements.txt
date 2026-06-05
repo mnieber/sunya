@@ -10,9 +10,9 @@ attrs==26.1.0
     # via
     #   jsonschema
     #   referencing
-boto3==1.43.22
+boto3==1.43.23
     # via woodstock
-botocore==1.43.22
+botocore==1.43.23
     # via
     #   boto3
     #   s3transfer

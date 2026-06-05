@@ -1,4 +1,4 @@
-import './just/docker/index.just'
+import './just/compose/index.just'
 import './just/python/index.just'
 
 set dotenv-load := true
@@ -13,8 +13,7 @@ export PYTHON := `which python3 2>/dev/null || which python`
 export COMPOSE_DIR := source_directory() / "docker"
 export COMPOSE_PROJECT_NAME := "blogs"
 
+pip-compile: _pip_compile
+
 render-specs:
     sunya render --create-simple-output-dir --watch
-
-debug:
-    echo "JUST_SHELL_COMMAND: ${BLOGS_SHELL_COMMAND}"

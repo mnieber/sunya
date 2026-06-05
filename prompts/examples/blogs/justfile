@@ -1,3 +1,1 @@
 import 'env/local/justfile'
-
-pip-compile: _pip_compile
