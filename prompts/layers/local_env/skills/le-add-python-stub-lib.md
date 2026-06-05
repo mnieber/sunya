@@ -21,6 +21,24 @@ A stub library is a minimal Python package structure in `<stack>/src/libs/` that
 
 - Library is developed in a separate repository
 
+**When NOT to use:**
+
+- For libraries that are part of the stack → see `layers/local_env/skills/le-add-python-lib.md`
+
+---
+
+## Core library setup
+
+For the basic library structure (creating pyproject.toml, setup.py, README.md, etc.), follow **Steps 1-6** in:
+
+→ **`layers/local_env/skills/le-add-python-lib.md`**
+
+The key difference for stub libraries:
+
+- **No tests directory** - tests live with the real library
+- **Minimal `__init__.py`** - just a placeholder comment
+- **Minimal README** - just the library name
+
 ---
 
 ## File structure
@@ -34,7 +52,7 @@ A stub library contains only the minimal files needed for Python packaging:
 ├── README.md               # Minimal library description
 └── src/
     └── <lib_name>/
-        └── __init__.py     # Placeholder module
+        └── __init__.py     # Placeholder module (not full implementation)
 ```
 
 Example for `woodstock`:
@@ -49,123 +67,25 @@ src/libs/woodstock/
         └── __init__.py
 ```
 
----
-
-## Step 1: Create the directory structure
-
-Create the stub library directory:
-
-```bash
-mkdir -p src/libs/woodstock/src/woodstock
-```
-
-**RULE:** Use `src/<lib_name>/` layout (src-layout) inside the stub, not flat layout.
+**IMPORTANT:** Do NOT create a `tests/` directory in the stub. Tests live with the real library.
 
 ---
 
-## Step 2: Create pyproject.toml
+## Stub-specific files
 
-The `pyproject.toml` file must contain the **actual dependencies** of the real library:
+### Minimal `__init__.py`
 
-```toml
-[project]
-name = "woodstock"
-version = "0.1.0"
-readme = "README.md"
-dependencies = ["dataclassy", "boto3", "bottle"]
-
-[project.optional-dependencies]
-test = ["pytest>=7.0.0", "pytest-cov>=4.0.0", "moto[s3]>=4.0.0"]
-
-[project.scripts]
-woodstock = "woodstock.server.entrypoints.woodstock:main"
-
-[tool.setuptools.package-dir]
-"" = "src"
-
-[tool.setuptools.packages.find]
-where = ["src"]
-
-[build-system]
-requires = ["setuptools>=45", "wheel"]
-build-backend = "setuptools.build_meta"
-```
-
-### Key sections
-
-**dependencies:** List all runtime dependencies the real library needs
-
-```toml
-dependencies = ["dataclassy", "boto3", "bottle"]
-```
-
-**RULE:** These must match the real library's dependencies exactly. When the real library adds dependencies, update this stub.
-
-**optional-dependencies:** Development and testing dependencies
-
-```toml
-[project.optional-dependencies]
-test = ["pytest>=7.0.0", "pytest-cov>=4.0.0", "moto[s3]>=4.0.0"]
-```
-
-**scripts:** Entry points if the library provides CLI commands
-
-```toml
-[project.scripts]
-woodstock = "woodstock.server.entrypoints.woodstock:main"
-```
-
-Only include if the real library has entry points.
-
-**package-dir:** Use src-layout
-
-```toml
-[tool.setuptools.package-dir]
-"" = "src"
-```
-
-**RULE:** The stub's pyproject.toml should be kept in sync with the real library's pyproject.toml, especially the dependencies section.
-
----
-
-## Step 3: Create setup.py
-
-Create a `setup.py` that generates a placeholder package:
+Create `src/<lib_name>/__init__.py` with just a placeholder:
 
 ```python
-from pathlib import Path
-
-from setuptools import setup
-
-
-def create_placeholder():
-    this_directory = Path(__file__).parent
-    pkg_directory = this_directory / "src" / "woodstock"
-
-    if not pkg_directory.exists():
-        pkg_directory.mkdir(parents=True)
-        with open(pkg_directory / "__init__.py", "w") as f:
-            f.write("# Placeholder for package")
-
-
-if __name__ == "__main__":
-    create_placeholder()
-    setup()
+# Placeholder for the real library
 ```
 
-**What this does:**
+This file will be overwritten when the real library code is overlaid at runtime.
 
-1. Creates the package directory if it doesn't exist
-2. Creates a placeholder `__init__.py` file
-3. Calls `setup()` to install the package
+**RULE:** Do NOT implement any functionality in the stub's `__init__.py`.
 
-**RULE:** Replace `woodstock` with your actual library name in the path.
-
----
-
-## Step 4: Create README.md
-
-Create a minimal README:
+### Minimal README.md
 
 ```markdown
 # woodstock
@@ -175,39 +95,9 @@ Just the library name. The real documentation lives with the real library.
 
 ---
 
-## Step 5: Create the placeholder **init**.py
+## Dockerfile configuration
 
-Create `src/<lib_name>/__init__.py`:
-
-```python
-# Placeholder for the real library
-```
-
-This file will be overwritten when the real library code is overlaid at runtime.
-
----
-
-## Step 6: Reference in service requirements.editable
-
-Services that use the stub library must reference it in their `requirements.editable` file:
-
-In `<stack>/src/services/<service_name>/requirements.editable`:
-
-```
--e ${BLOGS_LIBS_DIR}/woodstock
-```
-
-**RULE:** Use the `<STACK>_LIBS_DIR` environment variable to reference the library location.
-
-**RULE:** The `-e` flag installs in editable mode, allowing the overlay to take effect.
-
-This file is used during `just pip-compile` to include the library in `requirements.txt`.
-
----
-
-## Step 7: Copy stub library files in Dockerfile
-
-Services must copy the stub library's metadata files in their Dockerfiles:
+Follow the same Dockerfile configuration as described in **Step 10** of `le-add-python-lib.md`:
 
 ### In Dockerfile.local:
 
@@ -233,7 +123,27 @@ Copy the full stub directory for production builds.
 
 ---
 
-## Step 8: Overlay real library code in docker-compose.override.yml
+## Docker Compose configuration for stubs
+
+### Step 1: Add to docker-compose.src-overlays.yml
+
+Add the stub library overlay to `docker-compose.src-overlays.yml`:
+
+```yaml
+services:
+  blogs_be:
+    volumes:
+      - ${ROOT_DIR}/src/services/blogs_be:/app/src
+      - ${ROOT_DIR}/src/libs/woodstock:/app/libs/woodstock
+```
+
+This ensures the stub is available even when the real library isn't overlaid.
+
+**RULE:** This overlay is for the stub itself, not the real library. The real library overlay goes in `docker-compose.override.yml`.
+
+---
+
+### Step 2: Overlay real library code in docker-compose.override.yml
 
 To use the real library code during development, add a volume mount in `docker-compose.override.yml`:
 
@@ -262,24 +172,6 @@ This mounts the real library's source code over the placeholder stub in the cont
 **RULE:** Use absolute paths in `docker-compose.override.yml` since it's developer-specific.
 
 **RULE:** The real library must have the same package structure as expected by the stub.
-
----
-
-## Step 9: Add to docker-compose.src-overlays.yml
-
-Add the stub library overlay to `docker-compose.src-overlays.yml`:
-
-```yaml
-services:
-  blogs_be:
-    volumes:
-      - ${ROOT_DIR}/src/services/blogs_be:/app/src
-      - ${ROOT_DIR}/src/libs/woodstock:/app/libs/woodstock
-```
-
-This ensures the stub is available even when the real library isn't overlaid.
-
-**RULE:** This overlay is for the stub itself, not the real library. The real library overlay goes in `docker-compose.override.yml`.
 
 ---
 
@@ -322,14 +214,18 @@ When the real library changes dependencies:
 
 ## Checklist
 
+### Core setup (following le-add-python-lib.md Steps 1-6)
 - [ ] Stub directory created at `src/libs/<lib_name>/`
 - [ ] `pyproject.toml` created with correct dependencies matching real library
 - [ ] `setup.py` created with placeholder generation logic
-- [ ] `README.md` created with library name
-- [ ] Placeholder `src/<lib_name>/__init__.py` created
+- [ ] `README.md` created with library name only
+- [ ] Placeholder `src/<lib_name>/__init__.py` created (just a comment, no implementation)
 - [ ] Service's `requirements.editable` references stub with `${<STACK>_LIBS_DIR}`
-- [ ] Service's `Dockerfile.local` copies stub metadata files only
+
+### Stub-specific configuration
+- [ ] **No tests directory created** (tests live with real library)
+- [ ] Service's `Dockerfile.local` copies stub metadata files only (pyproject.toml, setup.py, README.md)
 - [ ] Service's `Dockerfile` copies full stub directory
 - [ ] Stub overlaid in `docker-compose.src-overlays.yml`
 - [ ] Real library code overlaid in `docker-compose.override.yml` (developer-specific)
-- [ ] Real library uses same src-layout structure
+- [ ] Real library uses same src-layout structure as stub expects
