@@ -1,5 +1,10 @@
 FROM blogs_base_python
 
+# Run pre-install scripts
+COPY install_scripts/install-postgres-tools.sh /app/install_scripts/
+RUN --mount=type=cache,sharing=locked,target=/var/cache/apt \
+    bash /app/install_scripts/install-postgres-tools.sh
+
 # Copy each library
 COPY libs/woodstock /app/libs/woodstock
 
