@@ -26,20 +26,6 @@ services:
     ports:
       - 3000:3000 # React
       - 6008:6008 # Storybook
-  localstack:
-    container_name: blogs_localstack
-    image: "localstack/localstack:3.4.0"
-    ports:
-      - 4566:4566
-    env_file:
-      - env_files/localstack.env
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:4566/health"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    volumes:
-      - "${ROOT_DIR}/src/services/localstack/scripts/initaws.d:/docker-entrypoint-initaws.d"
   postgres:
     container_name: blogs_postgres
     env_file:
