@@ -101,6 +101,14 @@ export COMPOSE_PROJECT_NAME := "blogs"
 
 Replace `"blogs"` with your stack name. This determines the prefix for container names and networks.
 
+**HOST_IP:** The host machine's IP address on the local network
+
+```makefile
+export HOST_IP := env_var_or_default("HOST_IP", `ip -4 addr show 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | grep -v 127.0.0.1 | head -1 || echo ""`)
+```
+
+Detected automatically from the host's network interfaces, excluding loopback. Useful when a container needs to reach a service running on the host machine (e.g. an external dependency not in Docker Compose). Falls back to an empty string if detection fails, in which case the developer can set it explicitly in `.local.env`.
+
 **PYTHON:** Python executable path
 
 ```makefile
