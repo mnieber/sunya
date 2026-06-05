@@ -17,4 +17,4 @@ ROOT: {}
 SERVER:
   install_dir: /app
   src_dir: ${/SERVER/install_dir}/src
-  host_src_dir: ${/ROOT/src_dir}/src/services/blogs_be
+
