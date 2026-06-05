@@ -20,14 +20,12 @@ ROOT:
     docker:
       - exec
       - make
-      - npm-link
       - npm-publish
       - tsc
 
 SERVER:
   install_dir: /app
   src_dir: ${/SERVER/install_dir}/src
-  host_src_dir: ${/ROOT/src_dir}/src/services/blogs_fe
 
 TSC:
   src_dir_map:

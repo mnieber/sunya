@@ -1,8 +1,10 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 # install pkg dependencies
 RUN apk update && apk add \
     make
+
+RUN corepack enable
 
 # install dev pkg dependencies
 RUN apk update && apk add \
