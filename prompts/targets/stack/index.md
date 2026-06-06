@@ -1,6 +1,6 @@
-# Local Development Environment Setup
+# Local Development Stack Setup
 
-This directory contains instructions for setting up and managing a **local development environment** for a stack containing multiple services and applications.
+This directory contains instructions for setting up and managing a stack containing multiple services and applications, focussing on the local development environment for working with this stack.
 
 ## Overview
 
@@ -25,6 +25,7 @@ Consult [local_env_layer/index.md](local_env_layer/index.md) for instructions on
 **[examples/blogs/](examples/blogs/)** — complete reference stack; primary template for all patterns
 
 The blogs stack contains:
+
 - Django backend (`blogs_be`) with PostgreSQL
 - React frontend (`blogs_fe`)
 - Docker Compose orchestration
