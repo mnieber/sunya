@@ -1,1 +1,0 @@
-Note that comments with a magnet indicate that the code is using a somewhat arbitrary choice for a certain parameter. In that case, you don't need to report the arbitrary parameter choice as an undocumented rule.

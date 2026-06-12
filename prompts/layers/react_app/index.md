@@ -73,15 +73,6 @@ Write isolated stories for standalone views and reusable components, backed by M
 
 ---
 
-### General code generation instructions
-
-- [general code generation instructions](general_code_generation_instructions/general%20code%20generation%20instructions.md) — rules for following project instructions and using example code as templates
-- [project structure](general_code_generation_instructions/project_structure.md) — codebase layout and development workflow
-
-### Reference app
-
-**[examples/blogs_fe/](examples/blogs_fe/)** — complete reference implementation; primary template for all patterns
-
 ### Key Principles
 
 - **camelCase file names** - File and directory names match the spec name in camelCase (e.g. `BlogPostsState/`, `useCreateBlog.ts`)

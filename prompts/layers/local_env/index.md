@@ -6,48 +6,44 @@ This layer describes how to set up and manage a **local development environment*
 
 A local_env stack runs all services in Docker containers via Docker Compose. Developers use Just commands to build, start, and operate the stack. Environment variables are managed through `.env.in` templates that are compiled into `.env` files before containers start.
 
-## Example application
-
-**`examples/blogs/`** — complete reference stack; primary template for all patterns. It contains a Django backend (`blogs_be`), a React frontend (`blogs_fe`), and a PostgreSQL database.
-
 ## Skills
 
 Read the relevant skill(s) before generating or modifying any files. Each skill covers one concern and cross-references others where they overlap.
 
 ### Setting up the stack
 
-| Skill | When to use |
-|---|---|
+| Skill                | When to use                                                                                                                                   |
+| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | `le-use-compose-ops` | Setting up the justfile structure, ROOT_DIR/COMPOSE_DIR/COMPOSE_PROJECT_NAME, `.local.env`, `secrets.env`, and the compile-env-files workflow |
-| `le-add-base-image` | Creating a shared base Docker image used by multiple Python services |
+| `le-add-base-image`  | Creating a shared base Docker image used by multiple Python services                                                                          |
 
 ### Adding services
 
-| Skill | When to use |
-|---|---|
-| `le-add-python-service-to-src` | Creating the source directory structure, Dockerfiles, requirements files, and justfile for a Python service |
-| `le-add-python-service-to-compose` | Wiring a Python service into the Docker Compose files and creating its `.env.in` template |
-| `le-add-react-service-to-compose` | Wiring a React/Vite frontend service into the Docker Compose files and creating its `.env.in` template |
+| Skill                              | When to use                                                                                                 |
+| ---------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| `le-add-python-service-to-src`     | Creating the source directory structure, Dockerfiles, requirements files, and justfile for a Python service |
+| `le-add-python-service-to-compose` | Wiring a Python service into the Docker Compose files and creating its `.env.in` template                   |
+| `le-add-react-service-to-compose`  | Wiring a React/Vite frontend service into the Docker Compose files and creating its `.env.in` template      |
 
 ### Adding infrastructure
 
-| Skill | When to use |
-|---|---|
-| `le-add-postgres-to-compose` | Adding a PostgreSQL service to Docker Compose |
-| `le-add-localstack` | Adding LocalStack for local AWS service emulation (S3, SQS, etc.) |
+| Skill                        | When to use                                                       |
+| ---------------------------- | ----------------------------------------------------------------- |
+| `le-add-postgres-to-compose` | Adding a PostgreSQL service to Docker Compose                     |
+| `le-add-localstack`          | Adding LocalStack for local AWS service emulation (S3, SQS, etc.) |
 
 ### Adding libraries
 
-| Skill | When to use |
-|---|---|
+| Skill                    | When to use                                                                         |
+| ------------------------ | ----------------------------------------------------------------------------------- |
 | `le-add-python-stub-lib` | Adding a stub for a Python library whose source code lives in a separate repository |
 
 ### Developer tooling
 
-| Skill | When to use |
-|---|---|
-| `le-write-dodo-config-files` | Setting up dodo_commands config files (`config.yaml`, `stack.root.yaml`, `stack.<service>.yaml`) |
-| `le-add-spec-src` | Adding an `extra/spec_src/` directory to a service and wiring it into the root `sunya.config.yaml` |
+| Skill                        | When to use                                                                                        |
+| ---------------------------- | -------------------------------------------------------------------------------------------------- |
+| `le-write-dodo-config-files` | Setting up dodo_commands config files (`config.yaml`, `stack.root.yaml`, `stack.<service>.yaml`)   |
+| `le-add-spec-src`            | Adding an `extra/spec_src/` directory to a service and wiring it into the root `sunya.config.yaml` |
 
 ## Typical setup order
 
