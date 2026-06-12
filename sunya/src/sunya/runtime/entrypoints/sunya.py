@@ -15,6 +15,7 @@ from sunya.runtime.rules.find_default_config import find_default_config
 from sunya.runtime.utils.get_logger import get_logger
 from sunya.runtime.utils.spec_file_change_handler import SpecFileChangeHandler
 from watchdog.observers import Observer
+from watchdog.observers.polling import PollingObserver
 
 logger = get_logger()
 logger.setLevel(logging.INFO)
@@ -60,13 +61,21 @@ def render_command(args):
     if args.watch:
         print("Watch mode enabled. Monitoring spec files for changes...")
         logger.info("Watch mode enabled. Monitoring spec files for changes...")
+
+        # Use polling observer if poll_interval is set, otherwise use native observer
+        if args.poll_interval:
+            logger.info(f"Using polling mode with {args.poll_interval}s interval (recommended for Docker)")
+            observer = PollingObserver(timeout=args.poll_interval)
+        else:
+            logger.info("Using native file system events (may not work in Docker)")
+            observer = Observer()
+
         logger.info("Press Ctrl+C to stop watching.")
 
         # Create event handler and observer
         event_handler = SpecFileChangeHandler(
             config_contexts, create_simple_output_dir=args.create_simple_output_dir
         )
-        observer = Observer()
 
         # Watch all paths from all configs
         all_watch_paths = set()
@@ -199,6 +208,12 @@ def _parse_args():
         "-w",
         action="store_true",
         help="Watch spec files for changes and automatically re-render",
+    )
+    render_parser.add_argument(
+        "--poll-interval",
+        type=float,
+        default=None,
+        help="Poll interval in seconds for file watching (recommended for Docker, e.g., 5). If not set, uses native file system events.",
     )
     render_parser.add_argument(
         "--create-simple-output-dir",

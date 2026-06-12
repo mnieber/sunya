@@ -16,4 +16,4 @@ export COMPOSE_PROJECT_NAME := "blogs"
 pip-compile: _pip_compile
 
 render-specs:
-    sunya render --create-simple-output-dir --watch
+    sunya render --create-simple-output-dir --watch --poll-interval=3
