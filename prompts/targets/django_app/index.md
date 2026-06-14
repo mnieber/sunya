@@ -7,29 +7,29 @@ This directory contains instructions for a spec-driven software development proc
 The development process follows two main phases:
 
 1. **Writing Specifications** - Define scenario specs that describe what the application should do
-2. **Create an implementation plan based on skills** - Before writing the plan, read [django_app/index.md](/home/maarten/projects/sunya/src/prompts/layers/django_app/index.md) and [/home/maarten/projects/sunya/src/prompts/layers/python_lib/index.md](python_lib/index.md) to identify which skills apply to the code units you need to generate. Then create a high-level implementation plan that refers to those skills.
+2. **Create an implementation plan based on skills** - Before writing the plan, read [django_app/index.md](../../layers/django_app/index.md) and [../../layers/python_lib/index.md](python_lib/index.md) to identify which skills apply to the code units you need to generate. Then create a high-level implementation plan that refers to those skills.
 3. **Implementation** - Map specifications to actual Python code following the consistent patterns described in the skills.
 
 ## Quick Start
 
-Consult [app/index.md](/home/maarten/projects/sunya/src/prompts/layers/app/index.md) for instructions on:
+Consult [app/index.md](../../layers/app/index.md) for instructions on:
 
 - writing specifications
 - implementing specifications
 - general code generation guidelines
 
-Consult [django_layer/index.md](/home/maarten/projects/sunya/src/prompts/layers/django_app/index.md) for instructions on:
+Consult [django_layer/index.md](../../layers/django_app/index.md) for instructions on:
 
 - Django-specific spec sections declared implicitly in scenarios: Django models, ApiViews, DomainEvents
 - Using specific django skills, such as dj-write-api-view.
 
-Consult [python_lib_layer/index.md](/home/maarten/projects/sunya/src/prompts/layers/python_lib/index.md) for instructions on:
+Consult [python_lib_layer/index.md](../../layers/python_lib/index.md) for instructions on:
 
 - Using specific python_lib skills, such as py-write-action
 
 ## Examples
 
-The [examples/](/home/maarten/projects/sunya/src/prompts/examples/) directory contains two complete example applications:
+The [examples/](../../examples/) directory contains two complete example applications:
 
 - **[examples/blogs_be/](examples/blogs_be/)** - A blogs backend showing Django-specific patterns (models, API views, serializers, admin, urls, permissions, factories, tests)
 - **[examples/bookie/](examples/bookie/)** - A bookie application showing Python package patterns (actions, rules, utils, settings, enums, entrypoints)
