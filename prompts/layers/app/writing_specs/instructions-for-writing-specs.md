@@ -1,6 +1,9 @@
 # Writing specs
 
-When writing a scenario spec file, please follow the `spec_src` directories that you find in the examples directory.
+When writing a scenario spec file, please follow the examples in the `spec_src` directories of the examples directory.
+
+`RULE`: spec files should not document previous versions of the system. Especially when you change a spec, avoid referring
+to the old solution (e.g. don't write down how the new solution improves on the old solution).
 
 ## The goal of spec files (VERY IMPORTANT)
 
@@ -10,11 +13,7 @@ However, it tries to strike a balance and avoids mentioning non-essential detail
 
 ## There are no explicit module spec files
 
-Modules are defined implicitly through the scenario spec files. There is no `extra/spec_src/modules/` directory and no explicit module spec files. All code-unit declarations are made implicitly in the scenario files by referencing module paths such as `m.Books.Actions.CreateBook`.
-
-## Scenarios may declare that certain code-units exist in a module.
-
-A scenario spec implicitly defines code-units in a module. E.g. the bookie scenario spec contains a reference to `m.Books.Actions.CreateBook` (where `m` is the modules namespace) which implies that the books module has an Actions section with a CreateBook action.
+Modules are defined implicitly through the scenario spec files. All code-unit declarations are made implicitly in the scenario files by referencing module paths such as `m.Books.Actions.CreateBook`, which implies that the books module has an Actions section with a CreateBook action.
 
 ## Specs import from the sunya package
 
@@ -22,7 +21,8 @@ The sunya package can be used to render the spec_src to Markdown files. However,
 
 ### The External module
 
-The `External` module is a special virtual namespace used only for external actors in scenarios, such as `m.External.Actors.User`. There is no corresponding file for this module in the spec_src.
+The `External` module is a special virtual namespace used only for external actors in scenarios, such as `m.External.Actors.User`. This module does not correspond to a code-unit
+in the code-base that we're directly working on.
 
 ## The scenarios
 
@@ -64,6 +64,8 @@ with the(r.frontend).calls_the(r.action).with_the(r.form):
 ```
 
 ### The markdown section
+
+`RULE:` The markdown section starts with a short description that should not duplicate the details that are already described in the steps. Keep it high-level and DRY!
 
 The markdown section uses this fixed structure:
 
