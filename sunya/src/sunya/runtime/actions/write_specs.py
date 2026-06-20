@@ -61,7 +61,7 @@ def _get_component_markdown(component_spec: ComponentSpec):
 
 
 def _get_scenario_markdown(scenario):
-    markdown = f"# Scenario: {scenario.name}\n\n"
+    markdown = f"# {scenario.name}\n\n"
 
     for node in scenario.nodes:
         markdown += f"## {node.title}\n\n{node.markdown.strip()}\n\n"

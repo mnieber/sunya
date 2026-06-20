@@ -3,7 +3,7 @@ from sunya import M as m
 from sunya import R as r
 from sunya import goal, it, the
 
-scenario = sunya.add_scenario(f"mrd6_domain_events_are_processed")
+scenario = sunya.add_scenario(f"MRD6: Domain events are processed")
 
 
 def run_scenario():

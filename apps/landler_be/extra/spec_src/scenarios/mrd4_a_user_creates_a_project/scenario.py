@@ -3,7 +3,7 @@ from sunya import M as m
 from sunya import R as r
 from sunya import goal, it, the
 
-scenario = sunya.add_scenario(f"mrd4_a_user_creates_a_project")
+scenario = sunya.add_scenario(f"MRD4: A user creates a project")
 
 
 def run_scenario():

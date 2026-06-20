@@ -3,7 +3,7 @@ from sunya import M as m
 from sunya import R as r
 from sunya import goal, it, the
 
-scenario = sunya.add_scenario(f"mrd7_a_staff_user_schedules_a_project_analysis")
+scenario = sunya.add_scenario(f"MRD7: A staff user schedules a project analysis")
 
 
 def run_scenario():
