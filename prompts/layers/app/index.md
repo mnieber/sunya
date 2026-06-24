@@ -7,7 +7,7 @@
 If you're writing specifications:
 
 - Start with [./writing_specs/instructions-for-writing-specs.md](./writing_specs/instructions-for-writing-specs.md)
-- See examples in [examples/bookie/extra/spec_src/scenarios/](examples/bookie/extra/spec_src/scenarios/)
+- See examples in [examples/bookie/extra/spec_src/scenarios/](./examples/bookie/extra/spec_src/scenarios/)
 
 **[./writing_specs/instructions-for-writing-specs.md](./writing_specs/instructions-for-writing-specs.md)**
 

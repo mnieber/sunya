@@ -2,7 +2,7 @@
 
 Applies when adding a PostgreSQL database service to the Docker Compose configuration for local development.
 
-Primary reference: `examples/blogs/env/local/docker/docker-compose.yml`, `examples/blogs/env/local/docker/env_files/postgres.env.in`
+Primary reference: `../examples/blogs/env/local/docker/docker-compose.yml`, `../examples/blogs/env/local/docker/env_files/postgres.env.in`
 
 ---
 

@@ -2,7 +2,7 @@
 
 Applies when adding a Python service to the Docker Compose configuration for local development.
 
-Primary reference: `examples/blogs/env/local/docker/`
+Primary reference: `../examples/blogs/env/local/docker/`
 
 ---
 

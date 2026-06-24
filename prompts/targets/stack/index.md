@@ -12,7 +12,7 @@ Setting up a local development stack follows these main phases:
 
 ## Quick Start
 
-Consult [local_env/index.md](/home/maarten/projects/sunya/src/prompts/layers/local_env/index.md) for instructions on:
+Consult [local_env/index.md](./local_env_layer/index.md) for instructions on:
 
 - Setting up Docker Compose configuration
 - Creating justfile commands for stack operations
@@ -22,7 +22,7 @@ Consult [local_env/index.md](/home/maarten/projects/sunya/src/prompts/layers/loc
 
 ## Reference app
 
-**[examples/blogs/](/home/maarten/projects/sunya/src/prompts/examples/blogs/)** — complete reference stack; primary template for all patterns
+**[examples/blogs/](./examples/blogs/)** — complete reference stack; primary template for all patterns
 
 The blogs stack contains:
 

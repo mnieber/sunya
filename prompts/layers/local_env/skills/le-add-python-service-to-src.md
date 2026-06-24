@@ -2,7 +2,7 @@
 
 Applies when adding a new Python-based service to the stack's `src/services/` directory.
 
-Primary reference: `examples/blogs/src/services/blogs_be/`
+Primary reference: `../examples/blogs/src/services/blogs_be/`
 
 ---
 

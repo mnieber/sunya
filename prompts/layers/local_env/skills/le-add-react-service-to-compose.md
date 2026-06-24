@@ -2,7 +2,7 @@
 
 Applies when adding a React (Vite) frontend service to the Docker Compose configuration for local development.
 
-Primary reference: `examples/blogs/src/services/blogs_fe/`, `examples/blogs/env/local/docker/`
+Primary reference: `../examples/blogs/src/services/blogs_fe/`, `../examples/blogs/env/local/docker/`
 
 ---
 

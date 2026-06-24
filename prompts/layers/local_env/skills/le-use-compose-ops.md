@@ -2,7 +2,7 @@
 
 Applies when setting up Just commands to manage Docker Compose operations for the local development stack.
 
-Primary reference: `examples/blogs/env/local/just/compose/`
+Primary reference: `../examples/blogs/env/local/just/compose/`
 
 ---
 

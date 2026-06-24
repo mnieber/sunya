@@ -2,7 +2,7 @@
 
 Applies when setting up dodo_commands configuration files for a stack.
 
-Primary reference: `examples/blogs/src/.dodo/`, `examples/blogs/src/services/blogs_be/.dodo/`, `examples/blogs/src/services/blogs_fe/.dodo/`
+Primary reference: `../examples/blogs/src/.dodo/`, `../examples/blogs/src/services/blogs_be/.dodo/`, `../examples/blogs/src/services/blogs_fe/.dodo/`
 
 ---
 
@@ -30,7 +30,7 @@ ROOT:
   command_path:
     - /home/maarten/.dodo_commands/default_project/commands/*
   version: 1.0.0
-  src_dir: /home/maarten/projects/sunya/src/prompts/examples/blogs/src
+  src_dir: /path/to/project/examples/blogs/src
 
 DIAL:
   default:
@@ -74,7 +74,7 @@ LAYER_GROUPS:
 
 Located at `src/.dodo/stack.root.yaml`. Defines top-level commands and the tmux session for the whole stack.
 
-Primary reference: `examples/blogs/src/.dodo/stack.root.yaml`
+Primary reference: `../examples/blogs/src/.dodo/stack.root.yaml`
 
 ```yaml
 COMMANDS:
@@ -118,7 +118,7 @@ Located at `src/services/<service_name>/.dodo/stack.<service_name>.yaml`. Define
 
 ### Python service example
 
-Primary reference: `examples/blogs/src/services/blogs_be/.dodo/stack.blogs_be.yaml`
+Primary reference: `../examples/blogs/src/services/blogs_be/.dodo/stack.blogs_be.yaml`
 
 ```yaml
 COMMANDS:
@@ -144,7 +144,7 @@ SERVER:
 
 ### Frontend service example
 
-Primary reference: `examples/blogs/src/services/blogs_fe/.dodo/stack.blogs_fe.yaml`
+Primary reference: `../examples/blogs/src/services/blogs_fe/.dodo/stack.blogs_fe.yaml`
 
 ```yaml
 COMMANDS:
