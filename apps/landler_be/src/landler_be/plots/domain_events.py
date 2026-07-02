@@ -39,14 +39,12 @@ def create_update_plot_owner_event(plot_id, owner_id):
     )
 
 
-def create_update_plot_fields_event(plot_id, name):
+def create_update_plot_name_event(plot_id, name):
     return create_domain_event(
         type_name="update_plot_fields",
         schema_version=SCHEMA_VERSION,
         payload={
-            "plot_id": plot_id,
             "name": name,
-            "is_draft": True,  # New plots are created as drafts by default
         },
         entity_ids=[plot_id],
     )

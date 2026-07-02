@@ -3,8 +3,8 @@ from django.contrib.gis.db import models
 
 
 class Polygon(BaseModel):
-    polygon = models.PolygonField()
-    crc = models.CharField(max_length=32)
+    polygon = models.MultiPolygonField()
+    crc = models.TextField()
     area = models.FloatField(help_text="Area of the polygon in ha")
 
     def __str__(self):

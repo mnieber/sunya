@@ -9,6 +9,6 @@ class UserConsent(BaseModel):
         on_delete=models.CASCADE,
         related_name="consent",
     )
-    accepted_terms = models.CharField(max_length=10, default="1.0.0")
-    accepted_privacy_policy = models.CharField(max_length=10, default="")
+    accepted_terms = models.TextField(default="1.0.0")
+    accepted_privacy_policy = models.TextField(default="")
     accepted_biometric_data_process = models.BooleanField(default=False)

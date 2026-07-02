@@ -27,8 +27,9 @@ def create_plot(
 
     # Create event for plot fields update
     with transaction.atomic():
-        domain_events.create_update_plot_fields_event(plot_id, create_plot_form.name)
+        domain_events.create_update_plot_name_event(plot_id, create_plot_form.name)
         domain_events.create_update_plot_owner_event(plot_id, owner.id)
+        domain_events.create_update_plot_publication_status_event(plot_id, is_draft=True)
         domain_events.create_update_plot_polygon_event(plot_id, polygon.id)
         domain_events.create_update_plot_questionnaire_event(
             plot_id, plot_questionnaire.id
