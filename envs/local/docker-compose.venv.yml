@@ -8,11 +8,7 @@ services:
   darshana_be:
     volumes:
       - darshana_be_venv:/app/env
-  landler_be:
-    volumes:
-      - landler_be_venv:/app/env
 volumes:
   blogs_be_venv: {}
   darshana_be_venv: {}
-  landler_be_venv: {}
   mock_venv: {}

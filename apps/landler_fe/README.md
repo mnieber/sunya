@@ -1,1 +1,0 @@
-# Landler sample application

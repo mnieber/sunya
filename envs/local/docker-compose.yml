@@ -32,31 +32,6 @@ services:
     ports:
       - 3000:3000
       - 6006:6006
-  landler_be:
-    build:
-      context: ./landler_be
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    depends_on:
-      - postgres
-    env_file:
-      - ./landler_be/.env/dev.injected.env
-    environment:
-      - DJANGO_SETTINGS_MODULE=app.settings.dev
-    image: sunya_landler_be_dev
-    ports:
-      - 8001:8001
-  landler_fe:
-    build:
-      context: ./landler_fe
-      dockerfile: Dockerfile.dev
-    command: sleep infinity
-    env_file:
-      - ./landler_fe/.env/dev.injected.env
-    image: sunya_landler_fe_dev
-    ports:
-      - 3001:3001
-      - 6007:6007
   roadplan_ui:
     build:
       context: ${ROOT_DIR}/apps/roadplan_ui
