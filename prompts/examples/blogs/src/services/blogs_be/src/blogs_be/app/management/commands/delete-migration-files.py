@@ -15,7 +15,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        local_app_names = [x.split(".")[0] for x in settings.LOCAL_APPS]
+        local_app_names = [x.split(".")[1] for x in settings.LOCAL_APPS]
         for name, app in apps.app_configs.items():
             if name in local_app_names:
                 for migration_fn in glob.glob(app.path + "/migrations/*.py"):
