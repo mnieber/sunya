@@ -17,8 +17,6 @@ def create_config_context(config_path: Path, config_dict: dict) -> ConfigContext
     root_dirname = config_path.parent
     if "root_dir" in config_dict:
         root_dirname = (config_path.parent / config_dict["root_dir"]).resolve()
-    if root_dirname not in sys.path:
-        sys.path.insert(0, str(root_dirname))
 
     # Determine output directory (required if there is a spec_paths_by_package key)
     if "spec_paths_by_package" in config_dict:

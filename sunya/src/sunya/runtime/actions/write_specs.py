@@ -1,3 +1,4 @@
+import contextlib
 import importlib
 import sys
 from pathlib import Path
@@ -21,11 +22,14 @@ def write_specs(
     if package_output_path is None:
         package_output_path = package
 
-    # Write scenarios
+    # Get scenario spec paths
     scenario_spec_paths = get_scenario_spec_paths(
         root_dirname, spec_config["scenario_paths"]
     )
-    _write_scenarios(package_output_path, scenario_spec_paths, file_writer)
+
+    # Write scenarios
+    with _isolate_imports(str(root_dirname)):
+        _write_scenarios(package_output_path, scenario_spec_paths, file_writer)
 
     # Write modules
     _write_modules(package_output_path, file_writer)
@@ -33,6 +37,27 @@ def write_specs(
     watch_paths = set()
     watch_paths.update(Path(root_dirname) / Path(path) for path in scenario_spec_paths)
     return watch_paths
+
+
+@contextlib.contextmanager
+def _isolate_imports(extra_path):
+    """Import scenario modules in isolation.
+
+    Removes every module that gets added to sys.modules during the block
+    (the leaf module, its parent packages, and any first-time dependencies)
+    so a later import with a different sys.path re-resolves from scratch
+    instead of reusing a stale parent package object.
+    """
+    modules_before = set(sys.modules)
+    importlib.invalidate_caches()
+    sys.path.insert(0, extra_path)
+    try:
+        yield
+    finally:
+        for name in set(sys.modules) - modules_before:
+            del sys.modules[name]
+        if sys.path[0] == extra_path:
+            del sys.path[0]
 
 
 def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
@@ -44,9 +69,6 @@ def _write_scenarios(package, scenario_spec_paths, file_writer: FileWriter):
         scenario.markdown_fn = file_writer.write_scenario(
             package, scenario, get_markdown_signature() + scenario_markdown
         )
-        # Remove module from sys.modules to allow re-import on next run
-        if module_name in sys.modules:
-            del sys.modules[module_name]
 
 
 def _write_modules(package, file_writer):

@@ -64,7 +64,9 @@ def render_command(args):
 
         # Use polling observer if poll_interval is set, otherwise use native observer
         if args.poll_interval:
-            logger.info(f"Using polling mode with {args.poll_interval}s interval (recommended for Docker)")
+            logger.info(
+                f"Using polling mode with {args.poll_interval}s interval (recommended for Docker)"
+            )
             observer = PollingObserver(timeout=args.poll_interval)
         else:
             logger.info("Using native file system events (may not work in Docker)")
