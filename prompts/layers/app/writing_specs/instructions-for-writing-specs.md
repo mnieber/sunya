@@ -65,7 +65,9 @@ with the(r.frontend).calls_the(r.action).with_the(r.form):
 
 ### The markdown section
 
-`RULE:` The markdown section starts with a short description that should not duplicate the details that are already described in the steps. Keep it high-level and DRY!
+`RULE:` The markdown section starts with a short description that should not duplicate the details that are already described in the steps. Avoid explaining the steps in the introduction and then explaining them again in the Steps section.
+
+`RULE:` Don't insert cross-references to other scenarios, as these go stale quickly. Instead, assume that the reader will find the related scenarios on their own.
 
 The markdown section uses this fixed structure:
 

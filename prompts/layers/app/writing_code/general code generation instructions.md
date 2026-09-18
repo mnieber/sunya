@@ -1,5 +1,7 @@
 # General code generation instructions
 
+`RULE`: do not refer to the spec files when writing code. Small inline comments to guide the flow are good, but don't explain the bigger ideas in the code. Assume that the user learns about these ideas by refering to the spec files on their own.
+
 ## Please follow the rules very closely
 
 In the instructions in the reference data, I will indicate the rules using a `RULE:` prefix.

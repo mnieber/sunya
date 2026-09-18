@@ -67,12 +67,12 @@ export const BlogsPage = observer(
 
 Use `L` from `frames/layout.ts` to express layout intent. The available layouts are defined there. Common ones:
 
-| Expression | Meaning |
-|---|---|
-| `L.row.bar()` | Horizontal flex row, no shrink |
+| Expression       | Meaning                                     |
+| ---------------- | ------------------------------------------- |
+| `L.row.bar()`    | Horizontal flex row, no shrink              |
 | `L.col.banner()` | Vertical flex column, fills available space |
-| `L.col.canvas()` | Vertical flex column, main content area |
-| `L.col.skewer()` | Vertical flex column, items stacked |
+| `L.col.canvas()` | Vertical flex column, main content area     |
+| `L.col.skewer()` | Vertical flex column, items stacked         |
 
 Pass `L.xxx()` as the first positional class to `cn(...)` after the component name class.
 
@@ -84,6 +84,7 @@ Styles are split into two categories:
 - **Ad-hoc styles** — context-dependent styles (margins, background-color chosen by the parent, sizing applied at the call site). These are passed via `className` or inlined in the JSX.
 
 Guidelines:
+
 - **Margins are always ad-hoc** — they are outside the boundary of the element and belong to the parent.
 - **Background-color is ad-hoc** when callers need to choose it (e.g. a card used in multiple places with different backgrounds). It is intrinsic when the component always has the same background.
 - When in doubt, ask: "would a different caller want this to be different?" If yes, it's ad-hoc.
@@ -103,6 +104,7 @@ Guidelines:
 
 ## Checklist
 
+- [ ] The top-level div has a class property with the component name (this aids inspection of the DOM)
 - [ ] Props accessed via `props.foo`, never destructured
 - [ ] `className?: any` included so callers can pass ad-hoc positioning
 - [ ] `observer(withContextProps(..., ContextProps))` used when reading MobX state
