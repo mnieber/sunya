@@ -8,4 +8,5 @@ MIDDLEWARE = [
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "blogs_be.app.middleware.request_logging.request_logging_middleware",
 ]
