@@ -1,5 +1,5 @@
 import sunya
-from sunya import M as m
+from sunya import C as c
 from sunya import R as r
 from sunya import goal, it, the
 
@@ -7,14 +7,16 @@ scenario = sunya.add_scenario("ms1_a_user_creates_a_blog")
 
 
 def run_scenario():
-    r.frontend = m.External.Actors.Frontend
-    r.create_blog_api_view = m.Blogs.ApiViews.CreateBlogApiView
-    r.create_blog_action = m.Blogs.Actions.CreateBlog
-    r.has_forbidden_words_rule = m.Blogs.Rules.HasForbiddenWords
+    r.frontend = c.External.Actors.Frontend
+    r.create_blog_api_view = c.Blogs.ApiViews.CreateBlogApiView
+    r.create_blog_action = c.Blogs.Actions.CreateBlog
+    r.has_forbidden_words_rule = c.Blogs.Rules.HasForbiddenWords
 
     with goal().create_a(r.blog).for_the(r.user):
         the(r.frontend).calls(r.create_blog_api_view)
-        with the(r.create_blog_api_view).calls(r.create_blog_action).with_the(r.create_blog_form):
+        with the(r.create_blog_api_view).calls(r.create_blog_action).with_the(
+            r.create_blog_form
+        ):
             it().calls(r.has_forbidden_words_rule).on_the(r.name).and_the(r.description)
             it().raises(r.forbidden_words_error).if_forbidden_words_are_found()
             it().creates(r.blog)

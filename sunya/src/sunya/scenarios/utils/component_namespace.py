@@ -17,7 +17,7 @@ class ComponentNamespace:
         """Clear all component specs."""
         self._components = {}
 
-    def __getattr__(self, name: str) -> any:
+    def __getattr__(self, name: str) -> ComponentSpec:
         """Get or create a component spec."""
         if name.startswith("_"):
             raise AttributeError(
