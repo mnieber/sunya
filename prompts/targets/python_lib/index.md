@@ -4,16 +4,16 @@ This directory contains instructions for a spec-driven software development proc
 
 ## Overview
 
-The development process follows two main phases:
-
-1. **Writing Specifications** - Define scenario specs that describe what the application should do
-2. **Create an implementation plan based on skills** - Before writing the plan, read [python_lib/index.md](./python_lib_layer/index.md) to identify which skills apply to the code units you need to generate. Then create a high-level implementation plan that refers to those skills.
-3. **Implementation** - Map specifications to actual Python code following the consistent patterns described in the skills.
+The development process has four phases (design, tests, code and scenarios), which are described in the
+[development workflow](./app_layer/development_workflow.md). Before you write code (or a plan for it), read
+[python_lib/index.md](./python_lib_layer/index.md) to identify the skills that apply to the code units, and follow
+them closely.
 
 ## Quick Start
 
 Consult ./app_layer/index.md for instructions on:
 
+- the development workflow
 - writing specifications
 - implementing specifications
 - general code generation guidelines

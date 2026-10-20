@@ -1,5 +1,8 @@
 # General instructions for writing applications
 
+Start with the [development workflow](./development_workflow.md): it describes the phases (design, tests, code
+and scenarios), and what to do in each of them.
+
 # Using specifications
 
 ## 1. Writing Specifications
@@ -29,7 +32,7 @@ If you're implementing from specifications:
 - Section naming conventions (PascalCase → snake_case)
 - File structure patterns
 - Settings consolidation
-- Validation approach
+- Validation by the tests
 
 ## Notes
 

@@ -16,24 +16,36 @@ Primary reference: `bookie/runtime/entrypoints/bookie.py`, `bookie/pyproject.tom
 
 An entrypoint file contains:
 
-1. A `_parse_args()` function using `argparse`.
-2. Any private helper functions needed by `main()`.
-3. A `main()` function that calls `_parse_args()` and dispatches to actions.
-4. A `if __name__ == "__main__": sys.exit(main())` guard.
+1. A `_parse_args(argv)` function using `argparse`.
+2. Any private helper functions needed by `run()`.
+3. A `run(argv=None)` function that calls `_parse_args(argv)` and dispatches to actions. It lets errors pass
+   through, so that the tests can assert on them.
+4. A `main(argv=None)` function for the console script: it does what `run` does, but prints the errors (with a
+   hint, and the traceback only with `-v`) and returns the exit code.
+5. A `if __name__ == "__main__": sys.exit(main())` guard.
 
 RULE: Use a separate `_parse_args()` function based on the `argparse` package.
 
 ```python
-def _parse_args():
+def _parse_args(argv):
     parser = argparse.ArgumentParser(description="...")
     # add arguments / subparsers
-    return parser.parse_args()
+    return parser.parse_args(argv)
 
 
-def main():
-    args = _parse_args()
+def run(argv=None):
+    args = _parse_args(argv)
     # dispatch to actions
     return 0
+
+
+def main(argv=None):
+    # Runs the tool for the user: errors are printed instead of raised
+    try:
+        return run(argv)
+    except Exception as error:
+        print(f"{type(error).__name__}: {error}", file=sys.stderr)
+        return 1
 
 
 if __name__ == "__main__":
@@ -53,6 +65,7 @@ bookie = "bookie.runtime.entrypoints.bookie:main"
 
 - [ ] Entrypoint file is under `<app_package>/runtime/entrypoints/`
 - [ ] `_parse_args()` uses `argparse` and is a private function (leading underscore)
-- [ ] `main()` calls `_parse_args()` and dispatches to action functions
+- [ ] `run()` calls `_parse_args()` and dispatches to action functions, without catching errors
+- [ ] `main()` runs the same commands, prints the errors and returns the exit code
 - [ ] `if __name__ == "__main__": sys.exit(main())` guard present
 - [ ] Entry added to `[project.scripts]` in `pyproject.toml`

@@ -35,7 +35,7 @@ MAX_CHAPTERS_PER_BOOK = int(os.environ.get("MAX_CHAPTERS_PER_BOOK", 10))
 
 ## Mapping from specs
 
-Each module's `Settings` section in the scenario spec (e.g. `m.Books.Settings.MAX_CHAPTERS_PER_BOOK`) describes module-level settings. Despite being declared per-module in the spec, all of them are consolidated into the single root `settings.py`.
+Each module's `Settings` section in the scenario spec (e.g. `c.Books.Settings.MAX_CHAPTERS_PER_BOOK`) describes module-level settings. Despite being declared per-module in the spec, all of them are consolidated into the single root `settings.py`.
 
 ## Checklist
 

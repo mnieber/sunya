@@ -12,7 +12,7 @@ If the application is called `bookie`, then:
 - The `Chapters` namespace → `bookie/chapters/` feature package
 - Etc.
 
-**Example:** A frontend scenario spec referencing m.Api.Mutations.CreateBlog implies that the application has a `api` feature package directory with a `mutations` sub-directory that has a `CreateBlog.ts` mutation function.
+**Example:** A frontend scenario spec referencing `c.Api.Mutations.CreateBlog` implies that the application has a `api` feature package directory with a `mutations` sub-directory that has a `CreateBlog.ts` mutation function.
 
 RULE: Please inspect the example code and example spec_src to understand how the modules that are described in the specs are mapped onto source code files and try to follow the same patterns.
 
@@ -22,4 +22,6 @@ Note that usually each source code file is focussed on one particular function o
 
 ## Validation
 
-You don't need to validate that implementation matches specs, I will do this myself. If you think something is missing in the spec then please delay code generation and ask me to clarify it.
+The tests validate that the implementation matches the specs: what they import and call implies the code units
+and where they live (see the [development workflow](../development_workflow.md)). If you think something is missing
+in the specs or the tests, ask me to clarify it before you generate the code.

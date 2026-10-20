@@ -15,6 +15,8 @@ Inline comments are welcome when they outline a non-obvious step. Group related 
 Use the `logging` package for progress messages and error/warning messages.
 
 RULE: The `print` statement should only be used for actual application output.
+Progress messages that are part of the output of a command-line tool (as the specs describe them) are printed to
+stderr, so that they stay apart from the output on stdout. Use `logging` for diagnostics.
 
 ## Dataclasses
 

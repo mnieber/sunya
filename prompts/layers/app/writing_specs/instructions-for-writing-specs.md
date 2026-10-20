@@ -11,9 +11,13 @@ The goal of the specification files is to make the high-level design understanda
 in the source code when these are important for understanding the high-level design (and when this will later help the reader of the source code to understand it).
 However, it tries to strike a balance and avoids mentioning non-essential details (the reader will figure those out when they read the actual source code).
 
+`RULE`: a scenario describes the high-level workflow and the features that the user sees. Edge cases and details
+(e.g. the exact error for each invalid input, or the order of the checks) are left to the tests, which the reader
+can consult.
+
 ## There are no explicit module spec files
 
-Modules are defined implicitly through the scenario spec files. All code-unit declarations are made implicitly in the scenario files by referencing module paths such as `m.Books.Actions.CreateBook`, which implies that the books module has an Actions section with a CreateBook action.
+Modules are defined implicitly through the scenario spec files. All code-unit declarations are made implicitly in the scenario files by referencing module paths such as `c.Books.Actions.CreateBook`, which implies that the books module has an Actions section with a CreateBook action.
 
 ## Specs import from the sunya package
 
@@ -21,7 +25,7 @@ The sunya package can be used to render the spec_src to Markdown files. However,
 
 ### The External module
 
-The `External` module is a special virtual namespace used only for external actors in scenarios, such as `m.External.Actors.User`. This module does not correspond to a code-unit
+The `External` module is a special virtual namespace used only for external actors in scenarios, such as `c.External.Actors.User`. This module does not correspond to a code-unit
 in the code-base that we're directly working on.
 
 ## The scenarios
@@ -35,7 +39,7 @@ Each scenario file contains:
 
 The `run_scenario` function describes the scenario by:
 
-- Assigning roles to module code-units using `r.<role> = m.<Module>.<Section>.<CodeUnit>`
+- Assigning roles to module code-units using `r.<role> = c.<Module>.<Section>.<CodeUnit>`
 - Describing goals and steps using `with goal()...` blocks and `the(...)` / `it()` step expressions
 
 #### Goals

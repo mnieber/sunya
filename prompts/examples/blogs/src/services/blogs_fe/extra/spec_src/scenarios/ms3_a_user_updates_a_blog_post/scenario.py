@@ -1,5 +1,5 @@
 import sunya
-from sunya import M as m
+from sunya import C as c
 from sunya import R as r
 from sunya import goal, it, the
 
@@ -7,11 +7,11 @@ scenario = sunya.add_scenario("ms3_a_user_updates_a_blog_post")
 
 
 def run_scenario():
-    r.user = m.External.Actors.User
-    r.blog_view = m.Blogs.Views.BlogView
-    r.blog_post_form_view = m.Blogs.Views.BlogPostFormView
-    r.update_blog_post_mutation = m.Blogs.Mutations.UpdateBlogPost
-    r.delete_blog_posts_mutation = m.Blogs.Mutations.DeleteBlogPosts
+    r.user = c.External.Actors.User
+    r.blog_view = c.Blogs.Views.BlogView
+    r.blog_post_form_view = c.Blogs.Views.BlogPostFormView
+    r.update_blog_post_mutation = c.Blogs.Mutations.UpdateBlogPost
+    r.delete_blog_posts_mutation = c.Blogs.Mutations.DeleteBlogPosts
 
     with goal().edit_a(r.blog_post).in_the(r.blog):
         the(r.user).selects_the(r.blog_post).they_want_to_edit()

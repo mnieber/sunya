@@ -29,7 +29,7 @@ class TitleStyles(str, Enum):
 
 ## Mapping from specs
 
-A module's `Enums` section in the scenario spec (e.g. `m.Chapters.Enums`) maps to `<module>/enums.py`.
+A module's `Enums` section in the scenario spec (e.g. `c.Chapters.Enums`) maps to `<module>/enums.py`.
 
 ## Checklist
 

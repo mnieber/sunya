@@ -29,6 +29,16 @@ A function that retrieves or computes information subject to business logic, wit
 A generic helper function free from business logic.
 → [py-write-util](skills/py-write-util.md)
 
+### Policy
+
+A replaceable class that hides an interaction with the outside world (e.g. an external service).
+→ [py-write-policy](skills/py-write-policy.md)
+
+### Workflow tests
+
+Tests that a developer reads top to bottom, like a story, to understand how the tool is used.
+→ [py-write-workflow-tests](skills/py-write-workflow-tests.md)
+
 ### Settings
 
 Centralized `settings.py` at the application package root; environment variable handling.

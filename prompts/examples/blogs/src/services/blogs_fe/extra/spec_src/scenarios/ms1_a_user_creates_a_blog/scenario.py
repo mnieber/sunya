@@ -1,5 +1,5 @@
 import sunya
-from sunya import M as m
+from sunya import C as c
 from sunya import R as r
 from sunya import goal, it, the
 
@@ -7,10 +7,10 @@ scenario = sunya.add_scenario("ms1_a_user_creates_a_blog")
 
 
 def run_scenario():
-    r.user = m.External.Actors.User
-    r.blog_list_view = m.Blogs.Views.BlogListView
-    r.blog_form_view = m.Blogs.Views.BlogFormView
-    r.create_blog_mutation = m.Blogs.Mutations.CreateBlog
+    r.user = c.External.Actors.User
+    r.blog_list_view = c.Blogs.Views.BlogListView
+    r.blog_form_view = c.Blogs.Views.BlogFormView
+    r.create_blog_mutation = c.Blogs.Mutations.CreateBlog
 
     with goal().create_a(r.blog).for_the(r.user):
         the(r.user).visits_the(r.blogs_route)

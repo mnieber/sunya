@@ -1,5 +1,5 @@
 import sunya
-from sunya import M as m
+from sunya import C as c
 from sunya import R as r
 from sunya import goal, it, the
 
@@ -7,12 +7,12 @@ scenario = sunya.add_scenario("ms3_a_user_edits_and_deletes_a_blog_post")
 
 
 def run_scenario():
-    r.frontend = m.External.Actors.Frontend
-    r.update_blog_post_api_view = m.Blogs.ApiViews.UpdateBlogPostApiView
-    r.update_blog_post_action = m.Blogs.Actions.UpdateBlogPost
-    r.has_forbidden_words_rule = m.Blogs.Rules.HasForbiddenWords
-    r.delete_blog_posts_api_view = m.Blogs.ApiViews.DeleteBlogPostsApiView
-    r.delete_blog_posts_action = m.Blogs.Actions.DeleteBlogPosts
+    r.frontend = c.External.Actors.Frontend
+    r.update_blog_post_api_view = c.Blogs.ApiViews.UpdateBlogPostApiView
+    r.update_blog_post_action = c.Blogs.Actions.UpdateBlogPost
+    r.has_forbidden_words_rule = c.Blogs.Rules.HasForbiddenWords
+    r.delete_blog_posts_api_view = c.Blogs.ApiViews.DeleteBlogPostsApiView
+    r.delete_blog_posts_action = c.Blogs.Actions.DeleteBlogPosts
 
     with goal().edit_a(r.blog_post).in_the(r.blog):
         the(r.frontend).calls(r.update_blog_post_api_view)

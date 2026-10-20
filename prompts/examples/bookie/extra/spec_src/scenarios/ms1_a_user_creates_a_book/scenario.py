@@ -1,5 +1,5 @@
 import sunya
-from sunya import M as m
+from sunya import C as c
 from sunya import R as r
 from sunya import goal, it, the
 
@@ -7,11 +7,11 @@ scenario = sunya.add_scenario(f"ms1_a_user_creates_a_book")
 
 
 def run_scenario():
-    r.user = m.External.Actors.User
-    r.create_book_action = m.Books.Actions.CreateBook
-    r.create_chapter_action = m.Chapters.Actions.CreateChapter
-    r.create_paragraph_action = m.Chapters.Actions.CreateParagraph
-    r.is_bad_word_rule = m.Chapters.Rules.IsBadWord
+    r.user = c.External.Actors.User
+    r.create_book_action = c.Books.Actions.CreateBook
+    r.create_chapter_action = c.Chapters.Actions.CreateChapter
+    r.create_paragraph_action = c.Chapters.Actions.CreateParagraph
+    r.is_bad_word_rule = c.Chapters.Rules.IsBadWord
 
     with goal().create_a(r.book).with_lorem_ipsum_text():
 
