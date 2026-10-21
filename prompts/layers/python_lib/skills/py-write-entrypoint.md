@@ -20,7 +20,7 @@ An entrypoint file contains:
 2. Any private helper functions needed by `run()`.
 3. A `run(argv=None)` function that calls `_parse_args(argv)` and dispatches to actions. It lets errors pass
    through, so that the tests can assert on them.
-4. A `main(argv=None)` function for the console script: it does what `run` does, but prints the errors (with a
+4. A `main(argv=None)` function for the console script: it delegates to `run`, but prints the errors (with a
    hint, and the traceback only with `-v`) and returns the exit code.
 5. A `if __name__ == "__main__": sys.exit(main())` guard.
 

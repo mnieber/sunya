@@ -10,7 +10,9 @@ scenarios.
 
 ## 2. Tests
 
-Create a test_plan.md document that contains a high-level description of the tests (that follow from the design doc) in batches (one feature or group of related features per batch). The described tests will be written before the code exists. The tests follow the workflow-test style of the layer (for Python: the [py-write-workflow-tests](../python_lib/skills/py-write-workflow-tests.md) skill).
+Translate the design doc into a test_plan.md document that contains a high-level description of the tests. Group the tests
+in in batches (one feature or group of related features per batch). The described tests will be written before the code exists.
+The tests follow the workflow-test skill file of the layer (for Python: the `py-write-workflow-tests` skill).
 
 - Before writing a batch, ask me about the design choices that change what the tests assert, and propose an
   answer. I often refine the proposal.
@@ -23,8 +25,7 @@ Create a test_plan.md document that contains a high-level description of the tes
 You write the code that makes the tests pass, following the skills of the layer.
 
 - Read the design doc and the tests of the feature first.
-- Enable the new tests in batches, and make each batch pass before you continue. A test package is enabled by
-  adding it to `ENABLED_TEST_PACKAGES` in `tests/conftest.py`, in the order in which the code is implemented.
+- Enable the new tests in batches, and make each batch pass before you continue.
 - Run the whole test suite at the end. Don't run tests that cost money (e.g. e2e tests that call an external
   service) without asking.
 - When the design doc and the tests don't settle a choice, pick a sensible option, and mention it in your report.
@@ -36,7 +37,7 @@ The scenarios (`extra/spec_src/scenarios/`) are updated with the changes that af
 features (see [writing specs](./writing_specs/instructions-for-writing-specs.md)). Edge cases and details are left
 to the tests.
 
-- Update (or write) one scenario at a time, and let me review it before you continue.
-- After each scenario, remove the parts of the design doc that it covers, together with the details that the
+- Split the affected scenarios in one ore more suitable batches (as you see fit), write/update the scenarios for a batch, and ask me to review.
+- After each review, remove the parts of the design doc that is covered by the batch, together with the details that the
   tests cover. When the design doc is empty, the feature is done.
 - Format the scenario files with `black`. Don't render them with sunya: I do that myself.

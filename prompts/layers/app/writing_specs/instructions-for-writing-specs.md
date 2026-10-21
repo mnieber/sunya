@@ -7,9 +7,7 @@ to the old solution (e.g. don't write down how the new solution improves on the 
 
 ## The goal of spec files (VERY IMPORTANT)
 
-The goal of the specification files is to make the high-level design understandable. The specification files do mention specific functions and models that are used
-in the source code when these are important for understanding the high-level design (and when this will later help the reader of the source code to understand it).
-However, it tries to strike a balance and avoids mentioning non-essential details (the reader will figure those out when they read the actual source code).
+The goal of the specification files is to make the high-level design understandable. The specification files do mention specific functions and models that are used in the source code when these are important for understanding the high-level design (and when this will later help the reader of the source code to understand it). However, it tries to strike a balance and avoids mentioning non-essential details.
 
 `RULE`: a scenario describes the high-level workflow and the features that the user sees. Edge cases and details
 (e.g. the exact error for each invalid input, or the order of the checks) are left to the tests, which the reader
@@ -25,8 +23,7 @@ The sunya package can be used to render the spec_src to Markdown files. However,
 
 ### The External module
 
-The `External` module is a special virtual namespace used only for external actors in scenarios, such as `c.External.Actors.User`. This module does not correspond to a code-unit
-in the code-base that we're directly working on.
+The `External` module is a special virtual namespace used only for external actors in scenarios, such as `c.External.Actors.User`. This module does not correspond to a code-unit in the code-base that we're directly working on.
 
 ## The scenarios
 
@@ -34,6 +31,11 @@ Each scenario file contains:
 
 1. A `run_scenario()` function that describes the scenario logic using the sunya Python DSL.
 2. A `markdown_node` with a structured markdown section. This markdown section has a fixed format with **Steps** and **Diagram** subsections.
+
+## Numbering
+
+Except in legacy spec_src directories, the initial scenarios use decadal numbering: s10_foo, s20_bar, s30_baz, etc.
+This leaves room to insert other scenarios later (s05_hello).
 
 ### The run_scenario function
 

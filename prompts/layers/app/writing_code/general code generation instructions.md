@@ -1,6 +1,6 @@
 # General code generation instructions
 
-`RULE`: do not refer to the spec files when writing code. Small inline comments to guide the flow are good, but don't explain the bigger ideas in the code. Assume that the user learns about these ideas by refering to the spec files on their own.
+`RULE`: do not insert references to the spec files when writing code. Small inline comments to guide the flow are good, but don't explain the bigger ideas in the code. Assume that the user learns about these ideas by refering to the spec files on their own.
 
 ## Please follow the rules very closely
 
@@ -9,7 +9,7 @@ It's extremely important to follow the rules as closely as possible. If the rule
 
 ## Use of specific code generation instructions relevant to the code unit
 
-When I ask you to write the source code for a code unit (such as an api view), then a specific set of instructions for writing such a code unit will be available in the project instructions. If you cannot find the specific instructions, please let me know.
+When you need to write the source code for a code unit (such as an api view), then a specific set of instructions for writing such a code unit will be available in the project instructions. If you cannot find the specific instructions, please let me know.
 
 ## Use of example code
 

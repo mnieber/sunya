@@ -138,7 +138,8 @@ Rules for actions:
 ## Testing a command-line tool
 
 - The entrypoint has a `run(argv)` that lets errors pass through, and a `main(argv)` for the console script that
-  prints the errors (with a hint) and returns the exit code (see [py-write-entrypoint](py-write-entrypoint.md)).
+  calls `run` in a try-catch block that prints the errors (with a hint) and returns the exit code
+  (see [py-write-entrypoint](py-write-entrypoint.md)).
   Most tests call `run` (`run_bookie`), so that they can assert on the error. A test of what the user sees calls
   `main` (`run_bookie_cli`), and stores the exit code in `env.exit_code` and what was printed in `env.output` (via
   `capsys`).
