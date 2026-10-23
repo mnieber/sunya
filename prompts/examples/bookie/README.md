@@ -1,3 +1,0 @@
-# bookie
-
-Bookie Application

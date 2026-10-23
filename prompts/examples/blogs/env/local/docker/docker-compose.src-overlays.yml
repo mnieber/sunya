@@ -1,7 +1,0 @@
-services:
-  blogs_be:
-    volumes:
-      - ${ROOT_DIR}/src/services/blogs_be:/app/src
-  blogs_fe:
-    volumes:
-      - ${ROOT_DIR}/src/services/blogs_fe:/app/src

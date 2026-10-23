@@ -1,1 +1,0 @@
-export { useGetProject } from './useGetProject';

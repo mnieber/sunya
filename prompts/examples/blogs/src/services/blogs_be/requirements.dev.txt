@@ -1,7 +1,0 @@
-factory-boy
-faker
-pytest
-pytest-django
-pytest-html
-pytest_pudb
-pytest-socket

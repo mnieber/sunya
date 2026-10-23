@@ -1,1 +1,0 @@
-# Blogs sample application

@@ -1,1 +1,0 @@
-export { useObservableQuery } from './useObservableQuery';

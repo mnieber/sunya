@@ -1,1 +1,0 @@
-export { generatePath } from './generatePath';
