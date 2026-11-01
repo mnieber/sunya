@@ -18,8 +18,14 @@ def create_config_context(config_path: Path, config_dict: dict) -> ConfigContext
     if "root_dir" in config_dict:
         root_dirname = (config_path.parent / config_dict["root_dir"]).resolve()
 
-    # Determine output directory (required if there is a spec_paths_by_package key)
     if "spec_paths_by_package" in config_dict:
+        raise ValueError(
+            f"Error: Config at {config_path} uses 'spec_paths_by_package', "
+            "which was renamed to 'package_config_by_name'",
+        )
+
+    # Determine output directory (required if there is a package_config_by_name key)
+    if "package_config_by_name" in config_dict:
         if "output_dir" not in config_dict:
             raise ValueError(
                 f"Error: Config at {config_path} must contain 'output_dir' key",
