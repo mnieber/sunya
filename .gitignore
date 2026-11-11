@@ -1,3 +1,6 @@
 __pycache__
 *.local.env
 .claude
+
+CLAUDE.md
+instructions
