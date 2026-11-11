@@ -1,5 +1,4 @@
 from .nodes.actions.add_markdown_node import add_markdown_node  # noqa
-from .runtime.utils.file_writer import FileWriter  # noqa
 from .scenarios.actions.add_scenario import add_scenario  # noqa
 from .scenarios.models.scenario import get_scenario  # noqa
 from .scenarios.utils.component_namespace import C  # noqa

@@ -1,9 +1,9 @@
 import sys
 from pathlib import Path
 
-from sunya import FileWriter
-from sunya.runtime.models import ConfigContext
-from sunya.runtime.utils.get_logger import get_logger
+from sunya.config.models.config_context import ConfigContext
+from sunya.render.utils.file_writer import FileWriter
+from sunya.utils.get_logger import get_logger
 
 logger = get_logger()
 

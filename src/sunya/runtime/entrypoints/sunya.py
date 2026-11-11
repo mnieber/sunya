@@ -5,17 +5,14 @@ Sunya CLI entrypoint for rendering markdown documentation from spec files.
 import argparse
 import logging
 import sys
-import time
 from pathlib import Path
 
-from sunya.runtime.actions.create_config_context import create_config_context
-from sunya.runtime.actions.process_config_contexts import process_config_contexts
-from sunya.runtime.rules.collect_all_configs import collect_all_configs
-from sunya.runtime.rules.find_default_config import find_default_config
-from sunya.runtime.utils.get_logger import get_logger
-from sunya.runtime.utils.spec_file_change_handler import SpecFileChangeHandler
-from watchdog.observers import Observer
-from watchdog.observers.polling import PollingObserver
+from sunya.config.actions.create_config_context import create_config_context
+from sunya.config.rules.collect_all_configs import collect_all_configs
+from sunya.config.rules.find_default_config import find_default_config
+from sunya.render.actions.render_specs import render_specs
+from sunya.render.actions.watch_and_render import watch_and_render
+from sunya.utils.get_logger import get_logger
 
 logger = get_logger()
 logger.setLevel(logging.INFO)
@@ -48,7 +45,7 @@ def render_command(args):
         config_contexts.append(ctx)
 
     # Render specs for all configs
-    count = process_config_contexts(
+    count = render_specs(
         config_contexts,
         reset_store=True,
         create_simple_output_dir=args.create_simple_output_dir,
@@ -57,46 +54,12 @@ def render_command(args):
     # Count total packages processed
     logger.info(f"✓ Processed {count} configs")
 
-    # If watch mode is enabled, set up file watching
     if args.watch:
-        print("Watch mode enabled. Monitoring spec files for changes...")
-        logger.info("Watch mode enabled. Monitoring spec files for changes...")
-
-        # Use polling observer if poll_interval is set, otherwise use native observer
-        if args.poll_interval:
-            logger.info(
-                f"Using polling mode with {args.poll_interval}s interval (recommended for Docker)"
-            )
-            observer = PollingObserver(timeout=args.poll_interval)
-        else:
-            logger.info("Using native file system events (may not work in Docker)")
-            observer = Observer()
-
-        logger.info("Press Ctrl+C to stop watching.")
-
-        # Create event handler and observer
-        event_handler = SpecFileChangeHandler(
-            config_contexts, create_simple_output_dir=args.create_simple_output_dir
+        watch_and_render(
+            config_contexts,
+            create_simple_output_dir=args.create_simple_output_dir,
+            poll_interval=args.poll_interval,
         )
-
-        # Watch all paths from all configs
-        all_watch_paths = set()
-        for ctx in config_contexts:
-            all_watch_paths.update(ctx.watch_paths)
-
-        for watch_path in all_watch_paths:
-            logger.info(f"Watching file: {watch_path}")
-            observer.schedule(event_handler, str(watch_path))
-
-        # Start watching
-        observer.start()
-        try:
-            while True:
-                time.sleep(1)
-        except KeyboardInterrupt:
-            logger.info("\nStopping watch mode...")
-            observer.stop()
-        observer.join()
 
 
 def serve_command(args):

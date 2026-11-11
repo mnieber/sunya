@@ -3,10 +3,10 @@ import importlib
 import sys
 from pathlib import Path
 
-from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
-from sunya.runtime.utils.file_writer import FileWriter
-from sunya.runtime.utils.filepath_to_import_path import filepath_to_import_path
-from sunya.runtime.utils.get_scenario_spec_paths import get_scenario_spec_paths
+from sunya.render.rules.get_markdown_signature import get_markdown_signature
+from sunya.render.utils.file_writer import FileWriter
+from sunya.render.utils.filepath_to_import_path import filepath_to_import_path
+from sunya.render.utils.get_scenario_spec_paths import get_scenario_spec_paths
 from sunya.scenarios.models.scenario import get_scenario
 from sunya.scenarios.utils.component_namespace import C, ComponentSpec
 
@@ -35,7 +35,9 @@ def write_specs(
     _write_modules(package_output_path, file_writer)
 
     watch_paths = set()
-    watch_paths.update(Path(root_dirname) / Path(path) for path in scenario_spec_paths)
+    watch_paths.update(
+        (Path(root_dirname) / path).resolve() for path in scenario_spec_paths
+    )
     return watch_paths
 
 

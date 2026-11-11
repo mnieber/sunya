@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Set
 
-from sunya.runtime.utils.file_writer import FileWriter
+from sunya.render.utils.file_writer import FileWriter
 
 
 @dataclass

@@ -1,7 +1,10 @@
+import os
 import time
+from pathlib import Path
 
-from sunya.runtime.actions.process_config_contexts import process_config_contexts
-from sunya.runtime.utils.get_logger import get_logger
+from sunya.render.actions.render_specs import render_specs
+from sunya.render.utils.get_scenario_watch_dirs import is_scenario_spec_path
+from sunya.utils.get_logger import get_logger
 from watchdog.events import FileSystemEventHandler
 
 logger = get_logger()
@@ -24,8 +27,12 @@ class SpecFileChangeHandler(FileSystemEventHandler):
         if event.is_directory:
             return False
 
-        # Check if the changed file is a Python file
-        if not event.src_path.endswith(".py"):
+        paths = [event.src_path]
+        if getattr(event, "dest_path", None):
+            paths.append(event.dest_path)
+
+        # Check if a changed file is a (new, existing or removed) scenario file
+        if not any(self._is_scenario_file(path) for path in paths):
             return False
 
         # Debounce: avoid processing events that are too close together
@@ -40,16 +47,47 @@ class SpecFileChangeHandler(FileSystemEventHandler):
         if not self.should_process_event(event):
             return
 
-        self.render_specs()
+        self._render()
 
     def on_created(self, event):
         """Handle file creation events."""
         if not self.should_process_event(event):
             return
 
-        self.render_specs()
+        self._render()
 
-    def render_specs(self):
+    def on_deleted(self, event):
+        """Handle file deletion events."""
+        if not self.should_process_event(event):
+            return
+
+        self._render()
+
+    def on_moved(self, event):
+        """Handle file move events (e.g. editors that save via a rename)."""
+        if not self.should_process_event(event):
+            return
+
+        self._render()
+
+    def _is_scenario_file(self, path):
+        path = os.fsdecode(path)
+        if not path.endswith(".py"):
+            return False
+
+        for ctx in self.config_contexts:
+            # A file that was rendered before (it may have been removed since)
+            if Path(path).resolve() in ctx.watch_paths:
+                return True
+            # A file that matches a scenario pattern (it may be new)
+            package_config_by_name = ctx.config_dict.get("package_config_by_name") or {}
+            for package_config in package_config_by_name.values():
+                patterns = package_config.get("scenario_paths", [])
+                if is_scenario_spec_path(ctx.root_dir, patterns, path):
+                    return True
+        return False
+
+    def _render(self):
         """Re-render all specs from all configs."""
         self.last_render_time = time.time()
         logger.info("Change detected, re-rendering all configs...")
@@ -61,7 +99,7 @@ class SpecFileChangeHandler(FileSystemEventHandler):
             logger.info(f"  - {config_path}")
 
         try:
-            count = process_config_contexts(
+            count = render_specs(
                 self.config_contexts,
                 reset_store=True,
                 create_simple_output_dir=self.create_simple_output_dir,

@@ -1,4 +1,4 @@
-from sunya.runtime.rules.get_markdown_signature import get_markdown_signature
+from sunya.render.rules.get_markdown_signature import get_markdown_signature
 
 
 def wipe_spec_files(file_writer, package):

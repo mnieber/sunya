@@ -1,15 +1,16 @@
-from sunya.runtime import wipe_spec_files, write_specs
-from sunya.runtime.actions.create_simple_scenarios_dir import (
+from sunya.render.actions.create_simple_scenarios_dir import (
     create_simple_scenarios_dir,
 )
-from sunya.runtime.utils.get_logger import get_logger
+from sunya.render.actions.wipe_spec_files import wipe_spec_files
+from sunya.render.actions.write_specs import write_specs
 from sunya.scenarios.actions.create_component import create_component
 from sunya.scenarios.models.store import get_store
+from sunya.utils.get_logger import get_logger
 
 logger = get_logger()
 
 
-def process_config_contexts(
+def render_specs(
     config_contexts, *, reset_store: bool, create_simple_output_dir: bool
 ) -> int:
     if reset_store:

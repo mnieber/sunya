@@ -7,8 +7,8 @@ that mirrors: store -> components -> scenarios -> scenario.markdown files.
 
 from pathlib import Path
 
-from sunya.runtime.utils.get_logger import get_logger
 from sunya.scenarios.models.store import get_store
+from sunya.utils.get_logger import get_logger
 
 logger = get_logger()
 
